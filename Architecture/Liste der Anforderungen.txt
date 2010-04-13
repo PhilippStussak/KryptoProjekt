@@ -1,0 +1,31 @@
+﻿Liste der Anforderungen:
+
+- Usereingabenverifizierung
+- Hilfefunktion zur Benutzereingabe
+- Hilfefunktion zu den Algorithmen
+- Ver-/Entschlüsselungsszenarien
+- Protokollierung
+- Speichern und Laden einer Sitzung
+- Hamming-Code
+- Modulo-Rechnung
+- (erw.) Euklidischer Algorithmus	
+- Square-and-Multiply
+- Primzahltests
+- Allgemeine zyklische Codes
+- Eulersche Phi-Funktion
+- Anzeige von Zwischenergebnissen
+- Aufgabengenerierung
+- Aufwandsberechnung
+- Multiple-Choice-Aufgabenstellung
+- Schwierigkeitsstufen
+- erw. Verschlüsselungsalgorithmen
+
+
+Constraints:
+
+- Baukastenprinzip
+- Plattformunabhängigkeit
+- Programmiersprache
+- GUI
+- Erweiterbarkeit/Wiederverwertbarkeit
+- Netzwerkfunktionalität

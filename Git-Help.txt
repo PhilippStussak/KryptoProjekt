@@ -1,0 +1,35 @@
+<<<<<<<<<<<<<<< GIT-BEFEHLE für UPDATE und COMMIT >>>>>>>>>>>>>>>
+
+1.	git fetch origin 							(bringt Remote auf aktuellsten Stand)
+
+2.	git reset --hard origin/master 		(resettet lokales Repository auf Stand des Remotes. ACHTUNG: modifizierte Dateien werden gelöscht/resettet)
+
+3.	git add . 									(den Punkt nich vergessen, stellt alle modifizierten Dateien für den nächsten Commit bereit)
+
+4. git commit -m "Commit-Msg" 		(committed die bereitgestellten Dateien auf den Remote...)
+
+5. git push origin master 				(pushed die Commits vom Remote auf den Server)
+
+
+
+
+zum UPDATEN des lokalen Branches:
+
+Schritt 1 und 2 ausführen (geänderte Dateien werden hierbei gelöscht).
+
+
+
+
+zum COMMITTEN auf den Server:
+
+am besten alle Schritte ausführen, notwendig aber eigentlich nur Schritt 3-5.
+
+Falls Meldung wegen mergen kommt, am besten abbrechen, von geänderten Dateien lokale Sicherheitskopie erstellen, Repository updaten/resetten, Änderungen in neue Dateien übernehmen und dann erst comitten.
+
+Falls mergen, am besten vllt. davor den Phil fragen oder kA =)
+
+
+
+So, viel Spaß.
+
+Jens.
