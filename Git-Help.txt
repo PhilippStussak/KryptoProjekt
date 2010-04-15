@@ -20,15 +20,20 @@ Schritt 1 und 2 ausführen (geänderte Dateien werden hierbei gelöscht).
 
 
 
-zum COMMITTEN auf den Server:
+zum COMMITTEN auf den Server (edit by phil):
 
-am besten alle Schritte ausführen, notwendig aber eigentlich nur Schritt 3-5.
+Generell gibt es 2 Situationen in der euer lokaler Ordner sein kann.
+1) Ihr habt nichts geändert seit dem letzten Update und könnt einfach schritt 1+2 ausführen. Dann ist euer lokaler Ordner auf dem neusten Stand.
+Anschließend könnt ihr eure Änderungen machen und sie mit git add . zum index hinzufügen (schritt 3) und anschließend lokal committen (schritt 4). 
+Um das dann auf den Server zu bekommen braucht ihr Schritt 5.
 
-Falls Meldung wegen mergen kommt, am besten abbrechen, von geänderten Dateien lokale Sicherheitskopie erstellen, Repository updaten/resetten, Änderungen in neue Dateien übernehmen und dann erst comitten.
-
-Falls mergen, am besten vllt. davor den Phil fragen oder kA =)
-
-
+2) Ihr habt gearbeitet, in der zwischenzeit wurde aber schon was in das github repo committet. Jett könnt ihr natürlich nicht einfach pushen. 
+Hier ist das Vorgehen eigentlich einfach: Bevor ihr updatet einmal Schritt 3 und 4 ausführen um eure gesamten changes bis dahin in einem commit zu sichern. 
+Anschließend kann man mit git log den obersten commit sehen. Dieser hat einen commit-hash den ihr euch aufschreibt bzw raus-copy-pastat. 
+Anschließend einfachS chritt 1+2 ausführen. Das updatet euer repo dann auf stand des online repos. 
+Nun könnt ihr mit git cherrypick [Commithash] (ohne klammern) euere gespeicherten Änderungen wieder reinnehmen. 
+Sollte es Konflikte zwischen dem neuen und dem alten geben sagt euch git das und in dem File in dem es konflikte gab stehen dann ">>>>>" Zeichen vor der entsprechenden Zeile. 
+Dann könnt ihr das entsprechend anpassen und fertigmergen.
 
 So, viel Spaß.
 
