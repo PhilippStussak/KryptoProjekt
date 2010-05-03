@@ -1,0 +1,47 @@
+	Hilfe
+
+1)	Hilfe zu den Algorithmen
+
+
+	Netzwerk
+
+2)	User stellt Netzwerkverbindung her
+
+
+	Verwaltung
+
+3)	System protokolliert Ein- und Ausgaben
+4)	System speichert aktuellen Datenbestand
+5)	System lädt eine gespeicherte Sitzung
+
+
+	Mathematisch/Basics
+
+6)	User berechnet ggT (Euklid. Algorithmus)
+7)	User kann prüfen, ob Zahl prim ist
+8)	User führt Square-and-Multiply aus
+9)	User kann Phi-Funktion berechnen
+10)	User berechnet Inverses (precondition nicht vergessen)
+
+
+	Mathematisch/Verschlüsselung und Kodierung
+
+11)	User codiert Daten mithilfe des Hamming-Codes
+12)	User decodiert Daten mithilfe des Hamming-Codes
+13)	User lässt Syndrom berechnen
+14)	User kann zyklische Codes bei Berechnung verwenden
+15)	User ver-/entschlüsselt Daten
+
+	
+	Zusatzfeatures
+
+16)	User kann Zwischenergebnisse anzeigen lassen
+17)	System generiert zufällige Aufgaben
+18)	System stellt Multiple-Choice-Aufgaben 
+19)	User wählt verschiedene Schwierigkeitsstufen der Bausteine aus
+
+1-2) 	Jens
+3-6) 	Phil
+7-10) 	Stefan
+11-15)	Mario
+16-19)	Michael
