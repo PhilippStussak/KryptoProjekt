@@ -1,0 +1,8 @@
+Aufteilung der Klassenimplementierung
+
+Stefan + Phil:
+	Basics + Kryptotype, Matrix
+Michael:
+	Primzahltests
+Mario + Jens:
+	Coder + Hamming-Code, Validator
