@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package kryptoprojekt.model;
 
 import java.math.BigInteger;
@@ -13,55 +12,70 @@ import java.math.BigInteger;
  */
 public class Z implements KryptoType<Z> {
 
-	private BigInteger number;
+    private BigInteger number;
 
-	private Z(BigInteger number) {
-		this.number = number;
-	}
+    private Z(BigInteger number) {
+        this.number = number;
+    }
 
-	public Z(long number) {
-		this.number = BigInteger.valueOf(number);
-	}
+    public Z(long number) {
+        this.number = BigInteger.valueOf(number);
+    }
 
-	public Z(String number) {
-		this.number = new BigInteger(number);
-	}
+    public Z(String number) {
+        this.number = new BigInteger(number);
+    }
 
-	public Z add(Z e) {
-		return new Z(number.add(e.number));
-	}
+    public Z add(Z other) {
+        return new Z(number.add(other.number));
+    }
 
-	public Z multiply(Z e) {
-		return new Z(number.multiply(e.number));
-	}
+    public Z subtract(Z other) {
+        return new Z(number.subtract(other.number));
+    }
 
-	public Z divide(Z e) {
-		return new Z(number.divide(e.number));
-	}
+    public Z multiply(Z other) {
+        return new Z(number.multiply(other.number));
+    }
 
-	public Z mod(Z e) {
-		return new Z(number.mod(e.number));
-	}
+    public Z divide(Z other) {
+        return new Z(number.divide(other.number));
+    }
 
-	public boolean isONE() {
-		return number.equals(BigInteger.ONE);
-	}
+    public Z mod(Z other) {
+        return new Z(number.mod(other.number));
+    }
 
-	public boolean isZERO() {
-		return number.equals(BigInteger.ZERO);
-	}
+    public boolean isONE() {
+        return number.equals(BigInteger.ONE);
+    }
 
-        public boolean equals(Z other) {
-		return number.equals(other.number);
-	}
+    public boolean isZERO() {
+        return number.equals(BigInteger.ZERO);
+    }
 
-        @Override
-        public String toString() {
-		return number.toString();
-	}
+    public int compareTo(Z other) {
+        return number.compareTo(other.number);
+    }
 
-	public int compareTo(Z other) {
-		return number.compareTo(other.number);
-	}
+    public boolean equals(Z other) {
+        return number.equals(other.number);
+    }
 
+    public int intValue() {
+        return number.intValue();
+    }
+
+    public String toBinaryString() {
+        String result = "";
+        for (int i = number.bitLength() - 1; i >= 0; i--) {
+            result += (number.testBit(i)) ? "1" : "0";
+        }
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return number.toString();
+    }
 }

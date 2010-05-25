@@ -10,10 +10,12 @@ package kryptoprojekt.model;
  */
 public interface KryptoType<E> extends Comparable<E> {
 
-    E add(E e);
-    E multiply(E e);
-    E divide(E e);
-    E mod(E e);
+    E add(E other);
+    E subtract(E other);
+    E multiply(E other);
+    E divide(E other);
+    E mod(E other);
+    String toBinaryString();
     boolean isZERO();
     boolean isONE();
 
