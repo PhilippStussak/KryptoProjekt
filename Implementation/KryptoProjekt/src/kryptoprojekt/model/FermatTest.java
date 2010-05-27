@@ -15,9 +15,12 @@ public final class FermatTest extends PrimeTest {
     public <E extends KryptoType<E>> boolean test(List<E> bases, E checkPrime)
             throws IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException {
         primeT = new FermatTest();
-        int a = 4;
-        int b[] = new int[] {1, 2, 3};
-        primeT.checkBases(bases, checkPrime); //prüft ob die Basis größer 0 und kleiner ist als das Modul
-        return new FermatTest().fermatCheck(bases, checkPrime);
+        //soll besser checkPrimeArguments von fermatCheck in PrimeTest aufgerufen werden? In Lucas Test muss man sonst auch vorher checkBases aufrufen
+        Tuple<Boolean, String> checkBasesAnswer = primeT.checkPrimeArguments(bases, checkPrime); //prüft ob die Basis größer 0 und kleiner ist als das Modul
+        if (checkBasesAnswer.first() == true){
+            return primeT.fermatCheck(bases, checkPrime);
+        } else{
+            throw new IllegalArgumentException(checkBasesAnswer.second());
+        }
     }
 }
