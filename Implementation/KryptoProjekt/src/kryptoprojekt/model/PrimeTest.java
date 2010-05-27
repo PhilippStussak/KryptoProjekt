@@ -10,7 +10,7 @@ import java.util.*;
 public abstract class PrimeTest {
 
     //soll diese Methode vielleicht besser in die Validator Klasse?
-    //checkt ob die übergebeneb Wert: Primzahl größer 0 und die Basis '0 < a < Modul' ist
+    //checkt ob die übergebenen Werte: Primzahl größer 0 und die Basis '0 < a < Modul' sind
     protected <E extends KryptoType<E>> Tuple<Boolean, String> checkPrimeArguments(List<E> bases, E checkPrime)
             throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException {
         try {
