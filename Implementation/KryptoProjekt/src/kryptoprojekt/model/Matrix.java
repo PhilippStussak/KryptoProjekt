@@ -31,6 +31,10 @@ public class Matrix<E extends KryptoType<E>> {
         matrix = (E[][]) new KryptoType[x][y];
     }
 
+    public int getMatrixColumnCapacity() {
+        return this.x;
+    }
+
     public Matrix<E> add(Matrix<E> other) {
         if (x != other.x || y != other.y) {
             throw new IllegalArgumentException();
