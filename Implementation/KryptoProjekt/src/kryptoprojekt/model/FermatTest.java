@@ -23,9 +23,14 @@ public final class FermatTest extends PrimeTest {
         if (checkPrimeArgAnswer) { //die IllegalArgumentException löst die checkPrimeArguments Methode von der Klasse PrimeTest aus, brauch ich hier also nicht abfangen
             boolean isPrime = fermatCheck(bases, checkPrime);
                 if (isPrime){
-                    //Postcondition
-                    assert checkPrimeArgAnswer == true && isPrime == true: "checkPrimeArgAnswer or isPrime have a false state";
-                    return new Tuple<Boolean, String>(isPrime, calculateProbability(bases, probabilityValue, maxDecimalPlaces));
+                    if (maxDecimalPlaces >= 0) {
+                        //Postcondition
+                        assert checkPrimeArgAnswer == true && isPrime == true && maxDecimalPlaces >=0: "checkPrimeArgAnswer, isPrime or maxDecimalPlaces have a false state";
+                        return new Tuple<Boolean, String>(isPrime, calculateProbability(bases, probabilityValue, maxDecimalPlaces));
+                    } else{
+                        assert checkPrimeArgAnswer == true && isPrime == true && maxDecimalPlaces <0: "checkPrimeArgAnswer, isPrime or maxDecimalPlaces have a false state";
+                        return new Tuple<Boolean, String>(isPrime, String.valueOf(-1));
+                    }
                 } else{
                     //Postcondition
                     assert checkPrimeArgAnswer == true && isPrime == false: "checkPrimeArgAnswer or isPrime have a false state";
@@ -34,6 +39,6 @@ public final class FermatTest extends PrimeTest {
         }
         //Postcondition
         assert false: "This line should never be reached!";
-        return new Tuple<Boolean, String>(false, "-1");
+        return null;
     }
 }
