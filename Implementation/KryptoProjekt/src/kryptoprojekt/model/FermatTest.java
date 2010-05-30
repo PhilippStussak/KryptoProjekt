@@ -16,23 +16,24 @@ public final class FermatTest extends PrimeTest {
     /* Führt den FermatTest über die abstrakte Klasse PrimeTest aus.
      * Die Methode test ist abstrakt in PrimeTest definiert und dort befinden sich auch die Erläuterungen zu den Übergabe- und Rückgabewerten.
      */
-    public <E extends KryptoType<E>> Tuple<Boolean, String> test(List<E> bases, E checkPrime, int decimalPlaces)
+    public <E extends KryptoType<E>> Tuple<Boolean, String> test(List<E> bases, E checkPrime, int maxDecimalPlaces)
             throws IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException {
-        primeT = new FermatTest();
         //soll checkPrimeArguments besser von fermatCheck in PrimeTest aufgerufen werden? In Lucas Test muss man sonst auch vorher checkBases aufrufen
-        int numbOfElements = bases.size();
-        Tuple<Boolean, String> checkPrimeArgAnswer = null;
-        if (numbOfElements > 0) {
-            checkPrimeArgAnswer = primeT.checkPrimeArguments(bases, checkPrime); //prüft ob die Basis größer 0 und kleiner ist als das Modul
-            if (checkPrimeArgAnswer.first() == false){
-                throw new IllegalArgumentException(checkPrimeArgAnswer.second());
-            } else{
-                Boolean isPrime = primeT.fermatCheck(bases, checkPrime);
+        boolean checkPrimeArgAnswer = checkPrimeArguments(bases, checkPrime); //Überlegen ob hier auch maxDecimalPlaces überprüft werden sollen. Aber eigentlich sollen nur Primzahlargumente wie Bases und Modul überprüft werden.
+        if (checkPrimeArgAnswer) { //die IllegalArgumentException löst die checkPrimeArguments Methode von der Klasse PrimeTest aus, brauch ich hier also nicht abfangen
+            boolean isPrime = fermatCheck(bases, checkPrime);
                 if (isPrime){
-                    return new Tuple<Boolean, String>(isPrime, primeT.calculateProbability(bases, probabilityValue, decimalPlaces));
-                }
-            }
+                    //Postcondition
+                    assert checkPrimeArgAnswer == true && isPrime == true: "checkPrimeArgAnswer or isPrime have a false state";
+                    return new Tuple<Boolean, String>(isPrime, calculateProbability(bases, probabilityValue, maxDecimalPlaces));
+                } else{
+                    //Postcondition
+                    assert checkPrimeArgAnswer == true && isPrime == false: "checkPrimeArgAnswer or isPrime have a false state";
+                    return new Tuple<Boolean, String>(false, "100%"); //es handelt sich um keine Primzahl
+                }           
         }
-        return new Tuple<Boolean, String>(false, "100%"); //Wenn keine Basen übergeben wurde, wird false zurückgegeben das es sich 100% um keine Primzahl handelt.
+        //Postcondition
+        assert false: "This line should never be reached!";
+        return new Tuple<Boolean, String>(false, "-1");
     }
 }
