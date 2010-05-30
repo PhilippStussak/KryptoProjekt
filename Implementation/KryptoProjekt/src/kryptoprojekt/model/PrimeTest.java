@@ -92,7 +92,7 @@ public abstract class PrimeTest {
         //probability wird abhängig von den übergebenen Basen berechnet
         HashSet<E> hs = new HashSet<E>();
         hs.addAll(bases); //Bitte überprüfen ob mehr als 10000 Elemente Platz haben, oder wo die Grenze ist. Dann besser abfangen. Bzw. schon bei der Eingabe in der GUI abfangen
-        assert hs.getClass().isAssignableFrom(Set.class): "check that bases contains no dublicate elements";
+        assert Set.class.isAssignableFrom(hs.getClass()): "check that bases contains no dublicate elements";
         assert hs.size() >0: "bases has no elements";
         numbOfBases = hs.size();
         probability = probabilityValue;
@@ -149,15 +149,16 @@ public abstract class PrimeTest {
             return true;
         }
         assert false: "This line should never be reached!";
-        return false;
-
+        Boolean notReached = null;
+        return notReached;
     }
 
-    //Was ist, wenn keine Wahrscheinlichkeit berechnet werden soll? Sollen wir zwei test-Methoden implementieren und die eine überschreibt er einfach mit leeren Klammern?
+    // Was ist, wenn keine Wahrscheinlichkeit berechnet werden soll? Sollen wir zwei test-Methoden implementieren und die eine überschreibt er einfach mit leeren Klammern?
     /* Diese Methode sollen alle Unterklassen von PrimeTest implementieren. Alle Primzahltests werden über diese Methode aufgerufen.
      * bases enthält die Basen auf welche die checkPrime Zahl überprüft wird, ob es sich um eine Primzahl handelt oder nicht.
      * maxDecimalPlaces gibt die max. Anzahl der Nachkommastellen für den Rückgabewert der Wahrscheinlichkeit an, dass es sich um eine Primzahl handelt.
-     * Vertrag einhalten: Rückgabewert ist ein Objekt vom Typ Tuble. Im ersten Argument steht ob es sich um eine Primzahl handelt und im zweiten wie hoch die Wahrscheinlichkeit ist.
+     * Falls keine Wahrscheinlichkeit berechnet werden soll, muss für maxDecimalPlaces ein negativer Wert übergeben werden. Als Rückgabewert erhält man -1.
+     * Vertrag einhalten: Rückgabewert ist ein Objekt vom Typ Tuble. Im ersten Argument steht ob es sich um eine Primzahl handelt und im zweiten wie hoch die Wahrscheinlichkeit ist oder -1.
      */
     public abstract <E extends KryptoType<E>> Tuple<Boolean, String> test(List<E> bases, E checkPrime, int maxDecimalPlaces)
             throws IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException;
