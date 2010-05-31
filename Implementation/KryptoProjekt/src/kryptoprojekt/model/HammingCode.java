@@ -4,6 +4,8 @@
  */
 package kryptoprojekt.model;
 
+import java.util.Hashtable;
+
 /**
  *
  * @author LiTTle, Mario
@@ -29,7 +31,7 @@ public class HammingCode extends Coder {
     }
 
     @Override
-    public Matrix<Z> detectError() {
+    public Hashtable detectError() {
         for (int i = 0; i < this.syndrom.getMatrixColumnCapacity(); i++) {
         }
         throw new UnsupportedOperationException("Not supported yet.");

@@ -31,6 +31,13 @@ public class Matrix<E extends KryptoType<E>> {
         matrix = (E[][]) new KryptoType[x][y];
     }
 
+    public E get(int x, int y) {
+        if (x >= 0 && x<this.x && y >= 0 && y<this.y)
+            return matrix[x][y];
+        else
+            throw new ArrayIndexOutOfBoundsException();
+    }
+
     public int getMatrixColumnCapacity() {
         return this.x;
     }
