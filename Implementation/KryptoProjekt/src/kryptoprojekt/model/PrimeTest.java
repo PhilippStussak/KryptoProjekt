@@ -13,33 +13,16 @@ public abstract class PrimeTest {
     //soll diese Methode vielleicht besser in die Validator Klasse?
     //checkt ob die übergebenen Werte: Primzahl größer 0 und die Basis '0 < a < Modul' sind
     protected <E extends KryptoType<E>> boolean checkPrimeArguments(List<E> bases, E checkPrime)
-            throws NullPointerException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException {
-        if (bases == null){
-            throw new NullPointerException("bases is null");
-        }
-        if (checkPrime == null){
-            throw new NullPointerException("checkPrime is null");
-        }
-        try { //prüft ob Primzahl größer 0 ist
-            if (checkPrime.compareTo((E) Factory.newInstance(checkPrime.getClass(), "1")) <= 0) {
-                throw new IllegalArgumentException("Es gibt nur Primzahlen >1");
-                //return new Tuple<Boolean, String>(false, "Es gibt nur Primzahlen >1");
-            }
-        } catch (ClassCastException e) { //falls Factory eine zu E inkombatible Instanz liefert
-            throw new ClassCastException("Comparison is not possible. " + e.toString());
+            throws IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException {
+        if (checkPrime.compareTo((E) Factory.newInstance(checkPrime.getClass(), "1")) <= 0) { //prüft ob Primzahl größer 0 ist
+            throw new IllegalArgumentException("Es gibt nur Primzahlen >1");
         }
         for (E checkBases : bases) { //prüft ob bases > 0 && bases < checkPrime ist
-            try {
-                if (checkBases.compareTo((E) Factory.newInstance(checkBases.getClass(), "0")) <= 0) {
-                    throw new IllegalArgumentException("Basis zu klein. Sie muss sein:  0 < a < Modul");
-                    //return new Tuple<Boolean, String> (false, "Basis zu klein. Sie muss sein:  0 < a < Modul");
-                } else if (checkBases.compareTo((E) Factory.newInstance(checkBases.getClass(), checkPrime.toString())) >= 0) {
-                    throw new IllegalArgumentException("Basis zu groß. Sie muss sein:  0 < a < Modul");
-                    //return new Tuple<Boolean, String>(false, "Basis zu groß. Sie muss sein:  0 < a < Modul");
-                }
-            } catch (ClassCastException e) {
-                throw new ClassCastException("Comparison not possible. " + e.toString());
-            }
+            if (checkBases.compareTo((E) Factory.newInstance(checkBases.getClass(), "0")) <= 0) {
+                throw new IllegalArgumentException("Basis zu klein. Sie muss sein:  0 < a < Modul");
+             } else if (checkBases.compareTo((E) Factory.newInstance(checkBases.getClass(), checkPrime.toString())) >= 0) {
+                 throw new IllegalArgumentException("Basis zu groß. Sie muss sein:  0 < a < Modul");
+               }
         }
         //Postcondition
         assert checkPrime.compareTo((E) Factory.newInstance(checkPrime.getClass(), "1")) == 1: "checkprime isn't > 1";
@@ -52,42 +35,30 @@ public abstract class PrimeTest {
      * Wenn probabilityValue 0 ist und maxDecimalPlaces =0 wird 0% zurückgegeben - bei maxDecimalPlaces >0 wird 0.0% zurückgegeben
      * soll das Tuple statts einem String lieber ein BigInteger oder ein double zurückliefern?
      */
-    protected <E extends KryptoType<E>> String calculateProbability(List<E> bases, double probabilityValue, int maxDecimalPlaces)
-        throws NullPointerException, IllegalArgumentException {
+    protected <E extends KryptoType<E>> double calculateProbability(List<E> bases, double probabilityValue)
+        throws IllegalArgumentException {
         int numbOfBases; //beinhaltet die Anzahl der übergebenen Basen
         double probability; //behinhaltet die Wahrscheinlichkeit das es sich um eine Primzahl handelt
 
         //Prüfung auf korrekte Paramter
-        if (bases == null) {
-            throw new NullPointerException("bases is null");
-        }
         if (bases.isEmpty()){
             throw new IllegalArgumentException("probabilityValue must be >=0 and <=1 ");
         }        
         for (E checkBases : bases) { //prüft ob bases > 0 //Achtung diese Abfrage kommt bereits ähnlich in checkPrimeArguments vot
-            try {
-                if (checkBases.compareTo((E) Factory.newInstance(checkBases.getClass(), "0")) <= 0) {
-                    throw new IllegalArgumentException("Basis zu klein. Sie muss sein:  0 < a < Modul");
-                }
-            } catch (ClassCastException e) {
-                throw new ClassCastException("Comparison not possible. " + e.toString());
-            }
+            if (checkBases.compareTo((E) Factory.newInstance(checkBases.getClass(), "0")) <= 0) {
+                throw new IllegalArgumentException("Basis zu klein. Sie muss sein:  0 < a < Modul");
+            }             
         }
         if (probabilityValue < 0 || probabilityValue > 1) {
             throw new IllegalArgumentException("probabilityValue have to be >=0 and <=1 ");
         }
-        //Wenn der probabilityValue 0 ist, kann gleich 0% bzw. 0.0% zurückgegeben werden
         if (probabilityValue == 0) {
-            return (maxDecimalPlaces <= 0 ? "0" : "0.0") +"%";
-        }
-        if (maxDecimalPlaces < 0) {
-            throw new IllegalArgumentException("maxDecimalPlaces have to be >=0");
+            return 0;
         }
         assert bases != null: "bases is null";
         assert !bases.isEmpty(): "No bases were passed.";
         assert probabilityValue <=1: "probabilityValue isn't <= 1";
         assert probabilityValue >=0: "probabilityValue isn't >= 0";
-        assert maxDecimalPlaces >=0: "maxDecimalPlaces isn't >= 0";
 
         //probability wird abhängig von den übergebenen Basen berechnet
         HashSet<E> hs = new HashSet<E>();
@@ -99,37 +70,12 @@ public abstract class PrimeTest {
         for (int i = 1; i <= numbOfBases; i++ ) {
             probability = probability * probabilityValue;
         }
-        probability = (1-probability)*100;
-
-        /* Erstellt die Anzahl der Nachkommastellen, wie die Dezimalzahl probability zurückgegeben wird.
-         * figure ist ein Muster das angibt mit wie vielen Dezimalstellen probability zurück gegeben wird, abhängig von den übergebenen maxDecimalPlaces.
-         * Wenn die probability Zahl jedoch weniger Dezimalstellen hat als von maxDecimalPlaces übergeben, wird maxDecimalPlaces nicht beachtet
-         */
-        int capacity = Double.toString(probability).length(); //speichert Anzahl der Zeichen von probability
-        int behDecimPoint;
-        StringBuffer figure = new StringBuffer("0");
-        assert numbOfBases > 0: "numbOfBases is not >0.";
-        if ((behDecimPoint = String.valueOf(probability).indexOf(".")+1) > -1){
-            if (maxDecimalPlaces > 0 && capacity-behDecimPoint > 0) {
-                maxDecimalPlaces = maxDecimalPlaces < capacity-behDecimPoint ? maxDecimalPlaces : capacity-behDecimPoint;
-                figure.append(".");
-                for (int i = 1; i <= maxDecimalPlaces; i++) {
-                    figure.append("0"); //es werden Nullen nach dem Gleitkommapunkt hinzugefügt
-                }
-            } else if (maxDecimalPlaces == 0){
-                figure = new StringBuffer("0");
-            }
-            DecimalFormat df = new DecimalFormat(figure.toString());
-            return df.format((probability))+"%";
-        } else{
-            figure = new StringBuffer("0");
-        }
-        return figure.toString()+"%";
+        return probability = (1-probability);
     }
 
     //Macht den eigentlichen FermatCheck. Erwartet eine Liste mit den Basen welche prüfen sollen ob die übergebene Zahl eine Primzahl ist
     protected final <E extends KryptoType<E>> boolean fermatCheck(List<E> bases, E checkPrime)
-            throws NullPointerException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException {
+            throws IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException {
         boolean basesCorrect;
         boolean isPrime = false;
 
@@ -156,10 +102,10 @@ public abstract class PrimeTest {
     // Was ist, wenn keine Wahrscheinlichkeit berechnet werden soll? Sollen wir zwei test-Methoden implementieren und die eine überschreibt er einfach mit leeren Klammern?
     /* Diese Methode sollen alle Unterklassen von PrimeTest implementieren. Alle Primzahltests werden über diese Methode aufgerufen.
      * bases enthält die Basen auf welche die checkPrime Zahl überprüft wird, ob es sich um eine Primzahl handelt oder nicht.
-     * maxDecimalPlaces gibt die max. Anzahl der Nachkommastellen für den Rückgabewert der Wahrscheinlichkeit an, dass es sich um eine Primzahl handelt.
-     * Falls keine Wahrscheinlichkeit berechnet werden soll, muss für maxDecimalPlaces ein negativer Wert übergeben werden. Als Rückgabewert erhält man -1.
+     * calcProp gibt an, ob die Wahrscheinlichkeit das es sich um eine Primzahl handelt berechnet werden soll
+     * Falls keine Wahrscheinlichkeit berechnet werden soll, oder diese nicht möglich ist, erhält man als Rückgabewert -1.
      * Vertrag einhalten: Rückgabewert ist ein Objekt vom Typ Tuble. Im ersten Argument steht ob es sich um eine Primzahl handelt und im zweiten wie hoch die Wahrscheinlichkeit ist oder -1.
      */
-    public abstract <E extends KryptoType<E>> Tuple<Boolean, String> test(List<E> bases, E checkPrime, int maxDecimalPlaces)
+    public abstract <E extends KryptoType<E>> Tuple<Boolean, Double> test(List<E> bases, E checkPrime, boolean calcProp)
             throws IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException;
 }
