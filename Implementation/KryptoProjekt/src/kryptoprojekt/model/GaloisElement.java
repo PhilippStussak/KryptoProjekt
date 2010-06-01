@@ -20,15 +20,15 @@ public class GaloisElement implements KryptoType<GaloisElement>{
     }
 
     public GaloisElement add(GaloisElement other) {
-        if(this.base.equals(other.getBase()))
-            return new GaloisElement((this.value.add(other.getValue())).mod(base), this.base);
+        if(this.base.equals(other.base))
+            return new GaloisElement((this.value.add(other.value)).mod(base), this.base);
         else
             // Wrong handling of Base missmatch, corrected soon
             return new GaloisElement(base, value);
     }
 
-    public int compareTo(GaloisElement first) {
-        return value.compareTo(first.getValue());
+    public int compareTo(GaloisElement other) {
+        return value.compareTo(other.value);
     }
 
     public GaloisElement divide(GaloisElement other) {
@@ -48,15 +48,19 @@ public class GaloisElement implements KryptoType<GaloisElement>{
     }
 
     public GaloisElement multiply (GaloisElement other){
-        if(this.base.equals(other.getBase()))
-            return new GaloisElement((this.value.multiply(other.getValue())).mod(base), this.base);
+        if(this.base.equals(other.base))
+            return new GaloisElement((this.value.multiply(other.value)).mod(base), this.base);
         else
             // Wrong handling of Base missmatch, corrected soon
             return new GaloisElement(base, value);
     }
 
     public GaloisElement subtract(GaloisElement other) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        if(this.base.equals(other.base))
+            return new GaloisElement((this.value.add(this.base.subtract(other.value))).mod(base), this.base);
+        else
+            // Wrong handling of Base missmatch, corrected soon
+            return new GaloisElement(base, value);
     }
 
     public String toBinaryString() {
