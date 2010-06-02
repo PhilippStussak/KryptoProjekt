@@ -12,18 +12,18 @@ import java.util.LinkedList;
  */
 public class Basic {
 
-    public static <E extends KryptoType<E>> Tuple<E, LinkedList<String>> gcd(E e1, E e2) {
-        LinkedList<String> list = new LinkedList<String>();
+    public static <E extends KryptoType<E>> Tuple<E, LinkedList<E[]>> gcd(E e1, E e2) {
+        LinkedList<E[]> list = new LinkedList<E[]>();
         do {
             if (e1.compareTo(e2) < 0) {
                 E buffer = e1;
                 e1 = e2;
                 e2 = buffer;
             }
-            list.add(e1 + " = " + e1.divide(e2) + " * " + e2 + " + " + e1.mod(e2));
+            list.add((E[])new KryptoType[] {e1, e1.divide(e2), e2, e1.mod(e2)});
             e1 = e1.mod(e2);
         } while (!e1.isZERO());
-        return new Tuple<E, LinkedList<String>>(e2, list);
+        return new Tuple<E, LinkedList<E[]>>(e2, list);
     }
 
     public static <E extends KryptoType<E>> E squareAndMultiply(E base, E exponent) {
@@ -83,6 +83,21 @@ public class Basic {
             help = result.add(new Z(1));
         }
         return result;
+    }
+
+    public static <E extends KryptoType<E>> Tuple<E, LinkedList<E[]>> extendedGCD(E e1, E e2) {
+        LinkedList<E[]> gcd = Basic.gcd(e1, e2).second();
+        gcd.removeLast();
+        E[] result = gcd.getLast();
+        gcd.removeLast();
+        E buffer = result[0];
+        result[0] = result[3];
+        result[3] = result[2];
+        result[2] = (E)Factory.newInstance(e1.getClass(), "-1").multiply(result[1]);
+        result[1] = buffer;
+        result[3] = gcd.getLast()[0];
+        //result[]
+        //result[1] = result[2].multiply(gcd.getLast()[1]).add((E)Factory.newInstance(e1.getClass(), "1"));
     }
 
     private Basic() {
