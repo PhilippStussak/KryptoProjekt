@@ -6,17 +6,23 @@ package kryptoprojekt.model;
 
 /**
  *
- * @author Stefan
+ * @author stefan
  */
 public interface KryptoType<E> extends Comparable<E> {
 
     E add(E other);
-    E subtract(E other);
-    E multiply(E other);
-    E divide(E other);
-    E mod(E other);
-    String toBinaryString();
-    boolean isZERO();
-    boolean isONE();
 
+    E subtract(E other);
+
+    E multiply(E other);
+
+    E divide(E other);
+
+    E mod(E other);
+
+    String toBinaryString();
+
+    boolean isZERO();
+
+    boolean isONE();
 }

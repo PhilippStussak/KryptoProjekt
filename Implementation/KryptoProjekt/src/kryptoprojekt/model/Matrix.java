@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package kryptoprojekt.model;
 
 /**
@@ -38,8 +34,19 @@ public class Matrix<E extends KryptoType<E>> {
             throw new ArrayIndexOutOfBoundsException();
     }
 
+    public void set(int x, int y, E value) {
+        if (x >= 0 && x<this.x && y >= 0 && y<this.y)
+            matrix[x][y] = value;
+        else
+            throw new ArrayIndexOutOfBoundsException();
+    }
+
     public int getMatrixColumnCapacity() {
         return this.x;
+    }
+
+    public int getMatrixRowCapacity() {
+        return this.y;
     }
 
     public Matrix<E> add(Matrix<E> other) {
