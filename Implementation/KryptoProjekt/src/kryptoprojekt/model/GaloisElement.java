@@ -13,6 +13,11 @@ public class GaloisElement implements KryptoType<GaloisElement> {
     private Z value;
     private Z base;
 
+    public GaloisElement(int value, int base) {
+        this.base = new Z(base);
+        this.value = new Z(value).mod(this.base);
+    }
+
     public GaloisElement(Z value, Z base) {
         this.base = base;
         this.value = value.mod(base);
@@ -36,7 +41,7 @@ public class GaloisElement implements KryptoType<GaloisElement> {
 
     public GaloisElement divide(GaloisElement other) {
         if (this.base.equals(other.base)) {
-            return this.multiply(this.inverseElement());
+            return this.multiply(other.inverseElement());
         } else {
             throw new RuntimeException();
         }
@@ -64,7 +69,7 @@ public class GaloisElement implements KryptoType<GaloisElement> {
 
     public GaloisElement subtract(GaloisElement other) {
         if (this.base.equals(other.base)) {
-            return new GaloisElement((this.value.add(this.base.subtract(other.value))).mod(base), this.base);
+            return this.add(other.inverseElement());
         } else {
             throw new RuntimeException("Base missmatch");
         }
@@ -74,23 +79,33 @@ public class GaloisElement implements KryptoType<GaloisElement> {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public Z getBase() {
-        return base;
-    }
-
-    public void setBase(Z base) {
-        this.base = base;
-    }
-
-    public Z getValue() {
-        return value;
-    }
-
-    public void setValue(Z value) {
-        this.value = value;
-    }
-
     public GaloisElement inverseElement() {
         return new GaloisElement(base.subtract(value), base);
+    }
+
+    public String toString(){
+        return value.toString()+ ", " + base.toString();
+    }
+
+    public Matrix getAddTable(int maxY, int maxX){
+        Z[][] addTable;
+        addTable = new Z[maxY][maxX];
+
+        for(int y=0; y<maxY; y++){
+            for(int x=0; x<maxX; x++)
+                addTable[y][x] = (new Z(y).add(new Z(x))).mod(base);
+        }
+        return new Matrix(addTable);
+    }
+
+    public Matrix getMultiplyTable(int maxY, int maxX){
+        Z[][] multiplyTable;
+        multiplyTable = new Z[maxY][maxX];
+
+        for(int y=0; y<maxY; y++){
+            for(int x=0; x<maxX; x++)
+                multiplyTable[y][x] = (new Z(y).multiply(new Z(x))).mod(base);
+        }
+        return new Matrix(multiplyTable);
     }
 }
