@@ -1,5 +1,5 @@
 build/
-
 dist/
 nbproject/private/private.properties
 nbproject/private/private.xml
+src/kryptoprojekt/model/Main.java
