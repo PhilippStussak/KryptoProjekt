@@ -91,7 +91,7 @@ public class Z implements KryptoType<Z> {
 
     /**
      * Returns a new Z whose value is {@code this % val}.
-     * Returns a non-negateive Z.
+     * Returns a non-negative Z.
      *
      * @param other value by which this Z is to be divided,
      * and the remainder is calculated.

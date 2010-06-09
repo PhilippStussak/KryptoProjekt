@@ -108,4 +108,8 @@ public class GaloisElement implements KryptoType<GaloisElement> {
         }
         return new Matrix(multiplyTable);
     }
+
+    public Z getGaloisElemValue() {
+        return this.value;
+    }
 }
