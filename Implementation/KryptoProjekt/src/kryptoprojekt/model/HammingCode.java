@@ -18,7 +18,7 @@ public class HammingCode extends Coder {
     private Matrix<GaloisElement> encodedWord;
     private Matrix<GaloisElement> syndrom;
     private Matrix<GaloisElement> decodedWord;
-    private int galoisBase;
+    private final int galoisBase = 2;
 
     /**
      * Encodes the sourceCodeWord which was set within constructor.
@@ -72,6 +72,7 @@ public class HammingCode extends Coder {
      */
     @Override
     public String decode() {
+        //not finished^^
         KryptoType<GaloisElement>[][] t = new KryptoType[1][this.codeWord.length() - 1];
         //values of type Matrix have to be accessible
         this.decodedWord = new Matrix(t);
@@ -98,18 +99,13 @@ public class HammingCode extends Coder {
         }
 
         //set parity bits
-        int tempBit = 1;
         for (int i = 0; i < codewordLength; i++) {
             for (int j = codewordLength; j < (int) Math.pow(2, codewordLength) - 1; j++) {
                 if (i != j) {
-                    if (tempBit >= this.galoisBase) {
-                        tempBit = 1;
-                    }
-                    t[i][j] = new GaloisElement(tempBit++, this.galoisBase);
+                    t[i][j] = new GaloisElement(1, this.galoisBase);
                 }
             }
         }
-
         this.generatorMatrix = new Matrix(t);
     }
 
@@ -142,16 +138,14 @@ public class HammingCode extends Coder {
     }
 
     /**
-     * Constructs a new object of HammingCode on base of given generatorMatrix, its galoisBase and the given codeWord.
+     * Constructs a new object of HammingCode on base of given generatorMatrix with  galoisBase = 2 and the given codeWord.
      * Length of codeWord have to be the same as columnCapacity of given generatorMatrix.
      * @param generatorMatrix matrix, which consists of identity-matrix and parity-matrix
      * @param codeWord word, which has to be encoded
-     * @param galoisBase base of GaloisElements of the given generatorMatrix
      * @throws IllegalArgumentException if length of given codeWord != columnCapacity of given generatorMatrix
      */
-    public HammingCode(Matrix<GaloisElement> generatorMatrix, int galoisBase, String codeWord) throws IllegalArgumentException{
+    public HammingCode(Matrix<GaloisElement> generatorMatrix, String codeWord) throws IllegalArgumentException{
         this.codeWord = codeWord;
-        this.galoisBase = galoisBase;
         this.sourceCodeWord = convertStringToOneRowMatrix(codeWord);
         if (Math.pow(2, codeWord.length()) - 1 == generatorMatrix.getMatrixColumnCapacity()) {
             this.generatorMatrix = generatorMatrix;
@@ -162,14 +156,11 @@ public class HammingCode extends Coder {
     }
 
     /**
-     * Constructs a new object of HammingCode on base of given generatorMatrix, its galoisBase and the given codeWord.
-     * Length of codeWord have to be the same as columnCapacity of given generatorMatrix.
+     * Constructs a new object of HammingCode on base of given generatorMatrix with galoisBase = 2 and the given codeWord.
      * @param codeWord word, which has to be encoded
-     * @param galoisBase sets base of GaloisElements within the generatorMatrix
      */
-    public HammingCode(String codeWord, int galoisBase) {
+    public HammingCode(String codeWord) {
         this.codeWord = codeWord;
-        this.galoisBase = galoisBase;
         this.sourceCodeWord = convertStringToOneRowMatrix(codeWord);
         generateGeneratorMatrix(codeWord.length());
         generateControlMatrix();
