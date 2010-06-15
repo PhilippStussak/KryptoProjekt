@@ -85,20 +85,20 @@ public class Basic {
         return result;
     }
 
-    public static <E extends KryptoType<E>> Tuple<E, LinkedList<E[]>> extendedGCD(E e1, E e2) {
-        LinkedList<E[]> gcd = Basic.gcd(e1, e2).second();
-        gcd.removeLast();
-        E[] result = gcd.getLast();
-        gcd.removeLast();
-        E buffer = result[0];
-        result[0] = result[3];
-        result[3] = result[2];
-        result[2] = (E)Factory.newInstance(e1.getClass(), "-1").multiply(result[1]);
-        result[1] = buffer;
-        result[3] = gcd.getLast()[0];
-        //result[]
-        //result[1] = result[2].multiply(gcd.getLast()[1]).add((E)Factory.newInstance(e1.getClass(), "1"));
-    }
+//    public static <E extends KryptoType<E>> Tuple<E, LinkedList<E[]>> extendedGCD(E e1, E e2) {
+//        LinkedList<E[]> gcd = Basic.gcd(e1, e2).second();
+//        gcd.removeLast();
+//        E[] result = gcd.getLast();
+//        gcd.removeLast();
+//        E buffer = result[0];
+//        result[0] = result[3];
+//        result[3] = result[2];
+//        result[2] = (E)Factory.newInstance(e1.getClass(), "-1").multiply(result[1]);
+//        result[1] = buffer;
+//        result[3] = gcd.getLast()[0];
+//        //result[]
+//        //result[1] = result[2].multiply(gcd.getLast()[1]).add((E)Factory.newInstance(e1.getClass(), "1"));
+//    }
 
     private Basic() {
     }

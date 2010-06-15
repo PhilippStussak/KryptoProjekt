@@ -27,7 +27,7 @@ public class Primes implements Iterable<Integer> {
             bs.flip(0, (max - 1) / 2);
             long actual = 3;
             while (actual >= 3) {
-                for (long i = 3 * (actual - 1) / 2; bs.length() - i >= actual && i > 0; i += actual) {
+                for (long i = 3 * (actual - 1) / 2; i <= max && actual <= max / 2; i += actual) {
                     bs.set((int) i, false);
                 }
                 actual = 2 * bs.nextSetBit(((int) actual - 1) / 2) + 3;
