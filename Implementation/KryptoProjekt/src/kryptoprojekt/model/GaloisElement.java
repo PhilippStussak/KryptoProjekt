@@ -41,7 +41,7 @@ public class GaloisElement implements KryptoType<GaloisElement> {
 
     public GaloisElement divide(GaloisElement other) {
         if (this.base.equals(other.base)) {
-            return this.multiply(other.inverseElement());
+            return this.multiply(other.inverseElementMultiplication());
         } else {
             throw new RuntimeException();
         }
@@ -69,7 +69,7 @@ public class GaloisElement implements KryptoType<GaloisElement> {
 
     public GaloisElement subtract(GaloisElement other) {
         if (this.base.equals(other.base)) {
-            return this.add(other.inverseElement());
+            return this.add(other.inverseElementAddition());
         } else {
             throw new RuntimeException("Base missmatch");
         }
@@ -79,8 +79,12 @@ public class GaloisElement implements KryptoType<GaloisElement> {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public GaloisElement inverseElement() {
+    public GaloisElement inverseElementAddition() {
         return new GaloisElement(base.subtract(value), base);
+    }
+
+    public GaloisElement inverseElementMultiplication(){
+        return new GaloisElement(Basic.squareAndMultiply(value, base.subtract(new Z(2))), base);
     }
 
     public String toString(){
