@@ -18,7 +18,8 @@ package kryptoprojekt;
 public class EncodeHammingFrm extends Kit {
 
     /** Creates new form EncodeHammingFrm */
-    public EncodeHammingFrm() {
+    public EncodeHammingFrm(ConnectionHandler handler) {
+        super(handler);
         initComponents();
     }
 

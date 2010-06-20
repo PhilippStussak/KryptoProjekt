@@ -7,6 +7,8 @@ package kryptoprojekt;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.Shape;
 import java.util.LinkedList;
 import javax.swing.JDesktopPane;
 
@@ -16,29 +18,26 @@ import javax.swing.JDesktopPane;
  */
 public class Desktop extends JDesktopPane {
 
-    LinkedList<Connection> connections;
+    ConnectionHandler handler;
 
-    public Desktop() {
-        connections = new LinkedList<Connection>();
+    public Desktop(ConnectionHandler handler) {
+        this.handler = handler;
         this.setAlignmentX(CENTER_ALIGNMENT);
         this.setAlignmentY(CENTER_ALIGNMENT);
         this.setBackground(Color.WHITE);
         this.setVisible(true);
+        this.setDoubleBuffered(true);
     }
 
     @Override
-    public void paintComponents(Graphics g) {
-        super.paintComponents(g);
-        for (Connection connection : connections) {
-            ((Graphics2D) g).draw(connection.getArrow());
-        }
+    public void paintComponent(Graphics g) {
+        Graphics2D g2 = (Graphics2D)g;
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+		        RenderingHints.VALUE_ANTIALIAS_ON);
+        super.paintComponent(g);
+        for (Shape arrow : handler.getConnectionArrows())
+            g2.draw(arrow);
+        repaint();
     }
-
-    public void addConnection(Connection connection) {
-        connections.add(connection);
-    }
-
-    public void removeConnection(Connection connection) {
-        connections.remove(connection);
-    }
+    
 }
