@@ -22,32 +22,39 @@ public class HammingCode extends Coder {
 
     /**
      * Encodes the sourceCodeWord which was set within constructor.
+     * @throws NullPointerException if sourceCodeWord or generatorMatrix is not calculated yet
      * @return encoded String
      */
     @Override
-    public String encode() {
+    public String encode() throws NullPointerException{
+        if (sourceCodeWord == null || generatorMatrix == null)
+            throw new NullPointerException("sourceCodeWord or generatorMatrix is not calculated yet.");
         this.encodedWord = this.sourceCodeWord.multiply(this.generatorMatrix);
         return convertOneRowMatrixToString(this.encodedWord);
     }
 
     /**
      * Calculates the syndrom.
+     * @throws NullPointerException if encodedWord or controlMatrix is not calculated yet
      */
     @Override
     //Do we have to throw an exception in this case, too?
-    public void calculateSyndrom() {
+    public void calculateSyndrom() throws NullPointerException{
+        if (encodedWord == null || controlMatrix == null)
+            throw new NullPointerException("EncodedWord or ControlMatrix not calculated yet.");
         this.syndrom = this.encodedWord.multiply(this.controlMatrix);
     }
 
     /**
      * Detects error(s) in the encodedWord. Uses the syndrom-attribute which has to be calculated before.
+     * @throws NullPointerException if syndrom is not calculated yet
      * @return Hashtable index 0 => bool-value, if errors were found
      *                   index 1 => String, original decodedWord
      *                   index 2 => int, error position
      *                   index 3 => String, decodedWord, but corrected if possible
      */
     @Override
-    public Hashtable detectError() {
+    public Hashtable detectError() throws NullPointerException{
         Hashtable result = new Hashtable();
         GaloisElement comparison = new GaloisElement(0, this.galoisBase);
 
@@ -55,7 +62,7 @@ public class HammingCode extends Coder {
             throw new NullPointerException("Syndrom is not calculated yet.");
         }
 
-        //is there any error in the sydrom
+        //is there any error in the syndrom
         for (int i = 0; i < this.syndrom.getMatrixColumnCapacity(); i++) {
             if (comparison.compareTo(this.syndrom.get(0, i)) != 0) {
                 result.put(0, true);
@@ -83,7 +90,15 @@ public class HammingCode extends Coder {
 
     }
 
-    private String correctError(int pos) {
+    /**
+     * Corrects the error in encodedWord.
+     * @param pos position of error in encodedWord
+     * @throws NullPointerException if encodedWord is not calculated yet
+     * @return corrected encodedWord
+     */
+    private String correctError(int pos) throws NullPointerException{
+        if (encodedWord == null)
+            throw new NullPointerException("EncodedWord is not calculated yet.");
         GaloisElement comparison = new GaloisElement(0, this.galoisBase);
 
         if (comparison.compareTo(this.encodedWord.get(0, pos)) == 0) {
@@ -94,7 +109,14 @@ public class HammingCode extends Coder {
         return convertOneRowMatrixToString(encodedWord);
     }
 
-    private int getErrorPosition() {
+    /**
+     * Calculates errorPosition in encodedWord on base of syndrom and controlMatrix
+     * @throws NullPointerException if syndrom or controlMatrix are not calculated yet
+     * @return errorPosition or -1 if too many errors found
+     */
+    private int getErrorPosition() throws NullPointerException{
+        if (controlMatrix == null || syndrom == null)
+            throw new NullPointerException("Syndrom or controlMatrix not calculated yet.");
         boolean check = false;
         boolean test = true;
         int position = 0;
@@ -129,13 +151,14 @@ public class HammingCode extends Coder {
 
     /**
      * Decodes the encodedWord.
+     * @throws NullPointerException if encodedWord is not calculated yet
      * @return decoded Word
      */
     @Override
     public String decode() {
-        //not finished^^
+        if (encodedWord == null)
+            throw new NullPointerException("EncodedWord is not calculated yet.");
         KryptoType<GaloisElement>[][] t = new KryptoType[1][this.codeWord.length() - 1];
-        //values of type Matrix have to be accessible
         for (int i = 0; i < this.codeWord.length(); i++) {
             t[0][i] = encodedWord.get(0, i);
         }
@@ -257,7 +280,6 @@ public class HammingCode extends Coder {
      * @return Matrix<GaloisElement> converted into a String
      */
     private String convertOneRowMatrixToString(Matrix<GaloisElement> sourceCodeWord) {
-        GaloisElement g[][] = new GaloisElement[1][sourceCodeWord.getMatrixColumnCapacity()];
         String s = "";
         for (int i = 0; i < sourceCodeWord.getMatrixColumnCapacity(); i++) {
             char t = (char) (sourceCodeWord.get(0, i).getGaloisElemValue().intValue() + 48);
@@ -304,6 +326,11 @@ public class HammingCode extends Coder {
         return hammingDistance(a, b);
     }
 
+    /**
+     * Calculates a bitError based on the given probability
+     * @param probability value between 0 and 1
+     * @return new GaloisElement with value 0 or 1
+     */
     private GaloisElement bitErrorProbability(double probability) {
         int rand = (int) Math.floor((Math.random() * 999) + 1);
         if (rand > probability * 1000) {
@@ -313,6 +340,10 @@ public class HammingCode extends Coder {
         }
     }
 
+    /**
+     * Generates a bitError with given probability in encodedWord.
+     * @param probability value between 0 and 1
+     */
     public void generateBitError(double probability) {
         int length = encodedWord.getMatrixColumnCapacity();
         for (int i = 0; i < length; i++) {
