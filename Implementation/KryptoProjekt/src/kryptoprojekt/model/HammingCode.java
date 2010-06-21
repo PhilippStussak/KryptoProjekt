@@ -12,12 +12,12 @@ import java.util.Hashtable;
  */
 public class HammingCode extends Coder {
 
-    private Matrix<GaloisElement> controlMatrix;
-    private Matrix<GaloisElement> generatorMatrix;
-    private Matrix<GaloisElement> sourceCodeWord;
-    private Matrix<GaloisElement> encodedWord;
-    private Matrix<GaloisElement> syndrom;
-    private Matrix<GaloisElement> decodedWord;
+    private Matrix<PrimeFieldElement> controlMatrix;
+    private Matrix<PrimeFieldElement> generatorMatrix;
+    private Matrix<PrimeFieldElement> sourceCodeWord;
+    private Matrix<PrimeFieldElement> encodedWord;
+    private Matrix<PrimeFieldElement> syndrom;
+    private Matrix<PrimeFieldElement> decodedWord;
     private final int galoisBase = 2;
 
     /**
@@ -56,7 +56,7 @@ public class HammingCode extends Coder {
     @Override
     public Hashtable detectError() throws NullPointerException{
         Hashtable result = new Hashtable();
-        GaloisElement comparison = new GaloisElement(0, this.galoisBase);
+        PrimeFieldElement comparison = new PrimeFieldElement(0, this.galoisBase);
 
         if (this.syndrom == null) {
             throw new NullPointerException("Syndrom is not calculated yet.");
@@ -99,10 +99,10 @@ public class HammingCode extends Coder {
     private String correctError(int pos) throws NullPointerException{
         if (encodedWord == null)
             throw new NullPointerException("EncodedWord is not calculated yet.");
-        GaloisElement comparison = new GaloisElement(0, this.galoisBase);
+        PrimeFieldElement comparison = new PrimeFieldElement(0, this.galoisBase);
 
         if (comparison.compareTo(this.encodedWord.get(0, pos)) == 0) {
-            this.encodedWord.set(0, pos, new GaloisElement(1, this.galoisBase));
+            this.encodedWord.set(0, pos, new PrimeFieldElement(1, this.galoisBase));
         } else {
             this.encodedWord.set(0, pos, comparison);
         }
@@ -158,7 +158,7 @@ public class HammingCode extends Coder {
     public String decode() {
         if (encodedWord == null)
             throw new NullPointerException("EncodedWord is not calculated yet.");
-        KryptoType<GaloisElement>[][] t = new KryptoType[1][this.codeWord.length() - 1];
+        KryptoType<PrimeFieldElement>[][] t = new KryptoType[1][this.codeWord.length() - 1];
         for (int i = 0; i < this.codeWord.length(); i++) {
             t[0][i] = encodedWord.get(0, i);
         }
@@ -172,25 +172,25 @@ public class HammingCode extends Coder {
      */
     private void generateGeneratorMatrix(int codewordLength) {
         int columnCapacity = (int) Math.pow(2, codewordLength) - 1;
-        KryptoType<GaloisElement>[][] t = new KryptoType[codewordLength][columnCapacity];
+        KryptoType<PrimeFieldElement>[][] t = new KryptoType[codewordLength][columnCapacity];
 
-        //initialise array with GaloisElement-objects, value=0
+        //initialise array with PrimeFieldElement-objects, value=0
         for (int i = 0; i < codewordLength; i++) {
             for (int j = 0; j < columnCapacity; j++) {
-                t[i][j] = new GaloisElement(0, this.galoisBase);
+                t[i][j] = new PrimeFieldElement(0, this.galoisBase);
             }
         }
 
         //generate identity matrix
         for (int i = 0; i < codewordLength; i++) {
-            t[i][i] = new GaloisElement(1, this.galoisBase);
+            t[i][i] = new PrimeFieldElement(1, this.galoisBase);
         }
 
         //set parity bits
         for (int i = 0; i < codewordLength; i++) {
             for (int j = codewordLength; j < (int) Math.pow(2, codewordLength) - 1; j++) {
                 if (i != j) {
-                    t[i][j] = new GaloisElement(1, this.galoisBase);
+                    t[i][j] = new PrimeFieldElement(1, this.galoisBase);
                 }
             }
         }
@@ -202,13 +202,13 @@ public class HammingCode extends Coder {
      */
     private void generateControlMatrix() {
         int x = this.generatorMatrix.getMatrixColumnCapacity() - this.generatorMatrix.getMatrixRowCapacity();
-        KryptoType<GaloisElement> k[][] = new KryptoType[x][this.generatorMatrix.getMatrixColumnCapacity()];
+        KryptoType<PrimeFieldElement> k[][] = new KryptoType[x][this.generatorMatrix.getMatrixColumnCapacity()];
         int n = this.generatorMatrix.getMatrixRowCapacity();
 
-        //initialise array with GaloisElement-objects, value=0
+        //initialise array with PrimeFieldElement-objects, value=0
         for (int i = 0; i < x; i++) {
             for (int j = 0; j < this.generatorMatrix.getMatrixColumnCapacity(); j++) {
-                k[i][j] = new GaloisElement(0, this.galoisBase);
+                k[i][j] = new PrimeFieldElement(0, this.galoisBase);
             }
         }
 
@@ -221,7 +221,7 @@ public class HammingCode extends Coder {
 
         //generates identity matrix
         for (int i = 0; i < x; i++) {
-            k[i][i] = new GaloisElement(1, this.galoisBase);
+            k[i][i] = new PrimeFieldElement(1, this.galoisBase);
         }
     }
 
@@ -232,7 +232,7 @@ public class HammingCode extends Coder {
      * @param codeWord word, which has to be encoded
      * @throws IllegalArgumentException if length of given codeWord != columnCapacity of given generatorMatrix
      */
-    public HammingCode(Matrix<GaloisElement> generatorMatrix, String codeWord) throws IllegalArgumentException {
+    public HammingCode(Matrix<PrimeFieldElement> generatorMatrix, String codeWord) throws IllegalArgumentException {
         this.codeWord = codeWord;
         this.sourceCodeWord = convertStringToOneRowMatrix(codeWord);
         if (Math.pow(2, codeWord.length()) - 1 == generatorMatrix.getMatrixColumnCapacity()) {
@@ -257,16 +257,16 @@ public class HammingCode extends Coder {
     /**
      * Converts a String into a matrix with one row and column quantity of given sourceCodeWordLength.
      * @param sourceCodeWord word which has to be converted into matrix
-     * @return given String converted in Matrix<GaloisElement>
+     * @return given String converted in Matrix<PrimeFieldElement>
      */
-    private Matrix<GaloisElement> convertStringToOneRowMatrix(String sourceCodeWord) {
-        KryptoType<GaloisElement> cWord[][] = new KryptoType[1][this.codeWord.length()];
+    private Matrix<PrimeFieldElement> convertStringToOneRowMatrix(String sourceCodeWord) {
+        KryptoType<PrimeFieldElement> cWord[][] = new KryptoType[1][this.codeWord.length()];
         char[] t = sourceCodeWord.toCharArray();
         for (int i = 0; i < sourceCodeWord.length(); i++) {
             for (int j = 0; j < this.galoisBase; j++) //added 48 to j because of ascii-value of '0'
             {
                 if (t[i] == j + 48) {
-                    cWord[0][i] = new GaloisElement(j, this.galoisBase);
+                    cWord[0][i] = new PrimeFieldElement(j, this.galoisBase);
                     break;
                 }
             }
@@ -277,12 +277,12 @@ public class HammingCode extends Coder {
     /**
      * Converts a one row matrix into a String.
      * @param sourceCodeWord matrix which has to be converted into a String
-     * @return Matrix<GaloisElement> converted into a String
+     * @return Matrix<PrimeFieldElement> converted into a String
      */
-    private String convertOneRowMatrixToString(Matrix<GaloisElement> sourceCodeWord) {
+    private String convertOneRowMatrixToString(Matrix<PrimeFieldElement> sourceCodeWord) {
         String s = "";
         for (int i = 0; i < sourceCodeWord.getMatrixColumnCapacity(); i++) {
-            char t = (char) (sourceCodeWord.get(0, i).getGaloisElemValue().intValue() + 48);
+            char t = (char) (sourceCodeWord.get(0, i).getPrimeElemValue().intValue() + 48);
             s += t;
         }
         return s;
@@ -296,7 +296,7 @@ public class HammingCode extends Coder {
      * @throws IllegalArgumentException if a or b have more than one row
      * @throws IllegalArgumentException if a has different columnCapacity as b
      */
-    public static int hammingDistance(Matrix<GaloisElement> a, Matrix<GaloisElement> b) throws IllegalArgumentException {
+    public static int hammingDistance(Matrix<PrimeFieldElement> a, Matrix<PrimeFieldElement> b) throws IllegalArgumentException {
         if (a.getMatrixRowCapacity() > 1 || b.getMatrixRowCapacity() > 1) {
             throw new IllegalArgumentException("Only matrices with one row are allowed!");
         }
@@ -317,26 +317,26 @@ public class HammingCode extends Coder {
      * @param a vector which should be calculated
      * @return calculated vector weight
      */
-    public static int vectorWeight(Matrix<GaloisElement> a) {
-        KryptoType<GaloisElement> k[][] = new KryptoType[1][a.getMatrixColumnCapacity()];
+    public static int vectorWeight(Matrix<PrimeFieldElement> a) {
+        KryptoType<PrimeFieldElement> k[][] = new KryptoType[1][a.getMatrixColumnCapacity()];
         for (int i = 0; i < a.getMatrixColumnCapacity(); i++) {
-            k[0][i] = new GaloisElement(0, 2);
+            k[0][i] = new PrimeFieldElement(0, 2);
         }
-        Matrix<GaloisElement> b = new Matrix(k);
+        Matrix<PrimeFieldElement> b = new Matrix(k);
         return hammingDistance(a, b);
     }
 
     /**
      * Calculates a bitError based on the given probability
      * @param probability value between 0 and 1
-     * @return new GaloisElement with value 0 or 1
+     * @return new PrimeFieldElement with value 0 or 1
      */
-    private GaloisElement bitErrorProbability(double probability) {
+    private PrimeFieldElement bitErrorProbability(double probability) {
         int rand = (int) Math.floor((Math.random() * 999) + 1);
         if (rand > probability * 1000) {
-            return new GaloisElement(0, this.galoisBase);
+            return new PrimeFieldElement(0, this.galoisBase);
         } else {
-            return new GaloisElement(1, this.galoisBase);
+            return new PrimeFieldElement(1, this.galoisBase);
         }
     }
 
@@ -347,7 +347,7 @@ public class HammingCode extends Coder {
     public void generateBitError(double probability) {
         int length = encodedWord.getMatrixColumnCapacity();
         for (int i = 0; i < length; i++) {
-            GaloisElement tmp = encodedWord.get(0, i);
+            PrimeFieldElement tmp = encodedWord.get(0, i);
             encodedWord.set(0, i, tmp.add(bitErrorProbability(probability)));
         }
     }
