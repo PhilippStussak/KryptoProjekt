@@ -28,7 +28,7 @@ public class HammingCode extends Coder {
     @Override
     public String encode() throws NullPointerException{
         if (sourceCodeWord == null || generatorMatrix == null)
-            throw new NullPointerException("sourceCodeWord or generatorMatrix is not calculated yet.");
+            throw new NullPointerException("encodeException");
         this.encodedWord = this.sourceCodeWord.multiply(this.generatorMatrix);
         return convertOneRowMatrixToString(this.encodedWord);
     }
@@ -41,7 +41,7 @@ public class HammingCode extends Coder {
     //Do we have to throw an exception in this case, too?
     public void calculateSyndrom() throws NullPointerException{
         if (encodedWord == null || controlMatrix == null)
-            throw new NullPointerException("EncodedWord or ControlMatrix not calculated yet.");
+            throw new NullPointerException("calculateSyndromException");
         this.syndrom = this.encodedWord.multiply(this.controlMatrix);
     }
 
@@ -59,7 +59,7 @@ public class HammingCode extends Coder {
         PrimeFieldElement comparison = new PrimeFieldElement(0, this.galoisBase);
 
         if (this.syndrom == null) {
-            throw new NullPointerException("Syndrom is not calculated yet.");
+            throw new NullPointerException("detectErrorNullException");
         }
 
         //is there any error in the syndrom
@@ -82,7 +82,7 @@ public class HammingCode extends Coder {
             if (errorPos > -1) {
                 result.put(3, correctError(errorPos));
             } else {
-                result.put(3, "Zuviele Fehler. Korrektur kann nicht vorgenommen werden.");
+                result.put(3, "detectErrorTooManyErrors");
             }
         }
 
@@ -98,7 +98,7 @@ public class HammingCode extends Coder {
      */
     private String correctError(int pos) throws NullPointerException{
         if (encodedWord == null)
-            throw new NullPointerException("EncodedWord is not calculated yet.");
+            throw new NullPointerException("correctErrorException");
         PrimeFieldElement comparison = new PrimeFieldElement(0, this.galoisBase);
 
         if (comparison.compareTo(this.encodedWord.get(0, pos)) == 0) {
@@ -116,7 +116,7 @@ public class HammingCode extends Coder {
      */
     private int getErrorPosition() throws NullPointerException{
         if (controlMatrix == null || syndrom == null)
-            throw new NullPointerException("Syndrom or controlMatrix not calculated yet.");
+            throw new NullPointerException("getErrorPositionException");
         boolean check = false;
         boolean test = true;
         int position = 0;
@@ -146,7 +146,7 @@ public class HammingCode extends Coder {
      */
     @Override
     public String printStatistics() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException("UnsupportedOperationException");
     }
 
     /**
@@ -157,7 +157,7 @@ public class HammingCode extends Coder {
     @Override
     public String decode() {
         if (encodedWord == null)
-            throw new NullPointerException("EncodedWord is not calculated yet.");
+            throw new NullPointerException("decodeException");
         KryptoType<PrimeFieldElement>[][] t = new KryptoType[1][this.codeWord.length() - 1];
         for (int i = 0; i < this.codeWord.length(); i++) {
             t[0][i] = encodedWord.get(0, i);
@@ -239,7 +239,7 @@ public class HammingCode extends Coder {
             this.generatorMatrix = generatorMatrix;
             generateControlMatrix();
         } else {
-            throw new IllegalArgumentException("Codewortlänge stimmt nicht mit Länge der Generatormatrix überein.");
+            throw new IllegalArgumentException("wrongCodeWordLength");
         }
     }
 
@@ -298,10 +298,10 @@ public class HammingCode extends Coder {
      */
     public static int hammingDistance(Matrix<PrimeFieldElement> a, Matrix<PrimeFieldElement> b) throws IllegalArgumentException {
         if (a.getMatrixRowCapacity() > 1 || b.getMatrixRowCapacity() > 1) {
-            throw new IllegalArgumentException("Only matrices with one row are allowed!");
+            throw new IllegalArgumentException("hammingDistanceRowException");
         }
         if (a.getMatrixColumnCapacity() != b.getMatrixColumnCapacity()) {
-            throw new IllegalArgumentException("Matrices should have same ColumnCapacity!");
+            throw new IllegalArgumentException("hammingDistanceColumnException");
         }
         int distance = 0;
         for (int i = 0; i < a.getMatrixColumnCapacity(); i++) {

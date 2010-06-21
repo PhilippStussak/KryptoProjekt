@@ -5,6 +5,7 @@
 package kryptoprojekt.model;
 
 import java.util.regex.Pattern;
+import kryptoprojekt.controller.XMLReader;
 
 /**
  *

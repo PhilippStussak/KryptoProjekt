@@ -1,0 +1,19 @@
+﻿<?xml version='1.0' encoding='UTF-8'?>
+ 
+<languagefile name="English">
+	<HammingCode>
+        <encodeException>SourceCodeWord or generatorMatrix is not calculated yet.</encodeException>
+        <calculateSyndromException>EncodedWord or ControlMatrix not calculated yet.</calculateSyndromException>
+		<detectErrorNullException>Syndrom is not calculated yet.</detectErrorNullException>
+		<detectErrorTooManyErrors>Too many errors. Correction can not be accomplished.</detectErrorTooManyErrors>
+		<correctErrorException>EncodedWord is not calculated yet.</correctErrorException>
+		<getErrorPositionException>Syndrom or controlMatrix not calculated yet.</getErrorPositionException>
+		<decodeException>EncodedWord is not calculated yet.</decodeException>
+		<wrongCodeWordLength>Length of codeWord has to be the same as columnCapacity of given generatorMatrix.</wrongCodeWordLength>
+		<hammingDistanceRowException>Only matrices with one row are allowed!</hammingDistanceRowException>
+		<hammingDistanceColumnException>Matrices should have same ColumnCapacity!</hammingDistanceColumnException>
+    </HammingCode>
+	<General>
+		<UnsupportedOperationException>Not supported yet.</UnsupportedOperationException>
+	</General>
+ </languagefile>
