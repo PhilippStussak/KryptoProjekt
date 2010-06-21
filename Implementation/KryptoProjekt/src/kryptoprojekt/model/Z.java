@@ -187,6 +187,16 @@ public class Z implements KryptoType<Z> {
         return result;
     }
 
+
+    /**
+     * Returns true if the number is Prime
+     *
+     * @return true if prime, else false
+     */
+    public Boolean isPrime(){
+        return number.isProbablePrime(7);
+    }
+
     /**
      * Returns a String representation of this Z.
      *

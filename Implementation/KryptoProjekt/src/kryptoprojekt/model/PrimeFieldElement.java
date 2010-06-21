@@ -13,24 +13,32 @@ public class PrimeFieldElement implements KryptoType<PrimeFieldElement> {
     private Z value;
     private Z base;
 
-    //ToDo: Check if ConstructorBase is Prime. Lucas Test must be implemented.
-
     /**
      * Integer Constructor for PrimeFieldelement
      * @param Value and Base of the Element, both Integer
+     * @throws Runtime Exception if Base is not prime
      */
     public PrimeFieldElement(int value, int base) {
-        this.base = new Z(base);
-        this.value = new Z(value).mod(this.base);
+        if (new Z(base).isPrime()) {
+            this.base = new Z(base);
+            this.value = new Z(value).mod(this.base);
+        } else {
+            throw new RuntimeException("Base is not prime!");
+        }
     }
 
     /**
      * Z Constructor for PrimeFieldelement
      * @param Value and Base of the Element, both Z
+     * @throws Runtime Exception if Base is not prime
      */
     public PrimeFieldElement(Z value, Z base) {
-        this.base = base;
-        this.value = value.mod(base);
+        if (base.isPrime()) {
+            this.base = base;
+            this.value = value.mod(base);
+        } else {
+            throw new RuntimeException("Base is not prime!");
+        }
     }
 
     /**
@@ -140,7 +148,7 @@ public class PrimeFieldElement implements KryptoType<PrimeFieldElement> {
      * Returns the Inverse Element for the multiplycation in this Field
      * @return new inverse PrimeFieldElement
      */
-    public PrimeFieldElement inverseElementMultiplication(){
+    public PrimeFieldElement inverseElementMultiplication() {
         return new PrimeFieldElement(Basic.squareAndMultiply(value, base.subtract(new Z(2))), base);
     }
 
@@ -149,8 +157,8 @@ public class PrimeFieldElement implements KryptoType<PrimeFieldElement> {
      * @return Element as a String
      */
     @Override
-    public String toString(){
-        return value.toString()+ ", " + base.toString();
+    public String toString() {
+        return value.toString() + ", " + base.toString();
     }
 
     /**
@@ -158,13 +166,14 @@ public class PrimeFieldElement implements KryptoType<PrimeFieldElement> {
      * @param maximum rows and colums
      * @return new Matrix Add-Table for this PrimeField
      */
-    public Matrix getAddTable(int maxY, int maxX){
+    public Matrix getAddTable(int maxY, int maxX) {
         Z[][] addTable;
         addTable = new Z[maxY][maxX];
 
-        for(int y=0; y<maxY; y++){
-            for(int x=0; x<maxX; x++)
+        for (int y = 0; y < maxY; y++) {
+            for (int x = 0; x < maxX; x++) {
                 addTable[y][x] = (new Z(y).add(new Z(x))).mod(base);
+            }
         }
         return new Matrix(addTable);
     }
@@ -174,13 +183,14 @@ public class PrimeFieldElement implements KryptoType<PrimeFieldElement> {
      * @param maximum rows and colums
      * @return new Matrix Multply-Table for this PrimeField
      */
-    public Matrix getMultiplyTable(int maxY, int maxX){
+    public Matrix getMultiplyTable(int maxY, int maxX) {
         Z[][] multiplyTable;
         multiplyTable = new Z[maxY][maxX];
 
-        for(int y=0; y<maxY; y++){
-            for(int x=0; x<maxX; x++)
+        for (int y = 0; y < maxY; y++) {
+            for (int x = 0; x < maxX; x++) {
                 multiplyTable[y][x] = (new Z(y).multiply(new Z(x))).mod(base);
+            }
         }
         return new Matrix(multiplyTable);
     }
