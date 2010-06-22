@@ -8,6 +8,8 @@ package kryptoprojekt.model;
  *
  * @author mario
  */
+
+//Class is not tested yet
 public class Polynom {
 
     private Z[] polynom;
@@ -74,7 +76,46 @@ public class Polynom {
         return result;
     }
 
+    //inefficent implementation
+    public Polynom multiply(Polynom other){
+        Z[][] multiplicationTable = new Z[polynom.length][other.getLength()];
+        int newLength = 0;
+        Polynom tmp = this;
+
+
+        if (this.polynom.length > other.getLength()) {
+            other = expand(other.getLength(), this.polynom.length, other);
+            newLength = this.polynom.length;
+        } else {
+            tmp = expand(this.polynom.length, other.getLength(), this);
+            newLength = other.getLength();
+        }
+
+        //build up multiplication table
+        for(int i=0; i<other.getLength(); i++){
+            for(int j=0; j<tmp.getLength(); j++){
+                if(other.get(i).intValue() == 0){
+                    multiplicationTable[i][j] = new Z(0);
+                }
+                else{
+                    multiplicationTable[i][j] = tmp.get(j);
+                }
+            }
+        }
+
+        
+
+        Polynom result = new Polynom(polynom.length+other.getLength()-1);
+
+
+        return this;
+    }
+
     public int getLength() {
         return polynom.length;
+    }
+
+    public Z[] getPolynom(){
+        return polynom;
     }
 }
