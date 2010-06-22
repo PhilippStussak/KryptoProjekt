@@ -20,7 +20,7 @@ public class Kit extends JInternalFrame {
 
     protected ConnectionHandler handler;
     private static int id = 1;
-    private Object[] result;
+    protected Result[] result;
 
     public Kit(ConnectionHandler handler) {
         super("#" + id++);
@@ -28,7 +28,7 @@ public class Kit extends JInternalFrame {
         handler.add(this);
     }
 
-    public Object getResult(int id) {
+    public Result getResult(int id) {
         return this.result[id];
     }
 
@@ -89,9 +89,10 @@ public class Kit extends JInternalFrame {
                     if (parent == origin) {
                         JOptionPane.showMessageDialog(null, "Drop on same frame not possible!");
                     } else {
-                        Connection con = new Connection(parent, origin);
+                        Connection con = new Connection(parent, origin, this);
+                        handler.removeSameTarget(con);
                         if (!handler.add(con)) {
-                            JOptionPane.showMessageDialog(null, "Only one connection possible!");
+                            JOptionPane.showMessageDialog(null, "Connection already exists!");
                         } else {
                             dtde.acceptDrop(DnDConstants.ACTION_COPY);
                             this.setText((String) ta.getTransferData(DataFlavor.stringFlavor));
@@ -107,5 +108,9 @@ public class Kit extends JInternalFrame {
                 e.printStackTrace();
             }
         }
+    }
+
+    public String toString() {
+        return getTitle();
     }
 }

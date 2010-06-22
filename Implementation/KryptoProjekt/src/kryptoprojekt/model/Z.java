@@ -140,8 +140,28 @@ public class Z implements KryptoType<Z> {
      * and other are numerically equal.
      * @see java.math.BigInteger#equals(java.math.BigInteger)
      */
-    public boolean equals(Z other) {
-        return number.equals(other.number);
+    @Override
+    public boolean equals(Object other) {
+        if(this == other)
+            return true;
+        if(other instanceof Z) {
+            Z value = (Z)other;
+            return number.equals(value.number);
+        }
+        return false;
+    }
+
+    /**
+     * Generates the hashcode of this Z.
+     *
+     * @return the hashcode of the value of this Z.
+     * @see java.math.BigInteger#equals(java.math.BigInteger)
+     */
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 79 * hash + (this.number != null ? this.number.hashCode() : 0);
+        return hash;
     }
 
     /**

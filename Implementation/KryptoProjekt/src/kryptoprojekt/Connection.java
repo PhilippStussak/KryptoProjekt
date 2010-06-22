@@ -6,7 +6,6 @@ package kryptoprojekt;
 
 import java.awt.Shape;
 import java.awt.geom.GeneralPath;
-import java.awt.geom.Path2D;
 
 /**
  *
@@ -15,10 +14,12 @@ import java.awt.geom.Path2D;
 public class Connection {
 
     private Kit parent, child;
+    private Kit.DropTextField drop;
 
-    public Connection(Kit parent, Kit child) {
+    public Connection(Kit parent, Kit child, Kit.DropTextField drop) {
         this.parent = parent;
         this.child = child;
+        this.drop = drop;
     }
 
     public Kit getParent() {
@@ -43,11 +44,17 @@ public class Connection {
         }
         if (o instanceof Connection) {
             Connection con = (Connection) o;
-            if (this.parent == con.parent && this.child == con.child
-                    || this.child == con.parent && this.child == con.parent) {
-                return true;
+            if (this.drop == con.drop) {
+                if (this.parent == con.parent && this.child == con.child
+                        || this.child == con.parent && this.child == con.parent) {
+                    return true;
+                }
             }
         }
         return false;
+    }
+
+    public boolean sameTarget(Connection other) {
+        return this.drop == other.drop;
     }
 }

@@ -8,13 +8,16 @@
  *
  * Created on 20.06.2010, 15:32:07
  */
-
 package kryptoprojekt.basicFrames;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import javax.swing.JList;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
+import kryptoprojekt.model.Validator;
+import kryptoprojekt.Result;
+import kryptoprojekt.model.Z;
 
 /**
  *
@@ -25,6 +28,7 @@ public class ZFrame extends Kit {
     /** Creates new form ZFrame */
     public ZFrame(ConnectionHandler handler) {
         super(handler);
+        result = new Result[]{new Result()};
         initComponents();
         initLogicComponents();
     }
@@ -45,11 +49,26 @@ public class ZFrame extends Kit {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jTextField1.setText("number");
+        jTextField1.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                jTextField1CaretUpdate(evt);
+            }
+        });
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
         jTextField1.addInputMethodListener(new java.awt.event.InputMethodListener() {
             public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
             }
             public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
                 jTextField1InputMethodTextChanged(evt);
+            }
+        });
+        jTextField1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jTextField1PropertyChange(evt);
             }
         });
 
@@ -61,7 +80,7 @@ public class ZFrame extends Kit {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 59, Short.MAX_VALUE)
+            .addGap(0, 63, Short.MAX_VALUE)
         );
 
         jLabel1.setText("Z");
@@ -94,21 +113,42 @@ public class ZFrame extends Kit {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextField1InputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_jTextField1InputMethodTextChanged
-
+        
     }//GEN-LAST:event_jTextField1InputMethodTextChanged
+
+    private void jTextField1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jTextField1PropertyChange
+        if (Validator.isInteger(jTextField1.getText())) {
+            jTextField1.setForeground(Color.black);
+            result[0].setResult(new Z(jTextField1.getText()));
+        }
+        else
+            jTextField1.setForeground(Color.red);
+    }//GEN-LAST:event_jTextField1PropertyChange
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jTextField1CaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextField1CaretUpdate
+        if (Validator.isInteger(jTextField1.getText())) {
+            jTextField1.setForeground(Color.black);
+            result[0].setResult(new Z(jTextField1.getText()));
+        }
+        else
+            jTextField1.setForeground(Color.red);
+    }//GEN-LAST:event_jTextField1CaretUpdate
 
     private void initLogicComponents() {
         jTextField1.setTransferHandler(null);
-        JList result = getDragList(new Object[] {getTitle() + "_number"});
+        JList list = getDragList(new Object[]{getTitle() + "_number"});
         jPanel1.setLayout(new BorderLayout());
-        jPanel1.add(result);
+        jPanel1.add(list);
         this.setSize(160, 120);
     }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
-
 }

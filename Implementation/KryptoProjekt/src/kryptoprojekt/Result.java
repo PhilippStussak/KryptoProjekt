@@ -4,9 +4,6 @@
  */
 package kryptoprojekt;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  *
  * @author Stefan
@@ -15,6 +12,9 @@ public class Result {
 
     private Object result = null;
     private boolean isComputed = false;
+
+    public Result() {
+    }
 
     public synchronized void setResult(Object result) {
         this.result = result;
