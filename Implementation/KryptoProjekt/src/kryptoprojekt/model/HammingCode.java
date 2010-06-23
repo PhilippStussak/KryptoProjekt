@@ -39,10 +39,11 @@ public class HammingCode extends Coder {
      */
     @Override
     //Do we have to throw an exception in this case, too?
-    public void calculateSyndrom() throws NullPointerException{
+    public String calculateSyndrom() throws NullPointerException{
         if (encodedWord == null || controlMatrix == null)
             throw new NullPointerException("calculateSyndromException");
         this.syndrom = this.encodedWord.multiply(this.controlMatrix);
+        return convertOneRowMatrixToString(this.syndrom);
     }
 
     /**
@@ -141,15 +142,6 @@ public class HammingCode extends Coder {
     }
 
     /**
-     *
-     * @return
-     */
-    @Override
-    public String printStatistics() {
-        throw new UnsupportedOperationException("UnsupportedOperationException");
-    }
-
-    /**
      * Decodes the encodedWord.
      * @throws NullPointerException if encodedWord is not calculated yet
      * @return decoded Word
@@ -170,7 +162,8 @@ public class HammingCode extends Coder {
      * Generates the generatorMatrix on base of given codeWordLength.
      * @param codewordLength Length of given codeWord
      */
-    private void generateGeneratorMatrix(int codewordLength) {
+    public Matrix<PrimeFieldElement> generateGeneratorMatrix() {
+        int codewordLength = codeWord.length();
         int columnCapacity = (int) Math.pow(2, codewordLength) - 1;
         KryptoType<PrimeFieldElement>[][] t = new KryptoType[codewordLength][columnCapacity];
 
@@ -189,40 +182,45 @@ public class HammingCode extends Coder {
         //set parity bits
         for (int i = 0; i < codewordLength; i++) {
             for (int j = codewordLength; j < (int) Math.pow(2, codewordLength) - 1; j++) {
-                if (i != j) {
+                if (i != j-codewordLength) {
                     t[i][j] = new PrimeFieldElement(1, this.galoisBase);
                 }
             }
         }
         this.generatorMatrix = new Matrix(t);
+        return this.generatorMatrix;
     }
 
     /**
      * Generates the controlMatrix on base of given generatorMatrix.
      */
-    private void generateControlMatrix() {
-        int x = this.generatorMatrix.getMatrixColumnCapacity() - this.generatorMatrix.getMatrixRowCapacity();
-        KryptoType<PrimeFieldElement> k[][] = new KryptoType[x][this.generatorMatrix.getMatrixColumnCapacity()];
-        int n = this.generatorMatrix.getMatrixRowCapacity();
+    public Matrix<PrimeFieldElement> generateControlMatrix() {
+        if (this.generatorMatrix == null)
+            generateGeneratorMatrix();
+        int y = this.generatorMatrix.getMatrixColumnCapacity() - this.generatorMatrix.getMatrixRowCapacity();
+        KryptoType<PrimeFieldElement> k[][] = new KryptoType[this.generatorMatrix.getMatrixColumnCapacity()][y];
+        int n = this.generatorMatrix.getMatrixColumnCapacity()-codeWord.length();
 
-        //initialise array with PrimeFieldElement-objects, value=0
-        for (int i = 0; i < x; i++) {
-            for (int j = 0; j < this.generatorMatrix.getMatrixColumnCapacity(); j++) {
+        //initialize array with PrimeFieldElement-objects, value=0
+        for (int i = 0; i < this.generatorMatrix.getMatrixColumnCapacity(); i++) {
+            for (int j = 0; j < y; j++) {
                 k[i][j] = new PrimeFieldElement(0, this.galoisBase);
             }
         }
 
         //sets parity bits in control matrix
-        for (int i = n + 1; i < x + n; i++) {
+        for (int i = 0; i < y-1; i++) {
             for (int j = 0; j < n; j++) {
-                k[i][j] = this.generatorMatrix.get(i, j);
+                k[i][j] = this.generatorMatrix.get(i, j+n-1);
             }
         }
 
         //generates identity matrix
-        for (int i = 0; i < x; i++) {
+        for (int i = 0; i < y; i++) {
             k[i][i] = new PrimeFieldElement(1, this.galoisBase);
         }
+        this.controlMatrix = new Matrix(k);
+        return this.controlMatrix;
     }
 
     /**
@@ -250,7 +248,7 @@ public class HammingCode extends Coder {
     public HammingCode(String codeWord) {
         this.codeWord = codeWord;
         this.sourceCodeWord = convertStringToOneRowMatrix(codeWord);
-        generateGeneratorMatrix(codeWord.length());
+        generateGeneratorMatrix();
         generateControlMatrix();
     }
 
