@@ -1,11 +1,13 @@
 package kryptoprojekt.model;
 
+import java.util.Arrays;
+
 /**
  * This Class is for easier handling with matrizes and operations on them.
  *
  * @author Stefan
  */
-public class Matrix<E extends KryptoType<E>>   {
+public class Matrix<E extends KryptoType<E>>      {
 
     private int x, y;
     private E[][] matrix;
@@ -49,11 +51,7 @@ public class Matrix<E extends KryptoType<E>>   {
      * @return {@code this[x][y]}
      */
     public E get(int x, int y) {
-        if (x >= 0 && x < this.x && y >= 0 && y < this.y) {
-            return matrix[x][y];
-        } else {
-            throw new ArrayIndexOutOfBoundsException();
-        }
+        return matrix[x][y];
     }
 
     /**
@@ -64,11 +62,7 @@ public class Matrix<E extends KryptoType<E>>   {
      * @param value the new value of the specific element.
      */
     public void set(int x, int y, E value) {
-        if (x >= 0 && x < this.x && y >= 0 && y < this.y) {
-            matrix[x][y] = value;
-        } else {
-            throw new ArrayIndexOutOfBoundsException();
-        }
+        matrix[x][y] = value;
     }
 
     /**
@@ -115,7 +109,7 @@ public class Matrix<E extends KryptoType<E>>   {
      * @return {@code this * other}
      */
     public Matrix<E> multiply(Matrix<E> other) {
-        if (x != other.y) {
+        if (y != other.x) {
             throw new IllegalArgumentException();
         }
         Matrix<E> result = new Matrix<E>(x, other.y);
@@ -184,5 +178,48 @@ public class Matrix<E extends KryptoType<E>>   {
             }
         }
         return new Matrix<Z>(field);
+    }
+
+    /**
+     * Generates the hashcode for this Matrix.
+     *
+     * @return hashcode of this Matrix.
+     */
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 71 * hash + this.x;
+        hash = 71 * hash + this.y;
+        hash = 71 * hash + Arrays.deepHashCode(this.matrix);
+        return hash;
+    }
+
+    /**
+     * Tests if this Matrix has the same parameters like another Matrix.
+     *
+     * @param o other object to be compared for equality with this Matrix.
+     * @return returns false if, and only if, o is an instance of Matrix
+     *  and both have the same parameters.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o instanceof Matrix) {
+            try {
+                Matrix<E> m = (Matrix<E>) o;
+                if(this.x != m.x || this.y != m.y)
+                    return false;
+                for(int i = 0; i < x; i++)
+                    for(int j = 0; j < y; j++)
+                        if(!this.matrix[i][j].equals(m.matrix[i][j]))
+                            return false;
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        }
+        return false;
     }
 }
