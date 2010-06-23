@@ -160,7 +160,7 @@ public class HammingCode extends Coder {
 
     /**
      * Generates the generatorMatrix on base of given codeWordLength.
-     * @param codewordLength Length of given codeWord
+     * @return
      */
     public Matrix<PrimeFieldElement> generateGeneratorMatrix() {
         int codewordLength = codeWord.length();
