@@ -5,11 +5,6 @@
 package kryptoprojekt.model;
 
 import junit.framework.TestCase;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
@@ -132,7 +127,7 @@ public class PrimeFieldElementTest extends TestCase {
         }
     }
     
-    public void testGetterAndIs(){
+    public void testGetterAndIsX(){
         PrimeFieldElement pfeGetOne = new PrimeFieldElement(1, 13);
         PrimeFieldElement pfeGetTwo = new PrimeFieldElement(0, 13);
         assertEquals(pfeGetOne.getPrimeElemBase(), new Z(13));
@@ -141,5 +136,41 @@ public class PrimeFieldElementTest extends TestCase {
         assertTrue(pfeGetTwo.isZERO());
     }
 
+    public void testToString(){
+        PrimeFieldElement pfeToString = new PrimeFieldElement(10, 13);
+        assertEquals(pfeToString.toString(), "[10, 13]");
+    }
 
+    public void testAddTable(){
+        PrimeFieldElement pfeAddTable = new PrimeFieldElement(1, 3);
+        Matrix m = Matrix.valueOf("0,1,2|1,2,0|2,0,1");
+        
+        KryptoType<PrimeFieldElement>[][] pfeM = new KryptoType[m.getMatrixRowCapacity()][m.getMatrixColumnCapacity()];
+        for (int i=0; i< m.getMatrixRowCapacity(); i++)
+            for (int j=0; j<m.getMatrixColumnCapacity(); j++)
+                pfeM[i][j] = new PrimeFieldElement((Z)m.get(i, j), new Z(3));
+        Matrix<PrimeFieldElement> finalMatrix = new Matrix(pfeM);
+        
+        assertEquals(pfeAddTable.getAddTable(3, 3), finalMatrix);
+    }
+
+    public void testMultiplyTable(){
+        PrimeFieldElement pfeAddTable = new PrimeFieldElement(1, 3);
+        Matrix m = Matrix.valueOf("0,0,0|0,1,2|0,2,1");
+        
+        KryptoType<PrimeFieldElement>[][] pfeM = new KryptoType[m.getMatrixRowCapacity()][m.getMatrixColumnCapacity()];
+        for (int i=0; i< m.getMatrixRowCapacity(); i++)
+            for (int j=0; j<m.getMatrixColumnCapacity(); j++)
+                pfeM[i][j] = new PrimeFieldElement((Z)m.get(i, j), new Z(3));
+        Matrix<PrimeFieldElement> finalMatrix = new Matrix(pfeM);
+        
+        assertEquals(pfeAddTable.getMultiplyTable(3, 3), finalMatrix);
+    }
+    
+    public void testEquals(){
+        PrimeFieldElement pfeEquals = new PrimeFieldElement(14, 17);
+        assertTrue(pfeEquals.equals(new PrimeFieldElement(new Z(14), new Z(17))));
+        assertFalse(pfeEquals.equals(new PrimeFieldElement(14, 23)));
+        assertFalse(pfeEquals.equals(new PrimeFieldElement(11, 17)));
+    }
 }
