@@ -20,6 +20,8 @@ public interface KryptoType<E> extends Comparable<E> {
 
     E mod(E other);
 
+    E newInstance(String value);
+
     String toBinaryString();
 
     boolean isZERO();

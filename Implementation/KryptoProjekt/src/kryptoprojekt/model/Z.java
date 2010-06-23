@@ -103,6 +103,17 @@ public class Z implements KryptoType<Z> {
     }
 
     /**
+     * Returns a new instance of Z with the spezified value
+     * of a String-representation of an integer number.
+     *
+     * @param value String-representation of the new instance of Z.
+     * @return {@code new Z(String number)}
+     */
+    public Z newInstance(String value) {
+        return new Z(value);
+    }
+
+    /**
      * Ckecks if the value of this Z is equals to 1.
      *
      * @return {@code this == 1}
@@ -118,6 +129,15 @@ public class Z implements KryptoType<Z> {
      */
     public boolean isZERO() {
         return number.equals(BigInteger.ZERO);
+    }
+
+    /**
+     * Returns a new Z with the absolute value of this Z.
+     *
+     * @return absolute value (|this|) of this Z.
+     */
+    public Z abs() {
+        return new Z(number.abs());
     }
 
     /**
