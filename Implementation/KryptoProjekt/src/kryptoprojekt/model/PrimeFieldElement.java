@@ -80,7 +80,7 @@ public class PrimeFieldElement implements KryptoType<PrimeFieldElement> {
         if (this.base.equals(other.base)) {
             return this.multiply(other.inverseElementMultiplication());
         } else {
-            throw new RuntimeException();
+            throw new RuntimeException("Base missmatch");
         }
     }
 
@@ -201,5 +201,35 @@ public class PrimeFieldElement implements KryptoType<PrimeFieldElement> {
      */
     public Z getPrimeElemValue() {
         return this.value;
+    }
+
+    public Z getPrimeElemBase() {
+        return this.base;
+    }
+
+    @Override
+    public boolean equals (Object o){
+        if(this == o){
+            return true;
+        }
+
+        if(o instanceof PrimeFieldElement){
+            PrimeFieldElement pfe = (PrimeFieldElement)o;
+            if (this.value.equals(pfe.value) && this.base.equals(pfe.base)){
+                return true;
+            } else{
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 89 * hash + (this.value != null ? this.value.hashCode() : 0);
+        hash = 89 * hash + (this.base != null ? this.base.hashCode() : 0);
+        return hash;
     }
 }
