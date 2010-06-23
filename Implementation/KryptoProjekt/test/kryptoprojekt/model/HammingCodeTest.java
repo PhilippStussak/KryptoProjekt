@@ -19,17 +19,6 @@ public class HammingCodeTest extends TestCase{
         super(name);
     }
 
-//    public void testHammingCodeConstructor() {
-//        HammingCode c = new HammingCode("11");
-//        Matrix m = Matrix.valueOf("1,1,1|1,1,1|1,0,0|0,1,0|0,0,1");
-//        KryptoType<PrimeFieldElement>[][] t = new KryptoType[m.getMatrixRowCapacity()][m.getMatrixColumnCapacity()];
-//        for (int i=0; i< m.getMatrixRowCapacity(); i++)
-//            for (int j=0; j<m.getMatrixColumnCapacity(); j++)
-//                t[i][j] = new PrimeFieldElement((Z)m.get(i, j), new Z(2));
-//        Matrix<PrimeFieldElement> fin = new Matrix(t);
-//        assertEquals(fin, c.generateControlMatrix());
-//    }
-
     public void testGenerateGeneratorMatrix() {
         HammingCode c = new HammingCode("110");
         Matrix m = Matrix.valueOf("1,0,0,0,1,1,1|0,1,0,1,0,1,1|0,0,1,1,1,0,1");
@@ -70,8 +59,9 @@ public class HammingCodeTest extends TestCase{
     }
 
     public void testDecode(){
-        Coder c = new HammingCode("011");
-
+        HammingCode c = new HammingCode("110");
+        c.encode();
+        assertEquals("110", c.decode());
     }
 
     public void testHammingDistance() {

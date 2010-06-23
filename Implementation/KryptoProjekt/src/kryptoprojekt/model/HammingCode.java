@@ -150,7 +150,7 @@ public class HammingCode extends Coder {
     public String decode() {
         if (encodedWord == null)
             throw new NullPointerException("decodeException");
-        KryptoType<PrimeFieldElement>[][] t = new KryptoType[1][this.codeWord.length() - 1];
+        KryptoType<PrimeFieldElement>[][] t = new KryptoType[1][this.codeWord.length()];
         for (int i = 0; i < this.codeWord.length(); i++) {
             t[0][i] = encodedWord.get(0, i);
         }
@@ -217,7 +217,7 @@ public class HammingCode extends Coder {
 
         //generates identity matrix
         for (int i = 0; i < y; i++) {
-            k[i][i] = new PrimeFieldElement(1, this.galoisBase);
+            k[i+codeWord.length()][i] = new PrimeFieldElement(1, this.galoisBase);
         }
         this.controlMatrix = new Matrix(k);
         return this.controlMatrix;
