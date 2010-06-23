@@ -158,7 +158,7 @@ public class PrimeFieldElement implements KryptoType<PrimeFieldElement> {
      */
     @Override
     public String toString() {
-        return value.toString() + ", " + base.toString();
+        return "[" + value.toString() + ", " + base.toString() + "]";
     }
 
     /**
@@ -167,12 +167,12 @@ public class PrimeFieldElement implements KryptoType<PrimeFieldElement> {
      * @return new Matrix Add-Table for this PrimeField
      */
     public Matrix getAddTable(int maxY, int maxX) {
-        Z[][] addTable;
-        addTable = new Z[maxY][maxX];
+        PrimeFieldElement[][] addTable;
+        addTable = new PrimeFieldElement[maxY][maxX];
 
         for (int y = 0; y < maxY; y++) {
             for (int x = 0; x < maxX; x++) {
-                addTable[y][x] = (new Z(y).add(new Z(x))).mod(base);
+                addTable[y][x] = (new PrimeFieldElement(new Z(y), base).add(new PrimeFieldElement(new Z(x), base)));
             }
         }
         return new Matrix(addTable);
@@ -184,12 +184,12 @@ public class PrimeFieldElement implements KryptoType<PrimeFieldElement> {
      * @return new Matrix Multply-Table for this PrimeField
      */
     public Matrix getMultiplyTable(int maxY, int maxX) {
-        Z[][] multiplyTable;
-        multiplyTable = new Z[maxY][maxX];
+        PrimeFieldElement[][] multiplyTable;
+        multiplyTable = new PrimeFieldElement[maxY][maxX];
 
         for (int y = 0; y < maxY; y++) {
             for (int x = 0; x < maxX; x++) {
-                multiplyTable[y][x] = (new Z(y).multiply(new Z(x))).mod(base);
+                multiplyTable[y][x] = (new PrimeFieldElement(new Z(y), base).multiply(new PrimeFieldElement(new Z(x), base)));
             }
         }
         return new Matrix(multiplyTable);
@@ -215,14 +215,10 @@ public class PrimeFieldElement implements KryptoType<PrimeFieldElement> {
 
         if(o instanceof PrimeFieldElement){
             PrimeFieldElement pfe = (PrimeFieldElement)o;
-            if (this.value.equals(pfe.value) && this.base.equals(pfe.base)){
+            if (this.value.equals(pfe.value) && this.base.equals(pfe.base))
                 return true;
-            } else{
-                return false;
-            }
-        } else {
-            return false;
         }
+        return false;
     }
 
     @Override
