@@ -228,4 +228,8 @@ public class PrimeFieldElement implements KryptoType<PrimeFieldElement> {
         hash = 89 * hash + (this.base != null ? this.base.hashCode() : 0);
         return hash;
     }
+
+    public PrimeFieldElement newInstance(String value) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }
