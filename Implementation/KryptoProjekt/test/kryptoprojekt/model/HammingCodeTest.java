@@ -54,9 +54,15 @@ public class HammingCodeTest extends TestCase{
     }
 
     public void testDetectError(){
-        Coder c = new HammingCode("011");
+        HammingCode c = new HammingCode("110");
+        c.encode();
+        c.calculateSyndrom();
+        Hashtable h = c.detectError();
+        assertFalse((Boolean)h.get(0));
+
 
     }
+
 
     public void testDecode(){
         HammingCode c = new HammingCode("110");
