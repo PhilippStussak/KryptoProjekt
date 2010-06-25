@@ -118,11 +118,12 @@ public class HammingCode extends Coder {
     private int getErrorPosition() throws NullPointerException{
         if (controlMatrix == null || syndrom == null)
             throw new NullPointerException("getErrorPositionException");
-        boolean check = false;
-        boolean test = true;
+        boolean check = true;
+        boolean test = false;
         int position = 0;
 
         for (int y = 0; y < this.controlMatrix.getMatrixRowCapacity(); y++) {
+            check = false;
             for (int i = 0; i < this.syndrom.getMatrixColumnCapacity(); i++) {
                 if (this.syndrom.get(0, i).compareTo(this.controlMatrix.get(y, i)) != 0) {
                     check = true;

@@ -10,7 +10,7 @@ import junit.framework.TestCase;
 
 /**
  *
- * @author LiTTle
+ * @author LiTTle, Mario
  */
 public class HammingCodeTest extends TestCase{
 
@@ -54,12 +54,42 @@ public class HammingCodeTest extends TestCase{
     }
 
     public void testDetectError(){
+        // No Errors detected
         HammingCode c = new HammingCode("110");
         c.encode();
         c.calculateSyndrom();
         Hashtable h = c.detectError();
         assertFalse((Boolean)h.get(0));
+        assertEquals("110",(String)h.get(1));
+        //generate too many errors
+        c.generateBitError(1);
+        c.calculateSyndrom();
 
+        h = c.detectError();
+        assertTrue((Boolean) h.get(0));
+
+        assertEquals("detectErrorTooManyErrors",h.get(3));
+
+        //generate one bit error and correct it
+
+        c = new HammingCode("110");
+        c.encode();
+        c.generateBitError(0.1);
+        c.calculateSyndrom();
+        h = c.detectError();
+
+        if((Boolean) h.get(0)){
+            if((Integer) h.get(2) != -1){
+                assertEquals("1101100",h.get(3));
+                System.out.println(h.get(3));
+            }
+            else{
+                fail();
+            }
+        }
+        else{
+            fail();
+        }
 
     }
 
