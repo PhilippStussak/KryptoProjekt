@@ -58,7 +58,7 @@ public class Basic {
      */
     public static <E extends KryptoType<E>> E squareAndMultiply(E base, E exponent) {
         char[] bin = exponent.toBinaryString().toCharArray();
-        E result = (E)Factory.newInstance(base.getClass(), "1");
+        E result = base.newInstance("1");
         for (char c : bin) {
             result = result.multiply(result);
             if (c == '1') {
@@ -80,7 +80,7 @@ public class Basic {
      */
     public static <E extends KryptoType<E>> E squareAndMultiply(E base, E exponent, E modul) {
         char[] bin = exponent.toBinaryString().toCharArray();
-        E result = (E)Factory.newInstance(base.getClass(), "1");
+        E result = base.newInstance("1");
         for (char c : bin) {
             result = result.multiply(result).mod(modul);
             if (c == '1') {

@@ -32,11 +32,11 @@ public abstract class MillerRabinTest <E extends KryptoType<E>> implements Prime
      */
     protected Tuple<E, E> factorizeEven(E evenNumber){
         //Precondition
-        assert evenNumber.compareTo((E) Factory.newInstance(evenNumber.getClass(), "1")) > 0 : "An even number cannot be less than <2. argument passed: " +evenNumber;
-        assert evenNumber.mod((E) Factory.newInstance(evenNumber.getClass(), "2")).compareTo((E) Factory.newInstance(evenNumber.getClass(), "0")) == 0 : "It is not an even number. number passed: " +evenNumber;
+        assert evenNumber.compareTo(evenNumber.newInstance("1")) > 0 : "An even number cannot be less than <2. argument passed: " +evenNumber;
+        assert evenNumber.mod(evenNumber.newInstance("2")).compareTo(evenNumber.newInstance("0")) == 0 : "It is not an even number. number passed: " +evenNumber;
 
         E dividend;
-        final E divisor = (E) Factory.newInstance(evenNumber.getClass(), "2");
+        final E divisor = evenNumber.newInstance("2");
         E quotient = evenNumber;
         int power = 0;
         if (!quotient.mod(divisor).isZERO()){
@@ -46,14 +46,14 @@ public abstract class MillerRabinTest <E extends KryptoType<E>> implements Prime
             dividend = quotient;
             quotient = dividend.divide(divisor);
             ++power;
-            assert evenNumber.compareTo(Basic.squareAndMultiply(divisor, (E) Factory.newInstance(evenNumber.getClass(), String.valueOf(power)))) >=0: "Too many Iterations. even number: " +evenNumber+ ", " +power+ " to the power of " +divisor+": " +Basic.squareAndMultiply(divisor, (E) Factory.newInstance(evenNumber.getClass(), String.valueOf(power)));
+            assert evenNumber.compareTo(Basic.squareAndMultiply(divisor, evenNumber.newInstance(String.valueOf(power)))) >=0: "Too many Iterations. even number: " +evenNumber+ ", " +power+ " to the power of " +divisor+": " +Basic.squareAndMultiply(divisor, evenNumber.newInstance(String.valueOf(power)));
         }
-        if (Basic.squareAndMultiply(divisor, (E) Factory.newInstance(evenNumber.getClass(), String.valueOf(power))).multiply(quotient).compareTo(evenNumber) == 0) {
+        if (Basic.squareAndMultiply(divisor, evenNumber.newInstance(String.valueOf(power))).multiply(quotient).compareTo(evenNumber) == 0) {
             //Postcondition
-            assert ((E) Factory.newInstance(evenNumber.getClass(), String.valueOf(power))).compareTo((E) Factory.newInstance(evenNumber.getClass(), "0")) >=0 || ((E) Factory.newInstance(evenNumber.getClass(), String.valueOf(quotient))).compareTo((E) Factory.newInstance(evenNumber.getClass(), "0")) >0:"power or quotient(odd number) have a wrong value. power: " +power+ ", quotient: " +quotient;
-            return new Tuple((E) Factory.newInstance(evenNumber.getClass(), String.valueOf(power)), quotient);
+            assert (evenNumber.newInstance(String.valueOf(power))).compareTo(evenNumber.newInstance("0")) >=0 || (evenNumber.newInstance(String.valueOf(quotient))).compareTo(evenNumber.newInstance("0")) >0:"power or quotient(odd number) have a wrong value. power: " +power+ ", quotient: " +quotient;
+            return new Tuple(evenNumber.newInstance(String.valueOf(power)), quotient);
         } else{
-            return new Tuple((E) Factory.newInstance(evenNumber.getClass(), "-1"), (E) Factory.newInstance(evenNumber.getClass(), "-1"));
+            return new Tuple(evenNumber.newInstance("-1"), evenNumber.newInstance("-1"));
         }
     }
 
