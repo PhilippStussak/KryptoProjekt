@@ -81,7 +81,8 @@ public class HammingCode extends Coder {
             int errorPos = getErrorPosition();
             result.put(2, errorPos);
             if (errorPos > -1) {
-                result.put(3, correctError(errorPos));
+                correctError(errorPos);
+                result.put(3, decode());
             } else {
                 result.put(3, "detectErrorTooManyErrors");
             }
@@ -304,7 +305,7 @@ public class HammingCode extends Coder {
         }
         int distance = 0;
         for (int i = 0; i < a.getMatrixColumnCapacity(); i++) {
-            if (a.get(0, i) != b.get(0, i)) {
+            if (a.get(0, i).compareTo(b.get(0, i)) != 0) {
                 distance++;
             }
         }

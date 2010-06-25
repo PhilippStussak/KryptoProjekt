@@ -79,8 +79,8 @@ public class HammingCodeTest extends TestCase{
         h = c.detectError();
 
         if((Boolean) h.get(0)){
-            if((Integer) h.get(2) != -1){
-                assertEquals("1101100",h.get(3));
+            if((Integer) h.get(2) > -1){
+                assertEquals("110",h.get(3));
                 System.out.println(h.get(3));
             }
             else{
@@ -101,7 +101,26 @@ public class HammingCodeTest extends TestCase{
     }
 
     public void testHammingDistance() {
-        Coder c = new HammingCode("011");
+       KryptoType<PrimeFieldElement> [][] t = new KryptoType[1][7];
+       KryptoType<PrimeFieldElement> [][] t2 = new KryptoType[1][7];
+
+       t[0][0] = new PrimeFieldElement(1,2);
+       t[0][1] = new PrimeFieldElement(0,2);
+       t[0][2] = new PrimeFieldElement(1,2);
+       t[0][3] = new PrimeFieldElement(1,2);
+       t[0][4] = new PrimeFieldElement(1,2);
+       t[0][5] = new PrimeFieldElement(1,2);
+       t[0][6] = new PrimeFieldElement(0,2);
+
+       t2[0][0] = new PrimeFieldElement(0,2);
+       t2[0][1] = new PrimeFieldElement(0,2);
+       t2[0][2] = new PrimeFieldElement(1,2);
+       t2[0][3] = new PrimeFieldElement(0,2);
+       t2[0][4] = new PrimeFieldElement(1,2);
+       t2[0][5] = new PrimeFieldElement(1,2);
+       t2[0][6] = new PrimeFieldElement(1,2);
+
+       assertEquals(3, HammingCode.hammingDistance(new Matrix(t), new Matrix(t2)));
     }
 
     public void testVectorWeight() {
