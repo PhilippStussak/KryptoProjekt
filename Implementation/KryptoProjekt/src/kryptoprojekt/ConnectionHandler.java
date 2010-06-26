@@ -7,6 +7,7 @@ package kryptoprojekt;
 import java.awt.Shape;
 import java.util.Iterator;
 import java.util.LinkedList;
+import javax.swing.JTextArea;
 
 /**
  *
@@ -16,6 +17,15 @@ public class ConnectionHandler {
 
     private LinkedList<Kit> frames = new LinkedList<Kit>();
     private LinkedList<Connection> connections = new LinkedList<Connection>();
+
+    public LinkedList<Kit> getFrames() {
+        return frames;
+    }
+
+    public void execute(JTextArea area) {
+        for(Kit k : frames)
+            area.setText(area.getText() + "\n" + k.execute());
+    }
 
     public void add(Kit kit) {
         frames.add(kit);
@@ -59,15 +69,15 @@ public class ConnectionHandler {
         return result;
     }
 
-    public boolean removeSameTarget(Connection con) {
+    public Connection removeSameTarget(Connection con) {
         Iterator<Connection> it = connections.iterator();
         while (it.hasNext()) {
             Connection connection = it.next();
             if (connection.sameTarget(con)) {
                 it.remove();
-                return true;
+                return connection;
             }
         }
-        return false;
+        return null;
     }
 }

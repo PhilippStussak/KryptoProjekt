@@ -16,7 +16,6 @@ import javax.swing.JList;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
 import kryptoprojekt.model.Validator;
-import kryptoprojekt.Result;
 import kryptoprojekt.model.Z;
 
 /**
@@ -28,7 +27,6 @@ public class ZFrame extends Kit {
     /** Creates new form ZFrame */
     public ZFrame(ConnectionHandler handler) {
         super(handler);
-        result = new Result[]{new Result()};
         initComponents();
         initLogicComponents();
     }
@@ -119,7 +117,7 @@ public class ZFrame extends Kit {
     private void jTextField1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jTextField1PropertyChange
         if (Validator.isInteger(jTextField1.getText())) {
             jTextField1.setForeground(Color.black);
-            result[0].setResult(new Z(jTextField1.getText()));
+            results.put(getTitle() + "_number", new Z(jTextField1.getText()));
         }
         else
             jTextField1.setForeground(Color.red);
@@ -132,7 +130,7 @@ public class ZFrame extends Kit {
     private void jTextField1CaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextField1CaretUpdate
         if (Validator.isInteger(jTextField1.getText())) {
             jTextField1.setForeground(Color.black);
-            result[0].setResult(new Z(jTextField1.getText()));
+            results.put(getTitle() + "_number", new Z(jTextField1.getText()));
         }
         else
             jTextField1.setForeground(Color.red);
@@ -141,9 +139,15 @@ public class ZFrame extends Kit {
     private void initLogicComponents() {
         jTextField1.setTransferHandler(null);
         JList list = getDragList(new Object[]{getTitle() + "_number"});
+        results.put(getTitle() + "_number", null);
         jPanel1.setLayout(new BorderLayout());
         jPanel1.add(list);
         this.setSize(160, 120);
+    }
+
+    @Override
+    public String execute() {
+        return results.get(getTitle() + "_number").toString();
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

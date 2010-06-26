@@ -18,6 +18,9 @@ import javax.swing.Timer;
 import javax.swing.Icon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import kryptoprojekt.basicFrames.DivisionFrame;
 import kryptoprojekt.basicFrames.MultiplicationFrame;
 import kryptoprojekt.coderFrames.DecodeHammingFrame;
@@ -125,6 +128,7 @@ public class KryptoProjektView extends FrameView {
         mainPanel = new javax.swing.JPanel();
         menuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
+        jMenuItem7 = new javax.swing.JMenuItem();
         javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -143,6 +147,15 @@ public class KryptoProjektView extends FrameView {
         statusAnimationLabel = new javax.swing.JLabel();
         progressBar = new javax.swing.JProgressBar();
         jMenu3 = new javax.swing.JMenu();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu5 = new javax.swing.JMenu();
+        jMenu6 = new javax.swing.JMenu();
+        jMenuBar2 = new javax.swing.JMenuBar();
+        jMenu7 = new javax.swing.JMenu();
+        jMenu8 = new javax.swing.JMenu();
+        jMenuBar3 = new javax.swing.JMenuBar();
+        jMenu9 = new javax.swing.JMenu();
+        jMenu10 = new javax.swing.JMenu();
 
         mainPanel.setName("mainPanel"); // NOI18N
 
@@ -154,7 +167,7 @@ public class KryptoProjektView extends FrameView {
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 249, Short.MAX_VALUE)
+            .addGap(0, 254, Short.MAX_VALUE)
         );
 
         menuBar.setName("menuBar"); // NOI18N
@@ -162,6 +175,15 @@ public class KryptoProjektView extends FrameView {
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(kryptoprojekt.KryptoProjektApp.class).getContext().getResourceMap(KryptoProjektView.class);
         fileMenu.setText(resourceMap.getString("fileMenu.text")); // NOI18N
         fileMenu.setName("fileMenu"); // NOI18N
+
+        jMenuItem7.setText(resourceMap.getString("jMenuItem7.text")); // NOI18N
+        jMenuItem7.setName("jMenuItem7"); // NOI18N
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        fileMenu.add(jMenuItem7);
 
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(kryptoprojekt.KryptoProjektApp.class).getContext().getActionMap(KryptoProjektView.class, this);
         exitMenuItem.setAction(actionMap.get("quit")); // NOI18N
@@ -288,6 +310,36 @@ public class KryptoProjektView extends FrameView {
         jMenu3.setText(resourceMap.getString("jMenu3.text")); // NOI18N
         jMenu3.setName("jMenu3"); // NOI18N
 
+        jMenuBar1.setName("jMenuBar1"); // NOI18N
+
+        jMenu5.setText(resourceMap.getString("jMenu5.text")); // NOI18N
+        jMenu5.setName("jMenu5"); // NOI18N
+        jMenuBar1.add(jMenu5);
+
+        jMenu6.setText(resourceMap.getString("jMenu6.text")); // NOI18N
+        jMenu6.setName("jMenu6"); // NOI18N
+        jMenuBar1.add(jMenu6);
+
+        jMenuBar2.setName("jMenuBar2"); // NOI18N
+
+        jMenu7.setText(resourceMap.getString("jMenu7.text")); // NOI18N
+        jMenu7.setName("jMenu7"); // NOI18N
+        jMenuBar2.add(jMenu7);
+
+        jMenu8.setText(resourceMap.getString("jMenu8.text")); // NOI18N
+        jMenu8.setName("jMenu8"); // NOI18N
+        jMenuBar2.add(jMenu8);
+
+        jMenuBar3.setName("jMenuBar3"); // NOI18N
+
+        jMenu9.setText(resourceMap.getString("jMenu9.text")); // NOI18N
+        jMenu9.setName("jMenu9"); // NOI18N
+        jMenuBar3.add(jMenu9);
+
+        jMenu10.setText(resourceMap.getString("jMenu10.text")); // NOI18N
+        jMenu10.setName("jMenu10"); // NOI18N
+        jMenuBar3.add(jMenu10);
+
         setComponent(mainPanel);
         setMenuBar(menuBar);
         setStatusBar(statusPanel);
@@ -329,17 +381,40 @@ public class KryptoProjektView extends FrameView {
         desktop.add(kit);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        JInternalFrame results = new JInternalFrame("result", true, true, true, true);
+        results.setSize(desktop.getWidth(), desktop.getHeight());
+        results.setVisible(true);
+        results.moveToFront();
+        JScrollPane scrollpane = new JScrollPane();
+        JTextArea area = new JTextArea();
+        area.setVisible(true);
+        results.add(area);
+        desktop.add(results, 100);
+        new Executor(handler, area).start();
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu10;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenu jMenu6;
+    private javax.swing.JMenu jMenu7;
+    private javax.swing.JMenu jMenu8;
+    private javax.swing.JMenu jMenu9;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuBar jMenuBar2;
+    private javax.swing.JMenuBar jMenuBar3;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JProgressBar progressBar;

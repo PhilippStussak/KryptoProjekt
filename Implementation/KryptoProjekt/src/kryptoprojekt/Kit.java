@@ -7,6 +7,8 @@ package kryptoprojekt;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.dnd.*;
+import java.util.HashMap;
+import java.util.LinkedList;
 import javax.swing.JInternalFrame;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -20,31 +22,43 @@ public class Kit extends JInternalFrame {
 
     protected ConnectionHandler handler;
     private static int id = 1;
-    protected Result[] result;
+    protected HashMap<String, Object> results;
+    protected LinkedList<Kit> parents, children;
 
     public Kit(ConnectionHandler handler) {
-        super("#" + id++);
+        super("#" + id++, false, true, false, false);
         this.handler = handler;
+        results = new HashMap<String, Object>();
+        parents = new LinkedList<Kit>();
+        children = new LinkedList<Kit>();
         handler.add(this);
     }
 
-    public Result getResult(int id) {
-        return this.result[id];
+    public Object getResult(String id) {
+        return this.results.get(id);
     }
 
-    public JList getDragList(Object[] list) {
+    public LinkedList<Kit> getParents() {
+        return parents;
+    }
+
+    public LinkedList<Kit> getChildren() {
+        return children;
+    }
+
+    public DragList getDragList(Object[] list) {
         return new DragList(list, this);
     }
 
-    public JTextField getDropTextField() {
+    public DropTextField getDropTextField() {
         return new DropTextField(this);
     }
 
-    public void execute() {
+    public String execute() {
         throw new UnsupportedOperationException();
     }
 
-    class DragList extends JList implements DragGestureListener {
+    public class DragList extends JList implements DragGestureListener {
 
         private Kit origin;
 
@@ -61,13 +75,18 @@ public class Kit extends JInternalFrame {
     }
     private static Kit parent;
 
-    class DropTextField extends JTextField implements DropTargetListener {
+    public class DropTextField extends JTextField implements DropTargetListener {
 
-        private Kit origin;
+        private Kit origin, p;
+        private String key;
 
         public DropTextField(Kit origin) {
             this.origin = origin;
             new DropTarget(this, this);
+        }
+
+        public Object getResult() {
+            return p.getResult(key);
         }
 
         public void dragEnter(DropTargetDragEvent dtde) {
@@ -90,13 +109,21 @@ public class Kit extends JInternalFrame {
                         JOptionPane.showMessageDialog(null, "Drop on same frame not possible!");
                     } else {
                         Connection con = new Connection(parent, origin, this);
-                        handler.removeSameTarget(con);
+                        Connection old = handler.removeSameTarget(con);
+                        if(old != null) {
+                            origin.parents.remove(old.getParent());
+                        }
                         if (!handler.add(con)) {
                             JOptionPane.showMessageDialog(null, "Connection already exists!");
                         } else {
                             dtde.acceptDrop(DnDConstants.ACTION_COPY);
-                            this.setText((String) ta.getTransferData(DataFlavor.stringFlavor));
+                            String text = (String)ta.getTransferData(DataFlavor.stringFlavor);
+                            this.setText(text);
                             dtde.getDropTargetContext().dropComplete(true);
+                            origin.parents.add(parent);
+                            parent.children.add(origin);
+                            p = parent;
+                            key = text;
                         }
                     }
                 } else {
@@ -108,9 +135,5 @@ public class Kit extends JInternalFrame {
                 e.printStackTrace();
             }
         }
-    }
-
-    public String toString() {
-        return getTitle();
     }
 }

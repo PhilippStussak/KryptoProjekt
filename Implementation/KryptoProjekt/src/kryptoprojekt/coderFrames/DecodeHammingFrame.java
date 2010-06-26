@@ -129,8 +129,8 @@ public class DecodeHammingFrame extends Kit {
     }
 
     @Override
-    public void execute() {
-        
+    public String execute() {
+        return null;
     }
 
 

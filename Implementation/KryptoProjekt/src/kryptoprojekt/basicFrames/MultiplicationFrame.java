@@ -16,12 +16,16 @@ import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
+import kryptoprojekt.model.KryptoType;
 
 /**
  *
  * @author Stefan
  */
 public class MultiplicationFrame extends Kit {
+
+    private DropTextField textField1 = getDropTextField();
+    private DropTextField textField2 = getDropTextField();
 
     /** Creates new form MultiplyFrame */
     public MultiplicationFrame(ConnectionHandler handler) {
@@ -93,7 +97,7 @@ public class MultiplicationFrame extends Kit {
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
         c.gridy = 0;
-        jPanel1.add(getDropTextField(), c);
+        jPanel1.add(textField1, c);
 
         c.weightx = 0.01;
         c.fill = GridBagConstraints.BOTH;
@@ -105,7 +109,7 @@ public class MultiplicationFrame extends Kit {
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 2;
         c.gridy = 0;
-        jPanel1.add(getDropTextField(), c);
+        jPanel1.add(textField2, c);
 
         c.weightx = 1;
         c.fill = GridBagConstraints.BOTH;
@@ -115,6 +119,13 @@ public class MultiplicationFrame extends Kit {
         jPanel1.add(getDragList(new Object[] {getTitle() + "_product"}), c);
 
         this.setSize(160, 120);
+    }
+
+    @Override
+    public String execute() {
+        Object result = ((KryptoType)textField1.getResult()).multiply((KryptoType)textField2.getResult());
+        results.put(getTitle() + "_product", result);
+        return result.toString();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

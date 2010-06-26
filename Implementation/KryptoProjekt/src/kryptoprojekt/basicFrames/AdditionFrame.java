@@ -16,12 +16,16 @@ import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
+import kryptoprojekt.model.KryptoType;
 
 /**
  *
  * @author Stefan
  */
 public class AdditionFrame extends Kit {
+
+    private DropTextField textField1 = getDropTextField();
+    private DropTextField textField2 = getDropTextField();
 
     /** Creates new form AddFrame */
     public AdditionFrame(ConnectionHandler handler) {
@@ -88,7 +92,7 @@ public class AdditionFrame extends Kit {
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
         c.gridy = 0;
-        jPanel1.add(getDropTextField(), c);
+        jPanel1.add(textField1, c);
 
         c.weightx = 0.01;
         c.fill = GridBagConstraints.BOTH;
@@ -100,7 +104,7 @@ public class AdditionFrame extends Kit {
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 2;
         c.gridy = 0;
-        jPanel1.add(getDropTextField(), c);
+        jPanel1.add(textField2, c);
 
         c.weightx = 1;
         c.fill = GridBagConstraints.BOTH;
@@ -113,8 +117,10 @@ public class AdditionFrame extends Kit {
     }
 
     @Override
-    public void execute() {
-
+    public String execute() {
+        Object result = ((KryptoType)textField1.getResult()).add((KryptoType)textField2.getResult());
+        results.put(getTitle() + "_sum", result);
+        return result.toString();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
