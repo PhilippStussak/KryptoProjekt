@@ -41,6 +41,23 @@ public class PrimeFieldElement implements KryptoType<PrimeFieldElement> {
         }
     }
 
+     /**
+     * String Constructor for PrimeFieldelement
+     * @param String with value and base in form: value,base
+     * @throws Runtime Exception if Base is not prime
+     */
+    public PrimeFieldElement(String valueAndBase){
+        String[] probableParam = valueAndBase.split(",");
+        Z probValue = new Z(probableParam[0]);
+        Z probBase = new Z(probableParam[1]);
+        if (probBase.isPrime()) {
+            this.base = probBase;
+            this.value = probValue.mod(probBase);
+        } else {
+            throw new RuntimeException("Base is not prime!");
+        }
+    }
+
     /**
      * Add-Method for two PrimeFieldElements
      * @param PrimeFieldElement to be added
@@ -230,6 +247,6 @@ public class PrimeFieldElement implements KryptoType<PrimeFieldElement> {
     }
 
     public PrimeFieldElement newInstance(String value) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return new PrimeFieldElement(value);
     }
 }

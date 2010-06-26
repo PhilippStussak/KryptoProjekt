@@ -24,6 +24,9 @@ public class PrimeFieldElementTest extends TestCase {
         PrimeFieldElement pfeZ = new PrimeFieldElement(new Z(10), new Z(7));
         assertEquals(pfeZ.getPrimeElemValue(), new Z(10).mod(new Z(7)));
 
+        PrimeFieldElement pfeString = new PrimeFieldElement("10,7");
+        assertEquals(pfeString.getPrimeElemValue(), new Z(10).mod(new Z(7)));
+
         try {
             PrimeFieldElement pfeIntFail = new PrimeFieldElement(10, 4);
             fail();
@@ -33,6 +36,13 @@ public class PrimeFieldElementTest extends TestCase {
 
         try {
             PrimeFieldElement pfeZFail = new PrimeFieldElement(new Z(10), new Z(4));
+            fail();
+        } catch (RuntimeException re) {
+            // base is not prime
+        }
+
+         try {
+            PrimeFieldElement pfeStringFail = new PrimeFieldElement("10,4");
             fail();
         } catch (RuntimeException re) {
             // base is not prime
