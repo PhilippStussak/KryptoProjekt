@@ -30,7 +30,7 @@ public class Desktop extends JDesktopPane {
         this.setDoubleBuffered(true);
         try {
             // ToDo: Change Patchspec from this package to resource.kryptoprojekt
-            image = javax.imageio.ImageIO.read(new java.net.URL(getClass().getResource("panelBackground.png"), "panelBackground.png"));
+            image = javax.imageio.ImageIO.read(new java.net.URL(getClass().getResource("resources\\panelBackground.png"), "resources\\panelBackground.png"));
         } catch (Exception e) {}
     }
 
