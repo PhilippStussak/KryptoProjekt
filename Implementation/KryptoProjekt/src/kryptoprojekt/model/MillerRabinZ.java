@@ -99,14 +99,14 @@ public class MillerRabinZ extends MillerRabinTest<Z>{
             }
             Z exponent = factors.first();
             Z oddFactor = factors.second();
-            Z maxPower = Basic.squareAndMultiply(twoObj, exponent.subtract(oneObj));
+            Z maxPower = Basic.squareAndMultiply(twoObj, exponent.subtract(oneObj)).first();
 
             int assertPostCondCounter = 0;
             nextBase:
             for (Z checkBases : bases) {
                 ++assertPostCondCounter;
                 
-                firstTest = Basic.squareAndMultiply(checkBases, oddFactor, checkPrime);
+                firstTest = Basic.squareAndMultiply(checkBases, oddFactor, checkPrime).first();
                 if((firstTest).isONE() || firstTest.equals(checkPrime.subtract(oneObj))) {
                     continue;
                 } else{

@@ -166,7 +166,7 @@ public class PrimeFieldElement implements KryptoType<PrimeFieldElement> {
      * @return new inverse PrimeFieldElement
      */
     public PrimeFieldElement inverseElementMultiplication() {
-        return new PrimeFieldElement(Basic.squareAndMultiply(value, base.subtract(new Z(2))), base);
+        return new PrimeFieldElement(Basic.squareAndMultiply(value, base.subtract(new Z(2))).first(), base);
     }
 
     /**

@@ -90,7 +90,7 @@ public class FermatZ extends FermatTest<Z>{
         int assertPostCondCounter = 0;
         for (Z base : bases) {
             ++assertPostCondCounter;
-            isPrime = Basic.squareAndMultiply(base, checkPrime.subtract(oneObj), checkPrime).isONE();
+            isPrime = Basic.squareAndMultiply(base, checkPrime.subtract(oneObj), checkPrime).first().isONE();
             if (!isPrime) {
                 //Postcondition
                 assert isPrime == false: "isPrime has a false state: isPrime = " +isPrime;

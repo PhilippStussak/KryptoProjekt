@@ -54,18 +54,27 @@ public class Basic {
      * @param <E> defines the type of the parameters and the return-value.
      * @param base value which is to be raise to the exponent.
      * @param exponent exponent to which the base is to be raised.
-     * @return this<sup>exponent</sup>
+     * @return Tuple(base<sup>exponent</sup>, intermediate data)
      */
-    public static <E extends KryptoType<E>> E squareAndMultiply(E base, E exponent) {
+    public static <E extends KryptoType<E>, F extends KryptoType<F>> Tuple<E, LinkedList<String>> squareAndMultiply(E base, F exponent) {
         char[] bin = exponent.toBinaryString().toCharArray();
-        E result = base.newInstance("1");
+        E result;
+        if(base.getClass().equals(PrimeFieldElement.class))
+            result = base.newInstance("1," + ((PrimeFieldElement)(KryptoType)base).getPrimeElemBase());
+        else
+            result = base.newInstance("1");
+        LinkedList<String> list = new LinkedList<String>();
         for (char c : bin) {
+            String resultString = result + " * " + result;
             result = result.multiply(result);
             if (c == '1') {
                 result = result.multiply(base);
+                resultString += " * " + base;
             }
+            resultString = result + " = " + resultString;
+            list.add(resultString);
         }
-        return result;
+        return new Tuple<E, LinkedList<String>>(result, list);
     }
 
     /**
@@ -76,18 +85,23 @@ public class Basic {
      * @param base value which is to be raise to the exponent.
      * @param exponent exponent to which the base is to be raised.
      * @param modul the modulus which is used in every arithmetic computation.
-     * @return this<sup>exponent</sup> % modul
+     * @return Tuple(base<sup>exponent</sup> % modul, intermediate data)
      */
-    public static <E extends KryptoType<E>> E squareAndMultiply(E base, E exponent, E modul) {
+    public static <E extends KryptoType<E>> Tuple<E, LinkedList<String>> squareAndMultiply(E base, E exponent, E modul) {
         char[] bin = exponent.toBinaryString().toCharArray();
         E result = base.newInstance("1");
+        LinkedList<String> list = new LinkedList<String>();
         for (char c : bin) {
+            String resultString = "(" + result + " * " + result;
             result = result.multiply(result).mod(modul);
             if (c == '1') {
                 result = result.multiply(base).mod(modul);
+                resultString += " * " + base;
             }
+            resultString = result + " = " +  resultString + ") mod " + modul;
+            list.add(resultString);
         }
-        return result;
+        return new Tuple<E, LinkedList<String>>(result, list);
     }
 
     /**
@@ -96,15 +110,20 @@ public class Basic {
      * to the given number.
      *
      * @param number number for which the totient function is to be calculated.
-     * @return the number of positive coprimes to the given parameter.
+     * @return the number of positive coprimes to the given
+     * parameter as first argument, and the primefactors of the number
+     * as the second. {@code Tuple(phi(number), LinkedList(primefactors))}
      */
-    public static Z phi(Z number) {
+    public static Tuple<Z, LinkedList<Z>> phi(Z number) {
+        LinkedList<Z> list = new LinkedList<Z>();
         if(number.compareTo(new Z(1)) < 0 || number.compareTo(new Z(Integer.MAX_VALUE).multiply(new Z(Integer.MAX_VALUE))) > 0)
             throw new IllegalArgumentException();
         if (number.equals(new Z(1)) || number.equals(new Z(2))) {
-            return new Z(1);
+            list.add(new Z(2));
+            return new Tuple<Z, LinkedList<Z>>(new Z(1), list);
         } else if (number.equals(new Z(3))) {
-            return new Z(2);
+            list.add(new Z(3));
+            return new Tuple<Z, LinkedList<Z>>(new Z(1), list);
         }
         Z result = number;
         for (int i : new Primes(Basic.sqrt(number).intValue())) {
@@ -112,6 +131,7 @@ public class Basic {
             if (number.mod(divider).isZERO()) {
                 result = result.subtract(result.divide(divider));
                 while (number.mod(divider).isZERO()) {
+                    list.add(divider);
                     number = number.divide(divider);
                 }
                 if (number.isONE()) {
@@ -120,9 +140,10 @@ public class Basic {
             }
         }
         if (!number.isONE()) {
+            list.add(number);
             result = result.subtract(result.divide(number));
         }
-        return result;
+        return new Tuple<Z, LinkedList<Z>>(result, list);
     }
 
     /**
@@ -150,15 +171,18 @@ public class Basic {
      * @param <E> defines the type of the parameters and the return-value.
      * @param e1 first value for extended euclidean algorithm.
      * @param e2 second value for extended euclidean algorithm.
-     * @return
+     * @return Returns the result of the equation a * s - b * t = gcd(a, b).
+     * {@code Tuple(s, intermediate data)}
      */
-    public static <E extends KryptoType<E>> Tuple<E, LinkedList<E[]>> extendedGCD(E e1, E e2) {
+    public static <E extends KryptoType<E>> Tuple<E, LinkedList<String>> extendedGCD(E e1, E e2) {
         Tuple<E, LinkedList<E[]>> gcd = Basic.gcd(e1, e2);
         LinkedList<E[]> list = gcd.second();
         list.removeLast();
         E[] result = permuteForEctendedGCD(list.getLast());
         list.removeLast();
         int index = 0;
+        LinkedList<String> resultList = new LinkedList<String>();
+        resultList.add(gcd.first() + " = " + result[0] + " * " + result[1] + " " + result[2] + " * " + result[3]);
         while(!list.isEmpty()) {
             E[] field = permuteForEctendedGCD(list.getLast());
             list.removeLast();
@@ -172,12 +196,10 @@ public class Basic {
                 result[0] = result[0].multiply(field[0]);
                 result[1] = field[1];
             }
-            for(E e : result)
-                System.out.print(e + " ");
-            System.out.println();
+            resultList.add(gcd.first() + " = " + result[0] + " * " + result[1] + " " + result[2] + " * " + result[3]);
             index++;
         }
-        return new Tuple<E, LinkedList<E[]>>(result[0], null);
+        return new Tuple<E, LinkedList<String>>(result[0], resultList);
     }
 
     private static <E extends KryptoType<E>> E[] permuteForEctendedGCD(E[] equation) {

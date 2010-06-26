@@ -46,9 +46,9 @@ public abstract class MillerRabinTest <E extends KryptoType<E>> implements Prime
             dividend = quotient;
             quotient = dividend.divide(divisor);
             ++power;
-            assert evenNumber.compareTo(Basic.squareAndMultiply(divisor, evenNumber.newInstance(String.valueOf(power)))) >=0: "Too many Iterations. even number: " +evenNumber+ ", " +power+ " to the power of " +divisor+": " +Basic.squareAndMultiply(divisor, evenNumber.newInstance(String.valueOf(power)));
+            assert evenNumber.compareTo(Basic.squareAndMultiply(divisor, evenNumber.newInstance(String.valueOf(power))).first()) >=0: "Too many Iterations. even number: " +evenNumber+ ", " +power+ " to the power of " +divisor+": " +Basic.squareAndMultiply(divisor, evenNumber.newInstance(String.valueOf(power)));
         }
-        if (Basic.squareAndMultiply(divisor, evenNumber.newInstance(String.valueOf(power))).multiply(quotient).compareTo(evenNumber) == 0) {
+        if (Basic.squareAndMultiply(divisor, evenNumber.newInstance(String.valueOf(power))).first().multiply(quotient).compareTo(evenNumber) == 0) {
             //Postcondition
             assert (evenNumber.newInstance(String.valueOf(power))).compareTo(evenNumber.newInstance("0")) >=0 || (evenNumber.newInstance(String.valueOf(quotient))).compareTo(evenNumber.newInstance("0")) >0:"power or quotient(odd number) have a wrong value. power: " +power+ ", quotient: " +quotient;
             return new Tuple(evenNumber.newInstance(String.valueOf(power)), quotient);
