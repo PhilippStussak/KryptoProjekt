@@ -174,6 +174,15 @@
             <Property name="name" type="java.lang.String" value="jMenu4" noResource="true"/>
           </Properties>
           <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem13">
+              <Properties>
+                <Property name="text" type="java.lang.String" resourceKey="jMenuItem13.text"/>
+                <Property name="name" type="java.lang.String" value="jMenuItem13" noResource="true"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem13ActionPerformed"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem6">
               <Properties>
                 <Property name="text" type="java.lang.String" resourceKey="jMenuItem6.text"/>
@@ -181,6 +190,24 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem6ActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="hammingDistanceMenuItem">
+              <Properties>
+                <Property name="text" type="java.lang.String" resourceKey="hammingDistanceMenuItem.text"/>
+                <Property name="name" type="java.lang.String" value="hammingDistanceMenuItem" noResource="true"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="hammingDistanceMenuItemActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="vectorWeightMenuItem">
+              <Properties>
+                <Property name="text" type="java.lang.String" resourceKey="vectorWeightMenuItem.text"/>
+                <Property name="name" type="java.lang.String" value="vectorWeightMenuItem" noResource="true"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="vectorWeightMenuItemActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
