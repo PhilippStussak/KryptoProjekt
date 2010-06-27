@@ -445,7 +445,7 @@ public class KryptoProjektView extends FrameView {
         JTextArea area = new JTextArea();
         area.setVisible(true);
         results.add(area);
-        desktop.add(results, 100);
+        desktop.add(results);
         new Executor(handler, area).start();
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 

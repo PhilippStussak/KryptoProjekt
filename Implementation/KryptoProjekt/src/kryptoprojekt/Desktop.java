@@ -5,6 +5,7 @@
 package kryptoprojekt;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -46,5 +47,12 @@ public class Desktop extends JDesktopPane {
             g2.draw(arrow);
         repaint();
     }
-    
+
+    @Override
+    public Component add(Component c) {
+        super.add(c);
+        moveToFront(c);
+        return c;
+    }
+
 }
