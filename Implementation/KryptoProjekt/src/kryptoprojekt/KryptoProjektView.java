@@ -22,8 +22,12 @@ import javax.swing.JInternalFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import kryptoprojekt.basicFrames.DivisionFrame;
+import kryptoprojekt.basicFrames.GCDFrame;
+import kryptoprojekt.basicFrames.ModuloFrame;
 import kryptoprojekt.basicFrames.MultiplicationFrame;
 import kryptoprojekt.basicFrames.PrimeFieldElementFrame;
+import kryptoprojekt.basicFrames.SaMFrame;
+import kryptoprojekt.basicFrames.SaMModFrame;
 import kryptoprojekt.coderFrames.DecodeHammingFrame;
 
 /**
@@ -137,12 +141,16 @@ public class KryptoProjektView extends FrameView {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem9 = new javax.swing.JMenuItem();
+        jMenuItem10 = new javax.swing.JMenuItem();
+        jMenuItem11 = new javax.swing.JMenuItem();
+        jMenuItem12 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
-        javax.swing.JMenu helpMenu = new javax.swing.JMenu();
-        javax.swing.JMenuItem aboutMenuItem = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
+        javax.swing.JMenu helpMenu = new javax.swing.JMenu();
+        javax.swing.JMenuItem aboutMenuItem = new javax.swing.JMenuItem();
         statusPanel = new javax.swing.JPanel();
         javax.swing.JSeparator statusPanelSeparator = new javax.swing.JSeparator();
         statusMessageLabel = new javax.swing.JLabel();
@@ -169,7 +177,7 @@ public class KryptoProjektView extends FrameView {
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 254, Short.MAX_VALUE)
+            .addGap(0, 248, Short.MAX_VALUE)
         );
 
         menuBar.setName("menuBar"); // NOI18N
@@ -236,6 +244,42 @@ public class KryptoProjektView extends FrameView {
         });
         jMenu2.add(jMenuItem5);
 
+        jMenuItem9.setText(resourceMap.getString("jMenuItem9.text")); // NOI18N
+        jMenuItem9.setName("jMenuItem9"); // NOI18N
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem9);
+
+        jMenuItem10.setText(resourceMap.getString("jMenuItem10.text")); // NOI18N
+        jMenuItem10.setName("jMenuItem10"); // NOI18N
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem10);
+
+        jMenuItem11.setText(resourceMap.getString("jMenuItem11.text")); // NOI18N
+        jMenuItem11.setName("jMenuItem11"); // NOI18N
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem11);
+
+        jMenuItem12.setText(resourceMap.getString("jMenuItem12.text")); // NOI18N
+        jMenuItem12.setName("jMenuItem12"); // NOI18N
+        jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem12ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem12);
+
         jMenu1.add(jMenu2);
 
         jMenuItem3.setText(resourceMap.getString("jMenuItem3.text")); // NOI18N
@@ -258,15 +302,6 @@ public class KryptoProjektView extends FrameView {
 
         menuBar.add(jMenu1);
 
-        helpMenu.setText(resourceMap.getString("helpMenu.text")); // NOI18N
-        helpMenu.setName("helpMenu"); // NOI18N
-
-        aboutMenuItem.setAction(actionMap.get("showAboutBox")); // NOI18N
-        aboutMenuItem.setName("aboutMenuItem"); // NOI18N
-        helpMenu.add(aboutMenuItem);
-
-        menuBar.add(helpMenu);
-
         jMenu4.setText(resourceMap.getString("jMenu4.text")); // NOI18N
         jMenu4.setName("jMenu4"); // NOI18N
 
@@ -280,6 +315,15 @@ public class KryptoProjektView extends FrameView {
         jMenu4.add(jMenuItem6);
 
         menuBar.add(jMenu4);
+
+        helpMenu.setText(resourceMap.getString("helpMenu.text")); // NOI18N
+        helpMenu.setName("helpMenu"); // NOI18N
+
+        aboutMenuItem.setAction(actionMap.get("showAboutBox")); // NOI18N
+        aboutMenuItem.setName("aboutMenuItem"); // NOI18N
+        helpMenu.add(aboutMenuItem);
+
+        menuBar.add(helpMenu);
 
         statusPanel.setName("statusPanel"); // NOI18N
 
@@ -300,7 +344,7 @@ public class KryptoProjektView extends FrameView {
             .addGroup(statusPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(statusMessageLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 230, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 226, Short.MAX_VALUE)
                 .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(statusAnimationLabel)
@@ -411,6 +455,30 @@ public class KryptoProjektView extends FrameView {
         desktop.add(kit);
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        Kit kit = new ModuloFrame(handler);
+        kit.setVisible(true);
+        desktop.add(kit);
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
+
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        Kit kit = new SaMFrame(handler);
+        kit.setVisible(true);
+        desktop.add(kit);
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
+
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+        Kit kit = new SaMModFrame(handler);
+        kit.setVisible(true);
+        desktop.add(kit);
+    }//GEN-LAST:event_jMenuItem11ActionPerformed
+
+    private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
+        Kit kit = new GCDFrame(handler);
+        kit.setVisible(true);
+        desktop.add(kit);
+    }//GEN-LAST:event_jMenuItem12ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu10;
@@ -426,6 +494,9 @@ public class KryptoProjektView extends FrameView {
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuBar jMenuBar3;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem10;
+    private javax.swing.JMenuItem jMenuItem11;
+    private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
@@ -433,6 +504,7 @@ public class KryptoProjektView extends FrameView {
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JProgressBar progressBar;
