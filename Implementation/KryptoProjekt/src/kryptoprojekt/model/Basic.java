@@ -57,6 +57,9 @@ public class Basic {
      * @return Tuple(base<sup>exponent</sup>, intermediate data)
      */
     public static <E extends KryptoType<E>, F extends KryptoType<F>> Tuple<E, LinkedList<String>> squareAndMultiply(E base, F exponent) {
+        if(exponent.getClass().equals(Z.class))
+            if(((Z)(KryptoType)exponent).compareTo(new Z(0)) < 0)
+                throw new IllegalArgumentException();
         char[] bin = exponent.toBinaryString().toCharArray();
         E result;
         if(base.getClass().equals(PrimeFieldElement.class))
@@ -88,6 +91,9 @@ public class Basic {
      * @return Tuple(base<sup>exponent</sup> % modul, intermediate data)
      */
     public static <E extends KryptoType<E>> Tuple<E, LinkedList<String>> squareAndMultiply(E base, E exponent, E modul) {
+        if(base.getClass().equals(Z.class))
+            if(((Z)(KryptoType)exponent).compareTo(new Z(0)) < 0 || ((Z)(KryptoType)modul).compareTo(new Z(0)) <= 0)
+                throw new IllegalArgumentException();
         char[] bin = exponent.toBinaryString().toCharArray();
         E result = base.newInstance("1");
         LinkedList<String> list = new LinkedList<String>();
