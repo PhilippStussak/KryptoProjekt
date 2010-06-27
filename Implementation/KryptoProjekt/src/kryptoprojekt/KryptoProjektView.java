@@ -29,6 +29,8 @@ import kryptoprojekt.basicFrames.PrimeFieldElementFrame;
 import kryptoprojekt.basicFrames.SaMFrame;
 import kryptoprojekt.basicFrames.SaMModFrame;
 import kryptoprojekt.coderFrames.DecodeHammingFrame;
+import kryptoprojekt.coderFrames.HammingDistanceFrame;
+import kryptoprojekt.coderFrames.HammingWeightFrame;
 import kryptoprojekt.coderFrames.InitHammingJFrame;
 
 /**
@@ -151,6 +153,8 @@ public class KryptoProjektView extends FrameView {
         jMenu4 = new javax.swing.JMenu();
         jMenuItem13 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
+        hammingDistanceMenuItem = new javax.swing.JMenuItem();
+        vectorWeightMenuItem = new javax.swing.JMenuItem();
         javax.swing.JMenu helpMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem aboutMenuItem = new javax.swing.JMenuItem();
         statusPanel = new javax.swing.JPanel();
@@ -325,6 +329,24 @@ public class KryptoProjektView extends FrameView {
         });
         jMenu4.add(jMenuItem6);
 
+        hammingDistanceMenuItem.setText(resourceMap.getString("hammingDistanceMenuItem.text")); // NOI18N
+        hammingDistanceMenuItem.setName("hammingDistanceMenuItem"); // NOI18N
+        hammingDistanceMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                hammingDistanceMenuItemActionPerformed(evt);
+            }
+        });
+        jMenu4.add(hammingDistanceMenuItem);
+
+        vectorWeightMenuItem.setText(resourceMap.getString("vectorWeightMenuItem.text")); // NOI18N
+        vectorWeightMenuItem.setName("vectorWeightMenuItem"); // NOI18N
+        vectorWeightMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                vectorWeightMenuItemActionPerformed(evt);
+            }
+        });
+        jMenu4.add(vectorWeightMenuItem);
+
         menuBar.add(jMenu4);
 
         helpMenu.setText(resourceMap.getString("helpMenu.text")); // NOI18N
@@ -496,7 +518,20 @@ public class KryptoProjektView extends FrameView {
         desktop.add(kit);
     }//GEN-LAST:event_jMenuItem13ActionPerformed
 
+    private void hammingDistanceMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hammingDistanceMenuItemActionPerformed
+        Kit kit = new HammingDistanceFrame(handler);
+        kit.setVisible(true);
+        desktop.add(kit);
+    }//GEN-LAST:event_hammingDistanceMenuItemActionPerformed
+
+    private void vectorWeightMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vectorWeightMenuItemActionPerformed
+        Kit kit = new HammingWeightFrame(handler);
+        kit.setVisible(true);
+        desktop.add(kit);
+    }//GEN-LAST:event_vectorWeightMenuItemActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem hammingDistanceMenuItem;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu10;
     private javax.swing.JMenu jMenu2;
@@ -529,6 +564,7 @@ public class KryptoProjektView extends FrameView {
     private javax.swing.JLabel statusAnimationLabel;
     private javax.swing.JLabel statusMessageLabel;
     private javax.swing.JPanel statusPanel;
+    private javax.swing.JMenuItem vectorWeightMenuItem;
     // End of variables declaration//GEN-END:variables
 
     private final Timer messageTimer;
