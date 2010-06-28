@@ -3,7 +3,6 @@
 <languagefile name="English">
 	<HammingCode>
         <encodeException>SourceCodeWord or generatorMatrix is not calculated yet.</encodeException>
-        <calculateSyndromException>EncodedWord or ControlMatrix not calculated yet.</calculateSyndromException>
 		<detectErrorNullException>Syndrom is not calculated yet.</detectErrorNullException>
 		<detectErrorTooManyErrors>Too many errors. Correction can not be accomplished.</detectErrorTooManyErrors>
 		<correctErrorException>EncodedWord is not calculated yet.</correctErrorException>

@@ -167,6 +167,12 @@ public class InitHammingJFrame extends Kit {
         c.gridy = 6;
         jPanel1.add(getDragList(new Object[] {getTitle() + "generatorMatrix"}), c);
 
+        c.weightx = 0.5;
+        c.fill = GridBagConstraints.BOTH;
+        c.gridwidth = 3;
+        c.gridx = 0;
+        c.gridy = 7;
+        jPanel1.add(getDragList(new Object[] {getTitle() + "hammingObject"}), c);
         
 
         this.setSize(180, 200);
@@ -177,12 +183,14 @@ public class InitHammingJFrame extends Kit {
         if(enableMarix.isSelected()){
         textGeneratorMatrix.enable(true);
         Object result = new HammingCode( (Matrix<PrimeFieldElement>)textGeneratorMatrix.getResult(),(String)textSourceCodeword.getResult());
+        results.put(getTitle() + "hammingObject", result);
         results.put(getTitle() + "generatorMatrix", result);
         results.put(getTitle() + "source codeword", result);
         return result.toString();
         }
         else{
-        Object result = new HammingCode((String)textSourceCodeword.getResult());
+        Object result = new HammingCode((String)textSourceCodeword.getText());
+        results.put(getTitle() + "hammingObject", result);
         results.put(getTitle() + "source codeword", result);
         return result.toString();
         }

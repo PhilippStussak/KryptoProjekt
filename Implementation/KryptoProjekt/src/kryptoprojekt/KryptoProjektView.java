@@ -28,8 +28,10 @@ import kryptoprojekt.basicFrames.MultiplicationFrame;
 import kryptoprojekt.basicFrames.PrimeFieldElementFrame;
 import kryptoprojekt.basicFrames.SaMFrame;
 import kryptoprojekt.basicFrames.SaMModFrame;
-import kryptoprojekt.coderFrames.DecodeHammingFrame;
+import kryptoprojekt.coderFrames.DecodeHammingCodeFrame;
+import kryptoprojekt.coderFrames.EncodeHammingCodeFrame;
 import kryptoprojekt.coderFrames.HammingDistanceFrame;
+import kryptoprojekt.coderFrames.HammingSyndromFrame;
 import kryptoprojekt.coderFrames.HammingWeightFrame;
 import kryptoprojekt.coderFrames.InitHammingJFrame;
 
@@ -134,25 +136,27 @@ public class KryptoProjektView extends FrameView {
     private void initComponents() {
 
         mainPanel = new javax.swing.JPanel();
-        menuBar = new javax.swing.JMenuBar();
+        mainMenuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
-        jMenuItem7 = new javax.swing.JMenuItem();
+        startMenuItem = new javax.swing.JMenuItem();
         javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem9 = new javax.swing.JMenuItem();
-        jMenuItem10 = new javax.swing.JMenuItem();
-        jMenuItem11 = new javax.swing.JMenuItem();
-        jMenuItem12 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
+        additionMenuItem = new javax.swing.JMenuItem();
+        subtractionMenuItem = new javax.swing.JMenuItem();
+        multiplicationMenuItem = new javax.swing.JMenuItem();
+        divisionMenuItem = new javax.swing.JMenuItem();
+        modMenuItem = new javax.swing.JMenuItem();
+        samMenuItem = new javax.swing.JMenuItem();
+        sammodMenuItem = new javax.swing.JMenuItem();
+        gcdMenuItem = new javax.swing.JMenuItem();
+        zMenuItem = new javax.swing.JMenuItem();
+        primeFieldMenuItem = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
-        jMenuItem13 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
+        initHammingCodeMenuItem = new javax.swing.JMenuItem();
+        encodeMenuItem = new javax.swing.JMenuItem();
+        syndromMenuItem = new javax.swing.JMenuItem();
+        decodeMenuItem = new javax.swing.JMenuItem();
         hammingDistanceMenuItem = new javax.swing.JMenuItem();
         vectorWeightMenuItem = new javax.swing.JMenuItem();
         javax.swing.JMenu helpMenu = new javax.swing.JMenu();
@@ -183,30 +187,30 @@ public class KryptoProjektView extends FrameView {
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 254, Short.MAX_VALUE)
+            .addGap(0, 249, Short.MAX_VALUE)
         );
 
-        menuBar.setName("menuBar"); // NOI18N
+        mainMenuBar.setName("mainMenuBar"); // NOI18N
 
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(kryptoprojekt.KryptoProjektApp.class).getContext().getResourceMap(KryptoProjektView.class);
         fileMenu.setText(resourceMap.getString("fileMenu.text")); // NOI18N
         fileMenu.setName("fileMenu"); // NOI18N
 
-        jMenuItem7.setText(resourceMap.getString("jMenuItem7.text")); // NOI18N
-        jMenuItem7.setName("jMenuItem7"); // NOI18N
-        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+        startMenuItem.setText(resourceMap.getString("startMenuItem.text")); // NOI18N
+        startMenuItem.setName("startMenuItem"); // NOI18N
+        startMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem7ActionPerformed(evt);
+                startMenuItemActionPerformed(evt);
             }
         });
-        fileMenu.add(jMenuItem7);
+        fileMenu.add(startMenuItem);
 
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(kryptoprojekt.KryptoProjektApp.class).getContext().getActionMap(KryptoProjektView.class, this);
         exitMenuItem.setAction(actionMap.get("quit")); // NOI18N
         exitMenuItem.setName("exitMenuItem"); // NOI18N
         fileMenu.add(exitMenuItem);
 
-        menuBar.add(fileMenu);
+        mainMenuBar.add(fileMenu);
 
         jMenu1.setText(resourceMap.getString("jMenu1.text")); // NOI18N
         jMenu1.setName("jMenu1"); // NOI18N
@@ -214,120 +218,138 @@ public class KryptoProjektView extends FrameView {
         jMenu2.setText(resourceMap.getString("jMenu2.text")); // NOI18N
         jMenu2.setName("jMenu2"); // NOI18N
 
-        jMenuItem1.setText(resourceMap.getString("jMenuItem1.text")); // NOI18N
-        jMenuItem1.setName("jMenuItem1"); // NOI18N
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        additionMenuItem.setText(resourceMap.getString("additionMenuItem.text")); // NOI18N
+        additionMenuItem.setName("additionMenuItem"); // NOI18N
+        additionMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                additionMenuItemActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem1);
+        jMenu2.add(additionMenuItem);
 
-        jMenuItem2.setText(resourceMap.getString("jMenuItem2.text")); // NOI18N
-        jMenuItem2.setName("jMenuItem2"); // NOI18N
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        subtractionMenuItem.setText(resourceMap.getString("subtractionMenuItem.text")); // NOI18N
+        subtractionMenuItem.setName("subtractionMenuItem"); // NOI18N
+        subtractionMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                subtractionMenuItemActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem2);
+        jMenu2.add(subtractionMenuItem);
 
-        jMenuItem4.setText(resourceMap.getString("jMenuItem4.text")); // NOI18N
-        jMenuItem4.setName("jMenuItem4"); // NOI18N
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+        multiplicationMenuItem.setText(resourceMap.getString("multiplicationMenuItem.text")); // NOI18N
+        multiplicationMenuItem.setName("multiplicationMenuItem"); // NOI18N
+        multiplicationMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
+                multiplicationMenuItemActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem4);
+        jMenu2.add(multiplicationMenuItem);
 
-        jMenuItem5.setText(resourceMap.getString("jMenuItem5.text")); // NOI18N
-        jMenuItem5.setName("jMenuItem5"); // NOI18N
-        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+        divisionMenuItem.setText(resourceMap.getString("divisionMenuItem.text")); // NOI18N
+        divisionMenuItem.setName("divisionMenuItem"); // NOI18N
+        divisionMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem5ActionPerformed(evt);
+                divisionMenuItemActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem5);
+        jMenu2.add(divisionMenuItem);
 
-        jMenuItem9.setText(resourceMap.getString("jMenuItem9.text")); // NOI18N
-        jMenuItem9.setName("jMenuItem9"); // NOI18N
-        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+        modMenuItem.setText(resourceMap.getString("modMenuItem.text")); // NOI18N
+        modMenuItem.setName("modMenuItem"); // NOI18N
+        modMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem9ActionPerformed(evt);
+                modMenuItemActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem9);
+        jMenu2.add(modMenuItem);
 
-        jMenuItem10.setText(resourceMap.getString("jMenuItem10.text")); // NOI18N
-        jMenuItem10.setName("jMenuItem10"); // NOI18N
-        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+        samMenuItem.setText(resourceMap.getString("samMenuItem.text")); // NOI18N
+        samMenuItem.setName("samMenuItem"); // NOI18N
+        samMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem10ActionPerformed(evt);
+                samMenuItemActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem10);
+        jMenu2.add(samMenuItem);
 
-        jMenuItem11.setText(resourceMap.getString("jMenuItem11.text")); // NOI18N
-        jMenuItem11.setName("jMenuItem11"); // NOI18N
-        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+        sammodMenuItem.setText(resourceMap.getString("sammodMenuItem.text")); // NOI18N
+        sammodMenuItem.setName("sammodMenuItem"); // NOI18N
+        sammodMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem11ActionPerformed(evt);
+                sammodMenuItemActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem11);
+        jMenu2.add(sammodMenuItem);
 
-        jMenuItem12.setText(resourceMap.getString("jMenuItem12.text")); // NOI18N
-        jMenuItem12.setName("jMenuItem12"); // NOI18N
-        jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
+        gcdMenuItem.setText(resourceMap.getString("gcdMenuItem.text")); // NOI18N
+        gcdMenuItem.setName("gcdMenuItem"); // NOI18N
+        gcdMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem12ActionPerformed(evt);
+                gcdMenuItemActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem12);
+        jMenu2.add(gcdMenuItem);
 
         jMenu1.add(jMenu2);
 
-        jMenuItem3.setText(resourceMap.getString("jMenuItem3.text")); // NOI18N
-        jMenuItem3.setName("jMenuItem3"); // NOI18N
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        zMenuItem.setText(resourceMap.getString("zMenuItem.text")); // NOI18N
+        zMenuItem.setName("zMenuItem"); // NOI18N
+        zMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                zMenuItemActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem3);
+        jMenu1.add(zMenuItem);
 
-        jMenuItem8.setText(resourceMap.getString("jMenuItem8.text")); // NOI18N
-        jMenuItem8.setName("jMenuItem8"); // NOI18N
-        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+        primeFieldMenuItem.setText(resourceMap.getString("primeFieldMenuItem.text")); // NOI18N
+        primeFieldMenuItem.setName("primeFieldMenuItem"); // NOI18N
+        primeFieldMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem8ActionPerformed(evt);
+                primeFieldMenuItemActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem8);
+        jMenu1.add(primeFieldMenuItem);
 
-        menuBar.add(jMenu1);
+        mainMenuBar.add(jMenu1);
 
         jMenu4.setText(resourceMap.getString("jMenu4.text")); // NOI18N
         jMenu4.setName("jMenu4"); // NOI18N
 
-        jMenuItem13.setText(resourceMap.getString("jMenuItem13.text")); // NOI18N
-        jMenuItem13.setName("jMenuItem13"); // NOI18N
-        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
+        initHammingCodeMenuItem.setText(resourceMap.getString("initHammingCodeMenuItem.text")); // NOI18N
+        initHammingCodeMenuItem.setName("initHammingCodeMenuItem"); // NOI18N
+        initHammingCodeMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem13ActionPerformed(evt);
+                initHammingCodeMenuItemActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenuItem13);
+        jMenu4.add(initHammingCodeMenuItem);
 
-        jMenuItem6.setText(resourceMap.getString("jMenuItem6.text")); // NOI18N
-        jMenuItem6.setName("jMenuItem6"); // NOI18N
-        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+        encodeMenuItem.setText(resourceMap.getString("encodeMenuItem.text")); // NOI18N
+        encodeMenuItem.setName("encodeMenuItem"); // NOI18N
+        encodeMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem6ActionPerformed(evt);
+                encodeMenuItemActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenuItem6);
+        jMenu4.add(encodeMenuItem);
+
+        syndromMenuItem.setText(resourceMap.getString("syndromMenuItem.text")); // NOI18N
+        syndromMenuItem.setName("syndromMenuItem"); // NOI18N
+        syndromMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                syndromMenuItemActionPerformed(evt);
+            }
+        });
+        jMenu4.add(syndromMenuItem);
+
+        decodeMenuItem.setText(resourceMap.getString("decodeMenuItem.text")); // NOI18N
+        decodeMenuItem.setName("decodeMenuItem"); // NOI18N
+        decodeMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                decodeMenuItemActionPerformed(evt);
+            }
+        });
+        jMenu4.add(decodeMenuItem);
 
         hammingDistanceMenuItem.setText(resourceMap.getString("hammingDistanceMenuItem.text")); // NOI18N
         hammingDistanceMenuItem.setName("hammingDistanceMenuItem"); // NOI18N
@@ -347,7 +369,7 @@ public class KryptoProjektView extends FrameView {
         });
         jMenu4.add(vectorWeightMenuItem);
 
-        menuBar.add(jMenu4);
+        mainMenuBar.add(jMenu4);
 
         helpMenu.setText(resourceMap.getString("helpMenu.text")); // NOI18N
         helpMenu.setName("helpMenu"); // NOI18N
@@ -356,7 +378,7 @@ public class KryptoProjektView extends FrameView {
         aboutMenuItem.setName("aboutMenuItem"); // NOI18N
         helpMenu.add(aboutMenuItem);
 
-        menuBar.add(helpMenu);
+        mainMenuBar.add(helpMenu);
 
         statusPanel.setName("statusPanel"); // NOI18N
 
@@ -429,47 +451,47 @@ public class KryptoProjektView extends FrameView {
         jMenuBar3.add(jMenu10);
 
         setComponent(mainPanel);
-        setMenuBar(menuBar);
+        setMenuBar(mainMenuBar);
         setStatusBar(statusPanel);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    private void zMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zMenuItemActionPerformed
         Kit kit = new ZFrame(handler);
         kit.setVisible(true);
         desktop.add(kit);
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    }//GEN-LAST:event_zMenuItemActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void additionMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_additionMenuItemActionPerformed
         Kit kit = new AdditionFrame(handler);
         kit.setVisible(true);
         desktop.add(kit);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_additionMenuItemActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void subtractionMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subtractionMenuItemActionPerformed
         Kit kit = new SubtractFrame(handler);
         kit.setVisible(true);
         desktop.add(kit);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_subtractionMenuItemActionPerformed
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+    private void multiplicationMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_multiplicationMenuItemActionPerformed
         Kit kit = new MultiplicationFrame(handler);
         kit.setVisible(true);
         desktop.add(kit);
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
+    }//GEN-LAST:event_multiplicationMenuItemActionPerformed
 
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+    private void divisionMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_divisionMenuItemActionPerformed
         Kit kit = new DivisionFrame(handler);
         kit.setVisible(true);
         desktop.add(kit);
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
+    }//GEN-LAST:event_divisionMenuItemActionPerformed
 
-    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        Kit kit = new DecodeHammingFrame(handler);
+    private void decodeMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decodeMenuItemActionPerformed
+        Kit kit = new DecodeHammingCodeFrame(handler);
         kit.setVisible(true);
         desktop.add(kit);
-    }//GEN-LAST:event_jMenuItem6ActionPerformed
+    }//GEN-LAST:event_decodeMenuItemActionPerformed
 
-    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+    private void startMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startMenuItemActionPerformed
         JInternalFrame results = new JInternalFrame("result", true, true, true, true);
         results.setSize(desktop.getWidth(), desktop.getHeight());
         results.setVisible(true);
@@ -480,43 +502,43 @@ public class KryptoProjektView extends FrameView {
         results.add(area);
         desktop.add(results);
         new Executor(handler, area).start();
-    }//GEN-LAST:event_jMenuItem7ActionPerformed
+    }//GEN-LAST:event_startMenuItemActionPerformed
 
-    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+    private void primeFieldMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_primeFieldMenuItemActionPerformed
         Kit kit = new PrimeFieldElementFrame(handler);
         kit.setVisible(true);
         desktop.add(kit);
-    }//GEN-LAST:event_jMenuItem8ActionPerformed
+    }//GEN-LAST:event_primeFieldMenuItemActionPerformed
 
-    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+    private void modMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modMenuItemActionPerformed
         Kit kit = new ModuloFrame(handler);
         kit.setVisible(true);
         desktop.add(kit);
-    }//GEN-LAST:event_jMenuItem9ActionPerformed
+    }//GEN-LAST:event_modMenuItemActionPerformed
 
-    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+    private void samMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_samMenuItemActionPerformed
         Kit kit = new SaMFrame(handler);
         kit.setVisible(true);
         desktop.add(kit);
-    }//GEN-LAST:event_jMenuItem10ActionPerformed
+    }//GEN-LAST:event_samMenuItemActionPerformed
 
-    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+    private void sammodMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sammodMenuItemActionPerformed
         Kit kit = new SaMModFrame(handler);
         kit.setVisible(true);
         desktop.add(kit);
-    }//GEN-LAST:event_jMenuItem11ActionPerformed
+    }//GEN-LAST:event_sammodMenuItemActionPerformed
 
-    private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
+    private void gcdMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gcdMenuItemActionPerformed
         Kit kit = new GCDFrame(handler);
         kit.setVisible(true);
         desktop.add(kit);
-    }//GEN-LAST:event_jMenuItem12ActionPerformed
+    }//GEN-LAST:event_gcdMenuItemActionPerformed
 
-    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
+    private void initHammingCodeMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_initHammingCodeMenuItemActionPerformed
         Kit kit = new InitHammingJFrame(handler);
         kit.setVisible(true);
         desktop.add(kit);
-    }//GEN-LAST:event_jMenuItem13ActionPerformed
+    }//GEN-LAST:event_initHammingCodeMenuItemActionPerformed
 
     private void hammingDistanceMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hammingDistanceMenuItemActionPerformed
         Kit kit = new HammingDistanceFrame(handler);
@@ -530,8 +552,26 @@ public class KryptoProjektView extends FrameView {
         desktop.add(kit);
     }//GEN-LAST:event_vectorWeightMenuItemActionPerformed
 
+    private void encodeMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_encodeMenuItemActionPerformed
+        Kit kit = new EncodeHammingCodeFrame(handler);
+        kit.setVisible(true);
+        desktop.add(kit);
+    }//GEN-LAST:event_encodeMenuItemActionPerformed
+
+    private void syndromMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_syndromMenuItemActionPerformed
+        Kit kit = new HammingSyndromFrame(handler);
+        kit.setVisible(true);
+        desktop.add(kit);
+    }//GEN-LAST:event_syndromMenuItemActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem additionMenuItem;
+    private javax.swing.JMenuItem decodeMenuItem;
+    private javax.swing.JMenuItem divisionMenuItem;
+    private javax.swing.JMenuItem encodeMenuItem;
+    private javax.swing.JMenuItem gcdMenuItem;
     private javax.swing.JMenuItem hammingDistanceMenuItem;
+    private javax.swing.JMenuItem initHammingCodeMenuItem;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu10;
     private javax.swing.JMenu jMenu2;
@@ -545,26 +585,22 @@ public class KryptoProjektView extends FrameView {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuBar jMenuBar3;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem10;
-    private javax.swing.JMenuItem jMenuItem11;
-    private javax.swing.JMenuItem jMenuItem12;
-    private javax.swing.JMenuItem jMenuItem13;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem9;
+    private javax.swing.JMenuBar mainMenuBar;
     private javax.swing.JPanel mainPanel;
-    private javax.swing.JMenuBar menuBar;
+    private javax.swing.JMenuItem modMenuItem;
+    private javax.swing.JMenuItem multiplicationMenuItem;
+    private javax.swing.JMenuItem primeFieldMenuItem;
     private javax.swing.JProgressBar progressBar;
+    private javax.swing.JMenuItem samMenuItem;
+    private javax.swing.JMenuItem sammodMenuItem;
+    private javax.swing.JMenuItem startMenuItem;
     private javax.swing.JLabel statusAnimationLabel;
     private javax.swing.JLabel statusMessageLabel;
     private javax.swing.JPanel statusPanel;
+    private javax.swing.JMenuItem subtractionMenuItem;
+    private javax.swing.JMenuItem syndromMenuItem;
     private javax.swing.JMenuItem vectorWeightMenuItem;
+    private javax.swing.JMenuItem zMenuItem;
     // End of variables declaration//GEN-END:variables
 
     private final Timer messageTimer;

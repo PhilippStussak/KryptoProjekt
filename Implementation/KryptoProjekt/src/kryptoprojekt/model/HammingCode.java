@@ -26,9 +26,10 @@ public class HammingCode extends Coder {
      * @return encoded String
      */
     @Override
-    public String encode() throws NullPointerException{
-        if (sourceCodeWord == null || generatorMatrix == null)
+    public String encode() throws NullPointerException {
+        if (sourceCodeWord == null || generatorMatrix == null) {
             throw new NullPointerException("encodeException");
+        }
         this.encodedWord = this.sourceCodeWord.multiply(this.generatorMatrix);
         return convertOneRowMatrixToString(this.encodedWord);
     }
@@ -39,9 +40,13 @@ public class HammingCode extends Coder {
      */
     @Override
     //Do we have to throw an exception in this case, too?
-    public String calculateSyndrom() throws NullPointerException{
-        if (encodedWord == null || controlMatrix == null)
-            throw new NullPointerException("calculateSyndromException");
+    public String calculateSyndrom() throws NullPointerException {
+        if (encodedWord == null) {
+            encode();
+        }
+        if (controlMatrix == null) {
+            generateControlMatrix();
+        }
         this.syndrom = this.encodedWord.multiply(this.controlMatrix);
         return convertOneRowMatrixToString(this.syndrom);
     }
@@ -55,7 +60,7 @@ public class HammingCode extends Coder {
      *                   index 3 => String, decodedWord, but corrected if possible
      */
     @Override
-    public Hashtable detectError() throws NullPointerException{
+    public Hashtable detectError() throws NullPointerException {
         Hashtable result = new Hashtable();
         PrimeFieldElement comparison = new PrimeFieldElement(0, this.galoisBase);
 
@@ -98,9 +103,10 @@ public class HammingCode extends Coder {
      * @throws NullPointerException if encodedWord is not calculated yet
      * @return corrected encodedWord
      */
-    private String correctError(int pos) throws NullPointerException{
-        if (encodedWord == null)
+    private String correctError(int pos) throws NullPointerException {
+        if (encodedWord == null) {
             throw new NullPointerException("correctErrorException");
+        }
         PrimeFieldElement comparison = new PrimeFieldElement(0, this.galoisBase);
 
         if (comparison.compareTo(this.encodedWord.get(0, pos)) == 0) {
@@ -116,9 +122,10 @@ public class HammingCode extends Coder {
      * @throws NullPointerException if syndrom or controlMatrix are not calculated yet
      * @return errorPosition or -1 if too many errors found
      */
-    private int getErrorPosition() throws NullPointerException{
-        if (controlMatrix == null || syndrom == null)
+    private int getErrorPosition() throws NullPointerException {
+        if (controlMatrix == null || syndrom == null) {
             throw new NullPointerException("getErrorPositionException");
+        }
         boolean check = true;
         boolean test = false;
         int position = 0;
@@ -150,8 +157,9 @@ public class HammingCode extends Coder {
      */
     @Override
     public String decode() {
-        if (encodedWord == null)
+        if (encodedWord == null) {
             throw new NullPointerException("decodeException");
+        }
         KryptoType<PrimeFieldElement>[][] t = new KryptoType[1][this.codeWord.length()];
         for (int i = 0; i < this.codeWord.length(); i++) {
             t[0][i] = encodedWord.get(0, i);
@@ -184,7 +192,7 @@ public class HammingCode extends Coder {
         //set parity bits
         for (int i = 0; i < codewordLength; i++) {
             for (int j = codewordLength; j < (int) Math.pow(2, codewordLength) - 1; j++) {
-                if (i != j-codewordLength) {
+                if (i != j - codewordLength) {
                     t[i][j] = new PrimeFieldElement(1, this.galoisBase);
                 }
             }
@@ -197,11 +205,12 @@ public class HammingCode extends Coder {
      * Generates the controlMatrix on base of given generatorMatrix.
      */
     public Matrix<PrimeFieldElement> generateControlMatrix() {
-        if (this.generatorMatrix == null)
+        if (this.generatorMatrix == null) {
             generateGeneratorMatrix();
+        }
         int y = this.generatorMatrix.getMatrixColumnCapacity() - this.generatorMatrix.getMatrixRowCapacity();
         KryptoType<PrimeFieldElement> k[][] = new KryptoType[this.generatorMatrix.getMatrixColumnCapacity()][y];
-        int n = this.generatorMatrix.getMatrixColumnCapacity()-codeWord.length();
+        int n = this.generatorMatrix.getMatrixColumnCapacity() - codeWord.length();
 
         //initialize array with PrimeFieldElement-objects, value=0
         for (int i = 0; i < this.generatorMatrix.getMatrixColumnCapacity(); i++) {
@@ -211,15 +220,15 @@ public class HammingCode extends Coder {
         }
 
         //sets parity bits in control matrix
-        for (int i = 0; i < y-1; i++) {
+        for (int i = 0; i < y - 1; i++) {
             for (int j = 0; j < n; j++) {
-                k[i][j] = this.generatorMatrix.get(i, j+n-1);
+                k[i][j] = this.generatorMatrix.get(i, j + n - 1);
             }
         }
 
         //generates identity matrix
         for (int i = 0; i < y; i++) {
-            k[i+codeWord.length()][i] = new PrimeFieldElement(1, this.galoisBase);
+            k[i + codeWord.length()][i] = new PrimeFieldElement(1, this.galoisBase);
         }
         this.controlMatrix = new Matrix(k);
         return this.controlMatrix;
@@ -350,5 +359,10 @@ public class HammingCode extends Coder {
             PrimeFieldElement tmp = encodedWord.get(0, i);
             encodedWord.set(0, i, tmp.add(bitErrorProbability(probability)));
         }
+    }
+
+    @Override
+    public String toString() {
+        return "";
     }
 }

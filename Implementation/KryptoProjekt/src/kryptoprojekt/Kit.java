@@ -45,6 +45,10 @@ public class Kit extends JInternalFrame {
         return parents;
     }
 
+    public HashMap<String, Object> getResults() {
+        return results;
+    }
+
     public LinkedList<Kit> getChildren() {
         return children;
     }

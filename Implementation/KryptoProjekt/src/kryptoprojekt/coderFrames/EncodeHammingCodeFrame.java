@@ -114,7 +114,7 @@ public class EncodeHammingCodeFrame extends Kit {
 
     @Override
     public String execute() {
-        Object result = ((HammingCode)textField1.getResult()).calculateSyndrom();
+        Object result = ((HammingCode)textField1.getResult()).encode();
         results.put(getTitle() + "_encode", result);
         return result.toString();
     }

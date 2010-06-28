@@ -41,11 +41,11 @@ public class Desktop extends JDesktopPane {
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 		        RenderingHints.VALUE_ANTIALIAS_ON);
         super.paintComponent(g);
-        if (image != null)
-            g2.drawImage(image, 0,0,this.getWidth(),this.getHeight(),this);
+//        if (image != null)
+//            g2.drawImage(image, 0,0,this.getWidth(),this.getHeight(),this);
         for (Shape arrow : handler.getConnectionArrows())
             g2.draw(arrow);
-        repaint();
+//        repaint();
     }
 
     @Override
