@@ -25,6 +25,7 @@ import kryptoprojekt.basicFrames.DivisionFrame;
 import kryptoprojekt.basicFrames.GCDFrame;
 import kryptoprojekt.basicFrames.ModuloFrame;
 import kryptoprojekt.basicFrames.MultiplicationFrame;
+import kryptoprojekt.basicFrames.PhiFrame;
 import kryptoprojekt.basicFrames.PrimeFieldElementFrame;
 import kryptoprojekt.basicFrames.SaMFrame;
 import kryptoprojekt.basicFrames.SaMModFrame;
@@ -150,6 +151,7 @@ public class KryptoProjektView extends FrameView {
         samMenuItem = new javax.swing.JMenuItem();
         sammodMenuItem = new javax.swing.JMenuItem();
         gcdMenuItem = new javax.swing.JMenuItem();
+        phiMenuItem = new javax.swing.JMenuItem();
         zMenuItem = new javax.swing.JMenuItem();
         primeFieldMenuItem = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
@@ -187,7 +189,7 @@ public class KryptoProjektView extends FrameView {
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 249, Short.MAX_VALUE)
+            .addGap(0, 248, Short.MAX_VALUE)
         );
 
         mainMenuBar.setName("mainMenuBar"); // NOI18N
@@ -289,6 +291,15 @@ public class KryptoProjektView extends FrameView {
             }
         });
         jMenu2.add(gcdMenuItem);
+
+        phiMenuItem.setText(resourceMap.getString("phiMenuItem.text")); // NOI18N
+        phiMenuItem.setName("phiMenuItem"); // NOI18N
+        phiMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                phiMenuItemActionPerformed(evt);
+            }
+        });
+        jMenu2.add(phiMenuItem);
 
         jMenu1.add(jMenu2);
 
@@ -399,7 +410,7 @@ public class KryptoProjektView extends FrameView {
             .addGroup(statusPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(statusMessageLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 230, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 226, Short.MAX_VALUE)
                 .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(statusAnimationLabel)
@@ -564,6 +575,12 @@ public class KryptoProjektView extends FrameView {
         desktop.add(kit);
     }//GEN-LAST:event_syndromMenuItemActionPerformed
 
+    private void phiMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_phiMenuItemActionPerformed
+        Kit kit = new PhiFrame(handler);
+        kit.setVisible(true);
+        desktop.add(kit);
+    }//GEN-LAST:event_phiMenuItemActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem additionMenuItem;
     private javax.swing.JMenuItem decodeMenuItem;
@@ -589,6 +606,7 @@ public class KryptoProjektView extends FrameView {
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuItem modMenuItem;
     private javax.swing.JMenuItem multiplicationMenuItem;
+    private javax.swing.JMenuItem phiMenuItem;
     private javax.swing.JMenuItem primeFieldMenuItem;
     private javax.swing.JProgressBar progressBar;
     private javax.swing.JMenuItem samMenuItem;

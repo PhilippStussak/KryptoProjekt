@@ -16,6 +16,7 @@ import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
+import kryptoprojekt.controller.BasicController;
 import kryptoprojekt.model.KryptoType;
 
 /**
@@ -118,7 +119,7 @@ public class SubtractFrame extends Kit {
 
     @Override
     public String execute() {
-        Object result = ((KryptoType)textField1.getResult()).subtract((KryptoType)textField2.getResult());
+        KryptoType result = BasicController.subtraction(textField1, textField2);
         results.put(getTitle() + "_difference", result);
         return result.toString();
     }

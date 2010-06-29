@@ -4,72 +4,69 @@
  */
 
 /*
- * ModuloFrame.java
+ * PhiFrame.java
  *
- * Created on 27.06.2010, 11:14:10
+ * Created on 27.06.2010, 13:01:11
  */
 
 package kryptoprojekt.basicFrames;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.util.LinkedList;
 import javax.swing.JLabel;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
-import kryptoprojekt.Kit.DropTextField;
 import kryptoprojekt.controller.BasicController;
+import kryptoprojekt.model.Basic;
 import kryptoprojekt.model.KryptoType;
+import kryptoprojekt.model.Tuple;
+import kryptoprojekt.model.Z;
 
 /**
  *
  * @author phil
  */
-public class ModuloFrame extends Kit {
-
+public class PhiFrame extends Kit {
+    
     private DropTextField textField1 = getDropTextField();
-    private DropTextField textField2 = getDropTextField();
 
-    /** Creates new form ModuloFrame */
-    public ModuloFrame(ConnectionHandler handler) {
+    /** Creates new form PhiFrame */
+    public PhiFrame(ConnectionHandler handler) {
         super(handler);
         initComponents();
         initLogicComponents();
     }
+
     private void initLogicComponents() {
         jPanel1.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
-        c.weightx = 0.495;
+        c.weightx = 0.1;
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
         c.gridy = 0;
-        jPanel1.add(textField1, c);
+        jPanel1.add(new JLabel("Phi:"), c);
 
-        c.weightx = 0.01;
+        c.weightx = 0.9;
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 1;
         c.gridy = 0;
-        jPanel1.add(new JLabel("%"), c);
-
-        c.weightx = 0.495;
-        c.fill = GridBagConstraints.BOTH;
-        c.gridx = 2;
-        c.gridy = 0;
-        jPanel1.add(textField2, c);
+        jPanel1.add(textField1, c);
 
         c.weightx = 1;
         c.fill = GridBagConstraints.BOTH;
-        c.gridwidth = 3;
+        c.gridwidth = 2;
         c.gridx = 0;
         c.gridy = 1;
-        jPanel1.add(getDragList(new Object[] {getTitle() + "_mod"}), c);
+        jPanel1.add(getDragList(new Object[] {getTitle() + "_phi"}), c);
 
         this.setSize(160, 120);
     }
 
     @Override
     public String execute() {
-        KryptoType result = BasicController.calculateModulo((KryptoType)textField1.getResult(), (KryptoType)textField2.getResult());
-        results.put(getTitle() + "_mod", result);
+        Z result = BasicController.calculatePhi((Z)textField1.getResult()).first();
+        results.put(getTitle() + "_phi", result);
         return result.toString();
     }
 
@@ -83,7 +80,7 @@ public class ModuloFrame extends Kit {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setName("Form"); // NOI18N
 
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(kryptoprojekt.KryptoProjektApp.class).getContext().getResourceMap(ModuloFrame.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(kryptoprojekt.KryptoProjektApp.class).getContext().getResourceMap(PhiFrame.class);
         jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
         jLabel1.setName("jLabel1"); // NOI18N
 
