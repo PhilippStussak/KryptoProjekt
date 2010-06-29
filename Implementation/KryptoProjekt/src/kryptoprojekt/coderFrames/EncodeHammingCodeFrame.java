@@ -16,6 +16,7 @@ import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
+import kryptoprojekt.controller.CoderController;
 import kryptoprojekt.model.HammingCode;
 
 /**
@@ -114,8 +115,8 @@ public class EncodeHammingCodeFrame extends Kit {
 
     @Override
     public String execute() {
-        Object result = CoderController.encodeHammingCode(textField1);
-        results.put(getTitle() + "_encode", result);
+        HammingCode result = CoderController.encodeHammingCode(textField1);
+        results.put(getTitle() + "_encode", result.getEncodedWord());
         return result.toString();
     }
 

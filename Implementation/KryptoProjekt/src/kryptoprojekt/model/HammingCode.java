@@ -328,7 +328,7 @@ public class HammingCode extends Coder {
      * @throws IllegalArgumentException if a or b have more than one row
      * @throws IllegalArgumentException if a has different columnCapacity as b
      */
-    public static int hammingDistance(Matrix<PrimeFieldElement> a, Matrix<PrimeFieldElement> b) throws IllegalArgumentException {
+    public static Z hammingDistance(Matrix<PrimeFieldElement> a, Matrix<PrimeFieldElement> b) throws IllegalArgumentException {
         if (a.getMatrixRowCapacity() > 1 || b.getMatrixRowCapacity() > 1) {
             throw new IllegalArgumentException("hammingDistanceRowException");
         }
@@ -341,7 +341,7 @@ public class HammingCode extends Coder {
                 distance++;
             }
         }
-        return distance;
+        return new Z(distance);
     }
 
     /**
@@ -349,7 +349,7 @@ public class HammingCode extends Coder {
      * @param a vector which should be calculated
      * @return calculated vector weight
      */
-    public static int vectorWeight(Matrix<PrimeFieldElement> a) {
+    public static Z vectorWeight(Matrix<PrimeFieldElement> a) {
         KryptoType<PrimeFieldElement> k[][] = new KryptoType[1][a.getMatrixColumnCapacity()];
         for (int i = 0; i < a.getMatrixColumnCapacity(); i++) {
             k[0][i] = new PrimeFieldElement(0, 2);
