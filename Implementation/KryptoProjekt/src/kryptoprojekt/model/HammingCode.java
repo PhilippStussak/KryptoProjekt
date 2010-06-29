@@ -18,6 +18,9 @@ public class HammingCode extends Coder {
     private Matrix<PrimeFieldElement> encodedWord;
     private Matrix<PrimeFieldElement> syndrom;
     private Matrix<PrimeFieldElement> decodedWord;
+    private Matrix<PrimeFieldElement> correctedDecodedWord;
+    private int errorPosition;
+    private boolean errorsFound;
     private final int galoisBase = 2;
 
     public Matrix<PrimeFieldElement> getDecodedWord() {
@@ -38,6 +41,14 @@ public class HammingCode extends Coder {
 
     public Matrix<PrimeFieldElement> getSyndrom() {
         return syndrom;
+    }
+
+    public Matrix<PrimeFieldElement> getCorrectedDecodedWord() {
+        return correctedDecodedWord;
+    }
+
+    public boolean isErrorsFound() {
+        return errorsFound;
     }
 
     public Matrix<PrimeFieldElement> getControlMatrix() {
@@ -77,14 +88,9 @@ public class HammingCode extends Coder {
     /**
      * Detects error(s) in the encodedWord. Uses the syndrom-attribute which has to be calculated before.
      * @throws NullPointerException if syndrom is not calculated yet
-     * @return Hashtable index 0 => bool-value, if errors were found
-     *                   index 1 => String, original decodedWord
-     *                   index 2 => int, error position
-     *                   index 3 => String, decodedWord, but corrected if possible
+     * @throws RuntimeException if too many errors were found (-->unable to correct)
      */
-    @Override
-    public Hashtable detectError() throws NullPointerException {
-        Hashtable result = new Hashtable();
+    public void detectError() throws RuntimeException {
         PrimeFieldElement comparison = new PrimeFieldElement(0, this.galoisBase);
 
         if (this.syndrom == null) {
@@ -94,30 +100,20 @@ public class HammingCode extends Coder {
         //is there any error in the syndrom
         for (int i = 0; i < this.syndrom.getMatrixColumnCapacity(); i++) {
             if (comparison.compareTo(this.syndrom.get(0, i)) != 0) {
-                result.put(0, true);
+                this.errorsFound = true;
             }
         }
-        if (result.get(0) == null) {
-            result.put(0, false);
-        }
 
-        //decoded codeWord
-        result.put(1, decode());
-
-
-        if ((Boolean) result.get(0) == true) {
+        if (errorsFound) {
             int errorPos = getErrorPosition();
-            result.put(2, errorPos);
+            this.errorPosition = errorPos;
             if (errorPos > -1) {
                 correctError(errorPos);
-                result.put(3, decode());
+                this.correctedDecodedWord = convertStringToOneRowMatrix(decode());
             } else {
-                result.put(3, "detectErrorTooManyErrors");
+                throw new RuntimeException("detectErrorTooManyErrors");
             }
         }
-
-        return result;
-
     }
 
     /**

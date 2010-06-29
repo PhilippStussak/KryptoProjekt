@@ -28,6 +28,13 @@ public class CoderController {
         return hc;
     }
 
+    public static HammingCode decodeHammingCode(HammingCode hc) {
+        hc.calculateSyndrom();
+        hc.detectError();
+
+        return hc;
+    }
+
     public static HammingCode encodeHammingCode(HammingCode hc) {
         hc.encode();
 

@@ -5,8 +5,6 @@
 
 package kryptoprojekt.model;
 
-import java.util.Hashtable;
-
 /**
  *
  * @author LiTTle, Mario
@@ -15,6 +13,6 @@ public abstract class Coder {
     protected String codeWord;
     public abstract String encode();
     public abstract String calculateSyndrom();
-    public abstract Hashtable detectError();
+    public abstract void detectError();
     public abstract String decode();
 }
