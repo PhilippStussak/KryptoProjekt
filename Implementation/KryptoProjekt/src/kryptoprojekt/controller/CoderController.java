@@ -46,8 +46,8 @@ public class CoderController {
         }
     }
 
-    public static Z hammingWeight(DropTextField textVector1){
-        Z result = HammingCode.vectorWeight((Matrix<PrimeFieldElement>) textVector1.getResult());
+    public static Z hammingWeight(Matrix<PrimeFieldElement> elem){
+        Z result = HammingCode.vectorWeight(elem);
         return result;
     }
 }

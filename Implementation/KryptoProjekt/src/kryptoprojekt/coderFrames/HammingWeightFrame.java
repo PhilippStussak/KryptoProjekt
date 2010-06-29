@@ -67,7 +67,7 @@ public class HammingWeightFrame extends Kit {
 
     @Override
     public String execute() {
-        Z result = CoderController.hammingWeight(textVector1);
+        Z result = CoderController.hammingWeight((Matrix<PrimeFieldElement>) textVector1.getResult());
         results.put(getTitle() + "Weight", result);
         return result.toString();
     }
