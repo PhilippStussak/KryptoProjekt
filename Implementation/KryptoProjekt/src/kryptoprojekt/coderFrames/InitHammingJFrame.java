@@ -21,6 +21,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
+import kryptoprojekt.controller.CoderController;
 import kryptoprojekt.model.HammingCode;
 import kryptoprojekt.model.KryptoType;
 import kryptoprojekt.model.Matrix;
@@ -180,20 +181,14 @@ public class InitHammingJFrame extends Kit {
 
     @Override
     public String execute() {
-        if(enableMarix.isSelected()){
-        textGeneratorMatrix.enable(true);
-        Object result = new HammingCode( (Matrix<PrimeFieldElement>)textGeneratorMatrix.getResult(),(String)textSourceCodeword.getResult());
-        results.put(getTitle() + "hammingObject", result);
-        results.put(getTitle() + "generatorMatrix", result);
-        results.put(getTitle() + "source codeword", result);
-        return result.toString();
-        }
-        else{
-        Object result = new HammingCode((String)textSourceCodeword.getText());
-        results.put(getTitle() + "hammingObject", result);
-        results.put(getTitle() + "source codeword", result);
-        return result.toString();
-        }
+
+        HammingCode hc = CoderController.initHammingCode(textGeneratorMatrix, textSourceCodeword, enableMarix);
+        results.put(getTitle() + "hammingObject", hc);
+        results.put(getTitle() + "generatorMatrix", textGeneratorMatrix);
+        results.put(getTitle() + "source codeword", textSourceCodeword);
+
+        return hc.toString();
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
