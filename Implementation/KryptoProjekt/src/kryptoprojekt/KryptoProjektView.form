@@ -183,60 +183,68 @@
             <Property name="name" type="java.lang.String" value="jMenu4" noResource="true"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="initHammingCodeMenuItem">
+            <Menu class="javax.swing.JMenu" name="jMenu11">
               <Properties>
-                <Property name="text" type="java.lang.String" resourceKey="initHammingCodeMenuItem.text"/>
-                <Property name="name" type="java.lang.String" value="initHammingCodeMenuItem" noResource="true"/>
+                <Property name="text" type="java.lang.String" resourceKey="jMenu11.text"/>
+                <Property name="name" type="java.lang.String" value="jMenu11" noResource="true"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="initHammingCodeMenuItemActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="encodeMenuItem">
-              <Properties>
-                <Property name="text" type="java.lang.String" resourceKey="encodeMenuItem.text"/>
-                <Property name="name" type="java.lang.String" value="encodeMenuItem" noResource="true"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="encodeMenuItemActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="syndromMenuItem">
-              <Properties>
-                <Property name="text" type="java.lang.String" resourceKey="syndromMenuItem.text"/>
-                <Property name="name" type="java.lang.String" value="syndromMenuItem" noResource="true"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="syndromMenuItemActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="decodeMenuItem">
-              <Properties>
-                <Property name="text" type="java.lang.String" resourceKey="decodeMenuItem.text"/>
-                <Property name="name" type="java.lang.String" value="decodeMenuItem" noResource="true"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="decodeMenuItemActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="hammingDistanceMenuItem">
-              <Properties>
-                <Property name="text" type="java.lang.String" resourceKey="hammingDistanceMenuItem.text"/>
-                <Property name="name" type="java.lang.String" value="hammingDistanceMenuItem" noResource="true"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="hammingDistanceMenuItemActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="vectorWeightMenuItem">
-              <Properties>
-                <Property name="text" type="java.lang.String" resourceKey="vectorWeightMenuItem.text"/>
-                <Property name="name" type="java.lang.String" value="vectorWeightMenuItem" noResource="true"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="vectorWeightMenuItemActionPerformed"/>
-              </Events>
-            </MenuItem>
+              <SubComponents>
+                <MenuItem class="javax.swing.JMenuItem" name="initHammingCodeMenuItem">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" resourceKey="initHammingCodeMenuItem.text"/>
+                    <Property name="name" type="java.lang.String" value="initHammingCodeMenuItem" noResource="true"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="initHammingCodeMenuItemActionPerformed"/>
+                  </Events>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="encodeMenuItem">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" resourceKey="encodeMenuItem.text"/>
+                    <Property name="name" type="java.lang.String" value="encodeMenuItem" noResource="true"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="encodeMenuItemActionPerformed"/>
+                  </Events>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="syndromMenuItem">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" resourceKey="syndromMenuItem.text"/>
+                    <Property name="name" type="java.lang.String" value="syndromMenuItem" noResource="true"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="syndromMenuItemActionPerformed"/>
+                  </Events>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="decodeMenuItem">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" resourceKey="decodeMenuItem.text"/>
+                    <Property name="name" type="java.lang.String" value="decodeMenuItem" noResource="true"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="decodeMenuItemActionPerformed"/>
+                  </Events>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="hammingDistanceMenuItem">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" resourceKey="hammingDistanceMenuItem.text"/>
+                    <Property name="name" type="java.lang.String" value="hammingDistanceMenuItem" noResource="true"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="hammingDistanceMenuItemActionPerformed"/>
+                  </Events>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="vectorWeightMenuItem">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" resourceKey="vectorWeightMenuItem.text"/>
+                    <Property name="name" type="java.lang.String" value="vectorWeightMenuItem" noResource="true"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="vectorWeightMenuItemActionPerformed"/>
+                  </Events>
+                </MenuItem>
+              </SubComponents>
+            </Menu>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="helpMenu">
