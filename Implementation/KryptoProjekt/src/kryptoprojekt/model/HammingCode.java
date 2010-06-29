@@ -60,11 +60,10 @@ public class HammingCode extends Coder {
 
     /**
      * Calculates the syndrom.
-     * @throws NullPointerException if encodedWord or controlMatrix is not calculated yet
      */
     @Override
     //Do we have to throw an exception in this case, too?
-    public String calculateSyndrom() throws NullPointerException {
+    public String calculateSyndrom(){
         if (encodedWord == null) {
             encode();
         }
