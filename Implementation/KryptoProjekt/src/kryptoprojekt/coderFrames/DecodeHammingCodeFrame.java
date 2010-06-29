@@ -13,6 +13,8 @@ package kryptoprojekt.coderFrames;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -27,6 +29,9 @@ import kryptoprojekt.model.Coder;
 public class DecodeHammingCodeFrame extends Kit {
 
     private DropTextField textField1 = getDropTextField();
+    private DropTextField textField2 = getDropTextField();
+    private DropTextField textField3 = getDropTextField();
+    private JCheckBox enableMatrix = new JCheckBox("correct encoded word");
 
     /** Creates new form DecodeHammingCodeFrame */
     public DecodeHammingCodeFrame(ConnectionHandler handler) {
@@ -90,47 +95,78 @@ public class DecodeHammingCodeFrame extends Kit {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     private void initLogicComponents() {
-        jPanel1.setLayout(new GridBagLayout());
+      jPanel1.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
-        c.weightx = 0.495;
+        c.weightx = 0.5;
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
         c.gridy = 0;
-        JLabel l = new JLabel();
-        l.setText("HammingCodeElement");
-        jPanel1.add(l, c);
+        jPanel1.add(new JLabel("HammingCode Element"), c);
 
         c.weightx = 0.5;
         c.fill = GridBagConstraints.BOTH;
-        c.gridx = 1;
-        c.gridy = 0;
-        jPanel1.add(textField1, c);
-        
-        c.weighty = 0.5;
-        c.fill = GridBagConstraints.BOTH;
-        c.gridwidth = 2;
         c.gridx = 0;
         c.gridy = 1;
-        JCheckBox ch = new JCheckBox();
-        ch.setText("Check on errors?");
-        jPanel1.add(ch,c);
-
-//        c.weightx = 0.5;
-        c.fill = GridBagConstraints.BOTH;
-        c.gridx = 0;
-        c.gridy = 2;
-        jPanel1.add(new JList(new Object[] {"decodedWord:", "errorCount:", "correctedWord"}));
+        jPanel1.add(textField1, c);
 
         c.weightx = 0.5;
         c.fill = GridBagConstraints.BOTH;
-
-        c.gridx = 1;
+        c.gridwidth = 3;
+        c.gridx = 0;
         c.gridy = 2;
-        jPanel1.add(getDragList(new Object[] { getTitle() + "_decode"}), c);
+        jPanel1.add(getDragList(new Object[] {getTitle() + "HammingCode Element"}), c);
 
-        
-        this.setSize(300, 180);
+        enableMatrix.addItemListener(
+                new ItemListener() {
+
+                    public void itemStateChanged(ItemEvent e) {
+                        // Set "ignore" whenever box is checked or unchecked.
+                    }
+                });
+
+
+        c.weighty = 3;
+        c.fill = GridBagConstraints.BOTH;
+        c.gridx = 0;
+        c.gridy = 3;
+        jPanel1.add(enableMatrix, c);
+
+        c.weightx = 0.5;
+        c.fill = GridBagConstraints.BOTH;
+        c.gridx = 0;
+        c.gridy = 4;
+        jPanel1.add(new JLabel("Original decoded word"), c);
+
+        c.weightx = 0.5;
+        c.fill = GridBagConstraints.BOTH;
+        c.gridx = 0;
+        c.gridy = 5;
+        jPanel1.add(textField2, c);
+
+
+        c.weightx = 0.5;
+        c.fill = GridBagConstraints.BOTH;
+        c.gridwidth = 3;
+        c.gridx = 0;
+        c.gridy = 6;
+        jPanel1.add(getDragList(new Object[] {getTitle() + "decoded word"}), c);
+
+        c.weightx = 0.5;
+        c.fill = GridBagConstraints.BOTH;
+        c.gridx = 0;
+        c.gridy = 7;
+        jPanel1.add(textField3, c);
+
+        c.weightx = 0.5;
+        c.fill = GridBagConstraints.BOTH;
+        c.gridwidth = 3;
+        c.gridx = 0;
+        c.gridy = 8;
+        jPanel1.add(getDragList(new Object[] {getTitle() + "corrected decoded word"}), c);
+
+
+        this.setSize(180, 230);
     }
 
     @Override
