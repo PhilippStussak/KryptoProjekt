@@ -16,6 +16,7 @@ import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
+import kryptoprojekt.controller.BasicController;
 import kryptoprojekt.model.Basic;
 import kryptoprojekt.model.KryptoType;
 
@@ -84,7 +85,7 @@ public class SaMModFrame extends Kit {
 
     @Override
     public String execute() {
-        Object result = (Basic.squareAndMultiply((KryptoType)textField1.getResult(), (KryptoType)textField2.getResult(), (KryptoType)textField3.getResult()).first());
+        KryptoType result = BasicController.squareAndMultiply((KryptoType)textField1.getResult(), (KryptoType)textField2.getResult(), (KryptoType)textField3.getResult()).first();
         results.put(getTitle() + "_SaMMod", result);
         return result.toString();
     }

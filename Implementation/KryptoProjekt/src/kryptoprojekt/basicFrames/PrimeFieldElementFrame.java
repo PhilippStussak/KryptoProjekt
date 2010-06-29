@@ -16,6 +16,7 @@ import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
+import kryptoprojekt.controller.BasicController;
 import kryptoprojekt.model.*;
 
 /**
@@ -80,7 +81,7 @@ public class PrimeFieldElementFrame extends Kit {
 
     @Override
     public String execute() {
-        Object result = new PrimeFieldElement((Z)(KryptoType)textFieldValue.getResult(), (Z)(KryptoType)textFieldBase.getResult());
+        Object result = BasicController.createPrimeFieldElement((Z)(KryptoType)textFieldValue.getResult(), (Z)(KryptoType)textFieldBase.getResult());
         results.put(getTitle() + "_elem", result);
         return result.toString();
     }

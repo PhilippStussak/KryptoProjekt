@@ -13,11 +13,14 @@ package kryptoprojekt.basicFrames;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.util.LinkedList;
 import javax.swing.JLabel;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
+import kryptoprojekt.controller.BasicController;
 import kryptoprojekt.model.Basic;
 import kryptoprojekt.model.KryptoType;
+import kryptoprojekt.model.Tuple;
 
 /**
  *
@@ -68,7 +71,7 @@ public class SaMFrame extends Kit {
 
     @Override
     public String execute() {
-        Object result = Basic.squareAndMultiply((KryptoType)textField1.getResult(), (KryptoType)textField2.getResult()).first();
+        KryptoType result = BasicController.squareAndMultiply((KryptoType)textField1.getResult(), (KryptoType)textField2.getResult()).first();
         results.put(getTitle() + "_SaM", result);
         return result.toString();
     }
