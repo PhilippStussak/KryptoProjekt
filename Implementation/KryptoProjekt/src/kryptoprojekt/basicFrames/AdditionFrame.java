@@ -16,6 +16,7 @@ import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
+import kryptoprojekt.controller.BasicController;
 import kryptoprojekt.model.KryptoType;
 
 /**
@@ -118,7 +119,7 @@ public class AdditionFrame extends Kit {
 
     @Override
     public String execute() {
-        Object result = ((KryptoType)textField1.getResult()).add((KryptoType)textField2.getResult());
+        KryptoType result = BasicController.addition(textField1, textField2);
         results.put(getTitle() + "_sum", result);
         return result.toString();
     }

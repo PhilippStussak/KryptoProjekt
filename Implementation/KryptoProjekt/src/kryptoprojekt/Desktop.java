@@ -45,7 +45,7 @@ public class Desktop extends JDesktopPane {
 //            g2.drawImage(image, 0,0,this.getWidth(),this.getHeight(),this);
         for (Shape arrow : handler.getConnectionArrows())
             g2.draw(arrow);
-//        repaint();
+        repaint();
     }
 
     @Override

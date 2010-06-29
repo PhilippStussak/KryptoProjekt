@@ -20,6 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
+import kryptoprojekt.controller.BasicController;
 import kryptoprojekt.model.Basic;
 import kryptoprojekt.model.KryptoType;
 import kryptoprojekt.model.Tuple;
@@ -86,7 +87,7 @@ public class GCDFrame extends Kit {
 
     @Override
     public String execute() {
-        Tuple result = Basic.gcd((KryptoType) textField1.getResult(), (KryptoType) textField2.getResult());
+        Tuple result = BasicController.calculateGCD(textField1, textField2);
         results.put(getTitle() + "_gcd", result.first());
         extension = "";
         for(Object[] o : (LinkedList<Object[]>)result.second())

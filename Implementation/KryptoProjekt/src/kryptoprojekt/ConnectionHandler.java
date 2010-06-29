@@ -23,8 +23,9 @@ public class ConnectionHandler {
     }
 
     public void execute(JTextArea area) {
-        for(Kit k : frames)
+        for (Kit k : frames) {
             area.setText(area.getText() + "\n" + k.execute());
+        }
     }
 
     public void add(Kit kit) {
@@ -32,6 +33,21 @@ public class ConnectionHandler {
     }
 
     public boolean remove(Kit kit) {
+        for (Kit k : kit.getParents()) {
+            k.getChildren().remove(kit);
+        }
+        for (Kit k : kit.getChildren()) {
+            k.getParents().remove(kit);
+        }
+        Iterator<Connection> iterator = connections.iterator();
+        while (iterator.hasNext()) {
+            Connection con = iterator.next();
+            if (con.getChild() == kit || con.getParent() == kit) {
+                con.getDrop().removeConnection();
+                iterator.remove();
+            }
+        }
+
         return frames.remove(kit);
     }
 

@@ -17,16 +17,12 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
 import kryptoprojekt.controller.CoderController;
 import kryptoprojekt.model.HammingCode;
-import kryptoprojekt.model.KryptoType;
 import kryptoprojekt.model.Matrix;
 import kryptoprojekt.model.PrimeFieldElement;
-import kryptoprojekt.model.Z;
 
 /**
  *

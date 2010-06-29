@@ -30,6 +30,10 @@ public class Connection {
         return child;
     }
 
+    public Kit.DropTextField getDrop() {
+        return drop;
+    }
+
     public Shape getArrow() {
         GeneralPath path = new GeneralPath();
         path.moveTo(parent.getX(), parent.getY());

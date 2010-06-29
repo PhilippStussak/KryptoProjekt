@@ -16,6 +16,7 @@ import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
+import kryptoprojekt.controller.BasicController;
 import kryptoprojekt.model.KryptoType;
 
 /**
@@ -123,7 +124,7 @@ public class MultiplicationFrame extends Kit {
 
     @Override
     public String execute() {
-        Object result = ((KryptoType)textField1.getResult()).multiply((KryptoType)textField2.getResult());
+        KryptoType result = BasicController.multiplication(textField1, textField2);
         results.put(getTitle() + "_product", result);
         return result.toString();
     }

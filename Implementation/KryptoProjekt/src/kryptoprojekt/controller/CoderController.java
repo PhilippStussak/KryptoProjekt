@@ -15,10 +15,11 @@ import kryptoprojekt.model.Z;
 
 /**
  *
- * @author LiTTle
+ * @author LiTTle, Mario
  */
 public class CoderController {
 
+<<<<<<< HEAD
     private CoderController() {
     }
 
@@ -26,6 +27,12 @@ public class CoderController {
         hc.calculateSyndrom();
 
         return hc;
+=======
+    public static HammingCode calculateHammingSyndrom(DropTextField textField1) {
+        HammingCode result = (HammingCode)textField1.getResult();
+        result.calculateSyndrom();
+        return result;
+>>>>>>> e347deec9f9bfcf6524f54857189bcf46bc5417e
     }
 
     public static HammingCode encodeHammingCode(HammingCode hc) {
@@ -34,10 +41,17 @@ public class CoderController {
         return hc;
     }
 
+<<<<<<< HEAD
     public static HammingCode initHammingCode(boolean enableMatrix, Matrix<PrimeFieldElement> generatorM, String sourceCodeWord) {
         HammingCode result = null;
         if (enableMatrix && generatorM != null) {
             result = new HammingCode(generatorM, sourceCodeWord);
+=======
+    public static HammingCode initHammingCode(DropTextField textGeneratorMatrix, DropTextField textSourceCodeword, JCheckBox enableMatrix){
+         if(enableMatrix.isSelected()){
+        textGeneratorMatrix.enable(true);
+        HammingCode result = new HammingCode( (Matrix<PrimeFieldElement>)textGeneratorMatrix.getResult(),(String)textSourceCodeword.getResult());
+>>>>>>> e347deec9f9bfcf6524f54857189bcf46bc5417e
 
         } else {
             result = new HammingCode(sourceCodeWord);
@@ -48,6 +62,11 @@ public class CoderController {
     public static Z calculateHammingDistance(Matrix<PrimeFieldElement> vector1, Matrix<PrimeFieldElement> vector2) {
         Z result = HammingCode.hammingDistance(vector1, vector2);
 
+        return result;
+    }
+
+    public static Z hammingWeight(Matrix<PrimeFieldElement> elem){
+        Z result = HammingCode.vectorWeight(elem);
         return result;
     }
 }

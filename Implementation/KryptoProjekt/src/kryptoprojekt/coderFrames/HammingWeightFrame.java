@@ -16,9 +16,11 @@ import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
+import kryptoprojekt.controller.CoderController;
 import kryptoprojekt.model.HammingCode;
 import kryptoprojekt.model.Matrix;
 import kryptoprojekt.model.PrimeFieldElement;
+import kryptoprojekt.model.Z;
 
 
 
@@ -29,7 +31,6 @@ import kryptoprojekt.model.PrimeFieldElement;
 public class HammingWeightFrame extends Kit {
 
     private DropTextField textVector1 = getDropTextField();
-    private DropTextField textVector2 = getDropTextField();
 
     /** Creates new form hammingDistanceFrame */
     public HammingWeightFrame(ConnectionHandler handler) {
@@ -66,7 +67,7 @@ public class HammingWeightFrame extends Kit {
 
     @Override
     public String execute() {
-        Object result = HammingCode.vectorWeight((Matrix<PrimeFieldElement>) textVector1.getResult());
+        Z result = CoderController.hammingWeight((Matrix<PrimeFieldElement>) textVector1.getResult());
         results.put(getTitle() + "Weight", result);
         return result.toString();
     }
