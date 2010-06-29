@@ -58,17 +58,20 @@ public class HammingCodeTest extends TestCase{
         HammingCode c = new HammingCode("110");
         c.encode();
         c.calculateSyndrom();
-        Hashtable h = c.detectError();
-        assertFalse((Boolean)h.get(0));
-        assertEquals("110",(String)h.get(1));
+        c.detectError();
+        assertFalse(c.isErrorsFound());
+        assertEquals("110",c.decode());
         //generate too many errors
+        try{
         c.generateBitError(1);
         c.calculateSyndrom();
 
-        h = c.detectError();
-        assertTrue((Boolean) h.get(0));
+        c.detectError();
+        assertTrue((Boolean) c.isErrorsFound());
+            fail();
+        }catch(RuntimeException r){
 
-        assertEquals("detectErrorTooManyErrors",h.get(3));
+        }
 
         //generate one bit error and correct it
 
@@ -76,12 +79,11 @@ public class HammingCodeTest extends TestCase{
         c.encode();
         c.generateBitError(0.1);
         c.calculateSyndrom();
-        h = c.detectError();
+        c.detectError();
 
-        if((Boolean) h.get(0)){
-            if((Integer) h.get(2) > -1){
-                assertEquals("110",h.get(3));
-                System.out.println(h.get(3));
+        if(c.isErrorsFound()){
+            if(c.getErrorPos() > -1){
+                assertEquals("110",c.decode());
             }
             else{
                 fail();
@@ -120,7 +122,7 @@ public class HammingCodeTest extends TestCase{
        t2[0][5] = new PrimeFieldElement(1,2);
        t2[0][6] = new PrimeFieldElement(1,2);
 
-       assertEquals(3, HammingCode.hammingDistance(new Matrix(t), new Matrix(t2)));
+       assertEquals(new Z(3), HammingCode.hammingDistance(new Matrix(t), new Matrix(t2)));
     }
 
     public void testVectorWeight() {
@@ -128,6 +130,6 @@ public class HammingCodeTest extends TestCase{
         t[0][0] = new PrimeFieldElement(0, 2);
         t[0][1] = new PrimeFieldElement(1, 2);
         t[0][2] = new PrimeFieldElement(1, 2);
-        assertEquals(2,HammingCode.vectorWeight(new Matrix(t)));
+        assertEquals(new Z(2),HammingCode.vectorWeight(new Matrix(t)));
     }
 }

@@ -27,6 +27,10 @@ public class HammingCode extends Coder {
         return decodedWord;
     }
 
+    public int getErrorPos(){
+        return errorPosition;
+    }
+
     public Matrix<PrimeFieldElement> getEncodedWord() {
         return encodedWord;
     }
