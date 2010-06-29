@@ -23,7 +23,6 @@ public class FermatZ extends FermatTest<Z>{
         super(bases, moduls, calcProp);
     }
 
-
     public ArrayList<Tuple<Boolean, Double>> test()
         throws IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException {
         boolean checkPrimeArgAnswer = checkPrimeArguments();
@@ -57,28 +56,32 @@ public class FermatZ extends FermatTest<Z>{
         return null;
     }
 
-    //checkt ob die übergebenen Werte: Primzahl größer 0 und die Basis '0 < a < Modul' sind
+
+    //muss noch überarbeitet werden. Soll so sein wie bei Lucas Test
+    //checkt ob die übergebenen Werte: Primzahl größer 1 und die Basis '1 < a < Modul' sind
     private boolean checkPrimeArguments()
             throws IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException {
         //Precondition
         assert Set.class.isAssignableFrom(bases.getClass()): "check that bases contains no dublicate elements: Liste hs = " +bases;
         if (bases.isEmpty()){
-            throw new IllegalArgumentException("Es wird mind. eine Basis >0 und <n benötigt.");
+            throw new IllegalArgumentException("Es wird mind. EINE Basis >1 und <n benötigt.");
         }
 
         if (getLowestModul().compareTo(new Z(1)) <= 0) { //prüft ob Primzahl größer 1 ist
             throw new IllegalArgumentException("Es gibt nur Primzahlen >1");
         }
-        //prüft ob bases > 0 && bases < checkPrime ist
-        if (getLowestBase().compareTo(new Z(1)) < 1) {
-            throw new IllegalArgumentException("Basis zu klein. Sie muss bei Miller-Rabin sein:  1 < a < Modul");
+        //prüft ob bases > 1 && bases < checkPrime ist
+        if (!getLowestModul().equals(new Z(2))){
+            if (getLowestBase().compareTo(new Z(1)) < 1) {
+                throw new IllegalArgumentException("Basis 'a' zu klein. Sie muss bei Fermat-Test sein:  1 < a < Modul");
+            }
         }
-        else if (getHighestBase().compareTo(getHighestModul())>0){
-            throw new IllegalArgumentException("Basis zu groß. Sie muss bei Miller-Rabin sein:  1 < a < Modul");
+        else if (getHighestBase().compareTo(getHighestModul())>=0){
+            throw new IllegalArgumentException("Basis 'a' zu groß. Sie muss bei Fermat-Test sein:  1 < a < Modul");
          }
         //Postcondition
         assert getLowestModul().compareTo(new Z(1)) >0: "checkprime isn't > 1: checkPrime = " +getLowestModul();
-        assert getLowestBase().compareTo(new Z(1)) >0: "base isn't > 1: base = " +getLowestBase();
+        assert getLowestBase().compareTo(new Z(1)) >0 || getLowestModul().equals(new Z(2)): "base isn't > 1: base = " +getLowestBase();
         return true;
     }
 
@@ -86,7 +89,7 @@ public class FermatZ extends FermatTest<Z>{
             throws IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException {
         boolean isPrime = false;
 
-        Z oneObj = new Z(1);
+        Z oneObj = new Z(1); //Die neue Instanz wir mit 1 initialisiert, das ist der Wert der vom Exponenten dann subtrahiert wird
         int assertPostCondCounter = 0;
         for (Z base : bases) {
             ++assertPostCondCounter;

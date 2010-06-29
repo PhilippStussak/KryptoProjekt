@@ -18,7 +18,7 @@ public class MillerRabinZ extends MillerRabinTest<Z>{
 
         /*
          * Erzeugt ein Miller-Rabin-Test Objekt für den PrimeType Z.
-         * Erwartet eine beliebige Liste mit Basen und Zahlen die auf Primzahleigenschaft getestet werden.
+         * Erwartet eine beliebige Liste mit Basen und Zahlen die auf Primzahleigenschaft getestet werden sollen.
         */
         MillerRabinZ(Collection<Z> bases, Collection<Z> moduls, boolean calcProp){
             super(bases, moduls, calcProp);
@@ -30,8 +30,8 @@ public class MillerRabinZ extends MillerRabinTest<Z>{
             ArrayList<Tuple<Boolean, Double>> primeResult = new ArrayList<Tuple<Boolean, Double>>();
 
             if (checkPrimeArgAnswer) {
-                Z zeroObj = new Z(0);
-                Z twoObj = new Z(2);
+                Z zeroObj = new Z(0); //um zu testen ob es eine gerade Zahl ist (Rest muss 0 ergeben)
+                Z twoObj = new Z(2); //um zu testen ob es eine gerade Zahl ist
                 double probability = calculateProbability(bases);
                 for (Z checkPrime : moduls){
                     if (checkPrime.mod(twoObj).equals(zeroObj)){
@@ -44,7 +44,7 @@ public class MillerRabinZ extends MillerRabinTest<Z>{
                             //Postcondition
                             assert checkPrimeArgAnswer == true && isPrime == true && calcProp == true: "checkPrimeArgAnswer or isPrime have a false state: checkPrimeArgAnswer = " +checkPrimeArgAnswer+ ", isPrime = " +isPrime;
                             primeResult.add(new Tuple<Boolean, Double>(isPrime, probability));
-                            continue;
+                            continue;                            
                         } else{
                             assert checkPrimeArgAnswer == true && isPrime == true && calcProp == false: "checkPrimeArgAnswer or isPrime have a false state: checkPrimeArgAnswer = " +checkPrimeArgAnswer+ ", isPrime = " +isPrime;
                             primeResult.add(new Tuple<Boolean, Double>(isPrime, -1.0)); //es sollte keine Wahrscheinlichkeit berechnet werden
@@ -55,6 +55,7 @@ public class MillerRabinZ extends MillerRabinTest<Z>{
                         assert checkPrimeArgAnswer == true && isPrime == false: "checkPrimeArgAnswer or isPrime have a false state: checkPrimeArgAnswer = " +checkPrimeArgAnswer+ ", isPrime = " +isPrime;
                         primeResult.add(new Tuple<Boolean, Double>(false, 1.0));//es handelt sich um keine Primzahl
                         continue;
+                        //return new Tuple<Boolean, Double>(false, 1.0); //es handelt sich um keine Primzahl
                     }
                 }
                 return primeResult;
@@ -63,22 +64,24 @@ public class MillerRabinZ extends MillerRabinTest<Z>{
             return null;
         }
 
-        //checkt ob die übergebenen Werte: Primzahl größer 0 und die Basis '0 < a < Modul' sind
+
+        //muss noch überarbeitet werden. Soll so sein wie bei Lucas Test
+        //checkt ob die übergebenen Werte: Primzahl größer 1 und die Basis '1 < a < Modul' sind
         private boolean checkPrimeArguments()
                 throws IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException {
             //Precondition
             assert Set.class.isAssignableFrom(bases.getClass()): "check that bases contains no dublicate elements: Liste hs = " +bases;
             if (bases.isEmpty()){
-                throw new IllegalArgumentException("Es wird mind. eine Basis >0 und <n benötigt.");
+                throw new IllegalArgumentException("Es wird mind. EINE Basis >1 und <n benötigt.");
             }
-            if (getLowestModul().compareTo(new Z(1)) <= 0) {
+            if (getLowestModul().compareTo(new Z(1)) <= 0) { //prüft ob Primzahl größer 1 ist
                 throw new IllegalArgumentException("Es gibt nur Primzahlen >1");
             }
             if (getLowestBase().compareTo(new Z(1)) < 1) {
-                throw new IllegalArgumentException("Basis zu klein. Sie muss bei Miller-Rabin sein:  1 < a < Modul");
+                throw new IllegalArgumentException("Basis 'a' zu klein. Sie muss bei Miller-Rabin sein:  1 < a < Modul");
             }
-            else if (getHighestBase().compareTo(getHighestModul())>0){
-                throw new IllegalArgumentException("Basis zu groß. Sie muss bei Miller-Rabin sein:  1 < a < Modul");
+            else if (getHighestBase().compareTo(getHighestModul())>=0){
+                throw new IllegalArgumentException("Basis 'a' zu groß. Sie muss bei Miller-Rabin sein:  1 < a < Modul");
             }
             //Postcondition
             assert getLowestModul().compareTo(new Z(1)) >0: "checkprime isn't > 1: checkPrime = " +getLowestModul();
@@ -89,17 +92,17 @@ public class MillerRabinZ extends MillerRabinTest<Z>{
         //Macht den Miller-Rabin-Test.
         private boolean millerRabinCheck(Z checkPrime)
                  throws IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException {
-            Z firstTest;
-            Z oneObj = new Z(1);
-            Z twoObj = new Z(2);
+            Z firstTest; //beinhaltet den Wert nach dem ersten FermatTest Schritt ob modul eine Primzahl ist
+            Z oneObj = new Z(1); //Die neue Instanz wird mit 1 initialisiert, das ist der Wert der vom Exponenten dann subtrahiert wird
+            Z twoObj = new Z(2); //Die neue Instanz wird mit 2 initialisiert, das ist der Wert mit dem der Exponent immer multipliziert wird
 
             Tuple<Z, Z> factors = factorizeEven(checkPrime.subtract(oneObj));  //erstes Argument: Potenz zur 2, zweites Argument: ungerader Faktor
             if(factors.first().equals(new Z(-1)) || factors.second().equals(new Z(-1))){
-                throw new RuntimeException("Die übergeben gerade Zahl konnte nicht faktorisiert werden.");
+                throw new RuntimeException("Die übergeben gerade Zahl konnte nicht faktorisiert werden."); //Frage: Gibt es dafür eine bessere Exception?
             }
-            Z exponent = factors.first();
-            Z oddFactor = factors.second();
-            Z maxPower = Basic.squareAndMultiply(twoObj, exponent.subtract(oneObj)).first();
+            Z exponent = factors.first(); //beinhaltet den Exponenten nach der Faktorisierung
+            Z oddFactor = factors.second(); //beinhaltet den ungeraden Faktor nach der Faktorisierung
+            Z maxPower = Basic.squareAndMultiply(twoObj, exponent.subtract(oneObj)).first(); //beinhaltet die maximale Potenz mit der die checkBasis hoch oddFactor potenziert werden darf nach der Faktorisierung
 
             int assertPostCondCounter = 0;
             nextBase:
@@ -112,15 +115,15 @@ public class MillerRabinZ extends MillerRabinTest<Z>{
                 } else{
                     Z newBase = firstTest;
                     assert oddFactor.compareTo(new Z(2147483647)) <0 : "oddFactor is too large (I think). oddFactor: " +oddFactor;
-                    int potenzK = 1;
+                    int potenzK = 1; //ist der 'k' Exponent
                     for (Z twoFactor = twoObj; twoFactor.compareTo(maxPower) <= 0; twoFactor=twoFactor.multiply(twoObj)){
                         assert potenzK <= maxPower.intValue(): "Too many Iterations. assertZaehler: "+potenzK+ ", maxPower: " +maxPower ;
-                        if (Basic.squareAndMultiply(newBase, twoFactor, checkPrime).equals(new Z(checkPrime.subtract(oneObj).toString()))){
+                        if (Basic.squareAndMultiply(newBase, twoFactor, checkPrime).equals(new Z(checkPrime.subtract(oneObj).toString()))){ //Wenn n-1 rauskommt, handelt es sich um eine Primzahl                            
                             continue nextBase;
                         }
                         ++potenzK;
                     }
-                    return false;
+                    return false; //der Test hat immer ungleich n-1 ergeben
                 }
             }
             //Postcondition
