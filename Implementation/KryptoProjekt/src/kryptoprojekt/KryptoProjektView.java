@@ -35,6 +35,7 @@ import kryptoprojekt.coderFrames.HammingDistanceFrame;
 import kryptoprojekt.coderFrames.HammingSyndromFrame;
 import kryptoprojekt.coderFrames.HammingWeightFrame;
 import kryptoprojekt.coderFrames.InitHammingJFrame;
+import kryptoprojekt.primeFrames.FermatFrame;
 
 /**
  * The application's main frame.
@@ -141,7 +142,7 @@ public class KryptoProjektView extends FrameView {
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
         startMenuItem = new javax.swing.JMenuItem();
         javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
-        jMenu1 = new javax.swing.JMenu();
+        basicMenu = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
         additionMenuItem = new javax.swing.JMenuItem();
         subtractionMenuItem = new javax.swing.JMenuItem();
@@ -154,7 +155,9 @@ public class KryptoProjektView extends FrameView {
         phiMenuItem = new javax.swing.JMenuItem();
         zMenuItem = new javax.swing.JMenuItem();
         primeFieldMenuItem = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
+        primeTestMenu = new javax.swing.JMenu();
+        fermatMenuItem = new javax.swing.JMenuItem();
+        coderMenu = new javax.swing.JMenu();
         jMenu11 = new javax.swing.JMenu();
         initHammingCodeMenuItem = new javax.swing.JMenuItem();
         encodeMenuItem = new javax.swing.JMenuItem();
@@ -190,7 +193,7 @@ public class KryptoProjektView extends FrameView {
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 254, Short.MAX_VALUE)
+            .addGap(0, 249, Short.MAX_VALUE)
         );
 
         mainMenuBar.setName("mainMenuBar"); // NOI18N
@@ -215,8 +218,8 @@ public class KryptoProjektView extends FrameView {
 
         mainMenuBar.add(fileMenu);
 
-        jMenu1.setText(resourceMap.getString("jMenu1.text")); // NOI18N
-        jMenu1.setName("jMenu1"); // NOI18N
+        basicMenu.setText(resourceMap.getString("basicMenu.text")); // NOI18N
+        basicMenu.setName("basicMenu"); // NOI18N
 
         jMenu2.setText(resourceMap.getString("jMenu2.text")); // NOI18N
         jMenu2.setName("jMenu2"); // NOI18N
@@ -302,7 +305,7 @@ public class KryptoProjektView extends FrameView {
         });
         jMenu2.add(phiMenuItem);
 
-        jMenu1.add(jMenu2);
+        basicMenu.add(jMenu2);
 
         zMenuItem.setText(resourceMap.getString("zMenuItem.text")); // NOI18N
         zMenuItem.setName("zMenuItem"); // NOI18N
@@ -311,7 +314,7 @@ public class KryptoProjektView extends FrameView {
                 zMenuItemActionPerformed(evt);
             }
         });
-        jMenu1.add(zMenuItem);
+        basicMenu.add(zMenuItem);
 
         primeFieldMenuItem.setText(resourceMap.getString("primeFieldMenuItem.text")); // NOI18N
         primeFieldMenuItem.setName("primeFieldMenuItem"); // NOI18N
@@ -320,12 +323,26 @@ public class KryptoProjektView extends FrameView {
                 primeFieldMenuItemActionPerformed(evt);
             }
         });
-        jMenu1.add(primeFieldMenuItem);
+        basicMenu.add(primeFieldMenuItem);
 
-        mainMenuBar.add(jMenu1);
+        mainMenuBar.add(basicMenu);
 
-        jMenu4.setText(resourceMap.getString("jMenu4.text")); // NOI18N
-        jMenu4.setName("jMenu4"); // NOI18N
+        primeTestMenu.setText(resourceMap.getString("primeTestMenu.text")); // NOI18N
+        primeTestMenu.setName("primeTestMenu"); // NOI18N
+
+        fermatMenuItem.setText(resourceMap.getString("fermatMenuItem.text")); // NOI18N
+        fermatMenuItem.setName("fermatMenuItem"); // NOI18N
+        fermatMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fermatMenuItemActionPerformed(evt);
+            }
+        });
+        primeTestMenu.add(fermatMenuItem);
+
+        mainMenuBar.add(primeTestMenu);
+
+        coderMenu.setText(resourceMap.getString("coderMenu.text")); // NOI18N
+        coderMenu.setName("coderMenu"); // NOI18N
 
         jMenu11.setText(resourceMap.getString("jMenu11.text")); // NOI18N
         jMenu11.setName("jMenu11"); // NOI18N
@@ -384,9 +401,9 @@ public class KryptoProjektView extends FrameView {
         });
         jMenu11.add(vectorWeightMenuItem);
 
-        jMenu4.add(jMenu11);
+        coderMenu.add(jMenu11);
 
-        mainMenuBar.add(jMenu4);
+        mainMenuBar.add(coderMenu);
 
         helpMenu.setText(resourceMap.getString("helpMenu.text")); // NOI18N
         helpMenu.setName("helpMenu"); // NOI18N
@@ -587,20 +604,27 @@ public class KryptoProjektView extends FrameView {
         desktop.add(kit);
     }//GEN-LAST:event_phiMenuItemActionPerformed
 
+    private void fermatMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fermatMenuItemActionPerformed
+        Kit kit = new FermatFrame(handler);
+        kit.setVisible(true);
+        desktop.add(kit);
+    }//GEN-LAST:event_fermatMenuItemActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem additionMenuItem;
+    private javax.swing.JMenu basicMenu;
+    private javax.swing.JMenu coderMenu;
     private javax.swing.JMenuItem decodeMenuItem;
     private javax.swing.JMenuItem divisionMenuItem;
     private javax.swing.JMenuItem encodeMenuItem;
+    private javax.swing.JMenuItem fermatMenuItem;
     private javax.swing.JMenuItem gcdMenuItem;
     private javax.swing.JMenuItem hammingDistanceMenuItem;
     private javax.swing.JMenuItem initHammingCodeMenuItem;
-    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu10;
     private javax.swing.JMenu jMenu11;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenu jMenu7;
@@ -615,6 +639,7 @@ public class KryptoProjektView extends FrameView {
     private javax.swing.JMenuItem multiplicationMenuItem;
     private javax.swing.JMenuItem phiMenuItem;
     private javax.swing.JMenuItem primeFieldMenuItem;
+    private javax.swing.JMenu primeTestMenu;
     private javax.swing.JProgressBar progressBar;
     private javax.swing.JMenuItem samMenuItem;
     private javax.swing.JMenuItem sammodMenuItem;
