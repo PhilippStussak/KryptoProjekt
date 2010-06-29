@@ -20,7 +20,7 @@ public class CoderController {
     public String calculateHammingSyndrom(DropTextField textField1) {
         Object result = ((HammingCode)textField1.getResult()).calculateSyndrom();
 
-        results.put(getTitle() + "_syndrom", result);
+        //results.put(getTitle() + "_syndrom", result);
         return result.toString();
     }
 }

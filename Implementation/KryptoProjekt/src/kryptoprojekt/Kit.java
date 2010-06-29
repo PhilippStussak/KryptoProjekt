@@ -7,11 +7,10 @@ package kryptoprojekt;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.dnd.*;
-import java.beans.PropertyVetoException;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JInternalFrame;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -65,6 +64,12 @@ public class Kit extends JInternalFrame {
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public void dispose() {
+        handler.remove(this);
+        super.dispose();
+    }
+
     public class DragList extends JList implements DragGestureListener {
 
         private Kit origin;
@@ -90,10 +95,33 @@ public class Kit extends JInternalFrame {
         public DropTextField(Kit origin) {
             this.origin = origin;
             new DropTarget(this, this);
+            this.addKeyListener(new KeyListener() {
+
+                public void keyTyped(KeyEvent e) {
+                    keyTypedAction();
+                }
+
+                public void keyPressed(KeyEvent e) {
+                }
+
+                public void keyReleased(KeyEvent e) {
+                }
+            });
+        }
+
+        public void keyTypedAction() {
+            p = null;
+            key = null;
+            handler.removeSameTarget(new Connection(null, null, (DropTextField) this));
         }
 
         public Object getResult() {
             return p.getResult(key);
+        }
+
+        public void removeConnection() {
+            key = null;
+            p = null;
         }
 
         public void dragEnter(DropTargetDragEvent dtde) {
@@ -117,14 +145,16 @@ public class Kit extends JInternalFrame {
                     } else {
                         Connection con = new Connection(parent, origin, this);
                         Connection old = handler.removeSameTarget(con);
-                        if(old != null) {
+                        if (old != null) {
                             origin.parents.remove(old.getParent());
                         }
-                        if (!handler.add(con)) {
+                        if(cyrcle(parent, origin))
+                            JOptionPane.showMessageDialog(null, "Recursion not possible!");
+                        else if (!handler.add(con)) {
                             JOptionPane.showMessageDialog(null, "Connection already exists!");
                         } else {
                             dtde.acceptDrop(DnDConstants.ACTION_COPY);
-                            String text = (String)ta.getTransferData(DataFlavor.stringFlavor);
+                            String text = (String) ta.getTransferData(DataFlavor.stringFlavor);
                             this.setText(text);
                             dtde.getDropTargetContext().dropComplete(true);
                             origin.parents.add(parent);
@@ -141,6 +171,15 @@ public class Kit extends JInternalFrame {
                 JOptionPane.showMessageDialog(null, e.getMessage());
                 e.printStackTrace();
             }
+        }
+
+        private boolean cyrcle(Kit par, Kit ch) {
+            if(par == ch)
+                return true;
+            for(Kit k : par.getParents())
+                if(cyrcle(k, ch))
+                    return true;
+            return false;
         }
     }
 }
