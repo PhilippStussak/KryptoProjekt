@@ -12,10 +12,11 @@ import kryptoprojekt.Kit.DropTextField;
 import kryptoprojekt.model.HammingCode;
 import kryptoprojekt.model.Matrix;
 import kryptoprojekt.model.PrimeFieldElement;
+import kryptoprojekt.model.Z;
 
 /**
  *
- * @author LiTTle
+ * @author LiTTle, Mario
  */
 public class CoderController {
     private CoderController() {}
@@ -31,8 +32,8 @@ public class CoderController {
         return null;
     }
 
-    public static HammingCode initHammingCode(DropTextField textGeneratorMatrix, DropTextField textSourceCodeword, JCheckBox enableMarix){
-         if(enableMarix.isSelected()){
+    public static HammingCode initHammingCode(DropTextField textGeneratorMatrix, DropTextField textSourceCodeword, JCheckBox enableMatrix){
+         if(enableMatrix.isSelected()){
         textGeneratorMatrix.enable(true);
         HammingCode result = new HammingCode( (Matrix<PrimeFieldElement>)textGeneratorMatrix.getResult(),(String)textSourceCodeword.getResult());
 
@@ -43,5 +44,10 @@ public class CoderController {
 
         return result;
         }
+    }
+
+    public static Z hammingWeight(DropTextField textVector1){
+        Z result = HammingCode.vectorWeight((Matrix<PrimeFieldElement>) textVector1.getResult());
+        return result;
     }
 }
