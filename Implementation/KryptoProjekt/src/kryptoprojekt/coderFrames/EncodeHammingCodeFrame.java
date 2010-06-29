@@ -115,7 +115,7 @@ public class EncodeHammingCodeFrame extends Kit {
 
     @Override
     public String execute() {
-        HammingCode result = CoderController.encodeHammingCode(textField1);
+        HammingCode result = CoderController.encodeHammingCode((HammingCode) textField1.getResult());
         results.put(getTitle() + "_encode", result.getEncodedWord());
         return result.toString();
     }

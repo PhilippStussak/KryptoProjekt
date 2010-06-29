@@ -15,6 +15,7 @@ import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
+import kryptoprojekt.controller.CoderController;
 import kryptoprojekt.model.HammingCode;
 import kryptoprojekt.model.Matrix;
 import kryptoprojekt.model.PrimeFieldElement;
@@ -74,15 +75,17 @@ public class HammingDistanceFrame extends Kit {
         c.gridwidth = 3;
         c.gridx = 0;
         c.gridy = 2;
-        jPanel1.add(getDragList(new Object[]{getTitle() + "Distance"}), c);
+        jPanel1.add(getDragList(new Object[]{getTitle() + "_distance"}), c);
 
         this.setSize(160, 120);
     }
 
     @Override
     public String execute() {
-        Object result = HammingCode.hammingDistance((Matrix<PrimeFieldElement>) textVector1.getResult(), (Matrix<PrimeFieldElement>) textVector2.getResult());
-        results.put(getTitle() + "Distance", result);
+        Object result = CoderController.calculateHammingDistance(
+                            (Matrix<PrimeFieldElement>) textVector1.getResult(),
+                            (Matrix<PrimeFieldElement>) textVector2.getResult());
+        results.put(getTitle() + "_distance", result);
         return result.toString();
     }
 

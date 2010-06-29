@@ -115,7 +115,7 @@ public class HammingSyndromFrame extends Kit {
 
     @Override
     public String execute() {
-        HammingCode result = CoderController.calculateHammingSyndrom(textField1);
+        HammingCode result = CoderController.calculateHammingSyndrom((HammingCode)textField1.getResult());
         results.put(getTitle() + "_syndrom", result.getSyndrom());
         return result.toString();
     }

@@ -37,7 +37,7 @@ public class InitHammingJFrame extends Kit {
 
     private DropTextField textGeneratorMatrix = getDropTextField();
     private DropTextField textSourceCodeword = getDropTextField();
-    private JCheckBox enableMarix = new JCheckBox("add own generator matrix");
+    private JCheckBox enableMatrix = new JCheckBox("add own generator matrix");
 
 
 
@@ -127,17 +127,17 @@ public class InitHammingJFrame extends Kit {
         c.gridy = 2;
         jPanel1.add(getDragList(new Object[] {getTitle() + "source codeword"}), c);
         
-        textGeneratorMatrix.enable(false);
+        textGeneratorMatrix.setEnabled(false);
 
-        enableMarix.addItemListener(
+        enableMatrix.addItemListener(
                 new ItemListener() {
 
                     public void itemStateChanged(ItemEvent e) {
                         // Set "ignore" whenever box is checked or unchecked.
                        if(e.getStateChange() == ItemEvent.SELECTED)
-                           textGeneratorMatrix.enable(true);
+                           textGeneratorMatrix.setEnabled(true);
                        else
-                           textGeneratorMatrix.enable(false);
+                           textGeneratorMatrix.setEnabled(false);
                     }
                 });
 
@@ -146,7 +146,7 @@ public class InitHammingJFrame extends Kit {
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
         c.gridy = 3;
-        jPanel1.add(enableMarix, c);
+        jPanel1.add(enableMatrix, c);
 
         c.weightx = 0.5;
         c.fill = GridBagConstraints.BOTH;
@@ -181,8 +181,13 @@ public class InitHammingJFrame extends Kit {
 
     @Override
     public String execute() {
-
-        HammingCode hc = CoderController.initHammingCode(textGeneratorMatrix, textSourceCodeword, enableMarix);
+        Matrix<PrimeFieldElement> generatorM = null;
+        HammingCode hc = null;
+        if (enableMatrix.isSelected()) {
+            hc = CoderController.initHammingCode(true, generatorM, (String)textSourceCodeword.getResult());
+        } else {
+            hc = CoderController.initHammingCode(false, null, (String)textSourceCodeword.getResult());
+        }
         results.put(getTitle() + "hammingObject", hc);
         results.put(getTitle() + "generatorMatrix", textGeneratorMatrix);
         results.put(getTitle() + "source codeword", textSourceCodeword);
