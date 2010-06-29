@@ -15,12 +15,16 @@ import kryptoprojekt.model.HammingCode;
  * @author LiTTle
  */
 public class CoderController {
-    private static HashMap<String, Object> results;
+    private CoderController() {}
 
-    public String calculateHammingSyndrom(DropTextField textField1) {
-        Object result = ((HammingCode)textField1.getResult()).calculateSyndrom();
+    public static HammingCode calculateHammingSyndrom(DropTextField textField1) {
+        HammingCode result = (HammingCode)textField1.getResult();
+        result.calculateSyndrom();
 
-        results.put(getTitle() + "_syndrom", result);
-        return result.toString();
+        return result;
+    }
+
+    public static HammingCode encodeHammingCode(DropTextField textField1) {
+        return null;
     }
 }

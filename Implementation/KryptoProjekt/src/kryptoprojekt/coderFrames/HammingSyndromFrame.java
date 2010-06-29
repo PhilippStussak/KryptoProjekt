@@ -16,6 +16,7 @@ import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
+import kryptoprojekt.controller.CoderController;
 import kryptoprojekt.model.HammingCode;
 
 /**
@@ -114,8 +115,8 @@ public class HammingSyndromFrame extends Kit {
 
     @Override
     public String execute() {
-        Object result = ((HammingCode)textField1.getResult()).calculateSyndrom();
-        results.put(getTitle() + "_syndrom", result);
+        HammingCode result = CoderController.calculateHammingSyndrom(textField1);
+        results.put(getTitle() + "_syndrom", result.getSyndrom());
         return result.toString();
     }
 
