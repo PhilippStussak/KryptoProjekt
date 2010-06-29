@@ -20,6 +20,30 @@ public class HammingCode extends Coder {
     private Matrix<PrimeFieldElement> decodedWord;
     private final int galoisBase = 2;
 
+    public Matrix<PrimeFieldElement> getDecodedWord() {
+        return decodedWord;
+    }
+
+    public Matrix<PrimeFieldElement> getEncodedWord() {
+        return encodedWord;
+    }
+
+    public Matrix<PrimeFieldElement> getGeneratorMatrix() {
+        return generatorMatrix;
+    }
+
+    public Matrix<PrimeFieldElement> getSourceCodeWord() {
+        return sourceCodeWord;
+    }
+
+    public Matrix<PrimeFieldElement> getSyndrom() {
+        return syndrom;
+    }
+
+    public Matrix<PrimeFieldElement> getControlMatrix() {
+        return this.controlMatrix;
+    }
+
     /**
      * Encodes the sourceCodeWord which was set within constructor.
      * @throws NullPointerException if sourceCodeWord or generatorMatrix is not calculated yet
