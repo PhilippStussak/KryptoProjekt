@@ -76,7 +76,7 @@ public class KryptoProjektAboutBox extends javax.swing.JDialog {
         appDescLabel.setText(resourceMap.getString("appDescLabel.text")); // NOI18N
         appDescLabel.setName("appDescLabel"); // NOI18N
 
-        imageLabel.setIcon(new javax.swing.ImageIcon("D:\\Studium\\Semester 4\\Projekt\\KryptoProjekt\\hfu.png")); // NOI18N
+        imageLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kryptoprojekt/resources/hfu.png"))); // NOI18N
         imageLabel.setName("imageLabel"); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

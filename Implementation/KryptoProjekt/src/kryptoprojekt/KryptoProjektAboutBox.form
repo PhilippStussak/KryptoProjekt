@@ -198,7 +198,7 @@
     <Component class="javax.swing.JLabel" name="imageLabel">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" noResource="true" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="D:\Studium\Semester 4\Projekt\KryptoProjekt\hfu.png"/>
+          <Image iconType="3" name="/kryptoprojekt/resources/hfu.png"/>
         </Property>
         <Property name="name" type="java.lang.String" value="imageLabel" noResource="true"/>
       </Properties>
