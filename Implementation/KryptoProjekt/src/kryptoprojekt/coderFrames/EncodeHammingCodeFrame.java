@@ -119,7 +119,7 @@ public class EncodeHammingCodeFrame extends Kit {
         HammingCode result = CoderController.encodeHammingCode((HammingCode) textField1.getResult());
         results.put(getTitle() + "_encode", result);
 
-        return result.getEncodedWord();
+        return "encoded word: " + result.getEncodedWord();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

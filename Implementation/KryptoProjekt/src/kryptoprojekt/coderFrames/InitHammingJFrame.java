@@ -188,7 +188,7 @@ public class InitHammingJFrame extends Kit {
         results.put(getTitle() + "generatorMatrix", textGeneratorMatrix);
         results.put(getTitle() + "source codeword", textSourceCodeword);
 
-        return hc.toString();
+        return "Init Hamming Code with source codeword "+hc.getSourceCodeWord();
 
     }
 
