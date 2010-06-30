@@ -16,7 +16,6 @@ import javax.swing.JList;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
 import kryptoprojekt.controller.LogicValidator;
-import kryptoprojekt.model.Validator;
 import kryptoprojekt.model.Z;
 
 /**
@@ -119,7 +118,7 @@ public class ZFrame extends Kit {
 
     @Override
     public String execute() {
-        return results.get(getTitle() + "_number").toString();
+        return "In Window " + getTitle() + ": " + results.get(getTitle() + "_number").toString();
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

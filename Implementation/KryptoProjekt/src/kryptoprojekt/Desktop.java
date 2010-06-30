@@ -37,14 +37,13 @@ public class Desktop extends JDesktopPane {
 
     @Override
     public void paintComponent(Graphics g) {
-        Graphics2D g2 = (Graphics2D)g;
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+        Graphics2D g2d = (Graphics2D)g;
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 		        RenderingHints.VALUE_ANTIALIAS_ON);
         super.paintComponent(g);
         if (image != null)
-            g2.drawImage(image, 0,0,this.getWidth(),this.getHeight(),this);
-        for (Shape arrow : handler.getConnectionArrows())
-            g2.draw(arrow);
+            g2d.drawImage(image, 0,0,this.getWidth(),this.getHeight(),this);
+        handler.drawArrows(g2d);
         repaint();
     }
 

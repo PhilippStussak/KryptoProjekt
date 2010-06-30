@@ -92,7 +92,7 @@ public class GCDFrame extends Kit {
         extension = "";
         for(Object[] o : (LinkedList<Object[]>)result.second())
             extension += o[0] + " = " + o[1] + " * " + o[2] + " + " + o[3] + "\n";
-        return result.first().toString();
+        return "In Window " + getTitle() + ": " + "GCD(" + (KryptoType)textField1.getResult() + ", " + (KryptoType)textField2.getResult() + ") = " +  result.first().toString();
     }
 
     @SuppressWarnings("unchecked")
