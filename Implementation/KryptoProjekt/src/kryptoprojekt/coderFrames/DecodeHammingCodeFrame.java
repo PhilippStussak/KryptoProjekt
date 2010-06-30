@@ -20,7 +20,9 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
+import kryptoprojekt.controller.CoderController;
 import kryptoprojekt.model.Coder;
+import kryptoprojekt.model.HammingCode;
 
 /**
  *
@@ -155,10 +157,20 @@ public class DecodeHammingCodeFrame extends Kit {
 
     @Override
     public String execute() {
-//        Object result = ((Coder)textField1.getResult()).add((Coder)textField2.getResult());
-//        results.put(getTitle() + "_decode", result);
-//        return result.toString();
-        return null;
+        try{
+        HammingCode result = CoderController.decodeHammingCode((HammingCode) hcField.getResult());
+        if(enableMatrix.isSelected()){
+            results.put(getTitle() + "HammingCode Element", result);
+            results.put(getTitle() + "decoded word", result.getDecodedWord());
+            results.put(getTitle() + "corrected decoded word", result.getCorrectedDecodedWord());
+            return "decoded word: " + result.getDecodedWord() +"\nError in encoded word " + result.getEncodedWord() + "at position "+ result.getErrorPos() + "\ncorrected decoded word: " + result.getCorrectedDecodedWord();
+        }
+        results.put(getTitle() + "HammingCode Element", result);
+        results.put(getTitle() + "decoded word", result.getDecodedWord());
+        return "decoded word: " + result.getDecodedWord();
+        }catch(RuntimeException r){
+            return r.getMessage();
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

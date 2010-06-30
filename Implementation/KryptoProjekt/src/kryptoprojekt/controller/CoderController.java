@@ -24,9 +24,10 @@ public class CoderController {
         return hc;
     }
 
-    public static HammingCode decodeHammingCode(HammingCode hc) {
+    public static HammingCode decodeHammingCode(HammingCode hc) throws RuntimeException{
         hc.calculateSyndrom();
         hc.detectError();
+        hc.decode();
 
         return hc;
     }
