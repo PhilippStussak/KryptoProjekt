@@ -41,6 +41,10 @@ public class HammingCodeTest extends TestCase{
         assertEquals(fin, c.generateControlMatrix());
     }
 
+    public void testControlMatrix2(){
+        HammingCode c= new HammingCode("1101");
+    }
+
     public void testEncode() {
         Coder c = new HammingCode("110");
         assertEquals("1101100", c.encode());

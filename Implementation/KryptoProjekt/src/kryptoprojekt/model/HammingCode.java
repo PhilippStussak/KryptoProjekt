@@ -233,7 +233,7 @@ public class HammingCode extends Coder {
         }
         int y = this.generatorMatrix.getMatrixColumnCapacity() - this.generatorMatrix.getMatrixRowCapacity();
         KryptoType<PrimeFieldElement> k[][] = new KryptoType[this.generatorMatrix.getMatrixColumnCapacity()][y];
-        int n = this.generatorMatrix.getMatrixColumnCapacity() - codeWord.length();
+        int n = codeWord.length();
 
         //initialize array with PrimeFieldElement-objects, value=0
         for (int i = 0; i < this.generatorMatrix.getMatrixColumnCapacity(); i++) {
@@ -243,9 +243,9 @@ public class HammingCode extends Coder {
         }
 
         //sets parity bits in control matrix
-        for (int i = 0; i < y - 1; i++) {
-            for (int j = 0; j < n; j++) {
-                k[i][j] = this.generatorMatrix.get(i, j + n - 1);
+        for (int i = 0; i < this.codeWord.length(); i++) {
+            for (int j = 0; j+n < this.generatorMatrix.getMatrixColumnCapacity(); j++) {
+                k[i][j] = this.generatorMatrix.get(i, j + n );
             }
         }
 
