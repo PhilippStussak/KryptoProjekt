@@ -6,9 +6,9 @@
 package kryptoprojekt.controller;
 
 import java.util.LinkedList;
-import kryptoprojekt.Kit.DropTextField;
 import kryptoprojekt.model.Basic;
 import kryptoprojekt.model.KryptoType;
+import kryptoprojekt.model.PrimeFieldElement;
 import kryptoprojekt.model.Tuple;
 import kryptoprojekt.model.Z;
 
@@ -23,33 +23,39 @@ public class BasicController {
         return Basic.phi(z1);
     }
 
-    public static Tuple calculateGCD(DropTextField field1, DropTextField field2){
-        Tuple result = Basic.gcd((KryptoType) field1.getResult(), (KryptoType) field2.getResult());
-        return result;
+    public static Tuple calculateGCD(KryptoType kt1, KryptoType kt2){
+        return Basic.gcd(kt1,kt2);
     }
 
     public static <E extends KryptoType<E>> E calculateModulo(E kt1, E kt2){
         return kt1.mod(kt2);
     }
 
-    public static KryptoType division(DropTextField field1, DropTextField field2){
-        Object result = ((KryptoType)field1.getResult()).divide((KryptoType)field2.getResult());
-        return (KryptoType) result;
+    public static <E extends KryptoType<E>> E division(E kt1, E kt2){
+        return kt1.divide(kt2);
     }
 
-    public static KryptoType subtraction(DropTextField field1, DropTextField field2){
-        Object result = ((KryptoType)field1.getResult()).subtract((KryptoType)field2.getResult());
-        return (KryptoType) result;
+    public static <E extends KryptoType<E>> E subtraction(E kt1, E kt2){
+        return kt1.subtract(kt2);
     }
 
-    public static KryptoType addition(DropTextField field1, DropTextField field2){
-        Object result = ((KryptoType)field1.getResult()).add((KryptoType)field2.getResult());
-        return (KryptoType) result;
+    public static <E extends KryptoType<E>> E addition(E kt1, E kt2){
+        return kt1.add(kt2);
     }
 
-    public static KryptoType multiplication(DropTextField field1, DropTextField field2){
-        Object result = ((KryptoType)field1.getResult()).multiply((KryptoType)field2.getResult());
-        return (KryptoType) result;
+    public static <E extends KryptoType<E>> E multiplication(E kt1, E kt2){
+        return kt1.multiply(kt2);
     }
 
+    public static PrimeFieldElement createPrimeFieldElement(Z z1, Z z2){
+        return new PrimeFieldElement(z1, z2);
+    }
+
+    public static <E extends KryptoType, F extends KryptoType> Tuple<KryptoType<E>, LinkedList<String>> squareAndMultiply(E kt1, F kt2){
+        return Basic.squareAndMultiply(kt1, kt2);
+    }
+
+    public static <E extends KryptoType> Tuple<KryptoType<E>, LinkedList<String>> squareAndMultiply(E kt1, E kt2, E kt3){
+        return Basic.squareAndMultiply(kt1, kt2, kt3);
+    }
 }

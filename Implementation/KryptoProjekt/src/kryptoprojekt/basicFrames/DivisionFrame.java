@@ -124,7 +124,7 @@ public class DivisionFrame extends Kit {
 
     @Override
     public String execute() {
-        KryptoType result = BasicController.division(textField1, textField2);
+        KryptoType result = BasicController.division((KryptoType)textField1.getResult(), (KryptoType)textField2.getResult());
         results.put(getTitle() + "_quotient", result);
         return result.toString();
     }

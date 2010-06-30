@@ -119,7 +119,7 @@ public class SubtractFrame extends Kit {
 
     @Override
     public String execute() {
-        KryptoType result = BasicController.subtraction(textField1, textField2);
+        KryptoType result = BasicController.subtraction((KryptoType)textField1.getResult(), (KryptoType)textField2.getResult());
         results.put(getTitle() + "_difference", result);
         return result.toString();
     }

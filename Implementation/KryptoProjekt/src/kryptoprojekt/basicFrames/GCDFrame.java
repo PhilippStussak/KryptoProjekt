@@ -87,7 +87,7 @@ public class GCDFrame extends Kit {
 
     @Override
     public String execute() {
-        Tuple result = BasicController.calculateGCD(textField1, textField2);
+        Tuple result = BasicController.calculateGCD((KryptoType)textField1.getResult(), (KryptoType)textField2.getResult());
         results.put(getTitle() + "_gcd", result.first());
         extension = "";
         for(Object[] o : (LinkedList<Object[]>)result.second())
