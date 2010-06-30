@@ -68,7 +68,7 @@ public class SaMFrame extends Kit {
         c.gridy = 1;
         jPanel1.add(getDragList(new Object[] {getTitle() + "_SaM"}), c);
 
-        this.setSize(160, 120);
+        this.setSize(250, 150);
     }
 
     @Override

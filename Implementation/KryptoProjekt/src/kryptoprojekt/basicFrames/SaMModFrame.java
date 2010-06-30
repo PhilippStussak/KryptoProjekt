@@ -84,7 +84,7 @@ public class SaMModFrame extends Kit {
         c.gridy = 2;
         jPanel1.add(getDragList(new Object[] {getTitle() + "_SaMMod"}), c);
 
-        this.setSize(160, 120);
+        this.setSize(250, 150);
     }
 
     @Override
@@ -143,7 +143,7 @@ public class SaMModFrame extends Kit {
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 172, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 180, Short.MAX_VALUE)
                         .addComponent(jButton1)))
                 .addContainerGap())
         );
