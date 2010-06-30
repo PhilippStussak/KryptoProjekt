@@ -16,7 +16,6 @@ import javax.swing.JList;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
 import kryptoprojekt.controller.LogicValidator;
-import kryptoprojekt.model.Validator;
 import kryptoprojekt.model.Z;
 
 /**
