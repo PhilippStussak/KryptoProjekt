@@ -70,7 +70,7 @@ public class ModuloFrame extends Kit {
     public String execute() {
         KryptoType result = BasicController.calculateModulo((KryptoType)textField1.getResult(), (KryptoType)textField2.getResult());
         results.put(getTitle() + "_mod", result);
-        return result.toString();
+        return "In Window " + getTitle() + ": " + (KryptoType)textField1.getResult() + " mod " + (KryptoType)textField2.getResult() + " = " + result.toString();
     }
 
     @SuppressWarnings("unchecked")

@@ -78,7 +78,7 @@ public class SaMFrame extends Kit {
         extension = "";
         for(String s : (LinkedList<String>)result.second())
             extension += s + "\n";
-        return result.first().toString();
+        return "In Window " + getTitle() + ": " + (KryptoType)textField1.getResult() + " ^ " + (KryptoType)textField2.getResult() + " = " + result.first().toString();
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

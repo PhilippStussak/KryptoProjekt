@@ -127,7 +127,7 @@ public class MultiplicationFrame extends Kit {
     public String execute() {
         KryptoType result = BasicController.multiplication((KryptoType)textField1.getResult(), (KryptoType)textField2.getResult());
         results.put(getTitle() + "_product", result);
-        return result.toString();
+        return "In Window " + getTitle() + ": " + (KryptoType)textField1.getResult() + " * " + (KryptoType)textField2.getResult() + " = " + result.toString();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

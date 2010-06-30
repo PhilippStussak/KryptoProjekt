@@ -80,9 +80,9 @@ public class PrimeFieldElementFrame extends Kit {
 
     @Override
     public String execute() {
-        Object result = new PrimeFieldElement((Z)(KryptoType)textFieldValue.getResult(), (Z)(KryptoType)textFieldBase.getResult());
+        PrimeFieldElement result = new PrimeFieldElement((Z)(KryptoType)textFieldValue.getResult(), (Z)(KryptoType)textFieldBase.getResult());
         results.put(getTitle() + "_elem", result);
-        return result.toString();
+        return "In window " + getTitle() + ": PrimeField with base = " + result.getPrimeElemBase() + " and value = " + result.getPrimeElemValue();
     }
 
     /** This method is called from within the constructor to
