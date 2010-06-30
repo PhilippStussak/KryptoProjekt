@@ -8,16 +8,21 @@
  *
  * Created on 20.06.2010, 17:08:56
  */
-
 package kryptoprojekt.basicFrames;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
 import kryptoprojekt.controller.BasicController;
+import kryptoprojekt.controller.LogicValidator;
 import kryptoprojekt.model.KryptoType;
+import kryptoprojekt.model.Z;
 
 /**
  *
@@ -88,6 +93,41 @@ public class AdditionFrame extends Kit {
     }// </editor-fold>//GEN-END:initComponents
 
     private void initLogicComponents() {
+
+        textField1.addKeyListener(new KeyListener() {
+
+            public void keyTyped(KeyEvent e) {
+            }
+
+            public void keyPressed(KeyEvent e) {
+            }
+
+            public void keyReleased(KeyEvent e) {
+                if (LogicValidator.isInteger(textField1.getText())) {
+                    textField1.setForeground(Color.black);
+                } else {
+                    textField1.setForeground(Color.red);
+                }
+            }
+        });
+
+        textField2.addKeyListener(new KeyListener() {
+
+            public void keyTyped(KeyEvent e) {
+            }
+
+            public void keyPressed(KeyEvent e) {
+            }
+
+            public void keyReleased(KeyEvent e) {
+                if (LogicValidator.isInteger(textField2.getText())) {
+                    textField2.setForeground(Color.black);
+                } else {
+                    textField2.setForeground(Color.red);
+                }
+            }
+        });
+
         jPanel1.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.weightx = 0.495;
@@ -95,7 +135,7 @@ public class AdditionFrame extends Kit {
         c.gridx = 0;
         c.gridy = 0;
         jPanel1.add(textField1, c);
-        
+
 
         c.weightx = 0.01;
         c.fill = GridBagConstraints.BOTH;
@@ -114,21 +154,28 @@ public class AdditionFrame extends Kit {
         c.gridwidth = 3;
         c.gridx = 0;
         c.gridy = 1;
-        jPanel1.add(getDragList(new Object[] {getTitle() + "_sum"}), c);
+        jPanel1.add(getDragList(new Object[]{getTitle() + "_sum"}), c);
 
         this.setSize(160, 120);
     }
 
     @Override
     public String execute() {
-        KryptoType result = BasicController.addition((KryptoType)textField1.getResult(), (KryptoType)textField2.getResult());
+        KryptoType value1, value2;
+        if(textField1.getResult() != null)
+            value1 = (KryptoType)textField1.getResult();
+        else
+            value1 = new Z(textField1.getText());
+        if(textField2.getResult() != null)
+            value2 = (KryptoType)textField2.getResult();
+        else
+            value2 = new Z(textField2.getText());
+        KryptoType result = BasicController.addition(value1, value2);
         results.put(getTitle() + "_sum", result);
-        return "In Window " + getTitle() + ": " + (KryptoType)textField1.getResult() + " + " + (KryptoType)textField2.getResult() + " = " + result.toString();
+        return "In Window " + getTitle() + ": " + value1 + " + " + value2 + " = " + result.toString();
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
-
 }

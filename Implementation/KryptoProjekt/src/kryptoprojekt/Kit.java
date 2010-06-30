@@ -4,6 +4,7 @@
  */
 package kryptoprojekt;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
@@ -100,6 +101,7 @@ public class Kit extends JInternalFrame {
 
                 public void keyTyped(KeyEvent e) {
                     keyTypedAction();
+                    setColor(Color.black);
                 }
 
                 public void keyPressed(KeyEvent e) {
@@ -110,6 +112,10 @@ public class Kit extends JInternalFrame {
             });
         }
 
+        public void setColor(Color c) {
+            this.setForeground(c);
+        }
+
         public void keyTypedAction() {
             p = null;
             key = null;
@@ -117,6 +123,8 @@ public class Kit extends JInternalFrame {
         }
 
         public Object getResult() {
+            if(p == null)
+                return null;
             return p.getResult(key);
         }
 
@@ -162,6 +170,7 @@ public class Kit extends JInternalFrame {
                             parent.children.add(origin);
                             p = parent;
                             key = text;
+                            setColor(Color.green);
                         }
                     }
                 } else {
