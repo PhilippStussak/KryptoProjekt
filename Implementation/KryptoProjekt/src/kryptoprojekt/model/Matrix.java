@@ -133,7 +133,7 @@ public class Matrix<E extends KryptoType<E>>      {
         for (int i = 0; i < matrix.length; i++) {
             string[i] = new String[matrix[i].length];
             for (int j = 0; j < matrix[i].length; j++) {
-                String s = matrix[i][j].toString();
+                String s =  matrix[i][j].toString();
                 maxLength = Math.max(maxLength, s.length());
                 string[i][j] = s;
             }
@@ -151,6 +151,8 @@ public class Matrix<E extends KryptoType<E>>      {
         }
         return result;
     }
+
+    
 
     /**
      * Translates a String-representation of a matrix
