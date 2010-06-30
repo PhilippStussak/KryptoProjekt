@@ -14,12 +14,12 @@ package kryptoprojekt.basicFrames;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.LinkedList;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JTextArea;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
 import kryptoprojekt.controller.BasicController;
-import kryptoprojekt.model.Basic;
-import kryptoprojekt.model.KryptoType;
 import kryptoprojekt.model.Tuple;
 import kryptoprojekt.model.Z;
 
@@ -30,6 +30,7 @@ import kryptoprojekt.model.Z;
 public class PhiFrame extends Kit {
     
     private DropTextField textField1 = getDropTextField();
+    private String extension = "";
 
     /** Creates new form PhiFrame */
     public PhiFrame(ConnectionHandler handler) {
@@ -65,9 +66,12 @@ public class PhiFrame extends Kit {
 
     @Override
     public String execute() {
-        Z result = BasicController.calculatePhi((Z)textField1.getResult()).first();
-        results.put(getTitle() + "_phi", result);
-        return result.toString();
+        Tuple<Z, LinkedList<Z>> result = BasicController.calculatePhi((Z)textField1.getResult());
+        results.put(getTitle() + "_phi", result.first());
+        extension = "";
+        for(Z tmp : result.second())
+            extension += tmp +" ";
+        return result.first().toString();
     }
 
     @SuppressWarnings("unchecked")
@@ -76,8 +80,10 @@ public class PhiFrame extends Kit {
 
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setClosable(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setName("Form"); // NOI18N
 
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(kryptoprojekt.KryptoProjektApp.class).getContext().getResourceMap(PhiFrame.class);
@@ -94,8 +100,16 @@ public class PhiFrame extends Kit {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 258, Short.MAX_VALUE)
+            .addGap(0, 249, Short.MAX_VALUE)
         );
+
+        jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
+        jButton1.setName("jButton1"); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -105,14 +119,19 @@ public class PhiFrame extends Kit {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 300, Short.MAX_VALUE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -121,7 +140,20 @@ public class PhiFrame extends Kit {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        JInternalFrame frame = new JInternalFrame(getTitle() + "_extension", true, true, true, true);
+        frame.setLocation(getX(), getY());
+        frame.setSize(320, 240);
+        JTextArea area = new JTextArea();
+        area.setText(extension);
+        area.setVisible(true);
+        frame.add(area);
+        frame.setVisible(true);
+        getParent().add(frame);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
