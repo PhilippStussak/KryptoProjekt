@@ -117,8 +117,8 @@ public class HammingSyndromFrame extends Kit {
     @Override
     public String execute() {
         HammingCode result = CoderController.calculateHammingSyndrom((HammingCode)textField1.getResult());
-        results.put(getTitle() + "_syndrom", result.getSyndrom());
-        return result.toString();
+        results.put(getTitle() + "_syndrom", result);
+        return "Syndrom: " + result.getSyndrom();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
