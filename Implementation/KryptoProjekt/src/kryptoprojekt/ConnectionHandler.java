@@ -5,7 +5,6 @@
 package kryptoprojekt;
 
 import java.awt.Graphics2D;
-import java.awt.Shape;
 import java.util.Iterator;
 import java.util.LinkedList;
 import javax.swing.JTextArea;
@@ -18,6 +17,15 @@ public class ConnectionHandler {
 
     private LinkedList<Kit> frames = new LinkedList<Kit>();
     private LinkedList<Connection> connections = new LinkedList<Connection>();
+    private Desktop desktop;
+
+    public Desktop getDesktop() {
+        return desktop;
+    }
+
+    public void setDesktop(Desktop desktop) {
+        this.desktop = desktop;
+    }
 
     public LinkedList<Kit> getFrames() {
         return frames;
@@ -79,8 +87,9 @@ public class ConnectionHandler {
     }
 
     public void drawArrows(Graphics2D g2d) {
-        for(Connection c : connections)
+        for (Connection c : connections) {
             c.drawArrow(g2d);
+        }
     }
 
     public Connection removeSameTarget(Connection con) {

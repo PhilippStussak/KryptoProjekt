@@ -5,12 +5,14 @@
 package kryptoprojekt;
 
 import java.awt.Color;
-import java.awt.Dimension;
+import java.awt.Component;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.dnd.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.HashMap;
 import java.util.LinkedList;
 import javax.swing.JInternalFrame;
@@ -28,6 +30,7 @@ public class Kit extends JInternalFrame {
     private static int id = 1;
     protected HashMap<String, Object> results;
     protected LinkedList<Kit> parents, children;
+    private static Thread refresher;
 
     public Kit(ConnectionHandler handler) {
         super("#" + id++, false, true, false, false);
@@ -36,6 +39,47 @@ public class Kit extends JInternalFrame {
         parents = new LinkedList<Kit>();
         children = new LinkedList<Kit>();
         handler.add(this);
+        for (Component c : getComponents()) {
+            c.addMouseListener(new MouseListener() {
+
+                private Thread t;
+
+                public void mouseClicked(MouseEvent e) {
+                }
+
+                public void mousePressed(MouseEvent e) {
+                    t = new Thread() {
+
+                        @Override
+                        public void run() {
+                            while (!isInterrupted()) {
+                                try {
+                                    Thread.sleep(50);
+                                } catch (InterruptedException ex) {
+                                    interrupt();
+                                }
+                                method();
+                            }
+                        }
+                    };
+                    t.start();
+                }
+
+                public void mouseReleased(MouseEvent e) {
+                    t.interrupt();
+                }
+
+                public void mouseEntered(MouseEvent e) {
+                }
+
+                public void mouseExited(MouseEvent e) {
+                }
+            });
+        }
+    }
+
+    private void method() {
+        handler.getDesktop().repaint();
     }
 
     public Object getResult(String id) {
@@ -123,8 +167,9 @@ public class Kit extends JInternalFrame {
         }
 
         public Object getResult() {
-            if(p == null)
+            if (p == null) {
                 return null;
+            }
             return p.getResult(key);
         }
 
@@ -157,9 +202,9 @@ public class Kit extends JInternalFrame {
                         if (old != null) {
                             origin.parents.remove(old.getParent());
                         }
-                        if(cyrcle(parent, origin))
+                        if (cyrcle(parent, origin)) {
                             JOptionPane.showMessageDialog(null, "Recursion not possible!");
-                        else if (!handler.add(con)) {
+                        } else if (!handler.add(con)) {
                             JOptionPane.showMessageDialog(null, "Connection already exists!");
                         } else {
                             dtde.acceptDrop(DnDConstants.ACTION_COPY);
@@ -184,11 +229,14 @@ public class Kit extends JInternalFrame {
         }
 
         private boolean cyrcle(Kit par, Kit ch) {
-            if(par == ch)
+            if (par == ch) {
                 return true;
-            for(Kit k : par.getParents())
-                if(cyrcle(k, ch))
+            }
+            for (Kit k : par.getParents()) {
+                if (cyrcle(k, ch)) {
                     return true;
+                }
+            }
             return false;
         }
     }
