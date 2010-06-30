@@ -180,9 +180,9 @@ public class InitHammingJFrame extends Kit {
         Matrix<PrimeFieldElement> generatorM = null;
         HammingCode hc = null;
         if (enableMatrix.isSelected()) {
-            hc = CoderController.initHammingCode(true, generatorM, (String)textSourceCodeword.getResult());
+            hc = CoderController.initHammingCode(true, generatorM, (String)textSourceCodeword.getText());
         } else {
-            hc = CoderController.initHammingCode(false, null, (String)textSourceCodeword.getResult());
+            hc = CoderController.initHammingCode(false, null, (String)textSourceCodeword.getText());
         }
         results.put(getTitle() + "hammingObject", hc);
         results.put(getTitle() + "generatorMatrix", textGeneratorMatrix);
