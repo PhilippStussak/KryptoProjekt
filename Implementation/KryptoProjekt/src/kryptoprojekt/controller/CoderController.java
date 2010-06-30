@@ -4,10 +4,6 @@
  */
 package kryptoprojekt.controller;
 
-import java.util.HashMap;
-import javax.swing.JCheckBox;
-import kryptoprojekt.Kit;
-import kryptoprojekt.Kit.DropTextField;
 import kryptoprojekt.model.HammingCode;
 import kryptoprojekt.model.Matrix;
 import kryptoprojekt.model.PrimeFieldElement;
@@ -40,6 +36,7 @@ public class CoderController {
 
         return hc;
     }
+
     public static HammingCode initHammingCode(boolean enableMatrix, Matrix<PrimeFieldElement> generatorM, String sourceCodeWord) {
         HammingCode result = null;
         if (enableMatrix && generatorM != null) {

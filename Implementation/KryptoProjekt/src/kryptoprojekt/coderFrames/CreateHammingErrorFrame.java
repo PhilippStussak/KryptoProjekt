@@ -4,9 +4,9 @@
  */
 
 /*
- * EncodeHammingFrm.java
+ * CreateHammingErrorFrame.java
  *
- * Created on 20.06.2010, 18:33:47
+ * Created on 30.06.2010, 12:09:29
  */
 
 package kryptoprojekt.coderFrames;
@@ -16,18 +16,16 @@ import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
-import kryptoprojekt.controller.CoderController;
-import kryptoprojekt.model.HammingCode;
 
 /**
  *
  * @author LiTTle
  */
-public class EncodeHammingCodeFrame extends Kit {
+public class CreateHammingErrorFrame extends Kit {
 
-    private DropTextField textField1 = getDropTextField();
-    /** Creates new form EncodeHammingFrm */
-    public EncodeHammingCodeFrame(ConnectionHandler handler) {
+    DropTextField probabilityField = getDropTextField();
+    /** Creates new form CreateHammingErrorFrame */
+    public CreateHammingErrorFrame(ConnectionHandler handler) {
         super(handler);
         initComponents();
         initLogicComponents();
@@ -45,11 +43,10 @@ public class EncodeHammingCodeFrame extends Kit {
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
 
-        setClosable(true);
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setName("Form"); // NOI18N
 
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(kryptoprojekt.KryptoProjektApp.class).getContext().getResourceMap(EncodeHammingCodeFrame.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(kryptoprojekt.KryptoProjektApp.class).getContext().getResourceMap(CreateHammingErrorFrame.class);
         jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
         jLabel1.setName("jLabel1"); // NOI18N
 
@@ -59,11 +56,11 @@ public class EncodeHammingCodeFrame extends Kit {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 377, Short.MAX_VALUE)
+            .addGap(0, 380, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 176, Short.MAX_VALUE)
+            .addGap(0, 269, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -96,32 +93,25 @@ public class EncodeHammingCodeFrame extends Kit {
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
         c.gridy = 0;
-        JLabel l = new JLabel();
-        l.setText("HammingCodeElement");
-        jPanel1.add(l, c);
+        jPanel1.add(new JLabel("Probability of errorCreation (0-1)"), c);
 
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
         c.gridy = 1;
-        jPanel1.add(textField1, c);
+        jPanel1.add(probabilityField, c);
 
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
-        c.gridy = 2;
-        jPanel1.add(getDragList(new Object[] {getTitle() + "_encode"}), c);
+        c.gridy = 3;
+        jPanel1.add(getDragList(new Object[] {getTitle() + "_probability"}), c);
 
-        this.setSize(150, 120);
-
+        this.setSize(200, 130);
     }
 
     @Override
     public String execute() {
-        HammingCode result = CoderController.encodeHammingCode((HammingCode) textField1.getResult());
-        results.put(getTitle() + "_encode", result);
-
-        return "encoded word: " + result.getEncodedWord();
+        return null;
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;

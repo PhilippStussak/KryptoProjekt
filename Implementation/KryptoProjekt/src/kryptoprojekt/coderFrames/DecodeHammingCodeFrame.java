@@ -28,9 +28,7 @@ import kryptoprojekt.model.Coder;
  */
 public class DecodeHammingCodeFrame extends Kit {
 
-    private DropTextField textField1 = getDropTextField();
-    private DropTextField textField2 = getDropTextField();
-    private DropTextField textField3 = getDropTextField();
+    private DropTextField hcField = getDropTextField();
     private JCheckBox enableMatrix = new JCheckBox("correct encoded word");
 
     /** Creates new form DecodeHammingCodeFrame */
@@ -109,7 +107,7 @@ public class DecodeHammingCodeFrame extends Kit {
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
         c.gridy = 1;
-        jPanel1.add(textField1, c);
+        jPanel1.add(hcField, c);
 
         c.weightx = 0.5;
         c.fill = GridBagConstraints.BOTH;
@@ -118,33 +116,24 @@ public class DecodeHammingCodeFrame extends Kit {
         c.gridy = 2;
         jPanel1.add(getDragList(new Object[] {getTitle() + "HammingCode Element"}), c);
 
+        final DragList corrDecodedWord = getDragList(new Object[] {getTitle() + "corrected decoded word"});
         enableMatrix.addItemListener(
                 new ItemListener() {
 
                     public void itemStateChanged(ItemEvent e) {
                         // Set "ignore" whenever box is checked or unchecked.
+                        if(e.getStateChange() == ItemEvent.SELECTED)
+                           corrDecodedWord.setEnabled(true);
+                       else
+                           corrDecodedWord.setEnabled(false);
                     }
                 });
-
 
         c.weighty = 3;
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
         c.gridy = 3;
         jPanel1.add(enableMatrix, c);
-
-        c.weightx = 0.5;
-        c.fill = GridBagConstraints.BOTH;
-        c.gridx = 0;
-        c.gridy = 4;
-        jPanel1.add(new JLabel("Original decoded word"), c);
-
-        c.weightx = 0.5;
-        c.fill = GridBagConstraints.BOTH;
-        c.gridx = 0;
-        c.gridy = 5;
-        jPanel1.add(textField2, c);
-
 
         c.weightx = 0.5;
         c.fill = GridBagConstraints.BOTH;
@@ -155,19 +144,13 @@ public class DecodeHammingCodeFrame extends Kit {
 
         c.weightx = 0.5;
         c.fill = GridBagConstraints.BOTH;
-        c.gridx = 0;
-        c.gridy = 7;
-        jPanel1.add(textField3, c);
-
-        c.weightx = 0.5;
-        c.fill = GridBagConstraints.BOTH;
         c.gridwidth = 3;
         c.gridx = 0;
         c.gridy = 8;
-        jPanel1.add(getDragList(new Object[] {getTitle() + "corrected decoded word"}), c);
+        jPanel1.add(corrDecodedWord, c);
+        corrDecodedWord.setEnabled(false);
 
-
-        this.setSize(180, 230);
+        this.setSize(180, 190);
     }
 
     @Override

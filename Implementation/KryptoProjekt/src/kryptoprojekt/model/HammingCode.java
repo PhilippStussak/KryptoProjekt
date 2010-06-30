@@ -23,32 +23,32 @@ public class HammingCode extends Coder {
     private boolean errorsFound;
     private final int galoisBase = 2;
 
-    public Matrix<PrimeFieldElement> getDecodedWord() {
-        return decodedWord;
+    public String getDecodedWord() {
+        return convertOneRowMatrixToString(decodedWord);
     }
 
     public int getErrorPos(){
         return errorPosition;
     }
 
-    public Matrix<PrimeFieldElement> getEncodedWord() {
-        return encodedWord;
+    public String getEncodedWord() {
+        return convertOneRowMatrixToString(encodedWord);
     }
 
     public Matrix<PrimeFieldElement> getGeneratorMatrix() {
         return generatorMatrix;
     }
 
-    public Matrix<PrimeFieldElement> getSourceCodeWord() {
-        return sourceCodeWord;
+    public String getSourceCodeWord() {
+        return convertOneRowMatrixToString(sourceCodeWord);
     }
 
-    public Matrix<PrimeFieldElement> getSyndrom() {
-        return syndrom;
+    public String getSyndrom() {
+        return convertOneRowMatrixToString(syndrom);
     }
 
-    public Matrix<PrimeFieldElement> getCorrectedDecodedWord() {
-        return correctedDecodedWord;
+    public String getCorrectedDecodedWord() {
+        return convertOneRowMatrixToString(correctedDecodedWord);
     }
 
     public boolean isErrorsFound() {
