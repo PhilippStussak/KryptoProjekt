@@ -13,11 +13,15 @@ package kryptoprojekt.basicFrames;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.util.LinkedList;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JTextArea;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
 import kryptoprojekt.model.Basic;
 import kryptoprojekt.model.KryptoType;
+import kryptoprojekt.model.Tuple;
 
 /**
  *
@@ -28,6 +32,7 @@ public class SaMModFrame extends Kit {
     private DropTextField textField1 = getDropTextField();
     private DropTextField textField2 = getDropTextField();
     private DropTextField textField3 = getDropTextField();
+    String extension = "";
 
     /** Creates new form SaMlModFrame */
     public SaMModFrame(ConnectionHandler handler) {
@@ -84,9 +89,12 @@ public class SaMModFrame extends Kit {
 
     @Override
     public String execute() {
-        Object result = (Basic.squareAndMultiply((KryptoType)textField1.getResult(), (KryptoType)textField2.getResult(), (KryptoType)textField3.getResult()).first());
-        results.put(getTitle() + "_SaMMod", result);
-        return result.toString();
+        Tuple result = (Basic.squareAndMultiply((KryptoType)textField1.getResult(), (KryptoType)textField2.getResult(), (KryptoType)textField3.getResult()));
+        results.put(getTitle() + "_SaMMod", result.first());
+        extension = "";
+        for(String s : (LinkedList<String>)result.second())
+            extension += s + "\n";
+        return result.first().toString();
     }
 
     @SuppressWarnings("unchecked")
@@ -95,8 +103,9 @@ public class SaMModFrame extends Kit {
 
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setClosable(true);
         setName("Form"); // NOI18N
 
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(kryptoprojekt.KryptoProjektApp.class).getContext().getResourceMap(SaMModFrame.class);
@@ -113,8 +122,16 @@ public class SaMModFrame extends Kit {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 258, Short.MAX_VALUE)
+            .addGap(0, 249, Short.MAX_VALUE)
         );
+
+        jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
+        jButton1.setName("jButton1"); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -124,14 +141,19 @@ public class SaMModFrame extends Kit {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 172, Short.MAX_VALUE)
+                        .addComponent(jButton1)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -140,7 +162,20 @@ public class SaMModFrame extends Kit {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        JInternalFrame frame = new JInternalFrame(getTitle() + "_extension", true, true, true, true);
+        frame.setLocation(getX(), getY());
+        frame.setSize(320, 240);
+        JTextArea area = new JTextArea();
+        area.setText(extension);
+        area.setVisible(true);
+        frame.add(area);
+        frame.setVisible(true);
+        getParent().add(frame);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
