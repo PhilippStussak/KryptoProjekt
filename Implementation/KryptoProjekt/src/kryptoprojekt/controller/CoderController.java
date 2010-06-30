@@ -36,6 +36,7 @@ public class CoderController {
 
         return hc;
     }
+
     public static HammingCode initHammingCode(boolean enableMatrix, Matrix<PrimeFieldElement> generatorM, String sourceCodeWord) {
         HammingCode result = null;
         if (enableMatrix && generatorM != null) {
