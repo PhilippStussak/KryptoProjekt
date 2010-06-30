@@ -178,6 +178,10 @@ public class PrimeFieldElement implements KryptoType<PrimeFieldElement> {
         return "[" + value.toString() + ", " + base.toString() + "]";
     }
 
+    public String toStringWithoutBases() {
+        return "[" + value.toString() + "]";
+    }
+
     /**
      * Calculates the Addition-Table for this PrimeField based on its base
      * @param maximum rows and colums

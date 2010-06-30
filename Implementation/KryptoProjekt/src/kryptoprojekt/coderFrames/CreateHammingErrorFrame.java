@@ -4,35 +4,28 @@
  */
 
 /*
- * DecodeHammingCodeFrame.java
+ * CreateHammingErrorFrame.java
  *
- * Created on 27.06.2010, 11:35:24
+ * Created on 30.06.2010, 12:09:29
  */
 
 package kryptoprojekt.coderFrames;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import javax.swing.JCheckBox;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
-import kryptoprojekt.model.Coder;
 
 /**
  *
  * @author LiTTle
  */
-public class DecodeHammingCodeFrame extends Kit {
+public class CreateHammingErrorFrame extends Kit {
 
-    private DropTextField hcField = getDropTextField();
-    private JCheckBox enableMatrix = new JCheckBox("correct encoded word");
-
-    /** Creates new form DecodeHammingCodeFrame */
-    public DecodeHammingCodeFrame(ConnectionHandler handler) {
+    DropTextField probabilityField = getDropTextField();
+    /** Creates new form CreateHammingErrorFrame */
+    public CreateHammingErrorFrame(ConnectionHandler handler) {
         super(handler);
         initComponents();
         initLogicComponents();
@@ -50,11 +43,10 @@ public class DecodeHammingCodeFrame extends Kit {
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
 
-        setClosable(true);
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setName("Form"); // NOI18N
 
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(kryptoprojekt.KryptoProjektApp.class).getContext().getResourceMap(DecodeHammingCodeFrame.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(kryptoprojekt.KryptoProjektApp.class).getContext().getResourceMap(CreateHammingErrorFrame.class);
         jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
         jLabel1.setName("jLabel1"); // NOI18N
 
@@ -64,11 +56,11 @@ public class DecodeHammingCodeFrame extends Kit {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 383, Short.MAX_VALUE)
+            .addGap(0, 380, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 273, Short.MAX_VALUE)
+            .addGap(0, 269, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -93,74 +85,33 @@ public class DecodeHammingCodeFrame extends Kit {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
     private void initLogicComponents() {
-      jPanel1.setLayout(new GridBagLayout());
+        jPanel1.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
-        c.weightx = 0.5;
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
         c.gridy = 0;
-        jPanel1.add(new JLabel("HammingCode Element"), c);
+        jPanel1.add(new JLabel("Probability of errorCreation (0-1)"), c);
 
-        c.weightx = 0.5;
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
         c.gridy = 1;
-        jPanel1.add(hcField, c);
+        jPanel1.add(probabilityField, c);
 
-        c.weightx = 0.5;
-        c.fill = GridBagConstraints.BOTH;
-        c.gridwidth = 3;
-        c.gridx = 0;
-        c.gridy = 2;
-        jPanel1.add(getDragList(new Object[] {getTitle() + "HammingCode Element"}), c);
-
-        final DragList corrDecodedWord = getDragList(new Object[] {getTitle() + "corrected decoded word"});
-        enableMatrix.addItemListener(
-                new ItemListener() {
-
-                    public void itemStateChanged(ItemEvent e) {
-                        // Set "ignore" whenever box is checked or unchecked.
-                        if(e.getStateChange() == ItemEvent.SELECTED)
-                           corrDecodedWord.setEnabled(true);
-                       else
-                           corrDecodedWord.setEnabled(false);
-                    }
-                });
-
-        c.weighty = 3;
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
         c.gridy = 3;
-        jPanel1.add(enableMatrix, c);
+        jPanel1.add(getDragList(new Object[] {getTitle() + "_probability"}), c);
 
-        c.weightx = 0.5;
-        c.fill = GridBagConstraints.BOTH;
-        c.gridwidth = 3;
-        c.gridx = 0;
-        c.gridy = 6;
-        jPanel1.add(getDragList(new Object[] {getTitle() + "decoded word"}), c);
-
-        c.weightx = 0.5;
-        c.fill = GridBagConstraints.BOTH;
-        c.gridwidth = 3;
-        c.gridx = 0;
-        c.gridy = 8;
-        jPanel1.add(corrDecodedWord, c);
-        corrDecodedWord.setEnabled(false);
-
-        this.setSize(180, 190);
+        this.setSize(200, 130);
     }
 
     @Override
     public String execute() {
-//        Object result = ((Coder)textField1.getResult()).add((Coder)textField2.getResult());
-//        results.put(getTitle() + "_decode", result);
-//        return result.toString();
         return null;
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;

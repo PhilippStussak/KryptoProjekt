@@ -29,6 +29,7 @@ import kryptoprojekt.basicFrames.PhiFrame;
 import kryptoprojekt.basicFrames.PrimeFieldElementFrame;
 import kryptoprojekt.basicFrames.SaMFrame;
 import kryptoprojekt.basicFrames.SaMModFrame;
+import kryptoprojekt.coderFrames.CreateHammingErrorFrame;
 import kryptoprojekt.coderFrames.DecodeHammingCodeFrame;
 import kryptoprojekt.coderFrames.EncodeHammingCodeFrame;
 import kryptoprojekt.coderFrames.HammingDistanceFrame;
@@ -163,6 +164,7 @@ public class KryptoProjektView extends FrameView {
         encodeMenuItem = new javax.swing.JMenuItem();
         syndromMenuItem = new javax.swing.JMenuItem();
         decodeMenuItem = new javax.swing.JMenuItem();
+        createErrorsMenuItem = new javax.swing.JMenuItem();
         hammingDistanceMenuItem = new javax.swing.JMenuItem();
         vectorWeightMenuItem = new javax.swing.JMenuItem();
         javax.swing.JMenu helpMenu = new javax.swing.JMenu();
@@ -382,6 +384,15 @@ public class KryptoProjektView extends FrameView {
             }
         });
         jMenu11.add(decodeMenuItem);
+
+        createErrorsMenuItem.setText(resourceMap.getString("createErrorsMenuItem.text")); // NOI18N
+        createErrorsMenuItem.setName("createErrorsMenuItem"); // NOI18N
+        createErrorsMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                createErrorsMenuItemActionPerformed(evt);
+            }
+        });
+        jMenu11.add(createErrorsMenuItem);
 
         hammingDistanceMenuItem.setText(resourceMap.getString("hammingDistanceMenuItem.text")); // NOI18N
         hammingDistanceMenuItem.setName("hammingDistanceMenuItem"); // NOI18N
@@ -610,10 +621,17 @@ public class KryptoProjektView extends FrameView {
         desktop.add(kit);
     }//GEN-LAST:event_fermatMenuItemActionPerformed
 
+    private void createErrorsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createErrorsMenuItemActionPerformed
+        Kit kit = new CreateHammingErrorFrame(handler);
+        kit.setVisible(true);
+        desktop.add(kit);
+    }//GEN-LAST:event_createErrorsMenuItemActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem additionMenuItem;
     private javax.swing.JMenu basicMenu;
     private javax.swing.JMenu coderMenu;
+    private javax.swing.JMenuItem createErrorsMenuItem;
     private javax.swing.JMenuItem decodeMenuItem;
     private javax.swing.JMenuItem divisionMenuItem;
     private javax.swing.JMenuItem encodeMenuItem;
