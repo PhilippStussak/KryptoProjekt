@@ -95,6 +95,7 @@ public class AdditionFrame extends Kit {
         c.gridx = 0;
         c.gridy = 0;
         jPanel1.add(textField1, c);
+        
 
         c.weightx = 0.01;
         c.fill = GridBagConstraints.BOTH;

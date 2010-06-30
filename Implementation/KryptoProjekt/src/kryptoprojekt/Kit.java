@@ -4,6 +4,7 @@
  */
 package kryptoprojekt;
 
+import java.awt.Dimension;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.dnd.*;

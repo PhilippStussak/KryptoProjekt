@@ -4,6 +4,7 @@
  */
 package kryptoprojekt;
 
+import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -77,12 +78,9 @@ public class ConnectionHandler {
         return connections.remove(connection);
     }
 
-    public LinkedList<Shape> getConnectionArrows() {
-        LinkedList<Shape> result = new LinkedList<Shape>();
-        for (Connection c : connections) {
-            result.add(c.getArrow());
-        }
-        return result;
+    public void drawArrows(Graphics2D g2d) {
+        for(Connection c : connections)
+            c.drawArrow(g2d);
     }
 
     public Connection removeSameTarget(Connection con) {
