@@ -4,10 +4,10 @@
  */
 package kryptoprojekt;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.Iterator;
 import java.util.LinkedList;
-import javax.swing.JTextArea;
 
 /**
  *
@@ -72,7 +72,6 @@ public class ConnectionHandler {
             }
         }
         frames = newOrder;
-        System.out.println(frames);
         return true;
     }
 
