@@ -11,8 +11,11 @@
 
 package kryptoprojekt.coderFrames;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import kryptoprojekt.ConnectionHandler;
@@ -22,7 +25,7 @@ import kryptoprojekt.model.HammingCode;
 
 /**
  *
- * @author LiTTle
+ * @author LiTTle, Mario
  */
 public class CreateHammingErrorFrame extends Kit {
 
@@ -92,6 +95,23 @@ public class CreateHammingErrorFrame extends Kit {
     }// </editor-fold>//GEN-END:initComponents
 
     private void initLogicComponents() {
+        hcField.addKeyListener(new KeyListener() {
+
+            public void keyTyped(KeyEvent e) {
+            }
+
+            public void keyPressed(KeyEvent e) {
+            }
+
+            public void keyReleased(KeyEvent e) {
+                if (hcField.getResult() instanceof HammingCode) {
+                    hcField.setForeground(Color.black);
+                } else {
+                    hcField.setForeground(Color.red);
+                }
+            }
+        });
+
         jPanel1.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
@@ -125,9 +145,14 @@ public class CreateHammingErrorFrame extends Kit {
 
     @Override
     public String execute() {
+         if (hcField.getResult() != null) {
         HammingCode hc = CoderController.createHammingError((HammingCode) hcField.getResult(), field.getText());
         results.put(getTitle() + "HammingCode Element", hc);
         return "generated errors with " + Double.parseDouble(field.getText())*100 + "% probability";
+         }
+         else {
+            return "No HammingCode element found";
+        }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
