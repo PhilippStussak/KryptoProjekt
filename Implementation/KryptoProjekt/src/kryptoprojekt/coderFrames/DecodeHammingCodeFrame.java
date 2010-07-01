@@ -159,6 +159,8 @@ public class DecodeHammingCodeFrame extends Kit {
     public String execute() {
         try{
         HammingCode result = CoderController.decodeHammingCode((HammingCode) hcField.getResult());
+        if(result.getErrorPos() == -1)
+            return "No errors created";
         if(enableMatrix.isSelected()){
             results.put(getTitle() + "HammingCode Element", result);
             results.put(getTitle() + "decoded word", result.getDecodedWord());
