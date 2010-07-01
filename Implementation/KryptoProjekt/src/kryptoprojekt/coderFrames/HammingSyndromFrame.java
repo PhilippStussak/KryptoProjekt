@@ -11,17 +11,21 @@
 
 package kryptoprojekt.coderFrames;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import javax.swing.JLabel;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
 import kryptoprojekt.controller.CoderController;
+import kryptoprojekt.controller.LogicValidator;
 import kryptoprojekt.model.HammingCode;
 
 /**
  *
- * @author LiTTle
+ * @author LiTTle, Mario
  */
 public class HammingSyndromFrame extends Kit {
 
@@ -91,6 +95,23 @@ public class HammingSyndromFrame extends Kit {
     }// </editor-fold>//GEN-END:initComponents
 
     private void initLogicComponents() {
+        textField1.addKeyListener(new KeyListener() {
+
+            public void keyTyped(KeyEvent e) {
+            }
+
+            public void keyPressed(KeyEvent e) {
+            }
+
+            public void keyReleased(KeyEvent e) {
+                if (textField1.getResult() instanceof HammingCode) {
+                    textField1.setForeground(Color.black);
+                } else {
+                    textField1.setForeground(Color.red);
+                }
+            }
+        });
+
         jPanel1.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
@@ -111,14 +132,17 @@ public class HammingSyndromFrame extends Kit {
         c.gridy = 2;
         jPanel1.add(getDragList(new Object[] {getTitle() + "HammingCode Element"}), c);
 
-        this.setSize(150, 120);
+        this.setSize(160, 120);
     }
 
     @Override
     public String execute() {
+         if(textField1.getResult() != null){
         HammingCode result = CoderController.calculateHammingSyndrom((HammingCode)textField1.getResult());
         results.put(getTitle() + "HammingCode Element", result);
         return "Syndrom: " + result.getSyndrom();
+         }
+         return "No HammingCode element found";
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

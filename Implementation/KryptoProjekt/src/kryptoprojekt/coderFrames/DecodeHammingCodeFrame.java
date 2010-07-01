@@ -26,7 +26,7 @@ import kryptoprojekt.model.HammingCode;
 
 /**
  *
- * @author LiTTle
+ * @author LiTTle, Mario
  */
 public class DecodeHammingCodeFrame extends Kit {
 
