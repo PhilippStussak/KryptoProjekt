@@ -11,11 +11,15 @@
 
 package kryptoprojekt.basicFrames;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import javax.swing.JLabel;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
+import kryptoprojekt.controller.LogicValidator;
 import kryptoprojekt.model.*;
 
 /**
@@ -24,8 +28,8 @@ import kryptoprojekt.model.*;
  */
 public class PrimeFieldElementFrame extends Kit {
 
-    private DropTextField textFieldValue = getDropTextField();
-    private DropTextField textFieldBase = getDropTextField();
+    private DropTextField textField1 = getDropTextField();
+    private DropTextField textField2 = getDropTextField();
 
     /** Creates new form PrimeFieldElementFrame */
     public PrimeFieldElementFrame(ConnectionHandler handler) {
@@ -35,6 +39,41 @@ public class PrimeFieldElementFrame extends Kit {
     }
 
     private void initLogicComponents() {
+
+        textField1.addKeyListener(new KeyListener() {
+
+            public void keyTyped(KeyEvent e) {
+            }
+
+            public void keyPressed(KeyEvent e) {
+            }
+
+            public void keyReleased(KeyEvent e) {
+                if (LogicValidator.isInteger(textField1.getText())) {
+                    textField1.setForeground(Color.black);
+                } else {
+                    textField1.setForeground(Color.red);
+                }
+            }
+        });
+
+        textField2.addKeyListener(new KeyListener() {
+
+            public void keyTyped(KeyEvent e) {
+            }
+
+            public void keyPressed(KeyEvent e) {
+            }
+
+            public void keyReleased(KeyEvent e) {
+                if (LogicValidator.isInteger(textField2.getText())) {
+                    textField2.setForeground(Color.black);
+                } else {
+                    textField2.setForeground(Color.red);
+                }
+            }
+        });
+
         jPanel1.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
@@ -54,7 +93,7 @@ public class PrimeFieldElementFrame extends Kit {
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
         c.gridy = 1;
-        jPanel1.add(textFieldValue, c);
+        jPanel1.add(textField1, c);
 
         c.weightx = 0.01;
         c.fill = GridBagConstraints.BOTH;
@@ -66,7 +105,7 @@ public class PrimeFieldElementFrame extends Kit {
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 2;
         c.gridy = 1;
-        jPanel1.add(textFieldBase, c);
+        jPanel1.add(textField2, c);
 
         c.weightx = 1;
         c.fill = GridBagConstraints.BOTH;
@@ -80,7 +119,17 @@ public class PrimeFieldElementFrame extends Kit {
 
     @Override
     public String execute() {
-        PrimeFieldElement result = new PrimeFieldElement((Z)(KryptoType)textFieldValue.getResult(), (Z)(KryptoType)textFieldBase.getResult());
+        KryptoType value1, value2;
+        if(textField1.getResult() != null)
+            value1 = (KryptoType)textField1.getResult();
+        else
+            value1 = new Z(textField1.getText());
+        if(textField2.getResult() != null)
+            value2 = (KryptoType)textField2.getResult();
+        else
+            value2 = new Z(textField2.getText());
+
+        PrimeFieldElement result = new PrimeFieldElement((Z)value1, (Z)value2);
         results.put(getTitle() + "_elem", result);
         return "In window " + getTitle() + ": PrimeField with base = " + result.getPrimeElemBase() + " and value = " + result.getPrimeElemValue();
     }

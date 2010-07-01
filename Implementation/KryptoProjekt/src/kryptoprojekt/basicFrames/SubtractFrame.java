@@ -11,13 +11,18 @@
 
 package kryptoprojekt.basicFrames;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import javax.swing.JLabel;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
 import kryptoprojekt.controller.BasicController;
+import kryptoprojekt.controller.LogicValidator;
 import kryptoprojekt.model.KryptoType;
+import kryptoprojekt.model.Z;
 
 /**
  *
@@ -88,6 +93,41 @@ public class SubtractFrame extends Kit {
     }// </editor-fold>//GEN-END:initComponents
 
     private void initLogicComponents() {
+
+        textField1.addKeyListener(new KeyListener() {
+
+            public void keyTyped(KeyEvent e) {
+            }
+
+            public void keyPressed(KeyEvent e) {
+            }
+
+            public void keyReleased(KeyEvent e) {
+                if (LogicValidator.isInteger(textField1.getText())) {
+                    textField1.setForeground(Color.black);
+                } else {
+                    textField1.setForeground(Color.red);
+                }
+            }
+        });
+
+        textField2.addKeyListener(new KeyListener() {
+
+            public void keyTyped(KeyEvent e) {
+            }
+
+            public void keyPressed(KeyEvent e) {
+            }
+
+            public void keyReleased(KeyEvent e) {
+                if (LogicValidator.isInteger(textField2.getText())) {
+                    textField2.setForeground(Color.black);
+                } else {
+                    textField2.setForeground(Color.red);
+                }
+            }
+        });
+
         jPanel1.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.weightx = 0.495;
@@ -120,9 +160,18 @@ public class SubtractFrame extends Kit {
 
     @Override
     public String execute() {
-        KryptoType result = BasicController.subtraction((KryptoType)textField1.getResult(), (KryptoType)textField2.getResult());
+        KryptoType value1, value2;
+        if(textField1.getResult() != null)
+            value1 = (KryptoType)textField1.getResult();
+        else
+            value1 = new Z(textField1.getText());
+        if(textField2.getResult() != null)
+            value2 = (KryptoType)textField2.getResult();
+        else
+            value2 = new Z(textField2.getText());
+        KryptoType result = BasicController.subtraction(value1, value2);
         results.put(getTitle() + "_difference", result);
-        return "In Window " + getTitle() + ": " + (KryptoType)textField1.getResult() + " - " + (KryptoType)textField2.getResult() + " = " + result.toString();
+        return "In Window " + getTitle() + ": " + value1.toString() + " - " + value2.toString() + " = " + result.toString();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

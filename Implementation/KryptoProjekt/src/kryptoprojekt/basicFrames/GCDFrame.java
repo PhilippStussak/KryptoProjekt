@@ -10,9 +10,12 @@
  */
 package kryptoprojekt.basicFrames;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.LinkedList;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
@@ -21,9 +24,11 @@ import javax.swing.JTextArea;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
 import kryptoprojekt.controller.BasicController;
+import kryptoprojekt.controller.LogicValidator;
 import kryptoprojekt.model.Basic;
 import kryptoprojekt.model.KryptoType;
 import kryptoprojekt.model.Tuple;
+import kryptoprojekt.model.Z;
 
 /**
  *
@@ -43,6 +48,41 @@ public class GCDFrame extends Kit {
     }
 
     private void initLogicComponents() {
+
+        textField1.addKeyListener(new KeyListener() {
+
+            public void keyTyped(KeyEvent e) {
+            }
+
+            public void keyPressed(KeyEvent e) {
+            }
+
+            public void keyReleased(KeyEvent e) {
+                if (LogicValidator.isInteger(textField1.getText())) {
+                    textField1.setForeground(Color.black);
+                } else {
+                    textField1.setForeground(Color.red);
+                }
+            }
+        });
+
+        textField2.addKeyListener(new KeyListener() {
+
+            public void keyTyped(KeyEvent e) {
+            }
+
+            public void keyPressed(KeyEvent e) {
+            }
+
+            public void keyReleased(KeyEvent e) {
+                if (LogicValidator.isInteger(textField2.getText())) {
+                    textField2.setForeground(Color.black);
+                } else {
+                    textField2.setForeground(Color.red);
+                }
+            }
+        });
+
         jPanel1.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.weightx = 0.04;
@@ -87,12 +127,22 @@ public class GCDFrame extends Kit {
 
     @Override
     public String execute() {
-        Tuple result = BasicController.calculateGCD((KryptoType)textField1.getResult(), (KryptoType)textField2.getResult());
+        KryptoType value1, value2;
+        if(textField1.getResult() != null)
+            value1 = (KryptoType)textField1.getResult();
+        else
+            value1 = new Z(textField1.getText());
+        if(textField2.getResult() != null)
+            value2 = (KryptoType)textField2.getResult();
+        else
+            value2 = new Z(textField2.getText());
+
+        Tuple result = BasicController.calculateGCD(value1, value2);
         results.put(getTitle() + "_gcd", result.first());
         extension = "";
         for(Object[] o : (LinkedList<Object[]>)result.second())
             extension += o[0] + " = " + o[1] + " * " + o[2] + " + " + o[3] + "\n";
-        return "In Window " + getTitle() + ": " + "GCD(" + (KryptoType)textField1.getResult() + ", " + (KryptoType)textField2.getResult() + ") = " +  result.first().toString();
+        return "In Window " + getTitle() + ": " + "GCD(" + value1.toString() + ", " + value2.toString() + ") = " +  result.first().toString();
     }
 
     @SuppressWarnings("unchecked")
@@ -142,7 +192,7 @@ public class GCDFrame extends Kit {
                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 308, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 292, Short.MAX_VALUE)
                         .addComponent(jButton1)))
                 .addContainerGap())
         );

@@ -169,27 +169,27 @@ public class FermatZFrame extends Kit{
         this.setSize(200, 150);
     }
 
-    @Override
-    public String execute() {
-        //KryptoType value1, value2;
-        //PrimeTest t1 = new FermatZ(basen, primeFill, calcProp);
-        ArrayList<Z> basen = new ArrayList<Z>();
-        ArrayList<Z> moduls = new ArrayList<Z>();
-        Tuple<Boolean, Double> result;// = new ArrayList<Boolean, Double>();
-
-        if(basesTextField.getResult() != null)
-            basen.add((Z)basesTextField.getResult());
-        else
-            basen.add(new Z (basesTextField.getText()));
-        if(moduloTextField.getResult() != null)
-            moduls.add((Z)moduloTextField.getResult());
-        else
-            moduls.add(new Z(moduloTextField.getText()));
-        //PrimeTest p1 = new FermatZ(basen, moduls, true); //Ich weiß nicht weshalb es nicht geht, selbst wenn ich auf public setze
-        //Tuple<Boolean, Double> result = p.test();
-        results.put(getTitle() + "_mod", new Tuple<Boolean, Double>(result.first(), result.second()));
-        return "In Window " + getTitle() + ": " + basen + " + " + moduls + " = " + result.toString();
-    }
+//    @Override
+//    public String execute() {
+//        //KryptoType value1, value2;
+//        //PrimeTest t1 = new FermatZ(basen, primeFill, calcProp);
+//        ArrayList<Z> basen = new ArrayList<Z>();
+//        ArrayList<Z> moduls = new ArrayList<Z>();
+//        Tuple<Boolean, Double> result;// = new ArrayList<Boolean, Double>();
+//
+//        if(basesTextField.getResult() != null)
+//            basen.add((Z)basesTextField.getResult());
+//        else
+//            basen.add(new Z (basesTextField.getText()));
+//        if(moduloTextField.getResult() != null)
+//            moduls.add((Z)moduloTextField.getResult());
+//        else
+//            moduls.add(new Z(moduloTextField.getText()));
+//        //PrimeTest p1 = new FermatZ(basen, moduls, true); //Ich weiß nicht weshalb es nicht geht, selbst wenn ich auf public setze
+//        //Tuple<Boolean, Double> result = p.test();
+//        results.put(getTitle() + "_mod", new Tuple<Boolean, Double>(result.first(), result.second()));
+//        return "In Window " + getTitle() + ": " + basen + " + " + moduls + " = " + result.toString();
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;

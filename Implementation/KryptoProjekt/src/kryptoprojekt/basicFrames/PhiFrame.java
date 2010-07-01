@@ -11,8 +11,11 @@
 
 package kryptoprojekt.basicFrames;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.LinkedList;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
@@ -20,6 +23,8 @@ import javax.swing.JTextArea;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
 import kryptoprojekt.controller.BasicController;
+import kryptoprojekt.controller.LogicValidator;
+import kryptoprojekt.model.KryptoType;
 import kryptoprojekt.model.Tuple;
 import kryptoprojekt.model.Z;
 
@@ -40,6 +45,24 @@ public class PhiFrame extends Kit {
     }
 
     private void initLogicComponents() {
+
+        textField1.addKeyListener(new KeyListener() {
+
+            public void keyTyped(KeyEvent e) {
+            }
+
+            public void keyPressed(KeyEvent e) {
+            }
+
+            public void keyReleased(KeyEvent e) {
+                if (LogicValidator.isInteger(textField1.getText())) {
+                    textField1.setForeground(Color.black);
+                } else {
+                    textField1.setForeground(Color.red);
+                }
+            }
+        });
+
         jPanel1.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.weightx = 0.1;
@@ -66,12 +89,18 @@ public class PhiFrame extends Kit {
 
     @Override
     public String execute() {
-        Tuple<Z, LinkedList<Z>> result = BasicController.calculatePhi((Z)textField1.getResult());
+        KryptoType value1;
+        if(textField1.getResult() != null)
+            value1 = (KryptoType)textField1.getResult();
+        else
+            value1 = new Z(textField1.getText());
+
+        Tuple<Z, LinkedList<Z>> result = BasicController.calculatePhi((Z) value1);
         results.put(getTitle() + "_phi", result.first());
         extension = "";
         for(Z tmp : result.second())
             extension += tmp +" ";
-        return "In window " + getTitle() + ": phi(" + (Z)textField1.getResult() + ") = " +result.first().toString();
+        return "In window " + getTitle() + ": phi(" + value1.toString() + ") = " +result.first().toString();
     }
 
     @SuppressWarnings("unchecked")
@@ -121,8 +150,8 @@ public class PhiFrame extends Kit {
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 300, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 297, Short.MAX_VALUE)
+                        .addComponent(jButton1)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
