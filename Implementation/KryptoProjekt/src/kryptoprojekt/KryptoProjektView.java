@@ -17,9 +17,6 @@ import javax.swing.Timer;
 import javax.swing.Icon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import kryptoprojekt.basicFrames.DivisionFrame;
 import kryptoprojekt.basicFrames.GCDFrame;
 import kryptoprojekt.basicFrames.ModuloFrame;
@@ -535,16 +532,12 @@ public class KryptoProjektView extends FrameView {
     }//GEN-LAST:event_decodeMenuItemActionPerformed
 
     private void startMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startMenuItemActionPerformed
-        JInternalFrame results = new JInternalFrame("result", true, true, true, true);
-        results.setSize(desktop.getWidth(), desktop.getHeight());
-        results.setVisible(true);
-        results.moveToFront();
-        JScrollPane scrollpane = new JScrollPane();
-        JTextArea area = new JTextArea();
-        area.setVisible(true);
-        results.add(area);
-        desktop.add(results);
-        new Executor(handler, area).start();
+        ResultFrame rf = new ResultFrame();
+        rf.setSize(desktop.getWidth(), desktop.getHeight() / 2);
+        rf.setLocation(0, desktop.getHeight() / 2);
+        rf.setVisible(true);
+        desktop.add(rf);
+        new Executor(handler, rf).start();
     }//GEN-LAST:event_startMenuItemActionPerformed
 
     private void primeFieldMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_primeFieldMenuItemActionPerformed

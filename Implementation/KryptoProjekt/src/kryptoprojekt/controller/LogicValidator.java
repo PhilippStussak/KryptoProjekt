@@ -4,23 +4,35 @@
  */
 package kryptoprojekt.controller;
 
-import kryptoprojekt.model.Validator;
+import java.util.regex.Pattern;
 
 /**
  *
- * @author Stefan
+ * @author LiTTle
  */
 public class LogicValidator {
 
+    //double regex not completely right, values beginning with zero are not considered
+    //private static String doubleString = "[+-]?[1-9][0-9]*(?:[.,]?[0-9]+|[0-9]*)";
+    private static String intString = "([-+]?[1-9][0-9]*)|0";
+    private static String binaryString = "[01]+";
+    private static String posintString = "([1-9][0-9]*)|0";
+
+    private LogicValidator() {
+    }
+
     public static boolean isInteger(String value) {
-        return Validator.isInteger(value);
+        return Pattern.matches(intString, value);
     }
 
     public static boolean isPosInteger(String value) {
-        return Validator.isPosInteger(value);
+        return Pattern.matches(posintString, value);
     }
 
+//    public static boolean isDouble(String value) {
+//        return Pattern.matches(doubleString, value);
+//    }
     public static boolean isBinaryString(String value) {
-        return Validator.isBinaryString(value);
+        return Pattern.matches(binaryString, value);
     }
 }

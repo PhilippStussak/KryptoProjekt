@@ -5,7 +5,7 @@
 package kryptoprojekt;
 
 import java.util.LinkedList;
-import javax.swing.JTextArea;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -14,14 +14,14 @@ import javax.swing.JTextArea;
 public class Executor extends Thread {
 
     LinkedList<Kit> orderOfExecution = new LinkedList<Kit>();
-    JTextArea area;
+    ResultFrame rf;
 
-    public Executor(ConnectionHandler handler, JTextArea area) {
+    public Executor(ConnectionHandler handler, ResultFrame rf) {
         LinkedList<Kit> frames = new LinkedList<Kit>();
         for (Kit kit : handler.getFrames()) {
             frames.add(kit);
         }
-        this.area = area;
+        this.rf = rf;
         for (Kit kit : frames) {
             if (kit.getChildren().size() == 0) {
                 insert(kit);
@@ -43,7 +43,13 @@ public class Executor extends Thread {
 
     public void run() {
         for (Kit kit : orderOfExecution) {
-            area.setText(area.getText() + "\n" + kit.execute());
+            try {
+            rf.addText(kit.execute());
+            } catch(NullPointerException npe) {
+                JOptionPane.showMessageDialog(rf, "Wrong parameters in Window " + kit.getTitle());
+            } catch(Exception e) {
+                JOptionPane.showMessageDialog(rf, e.getMessage());
+            }
         }
     }
 }
