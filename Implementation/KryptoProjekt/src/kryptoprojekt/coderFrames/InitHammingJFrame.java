@@ -11,15 +11,19 @@
 
 package kryptoprojekt.coderFrames;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
 import kryptoprojekt.controller.CoderController;
+import kryptoprojekt.controller.LogicValidator;
 import kryptoprojekt.model.HammingCode;
 import kryptoprojekt.model.Matrix;
 import kryptoprojekt.model.PrimeFieldElement;
@@ -93,6 +97,26 @@ public class InitHammingJFrame extends Kit {
     }// </editor-fold>//GEN-END:initComponents
 
     private void initLogicComponents() {
+
+        textSourceCodeword.addKeyListener(new KeyListener() {
+
+            public void keyTyped(KeyEvent e) {
+            }
+
+            public void keyPressed(KeyEvent e) {
+            }
+
+            public void keyReleased(KeyEvent e) {
+                if (LogicValidator.isBinaryString(textSourceCodeword.getText())) {
+                    textSourceCodeword.setForeground(Color.black);
+                } else {
+                    textSourceCodeword.setForeground(Color.red);
+                }
+            }
+        });
+
+        
+
         jPanel1.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
@@ -171,10 +195,16 @@ public class InitHammingJFrame extends Kit {
     public String execute() {
         Matrix<PrimeFieldElement> generatorM = null;
         HammingCode hc = null;
+        String value1;
+         if(!textSourceCodeword.getText().equals(""))
+            value1 = textSourceCodeword.getText();
+        else
+            return "no source codeword";
+
         if (enableMatrix.isSelected()) {
-            hc = CoderController.initHammingCode(true, generatorM, (String)textSourceCodeword.getText());
+            hc = CoderController.initHammingCode(true, generatorM, value1);
         } else {
-            hc = CoderController.initHammingCode(false, null, (String)textSourceCodeword.getText());
+            hc = CoderController.initHammingCode(false, null, value1);
         }
         results.put(getTitle() + "HammingCode Element", hc);
         results.put(getTitle() + "generatorMatrix", textGeneratorMatrix);
