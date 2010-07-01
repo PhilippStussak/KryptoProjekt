@@ -14,8 +14,11 @@ package kryptoprojekt.coderFrames;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
+import kryptoprojekt.controller.CoderController;
+import kryptoprojekt.model.HammingCode;
 
 /**
  *
@@ -23,7 +26,8 @@ import kryptoprojekt.Kit;
  */
 public class CreateHammingErrorFrame extends Kit {
 
-    DropTextField probabilityField = getDropTextField();
+    DropTextField hcField = getDropTextField();
+    JTextField field = new JTextField();
     /** Creates new form CreateHammingErrorFrame */
     public CreateHammingErrorFrame(ConnectionHandler handler) {
         super(handler);
@@ -43,7 +47,8 @@ public class CreateHammingErrorFrame extends Kit {
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setClosable(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setName("Form"); // NOI18N
 
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(kryptoprojekt.KryptoProjektApp.class).getContext().getResourceMap(CreateHammingErrorFrame.class);
@@ -60,7 +65,7 @@ public class CreateHammingErrorFrame extends Kit {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 269, Short.MAX_VALUE)
+            .addGap(0, 273, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -93,24 +98,36 @@ public class CreateHammingErrorFrame extends Kit {
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
         c.gridy = 0;
-        jPanel1.add(new JLabel("Probability of errorCreation (0-1)"), c);
+        jPanel1.add(new JLabel("HammingCode Element"), c);
 
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
         c.gridy = 1;
-        jPanel1.add(probabilityField, c);
+        jPanel1.add(hcField, c);
+
+        c.fill = GridBagConstraints.BOTH;
+        c.gridx = 0;
+        c.gridy = 2;
+        jPanel1.add(new JLabel("Probability of errorCreation (0-1)"), c);
 
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
         c.gridy = 3;
-        jPanel1.add(getDragList(new Object[] {getTitle() + "_probability"}), c);
+        jPanel1.add(field, c);
 
-        this.setSize(200, 130);
+        c.fill = GridBagConstraints.BOTH;
+        c.gridx = 0;
+        c.gridy = 4;
+        jPanel1.add(getDragList(new Object[] {getTitle() + "HammingCode Element"}), c);
+
+        this.setSize(200, 160);
     }
 
     @Override
     public String execute() {
-        return null;
+        HammingCode hc = CoderController.createHammingError((HammingCode) hcField.getResult(), field.getText());
+        results.put(getTitle() + "HammingCode Element", hc);
+        return "generated errors with " + Double.parseDouble(field.getText())*100 + "% probability";
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;

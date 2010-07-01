@@ -163,7 +163,7 @@ public class DecodeHammingCodeFrame extends Kit {
             results.put(getTitle() + "HammingCode Element", result);
             results.put(getTitle() + "decoded word", result.getDecodedWord());
             results.put(getTitle() + "corrected decoded word", result.getCorrectedDecodedWord());
-            return "decoded word: " + result.getDecodedWord() +"\nError in encoded word " + result.getEncodedWord() + "at position "+ result.getErrorPos() + "\ncorrected decoded word: " + result.getCorrectedDecodedWord();
+            return "decoded word: " + result.getDecodedWord() +"\nError in encoded word " + result.getEncodedWord() + " at position "+ result.getErrorPos() + "\ncorrected decoded word: " + result.getCorrectedDecodedWord();
         }
         results.put(getTitle() + "HammingCode Element", result);
         results.put(getTitle() + "decoded word", result.getDecodedWord());

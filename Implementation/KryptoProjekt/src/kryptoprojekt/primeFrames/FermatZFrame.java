@@ -187,8 +187,8 @@ public class FermatZFrame extends Kit{
             moduls.add(new Z(moduloTextField.getText()));
         //PrimeTest p1 = new FermatZ(basen, moduls, true); //Ich weiß nicht weshalb es nicht geht, selbst wenn ich auf public setze
         //Tuple<Boolean, Double> result = p.test();
-        results.put(getTitle() + "_mod", new Tuple<Boolean, Double>(result.first(), result.second()));
-        return "In Window " + getTitle() + ": " + basen + " + " + moduls + " = " + result.toString();
+        //results.put(getTitle() + "_mod", new Tuple<Boolean, Double>(result.first(), result.second()));
+        return "In Window " + getTitle() + ": " + basen + " + " + moduls + " = ";// + result.toString();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

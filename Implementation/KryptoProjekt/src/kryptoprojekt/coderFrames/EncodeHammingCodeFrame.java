@@ -108,7 +108,7 @@ public class EncodeHammingCodeFrame extends Kit {
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
         c.gridy = 2;
-        jPanel1.add(getDragList(new Object[] {getTitle() + "_encode"}), c);
+        jPanel1.add(getDragList(new Object[] {getTitle() + "HammingCode Element"}), c);
 
         this.setSize(150, 120);
 
@@ -117,7 +117,7 @@ public class EncodeHammingCodeFrame extends Kit {
     @Override
     public String execute() {
         HammingCode result = CoderController.encodeHammingCode((HammingCode) textField1.getResult());
-        results.put(getTitle() + "_encode", result);
+        results.put(getTitle() + "HammingCode Element", result);
 
         return "encoded word: " + result.getEncodedWord();
     }

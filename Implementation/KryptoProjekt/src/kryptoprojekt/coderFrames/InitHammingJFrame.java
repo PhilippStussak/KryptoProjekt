@@ -169,7 +169,7 @@ public class InitHammingJFrame extends Kit {
         c.gridwidth = 3;
         c.gridx = 0;
         c.gridy = 7;
-        jPanel1.add(getDragList(new Object[] {getTitle() + "hammingObject"}), c);
+        jPanel1.add(getDragList(new Object[] {getTitle() + "HammingCode Element"}), c);
         
 
         this.setSize(180, 200);
@@ -184,7 +184,7 @@ public class InitHammingJFrame extends Kit {
         } else {
             hc = CoderController.initHammingCode(false, null, (String)textSourceCodeword.getText());
         }
-        results.put(getTitle() + "hammingObject", hc);
+        results.put(getTitle() + "HammingCode Element", hc);
         results.put(getTitle() + "generatorMatrix", textGeneratorMatrix);
         results.put(getTitle() + "source codeword", textSourceCodeword);
 
