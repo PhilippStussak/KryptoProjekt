@@ -153,6 +153,8 @@ public class KryptoProjektView extends FrameView {
         primeFieldMenuItem = new javax.swing.JMenuItem();
         primeTestMenu = new javax.swing.JMenu();
         fermatMenuItem = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         coderMenu = new javax.swing.JMenu();
         jMenu11 = new javax.swing.JMenu();
         initHammingCodeMenuItem = new javax.swing.JMenuItem();
@@ -335,6 +337,14 @@ public class KryptoProjektView extends FrameView {
             }
         });
         primeTestMenu.add(fermatMenuItem);
+
+        jMenuItem1.setText(resourceMap.getString("jMenuItem1.text")); // NOI18N
+        jMenuItem1.setName("jMenuItem1"); // NOI18N
+        primeTestMenu.add(jMenuItem1);
+
+        jMenuItem2.setText(resourceMap.getString("jMenuItem2.text")); // NOI18N
+        jMenuItem2.setName("jMenuItem2"); // NOI18N
+        primeTestMenu.add(jMenuItem2);
 
         mainMenuBar.add(primeTestMenu);
 
@@ -641,6 +651,8 @@ public class KryptoProjektView extends FrameView {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuBar jMenuBar3;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuBar mainMenuBar;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuItem modMenuItem;
