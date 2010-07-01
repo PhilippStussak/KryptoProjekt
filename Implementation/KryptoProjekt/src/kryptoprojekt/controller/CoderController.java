@@ -26,8 +26,9 @@ public class CoderController {
 
     public static HammingCode decodeHammingCode(HammingCode hc) throws RuntimeException{
         hc.calculateSyndrom();
-        hc.detectError();
         hc.decode();
+        hc.detectError();
+        
 
         return hc;
     }
@@ -35,6 +36,11 @@ public class CoderController {
     public static HammingCode encodeHammingCode(HammingCode hc) {
         hc.encode();
 
+        return hc;
+    }
+
+    public static HammingCode createHammingError(HammingCode hc, String probability) {
+        hc.generateBitError(Double.parseDouble(probability));
         return hc;
     }
 

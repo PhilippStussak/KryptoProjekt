@@ -4,12 +4,12 @@
  */
 
 /*
- * MultiplyFrame.java
+ * FermatZFrame.java
  *
- * Created on 21.06.2010, 16:32:51
+ * Created on 29.06.2010, 17:14:20
  */
 
-package kryptoprojekt.basicFrames;
+package kryptoprojekt.primeFrames;
 
 import java.awt.Color;
 import java.awt.GridBagConstraints;
@@ -17,24 +17,28 @@ import java.awt.GridBagLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
 import kryptoprojekt.controller.BasicController;
 import kryptoprojekt.controller.LogicValidator;
 import kryptoprojekt.model.KryptoType;
 import kryptoprojekt.model.Z;
-
+import kryptoprojekt.model.PrimeTest;
+import kryptoprojekt.model.FermatZ;
+import kryptoprojekt.model.Tuple;
+import java.util.ArrayList;
 /**
  *
- * @author Stefan
+ * @author LiTTle
  */
-public class MultiplicationFrame extends Kit {
+public class FermatZFrame extends Kit{
 
-    private DropTextField textField1 = getDropTextField();
-    private DropTextField textField2 = getDropTextField();
+    private DropTextField basesTextField = getDropTextField();
+    private DropTextField moduloTextField = getDropTextField();
 
-    /** Creates new form MultiplyFrame */
-    public MultiplicationFrame(ConnectionHandler handler) {
+    /** Creates new form FermatZFrame */
+    public FermatZFrame(ConnectionHandler handler) {
         super(handler);
         initComponents();
         initLogicComponents();
@@ -54,9 +58,10 @@ public class MultiplicationFrame extends Kit {
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDoubleBuffered(true);
         setName("Form"); // NOI18N
 
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(kryptoprojekt.KryptoProjektApp.class).getContext().getResourceMap(MultiplicationFrame.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(kryptoprojekt.KryptoProjektApp.class).getContext().getResourceMap(FermatZFrame.class);
         jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
         jLabel1.setName("jLabel1"); // NOI18N
 
@@ -66,11 +71,11 @@ public class MultiplicationFrame extends Kit {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 219, Short.MAX_VALUE)
+            .addGap(0, 380, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 145, Short.MAX_VALUE)
+            .addGap(0, 281, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -87,7 +92,6 @@ public class MultiplicationFrame extends Kit {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -98,8 +102,7 @@ public class MultiplicationFrame extends Kit {
     }// </editor-fold>//GEN-END:initComponents
 
     private void initLogicComponents() {
-
-        textField1.addKeyListener(new KeyListener() {
+        basesTextField.addKeyListener(new KeyListener() {
 
             public void keyTyped(KeyEvent e) {
             }
@@ -108,15 +111,15 @@ public class MultiplicationFrame extends Kit {
             }
 
             public void keyReleased(KeyEvent e) {
-                if (LogicValidator.isInteger(textField1.getText())) {
-                    textField1.setForeground(Color.black);
+                if (LogicValidator.isInteger(basesTextField.getText())) {
+                    basesTextField.setForeground(Color.black);
                 } else {
-                    textField1.setForeground(Color.red);
+                    basesTextField.setForeground(Color.red);
                 }
             }
         });
 
-        textField2.addKeyListener(new KeyListener() {
+        moduloTextField.addKeyListener(new KeyListener() {
 
             public void keyTyped(KeyEvent e) {
             }
@@ -125,63 +128,74 @@ public class MultiplicationFrame extends Kit {
             }
 
             public void keyReleased(KeyEvent e) {
-                if (LogicValidator.isInteger(textField2.getText())) {
-                    textField2.setForeground(Color.black);
+                if (LogicValidator.isInteger(moduloTextField.getText())) {
+                    moduloTextField.setForeground(Color.black);
                 } else {
-                    textField2.setForeground(Color.red);
+                    moduloTextField.setForeground(Color.red);
                 }
             }
         });
 
         jPanel1.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
-        c.weightx = 0.495;
+
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
         c.gridy = 0;
-        jPanel1.add(textField1, c);
+        JLabel l = new JLabel();
+        l.setText("Bases for FermatTest, splittet with ','");
+        jPanel1.add(l, c);
 
-        c.weightx = 0.01;
+        c.weightx = 0.2;
         c.fill = GridBagConstraints.BOTH;
-        c.gridx = 1;
-        c.gridy = 0;
-        jPanel1.add(new JLabel("*"), c);
-
-        c.weightx = 0.495;
-        c.fill = GridBagConstraints.BOTH;
-        c.gridx = 2;
-        c.gridy = 0;
-        jPanel1.add(textField2, c);
-
-        c.weightx = 1;
-        c.fill = GridBagConstraints.BOTH;
-        c.gridwidth = 3;
         c.gridx = 0;
         c.gridy = 1;
-        jPanel1.add(getDragList(new Object[] {getTitle() + "_product"}), c);
+        jPanel1.add(basesTextField, c);
 
-        this.setSize(160, 120);
+        c.weightx = 0.4;
+        c.fill = GridBagConstraints.BOTH;
+        c.gridx = 0;
+        c.gridy = 2;
+        JLabel l2 = new JLabel();
+        l2.setText("Modulo:");
+        jPanel1.add(l2, c);
+
+        c.weightx = 0.2;
+        c.fill = GridBagConstraints.BOTH;
+        c.gridx = 0;
+        c.gridy = 3;
+        jPanel1.add(moduloTextField, c);
+
+        this.setSize(200, 150);
     }
 
     @Override
     public String execute() {
-        KryptoType value1, value2;
-        if(textField1.getResult() != null)
-            value1 = (KryptoType)textField1.getResult();
+        //KryptoType value1, value2;
+        //PrimeTest t1 = new FermatZ(basen, primeFill, calcProp);
+        ArrayList<Z> basen = new ArrayList<Z>();
+        ArrayList<Z> moduls = new ArrayList<Z>();
+        Tuple<Boolean, Double> result;// = new ArrayList<Boolean, Double>();
+
+        if(basesTextField.getResult() != null)
+            basen.add((Z)basesTextField.getResult());
         else
-            value1 = new Z(textField1.getText());
-        if(textField2.getResult() != null)
-            value2 = (KryptoType)textField2.getResult();
+            basen.add(new Z (basesTextField.getText()));
+        if(moduloTextField.getResult() != null)
+            moduls.add((Z)moduloTextField.getResult());
         else
-            value2 = new Z(textField2.getText());
-        KryptoType result = BasicController.multiplication(value1, value2);
-        results.put(getTitle() + "_product", result);
-        return "In Window " + getTitle() + ": " + value1.toString() + " * " + value2.toString() + " = " + result.toString();
+            moduls.add(new Z(moduloTextField.getText()));
+        //PrimeTest p1 = new FermatZ(basen, moduls, true); //Ich weiß nicht weshalb es nicht geht, selbst wenn ich auf public setze
+        //Tuple<Boolean, Double> result = p.test();
+        //results.put(getTitle() + "_mod", new Tuple<Boolean, Double>(result.first(), result.second()));
+        return "In Window " + getTitle() + ": " + basen + " + " + moduls + " = ";// + result.toString();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
+
+
 
 }

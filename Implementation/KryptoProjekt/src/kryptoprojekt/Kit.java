@@ -42,13 +42,11 @@ public class Kit extends JInternalFrame {
         for (Component c : getComponents()) {
             c.addMouseListener(new MouseListener() {
 
-                private Thread t;
-
                 public void mouseClicked(MouseEvent e) {
                 }
 
                 public void mousePressed(MouseEvent e) {
-                    t = new Thread() {
+                    refresher = new Thread() {
 
                         @Override
                         public void run() {
@@ -62,11 +60,11 @@ public class Kit extends JInternalFrame {
                             }
                         }
                     };
-                    t.start();
+                    refresher.start();
                 }
 
                 public void mouseReleased(MouseEvent e) {
-                    t.interrupt();
+                    refresher.interrupt();
                 }
 
                 public void mouseEntered(MouseEvent e) {
@@ -88,10 +86,6 @@ public class Kit extends JInternalFrame {
 
     public LinkedList<Kit> getParents() {
         return parents;
-    }
-
-    public HashMap<String, Object> getResults() {
-        return results;
     }
 
     public LinkedList<Kit> getChildren() {
@@ -202,7 +196,7 @@ public class Kit extends JInternalFrame {
                         if (old != null) {
                             origin.parents.remove(old.getParent());
                         }
-                        if (cyrcle(parent, origin)) {
+                        if (circle(parent, origin)) {
                             JOptionPane.showMessageDialog(null, "Recursion not possible!");
                         } else if (!handler.add(con)) {
                             JOptionPane.showMessageDialog(null, "Connection already exists!");
@@ -215,7 +209,7 @@ public class Kit extends JInternalFrame {
                             parent.children.add(origin);
                             p = parent;
                             key = text;
-                            setColor(Color.green);
+                            setColor(Color.blue);
                         }
                     }
                 } else {
@@ -228,12 +222,12 @@ public class Kit extends JInternalFrame {
             }
         }
 
-        private boolean cyrcle(Kit par, Kit ch) {
+        private boolean circle(Kit par, Kit ch) {
             if (par == ch) {
                 return true;
             }
             for (Kit k : par.getParents()) {
-                if (cyrcle(k, ch)) {
+                if (circle(k, ch)) {
                     return true;
                 }
             }

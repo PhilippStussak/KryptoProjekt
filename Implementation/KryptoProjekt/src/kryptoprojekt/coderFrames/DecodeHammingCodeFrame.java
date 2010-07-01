@@ -26,7 +26,7 @@ import kryptoprojekt.model.HammingCode;
 
 /**
  *
- * @author LiTTle
+ * @author LiTTle, Mario
  */
 public class DecodeHammingCodeFrame extends Kit {
 
@@ -159,11 +159,13 @@ public class DecodeHammingCodeFrame extends Kit {
     public String execute() {
         try{
         HammingCode result = CoderController.decodeHammingCode((HammingCode) hcField.getResult());
+        if(result.getErrorPos() == -1)
+            return "No errors created";
         if(enableMatrix.isSelected()){
             results.put(getTitle() + "HammingCode Element", result);
             results.put(getTitle() + "decoded word", result.getDecodedWord());
             results.put(getTitle() + "corrected decoded word", result.getCorrectedDecodedWord());
-            return "decoded word: " + result.getDecodedWord() +"\nError in encoded word " + result.getEncodedWord() + "at position "+ result.getErrorPos() + "\ncorrected decoded word: " + result.getCorrectedDecodedWord();
+            return "decoded word: " + result.getDecodedWord() +"\nError in encoded word " + result.getEncodedWord() + " at position "+ result.getErrorPos() + "\ncorrected decoded word: " + result.getCorrectedDecodedWord();
         }
         results.put(getTitle() + "HammingCode Element", result);
         results.put(getTitle() + "decoded word", result.getDecodedWord());

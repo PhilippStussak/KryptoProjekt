@@ -11,17 +11,22 @@
 
 package kryptoprojekt.basicFrames;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.LinkedList;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
+import kryptoprojekt.controller.LogicValidator;
 import kryptoprojekt.model.Basic;
 import kryptoprojekt.model.KryptoType;
 import kryptoprojekt.model.Tuple;
+import kryptoprojekt.model.Z;
 
 /**
  *
@@ -41,6 +46,41 @@ public class SaMFrame extends Kit {
     }
 
     private void initLogicComponents() {
+
+        textField1.addKeyListener(new KeyListener() {
+
+            public void keyTyped(KeyEvent e) {
+            }
+
+            public void keyPressed(KeyEvent e) {
+            }
+
+            public void keyReleased(KeyEvent e) {
+                if (LogicValidator.isInteger(textField1.getText())) {
+                    textField1.setForeground(Color.black);
+                } else {
+                    textField1.setForeground(Color.red);
+                }
+            }
+        });
+
+        textField2.addKeyListener(new KeyListener() {
+
+            public void keyTyped(KeyEvent e) {
+            }
+
+            public void keyPressed(KeyEvent e) {
+            }
+
+            public void keyReleased(KeyEvent e) {
+                if (LogicValidator.isInteger(textField2.getText())) {
+                    textField2.setForeground(Color.black);
+                } else {
+                    textField2.setForeground(Color.red);
+                }
+            }
+        });
+
         jPanel1.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.weightx = 0.495;
@@ -73,12 +113,21 @@ public class SaMFrame extends Kit {
 
     @Override
     public String execute() {
-        Tuple result = Basic.squareAndMultiply((KryptoType)textField1.getResult(), (KryptoType)textField2.getResult());
+        KryptoType value1, value2;
+        if(textField1.getResult() != null)
+            value1 = (KryptoType)textField1.getResult();
+        else
+            value1 = new Z(textField1.getText());
+        if(textField2.getResult() != null)
+            value2 = (KryptoType)textField2.getResult();
+        else
+            value2 = new Z(textField2.getText());
+        Tuple result = Basic.squareAndMultiply(value1, value2);
         results.put(getTitle() + "_SaM", result.first());
         extension = "";
         for(String s : (LinkedList<String>)result.second())
             extension += s + "\n";
-        return "In Window " + getTitle() + ": " + (KryptoType)textField1.getResult() + " ^ " + (KryptoType)textField2.getResult() + " = " + result.first().toString();
+        return "In Window " + getTitle() + ": " + value1.toString() + " ^ " + value2.toString() + " = " + result.first().toString();
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

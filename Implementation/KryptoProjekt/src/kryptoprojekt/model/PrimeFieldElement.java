@@ -175,11 +175,11 @@ public class PrimeFieldElement implements KryptoType<PrimeFieldElement> {
      */
     @Override
     public String toString() {
-        return "[" + value.toString() + ", " + base.toString() + "]";
+        return value.toString();
     }
 
-    public String toStringWithoutBases() {
-        return "[" + value.toString() + "]";
+    public String toStringWithBase() {
+        return "[" + value.toString() + ", " + base.toString() + "]";
     }
 
     /**

@@ -31,12 +31,6 @@ public class ConnectionHandler {
         return frames;
     }
 
-    public void execute(JTextArea area) {
-        for (Kit k : frames) {
-            area.setText(area.getText() + "\n" + k.execute());
-        }
-    }
-
     public void add(Kit kit) {
         frames.add(kit);
     }

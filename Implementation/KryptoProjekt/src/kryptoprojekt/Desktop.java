@@ -18,8 +18,8 @@ import javax.swing.JDesktopPane;
  */
 public class Desktop extends JDesktopPane {
 
-    ConnectionHandler handler;
-    Image image;
+    private ConnectionHandler handler;
+    private Image image;
 
     public Desktop(ConnectionHandler handler) {
         this.handler = handler;
@@ -29,7 +29,6 @@ public class Desktop extends JDesktopPane {
         this.setVisible(true);
         this.setDoubleBuffered(true);
         try {
-            // ToDo: Change Patchspec from this package to resource.kryptoprojekt
             image = javax.imageio.ImageIO.read(new java.net.URL(getClass().getResource("resources\\panelBackground.png"), "resources\\panelBackground.png"));
         } catch (Exception e) {
         }
