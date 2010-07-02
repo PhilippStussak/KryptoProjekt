@@ -1,6 +1,36 @@
 ﻿<?xml version='1.0' encoding='UTF-8'?>
  
 <languagefile name="English">
+	<KryptoView>
+		<startMenuItem>Start</startMenuItem>
+		<exitMenuItem>Close</exitMenuItem>
+		<basicMenu>Basics</basicMenu>
+		<basicArithmeticMenu>Basic Arithmetic</basicArithmeticMenu>
+		<zMenuItem>Z (Integer)</zMenuItem>
+		<primeFieldMenuItem>Primefield Element</primeFieldMenuItem>
+		<additionMenuItem>Addition</additionMenuItem>
+		<subtractionMenuItem>Subtraction</subtractionMenuItem>
+		<multiplicationMenuItem>Multiplication</multiplicationMenuItem>
+		<divisionMenuItem>Division</divisionMenuItem>
+		<modMenuItem>Modulo</modMenuItem>
+		<samMenuItem>Square and Multiply</samMenuItem>
+		<sammodMenuItem>Square and Multiply (Modulo)</sammodMenuItem>
+		<gcdMenuItem>Great Common Divisor</gcdMenuItem>
+		<phiMenuItem>Phi-Function</phiMenuItem>
+		<primeTestMenu>Primetests</primeTestMenu>
+		<fermatMenuItem>Fermat Test</fermatMenuItem>
+		<lucasMenuItem>Lucas Test</lucasMenuItem>
+		<millerrabinMenuItem>Miller Rabin test</millerrabinMenuItem>
+		<coderMenu>Coders</coderMenu>
+		<hammingMenu>Hamming Code</hammingMenu>
+		<initHammingCodeMenuItem>Initialize Hammingcode</initHammingCodeMenuItem>
+		<encodeMenuItem>Encode Hammingobject</encodeMenuItem>
+		<syndromMenuItem>Calculate Syndrom</syndromMenuItem>
+		<decodeMenuItem>Decode Hammingobject</decodeMenuItem>
+		<createErrorsMenuItem>Create Errors in encoded word</createErrorsMenuItem>
+		<hammingDistanceMenuItem>Calculate Hamming Distance</hammingDistanceMenuItem>
+		<vectorWeightMenuItem>Calculate Vector Weight</vectorWeightMenuItem>
+	</KryptoView>
 	<HammingCode>
         <encodeException>SourceCodeWord or generatorMatrix is not calculated yet.</encodeException>
 		<detectErrorNullException>Syndrom is not calculated yet.</detectErrorNullException>

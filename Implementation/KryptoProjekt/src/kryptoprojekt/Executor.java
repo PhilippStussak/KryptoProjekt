@@ -4,6 +4,7 @@
  */
 package kryptoprojekt;
 
+import java.util.Date;
 import java.util.LinkedList;
 import javax.swing.JOptionPane;
 
@@ -41,15 +42,20 @@ public class Executor extends Thread {
         }
     }
 
+    @Override
     public void run() {
+        long time = System.currentTimeMillis();
         for (Kit kit : orderOfExecution) {
             try {
-            rf.addText(kit.execute());
-            } catch(NullPointerException npe) {
-                JOptionPane.showMessageDialog(rf, "Wrong parameters in Window " + kit.getTitle());
-            } catch(Exception e) {
+                rf.addText(kit.execute());
+            } catch (NullPointerException npe) {
+                JOptionPane.showMessageDialog(rf, "Parameter in Window " + kit.getTitle() + " is missing!");
+            } catch (ClassCastException cce) {
+                JOptionPane.showMessageDialog(rf, "Wrong parameter in Window " + kit.getTitle() + "!");
+            } catch (Exception e) {
                 JOptionPane.showMessageDialog(rf, e.getMessage());
             }
         }
+        rf.addText("compute time: " + (System.currentTimeMillis() - time) + "ms");
     }
 }
