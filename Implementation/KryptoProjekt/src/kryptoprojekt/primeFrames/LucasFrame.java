@@ -293,6 +293,7 @@ public class LucasFrame extends Kit{
         }
         //return "In Window " + getTitle() + ": " + "\n\nPrimzahlen:\n" +moduls.get(0)+ ": "  + result.get(0).first();
    //     return "In Window " + getTitle() + ": " + basen + " + " + moduls + " = ";// + result.toString();
+        return "";
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -98,7 +98,7 @@ public class MillerRabinZFrame extends Kit {
         c.gridx = 0;
         c.gridy = 0;
         JLabel l = new JLabel();
-        l.setText("Experimental, splittet with ','");
+        l.setText("Base:");
         jPanel1.add(l, c);
 
         c.weightx = 0.2;

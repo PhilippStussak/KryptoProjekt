@@ -17,15 +17,10 @@ import java.awt.GridBagLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
-import kryptoprojekt.controller.BasicController;
 import kryptoprojekt.controller.LogicValidator;
-import kryptoprojekt.model.KryptoType;
 import kryptoprojekt.model.Z;
-import kryptoprojekt.model.PrimeTest;
-import kryptoprojekt.model.FermatZ;
 import kryptoprojekt.model.Tuple;
 import java.util.ArrayList;
 /**
@@ -143,7 +138,7 @@ public class FermatZFrame extends Kit{
         c.gridx = 0;
         c.gridy = 0;
         JLabel l = new JLabel();
-        l.setText("Bases for FermatTest, splittet with ','");
+        l.setText("Base:");
         jPanel1.add(l, c);
 
         c.weightx = 0.2;

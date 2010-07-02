@@ -137,7 +137,7 @@ public class KryptoProjektView extends FrameView {
         phiMenuItem.setText(xml.getTagElement("KryptoView", "phiMenuItem"));
         primeTestMenu.setText(xml.getTagElement("KryptoView", "primeTestMenu"));
         fermatMenuItem.setText(xml.getTagElement("KryptoView", "fermatMenuItem"));
-        lucasMenuItem.setText(xml.getTagElement("KryptoView", "lucasMenuItem"));
+        //lucasMenuItem.setText(xml.getTagElement("KryptoView", "lucasMenuItem"));
         coderMenu.setText(xml.getTagElement("KryptoView", "coderMenu"));
         hammingMenu.setText(xml.getTagElement("KryptoView", "hammingMenu"));
         initHammingCodeMenuItem.setText(xml.getTagElement("KryptoView", "initHammingCodeMenuItem"));
@@ -188,7 +188,6 @@ public class KryptoProjektView extends FrameView {
         primeFieldMenuItem = new javax.swing.JMenuItem();
         primeTestMenu = new javax.swing.JMenu();
         fermatMenuItem = new javax.swing.JMenuItem();
-        lucasMenuItem = new javax.swing.JMenuItem();
         rabinMenuItem = new javax.swing.JMenuItem();
         coderMenu = new javax.swing.JMenu();
         hammingMenu = new javax.swing.JMenu();
@@ -372,15 +371,6 @@ public class KryptoProjektView extends FrameView {
             }
         });
         primeTestMenu.add(fermatMenuItem);
-
-        lucasMenuItem.setText(resourceMap.getString("lucasMenuItem.text")); // NOI18N
-        lucasMenuItem.setName("lucasMenuItem"); // NOI18N
-        lucasMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                lucasMenuItemActionPerformed(evt);
-            }
-        });
-        primeTestMenu.add(lucasMenuItem);
 
         rabinMenuItem.setText(resourceMap.getString("rabinMenuItem.text")); // NOI18N
         rabinMenuItem.setName("rabinMenuItem"); // NOI18N
@@ -673,12 +663,6 @@ public class KryptoProjektView extends FrameView {
         desktop.add(kit);
     }//GEN-LAST:event_createErrorsMenuItemActionPerformed
 
-    private void lucasMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lucasMenuItemActionPerformed
-        Kit kit = new LucasFrame(handler);
-        kit.setVisible(true);
-        desktop.add(kit);
-    }//GEN-LAST:event_lucasMenuItemActionPerformed
-
     private void rabinMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rabinMenuItemActionPerformed
         Kit kit = new MillerRabinFrame(handler);
         kit.setVisible(true);
@@ -709,7 +693,6 @@ public class KryptoProjektView extends FrameView {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuBar jMenuBar3;
-    private javax.swing.JMenuItem lucasMenuItem;
     private javax.swing.JMenuBar mainMenuBar;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuItem modMenuItem;
