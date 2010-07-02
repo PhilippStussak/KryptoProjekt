@@ -107,6 +107,7 @@ public class Kit extends JInternalFrame {
     @Override
     public void dispose() {
         handler.remove(this);
+        handler.getDesktop().repaint();
         super.dispose();
     }
 
@@ -140,6 +141,7 @@ public class Kit extends JInternalFrame {
                 public void keyTyped(KeyEvent e) {
                     keyTypedAction();
                     setColor(Color.black);
+                    handler.getDesktop().repaint();
                 }
 
                 public void keyPressed(KeyEvent e) {
@@ -210,6 +212,7 @@ public class Kit extends JInternalFrame {
                             p = parent;
                             key = text;
                             setColor(Color.blue);
+                            handler.getDesktop().repaint();
                         }
                     }
                 } else {
