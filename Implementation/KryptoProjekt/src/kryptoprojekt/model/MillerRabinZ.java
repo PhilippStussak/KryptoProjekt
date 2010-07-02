@@ -20,7 +20,7 @@ public class MillerRabinZ extends MillerRabinTest<Z>{
          * Erzeugt ein Miller-Rabin-Test Objekt für den PrimeType Z.
          * Erwartet eine beliebige Liste mit Basen und Zahlen die auf Primzahleigenschaft getestet werden sollen.
         */
-        MillerRabinZ(Collection<Z> bases, Collection<Z> moduls, boolean calcProp){
+        public MillerRabinZ(Collection<Z> bases, Collection<Z> moduls, boolean calcProp){
             super(bases, moduls, calcProp);
         }
 
@@ -34,7 +34,7 @@ public class MillerRabinZ extends MillerRabinTest<Z>{
                 Z twoObj = new Z(2); //um zu testen ob es eine gerade Zahl ist
                 double probability = calculateProbability(bases);
                 for (Z checkPrime : moduls){
-                    if (checkPrime.mod(twoObj).equals(zeroObj)){
+                    if (checkPrime.mod(twoObj).equals(zeroObj)&& !checkPrime.equals(twoObj)){
                         primeResult.add(new Tuple<Boolean, Double>(false, 1.0));
                         continue;
                     }
@@ -77,11 +77,14 @@ public class MillerRabinZ extends MillerRabinTest<Z>{
             if (getLowestModul().compareTo(new Z(1)) <= 0) { //prüft ob Primzahl größer 1 ist
                 throw new IllegalArgumentException("Es gibt nur Primzahlen >1");
             }
-            if (getLowestBase().compareTo(new Z(1)) < 1) {
-                throw new IllegalArgumentException("Basis 'a' zu klein. Sie muss bei Miller-Rabin sein:  1 < a < Modul");
-            }
-            else if (getHighestBase().compareTo(getHighestModul())>=0){
-                throw new IllegalArgumentException("Basis 'a' zu groß. Sie muss bei Miller-Rabin sein:  1 < a < Modul");
+
+            if (!getLowestModul().equals(new Z(2))){
+                if (getLowestBase().compareTo(new Z(1)) < 1) {
+                    throw new IllegalArgumentException("Basis 'a' zu klein. Sie muss bei Miller-Rabin sein:  1 < a < Modul");
+                }
+                if (getHighestBase().compareTo(getHighestModul())>=0){
+                    throw new IllegalArgumentException("Basis 'a' zu groß. Sie muss bei Miller-Rabin sein:  1 < a < Modul");
+                }
             }
             //Postcondition
             assert getLowestModul().compareTo(new Z(1)) >0: "checkprime isn't > 1: checkPrime = " +getLowestModul();

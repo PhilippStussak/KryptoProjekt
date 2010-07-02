@@ -33,6 +33,8 @@ import kryptoprojekt.coderFrames.HammingSyndromFrame;
 import kryptoprojekt.coderFrames.HammingWeightFrame;
 import kryptoprojekt.coderFrames.InitHammingJFrame;
 import kryptoprojekt.primeFrames.FermatFrame;
+import kryptoprojekt.primeFrames.LucasFrame;
+import kryptoprojekt.primeFrames.MillerRabinFrame;
 
 /**
  * The application's main frame.
@@ -153,8 +155,8 @@ public class KryptoProjektView extends FrameView {
         primeFieldMenuItem = new javax.swing.JMenuItem();
         primeTestMenu = new javax.swing.JMenu();
         fermatMenuItem = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        lucasMenuItem = new javax.swing.JMenuItem();
+        rabinMenuItem = new javax.swing.JMenuItem();
         coderMenu = new javax.swing.JMenu();
         jMenu11 = new javax.swing.JMenu();
         initHammingCodeMenuItem = new javax.swing.JMenuItem();
@@ -338,13 +340,23 @@ public class KryptoProjektView extends FrameView {
         });
         primeTestMenu.add(fermatMenuItem);
 
-        jMenuItem1.setText(resourceMap.getString("jMenuItem1.text")); // NOI18N
-        jMenuItem1.setName("jMenuItem1"); // NOI18N
-        primeTestMenu.add(jMenuItem1);
+        lucasMenuItem.setText(resourceMap.getString("lucasMenuItem.text")); // NOI18N
+        lucasMenuItem.setName("lucasMenuItem"); // NOI18N
+        lucasMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lucasMenuItemActionPerformed(evt);
+            }
+        });
+        primeTestMenu.add(lucasMenuItem);
 
-        jMenuItem2.setText(resourceMap.getString("jMenuItem2.text")); // NOI18N
-        jMenuItem2.setName("jMenuItem2"); // NOI18N
-        primeTestMenu.add(jMenuItem2);
+        rabinMenuItem.setText(resourceMap.getString("rabinMenuItem.text")); // NOI18N
+        rabinMenuItem.setName("rabinMenuItem"); // NOI18N
+        rabinMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rabinMenuItemActionPerformed(evt);
+            }
+        });
+        primeTestMenu.add(rabinMenuItem);
 
         mainMenuBar.add(primeTestMenu);
 
@@ -627,6 +639,19 @@ public class KryptoProjektView extends FrameView {
         kit.setVisible(true);
         desktop.add(kit);
     }//GEN-LAST:event_createErrorsMenuItemActionPerformed
+
+    private void lucasMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lucasMenuItemActionPerformed
+        Kit kit = new LucasFrame(handler);
+        kit.setVisible(true);
+        desktop.add(kit);
+    }//GEN-LAST:event_lucasMenuItemActionPerformed
+
+    private void rabinMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rabinMenuItemActionPerformed
+        Kit kit = new MillerRabinFrame(handler);
+        kit.setVisible(true);
+        desktop.add(kit);
+    }//GEN-LAST:event_rabinMenuItemActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem additionMenuItem;
     private javax.swing.JMenu basicMenu;
@@ -651,8 +676,7 @@ public class KryptoProjektView extends FrameView {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuBar jMenuBar3;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem lucasMenuItem;
     private javax.swing.JMenuBar mainMenuBar;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuItem modMenuItem;
@@ -661,6 +685,7 @@ public class KryptoProjektView extends FrameView {
     private javax.swing.JMenuItem primeFieldMenuItem;
     private javax.swing.JMenu primeTestMenu;
     private javax.swing.JProgressBar progressBar;
+    private javax.swing.JMenuItem rabinMenuItem;
     private javax.swing.JMenuItem samMenuItem;
     private javax.swing.JMenuItem sammodMenuItem;
     private javax.swing.JMenuItem startMenuItem;

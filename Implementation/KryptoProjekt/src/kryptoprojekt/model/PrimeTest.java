@@ -18,8 +18,8 @@ public interface PrimeTest<E extends KryptoType<E>> {
      * Vertrag einhalten: Rückgabewert ist ein Objekt vom Typ Tuble.
      * 1. Argument: gibt an ob es sich um eine Primzahl handelt
      * 2. Argument: gibt die Wahrscheinlichkeit an, ob es eine Primzahl ist
-     * +1 wird zurückgegeben, wenn es sich zu 100% um eine Primzahl handelt(1. Argument = true), oder zu 100% um keine Primzahl(2. Argument false)
-     * -1 wird zurückgegeben wenn keine Wahrscheinlichkeit berechnet/ausgegeben werden sollte
+     * +1 wird zurückgegeben, wenn es sich zu 100% um eine Primzahl handelt(1. Argument = true), oder zu 100% um keine Primzahl(1. Argument = false)
+     * -1 wird zurückgegeben wenn keine Wahrscheinlichkeit berechnet/ausgegeben werden soll
      * -2 wird zurückgegeben wenn es eine Primzahl sein könnte, oder wenn für diesen Primzahltest keine Wahrscheinlichkeit berechnet werden kann.
      * (bei Fermat: (true, -2), bei LucasTest: (false, -2)
      */

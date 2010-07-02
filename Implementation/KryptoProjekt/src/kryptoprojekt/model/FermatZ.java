@@ -19,9 +19,10 @@ public class FermatZ extends FermatTest<Z>{
      * Erzeugt ein Fermat-Test Objekt für den PrimeType Z.
      * Erwartet eine beliebige Liste mit Basen und Zahlen die auf Primzahleigenschaft getestet werden.
      */
-    FermatZ(Collection<Z> bases, Collection<Z> moduls, boolean calcProp){
+    public FermatZ(Collection<Z> bases, Collection<Z> moduls, boolean calcProp){
         super(bases, moduls, calcProp);
     }
+
 
     public ArrayList<Tuple<Boolean, Double>> test()
         throws IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException {
@@ -75,10 +76,13 @@ public class FermatZ extends FermatTest<Z>{
             if (getLowestBase().compareTo(new Z(1)) < 1) {
                 throw new IllegalArgumentException("Basis 'a' zu klein. Sie muss bei Fermat-Test sein:  1 < a < Modul");
             }
+            if (getHighestBase().compareTo(getHighestModul())>=0){
+                throw new IllegalArgumentException("Basis 'a' zu groß. Sie muss bei Fermat-Test sein:  1 < a < Modul");
+            }
         }
-        else if (getHighestBase().compareTo(getHighestModul())>=0){
-            throw new IllegalArgumentException("Basis 'a' zu groß. Sie muss bei Fermat-Test sein:  1 < a < Modul");
-         }
+        //else if (getHighestBase().compareTo(getHighestModul())>=0){
+          //  throw new IllegalArgumentException("Basis 'a' zu groß. Sie muss bei Fermat-Test sein:  1 < a < Modul");
+        // }
         //Postcondition
         assert getLowestModul().compareTo(new Z(1)) >0: "checkprime isn't > 1: checkPrime = " +getLowestModul();
         assert getLowestBase().compareTo(new Z(1)) >0 || getLowestModul().equals(new Z(2)): "base isn't > 1: base = " +getLowestBase();

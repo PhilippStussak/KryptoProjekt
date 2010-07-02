@@ -4,7 +4,7 @@
  */
 
 /*
- * FermatFrame.java
+ * LucasFrame.java
  *
  * Created on 29.06.2010, 17:14:20
  */
@@ -23,11 +23,13 @@ import javax.swing.JLabel;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
 import kryptoprojekt.model.Tuple;
+import kryptoprojekt.model.Triple;
 import java.util.ArrayList;
 import kryptoprojekt.model.KryptoType;
 import kryptoprojekt.model.Z;
 import kryptoprojekt.model.PrimeTest;
 import kryptoprojekt.model.FermatZ;
+import kryptoprojekt.model.Basic;
 import kryptoprojekt.controller.PrimeTestController;
 import java.lang.reflect.InvocationTargetException;
 import java.awt.event.KeyEvent;
@@ -38,15 +40,16 @@ import kryptoprojekt.controller.LogicValidator;
  *
  * @author Michael
  */
-public class FermatFrame extends Kit {
+public class LucasFrame extends Kit{
 
     private DropTextField basesTextField = getDropTextField();
     private DropTextField moduloTextField = getDropTextField();
+    private DropTextField summandTextField = getDropTextField();
     private String extension = "";
     private String outputWindow = "";
 
-    /** Creates new form FermatFrame */
-    public FermatFrame(ConnectionHandler handler) {
+    /** Creates new form LucasFrame */
+    public LucasFrame(ConnectionHandler handler) {
         super(handler);
         initComponents();
         initLogicComponents();
@@ -63,13 +66,13 @@ public class FermatFrame extends Kit {
 
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDoubleBuffered(true);
         setName("Form"); // NOI18N
 
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(kryptoprojekt.KryptoProjektApp.class).getContext().getResourceMap(FermatFrame.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(kryptoprojekt.KryptoProjektApp.class).getContext().getResourceMap(LucasFrame.class);
         jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
         jLabel1.setName("jLabel1"); // NOI18N
 
@@ -83,16 +86,8 @@ public class FermatFrame extends Kit {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 257, Short.MAX_VALUE)
+            .addGap(0, 301, Short.MAX_VALUE)
         );
-
-        jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
-        jButton1.setName("jButton1"); // NOI18N
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -102,20 +97,13 @@ public class FermatFrame extends Kit {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 258, Short.MAX_VALUE)
-                        .addComponent(jButton1)))
+                    .addComponent(jLabel1))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jButton1)))
+                .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -124,23 +112,9 @@ public class FermatFrame extends Kit {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        JInternalFrame frame = new JInternalFrame(getTitle() + "_extension", true, true, true, true);
-        frame.setLocation(getX(), getY());
-        frame.setSize(420, 340);
-        JTextArea area = new JTextArea();
-        area.setText(extension);
-        area.setVisible(true);
-        frame.add(area);
-        frame.setVisible(true);
-        getParent().add(frame);
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void initLogicComponents() {
-        jPanel1.setLayout(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
 
-/*        basesTextField.addKeyListener(new KeyListener() {
+        basesTextField.addKeyListener(new KeyListener() {
 
             public void keyTyped(KeyEvent e) {
             }
@@ -172,13 +146,33 @@ public class FermatFrame extends Kit {
                     moduloTextField.setForeground(Color.red);
                 }
             }
-        });*/
+        });
+
+        summandTextField.addKeyListener(new KeyListener() {
+
+            public void keyTyped(KeyEvent e) {
+            }
+
+            public void keyPressed(KeyEvent e) {
+            }
+
+            public void keyReleased(KeyEvent e) {
+                if (LogicValidator.isInteger(summandTextField.getText())) {
+                    summandTextField.setForeground(Color.black);
+                } else {
+                    summandTextField.setForeground(Color.red);
+                }
+            }
+        });
+
+        jPanel1.setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
 
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
         c.gridy = 0;
         JLabel l = new JLabel();
-        l.setText("Bases, splittet with ','");
+        l.setText("Factors, splittet with '*'");
         jPanel1.add(l, c);
 
         c.weightx = 0.2;
@@ -192,7 +186,7 @@ public class FermatFrame extends Kit {
         c.gridx = 0;
         c.gridy = 2;
         JLabel l2 = new JLabel();
-        l2.setText("Modul:");
+        l2.setText("Modulo:");
         jPanel1.add(l2, c);
 
         c.weightx = 0.2;
@@ -201,29 +195,64 @@ public class FermatFrame extends Kit {
         c.gridy = 3;
         jPanel1.add(moduloTextField, c);
 
-        this.setSize(200, 150);
+        c.weightx = 0.01;
+        c.fill = GridBagConstraints.BOTH;
+        c.gridx = 1;
+        c.gridy = 1;
+        jPanel1.add(new JLabel("+"), c);
+
+        c.weightx = 0.2;
+        c.fill = GridBagConstraints.BOTH;
+        c.gridx = 2;
+        c.gridy = 1;
+        jPanel1.add(summandTextField, c);
+
+        this.setSize(300, 150);
     }
 
     @Override
-    public String execute(){
-        ArrayList<KryptoType> basen = new ArrayList<KryptoType>();
-        ArrayList<KryptoType> moduls = new ArrayList<KryptoType>();
+    public String execute() {
+        //KryptoType value1, value2;
+        //PrimeTest t1 = new FermatZ(basen, primeFill, calcProp);
+        ArrayList<Z> basen = new ArrayList<Z>();
+        ArrayList<Z> factors = new ArrayList<Z>();
+        ArrayList<Z> summand = new ArrayList<Z>();
+        ArrayList<Z> powers = new ArrayList<Z>();
         ArrayList<Tuple<Boolean, Double>> result;
 
+        //ACHTUNG, ES MÜSSEN NOCH POWER EINGABEFELDER EINGERICHTET WERDEN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        //lucasPrimeFactors Triple erzeugen
+        Triple<ArrayList<Z>, ArrayList<Z>, ArrayList<Z>> primeFactors = new Triple<ArrayList<Z>, ArrayList<Z>, ArrayList<Z>>(basen, factors, powers);
+        ArrayList<Triple<ArrayList<Z>, ArrayList<Z>, ArrayList<Z>>> lucasPrimeFactors = new ArrayList<Triple<ArrayList<Z>, ArrayList<Z>, ArrayList<Z>>>();
+        lucasPrimeFactors.add(primeFactors);
+
+        //Summanden Liste erzeugen
+        Tuple<Z, Z> sum = new Tuple<Z, Z>(new Z(1), new Z(1)); //lege ich bereits so fest, bitte das Eingabefeld bei dem Summanden gleich auf 1 setzen
+        ArrayList<Tuple<Z, Z>> summands = new ArrayList<Tuple<Z, Z>>();
+        summands.add(sum);
+
+
+
         if(basesTextField.getResult() != null)
-            basen.add((KryptoType)basesTextField.getResult());
+            factors.add((Z)basesTextField.getResult());
         else
-            basen.add(new Z (basesTextField.getText()));
+            factors.add(new Z (basesTextField.getText()));
+
+        //ACHTUNG, MODUL WIRD BEI DEM LUCAS-TEST NICHT GEBRAUCHT
         if(moduloTextField.getResult() != null)
-            moduls.add((KryptoType)moduloTextField.getResult());
+            basen.add((Z)moduloTextField.getResult());
         else
-            moduls.add(new Z(moduloTextField.getText()));
+            basen.add(new Z(moduloTextField.getText()));
+        //ACHTUNG, MODUL WIRD BEI DEM LUCAS-TEST NICHT GEBRAUCHT
 
-        //Strings[] stringtest = basen.split("\\$");
 
+        if(summandTextField.getResult() != null)
+            summand.add((Z)summandTextField.getResult());
+        else
+            summand.add(new Z(summandTextField.getText()));
 
         try{
-            result = PrimeTestController.primeTestFermat(basen, moduls);
+            result = PrimeTestController.primeTestLucas(lucasPrimeFactors, summands, true);
             results.put(getTitle() + "_prime", result);
             //return "In Window " + getTitle() + ": " + basen.get(0) + " ^ "+moduls.get(0).subtract(new Z(1))+ " mod "+moduls.get(0)+ " = " + result.get(0).first();
         }catch(RuntimeException e){
@@ -237,27 +266,36 @@ public class FermatFrame extends Kit {
         }catch(InvocationTargetException e){
             return e.getMessage();
         }
+
+        Z primeValue = new Z("1");
+        int j = 0;
+        for (Z factor : factors){
+            primeValue = primeValue.multiply(Basic.squareAndMultiply(factor, powers.get(j)).first());
+            ++j;
+        }
+
         extension = "";
         outputWindow = "";
         int i = 0;
         String probability = "";
         for(Tuple<Boolean, Double> output: result){
-            if (output.second() == -2.0){
+            if (output.second() == -2.0){ //dies korrigieren, gibt es bei MillerRabin nicht. Wenn nur -1
                 probability = "n.d.";
             }else{
                 double probDouble = output.second()*100;
                 probability = String.valueOf(probDouble)+"%";
-            }            
-            extension += basen.get(i) + " ^ "+moduls.get(i).subtract(new Z(1))+ " mod "+moduls.get(i)+ " = " + output.first()+ "   probability = " +probability;
-            outputWindow += moduls.get(i) + ": "  + result.get(i).first()+ "\n";
+            }
+   
+   //DIESE AUSKOMMENTIERTEN FELDER WIEDER AKTIVIEREN. ICH WEIß NOCH NICHT WIE MAN BASEN, HIER AM BESTEN AUSGIBT. ES IST DAS PRODUKT primeVALUE was ich oben stehen habe         
+   //         extension += basen.get(i) + " ^ "+moduls.get(i).subtract(new Z(1))+ " mod "+moduls.get(i)+ " = " + output.first()+ "   probability = " +probability;
+   //         outputWindow += moduls.get(i) + ": "  + result.get(i).first()+ "\n";
             i++;
         }
         //return "In Window " + getTitle() + ": " + "\n\nPrimzahlen:\n" +moduls.get(0)+ ": "  + result.get(0).first();
-        return "In Window " + getTitle() + ": " + "\n\nPrimzahlen:\n" +outputWindow;
+   //     return "In Window " + getTitle() + ": " + basen + " + " + moduls + " = ";// + result.toString();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables

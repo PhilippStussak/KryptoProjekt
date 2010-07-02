@@ -12,7 +12,7 @@ package kryptoprojekt.model;
 import java.util.*;
 
 //Ist die Oberklasse für alle verschiedenen KryptoTypen die einen Fermat Test machen können.
-public abstract class FermatTest <E extends KryptoType<E>> implements PrimeTest<E> {
+ abstract class FermatTest <E extends KryptoType<E>> implements PrimeTest<E>{
     protected TreeSet<E> bases;
     protected TreeSet<E> moduls;
     protected boolean calcProp; //ob die Wahrscheinlichkeit berechnet werden soll
