@@ -37,10 +37,12 @@ import org.xml.sax.SAXException;
  *
  * Example to get value "translatedText3":
  * ----
- * String val = xmlReaderObject.getTagElement("exception-related","textforwhatitstandsfor1");
+ * XMLReader xml = XMLReader.getInstance(filePath);
+ * String val = xml.getTagElement("exception-related","textforwhatitstandsfor1");
  */
 public class XMLReader {
 
+    private static XMLReader instance;
     private Document doc;
 
     /**
@@ -50,7 +52,7 @@ public class XMLReader {
      * @throws SAXException If any parse errors occur
      * @throws IOException If any IO errors occur
      */
-    public XMLReader(String filePath) {
+    private XMLReader(String filePath) {
         try {
             File file = new File(filePath);
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -64,6 +66,23 @@ public class XMLReader {
         } catch (IOException ex3) {
             ex3.printStackTrace();
         }
+    }
+    /**
+     * Returns the instance of the XMLReader. If there is just no instance of XMLReader a new instance will be created,
+     * otherwise the one and only existing instance will be returned.
+     * Consequently {@code filePath} should be correct for creating the first instance, otherwise {@code filePath} will be disregarded
+     * and {@code null} will be accepted as parameter, too.
+     *
+     * @param filePath path to *.xml-language file. Can be {@code null} if XMLReader-instance was created before.
+     * @return instance of XMLReader
+     */
+    public synchronized static XMLReader getInstance(String filePath) {
+        if (instance == null) {
+            if (filePath == null || filePath.isEmpty())
+                throw new IllegalArgumentException("First instance-creation of XMLReader needs a correct path to a *.xml-language file.");
+            instance = new XMLReader(filePath);
+        }
+        return instance;
     }
 
     /**

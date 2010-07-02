@@ -32,6 +32,7 @@ import kryptoprojekt.coderFrames.HammingDistanceFrame;
 import kryptoprojekt.coderFrames.HammingSyndromFrame;
 import kryptoprojekt.coderFrames.HammingWeightFrame;
 import kryptoprojekt.coderFrames.InitHammingJFrame;
+import kryptoprojekt.controller.XMLReader;
 import kryptoprojekt.primeFrames.FermatFrame;
 
 /**
@@ -112,6 +113,38 @@ public class KryptoProjektView extends FrameView {
                 }
             }
         });
+        //Create XMLReader instance
+        XMLReader xmlReader = XMLReader.getInstance("./languageFiles/english.xml");
+        initializeControlsLanguage(xmlReader);
+    }
+
+    private void initializeControlsLanguage(XMLReader xml) {
+        startMenuItem.setText(xml.getTagElement("KryptoView", "startMenuItem"));
+        basicMenu.setText(xml.getTagElement("KryptoView", "basicMenu"));
+        basicArithmeticMenu.setText(xml.getTagElement("KryptoView", "basicArithmeticMenu"));
+        zMenuItem.setText(xml.getTagElement("KryptoView", "zMenuItem"));
+        primeFieldMenuItem.setText(xml.getTagElement("KryptoView", "primeFieldMenuItem"));
+        additionMenuItem.setText(xml.getTagElement("KryptoView", "additionMenuItem"));
+        subtractionMenuItem.setText(xml.getTagElement("KryptoView", "subtractionMenuItem"));
+        multiplicationMenuItem.setText(xml.getTagElement("KryptoView", "multiplicationMenuItem"));
+        divisionMenuItem.setText(xml.getTagElement("KryptoView", "divisionMenuItem"));
+        modMenuItem.setText(xml.getTagElement("KryptoView", "modMenuItem"));
+        samMenuItem.setText(xml.getTagElement("KryptoView", "samMenuItem"));
+        sammodMenuItem.setText(xml.getTagElement("KryptoView", "sammodMenuItem"));
+        gcdMenuItem.setText(xml.getTagElement("KryptoView", "gcdMenuItem"));
+        phiMenuItem.setText(xml.getTagElement("KryptoView", "phiMenuItem"));
+        primeTestMenu.setText(xml.getTagElement("KryptoView", "primeTestMenu"));
+        fermatMenuItem.setText(xml.getTagElement("KryptoView", "fermatMenuItem"));
+        lucasMenuItem.setText(xml.getTagElement("KryptoView", "lucasMenuItem"));
+        coderMenu.setText(xml.getTagElement("KryptoView", "coderMenu"));
+        hammingMenu.setText(xml.getTagElement("KryptoView", "hammingMenu"));
+        initHammingCodeMenuItem.setText(xml.getTagElement("KryptoView", "initHammingCodeMenuItem"));
+        encodeMenuItem.setText(xml.getTagElement("KryptoView", "encodeMenuItem"));
+        syndromMenuItem.setText(xml.getTagElement("KryptoView", "syndromMenuItem"));
+        decodeMenuItem.setText(xml.getTagElement("KryptoView", "decodeMenuItem"));
+        createErrorsMenuItem.setText(xml.getTagElement("KryptoView", "createErrorsMenuItem"));
+        hammingDistanceMenuItem.setText(xml.getTagElement("KryptoView", "hammingDistanceMenuItem"));
+        vectorWeightMenuItem.setText(xml.getTagElement("KryptoView", "vectorWeightMenuItem"));
     }
 
     @Action
@@ -139,7 +172,7 @@ public class KryptoProjektView extends FrameView {
         startMenuItem = new javax.swing.JMenuItem();
         javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
         basicMenu = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
+        basicArithmeticMenu = new javax.swing.JMenu();
         additionMenuItem = new javax.swing.JMenuItem();
         subtractionMenuItem = new javax.swing.JMenuItem();
         multiplicationMenuItem = new javax.swing.JMenuItem();
@@ -153,10 +186,10 @@ public class KryptoProjektView extends FrameView {
         primeFieldMenuItem = new javax.swing.JMenuItem();
         primeTestMenu = new javax.swing.JMenu();
         fermatMenuItem = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        lucasMenuItem = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         coderMenu = new javax.swing.JMenu();
-        jMenu11 = new javax.swing.JMenu();
+        hammingMenu = new javax.swing.JMenu();
         initHammingCodeMenuItem = new javax.swing.JMenuItem();
         encodeMenuItem = new javax.swing.JMenuItem();
         syndromMenuItem = new javax.swing.JMenuItem();
@@ -192,7 +225,7 @@ public class KryptoProjektView extends FrameView {
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 249, Short.MAX_VALUE)
+            .addGap(0, 254, Short.MAX_VALUE)
         );
 
         mainMenuBar.setName("mainMenuBar"); // NOI18N
@@ -220,8 +253,8 @@ public class KryptoProjektView extends FrameView {
         basicMenu.setText(resourceMap.getString("basicMenu.text")); // NOI18N
         basicMenu.setName("basicMenu"); // NOI18N
 
-        jMenu2.setText(resourceMap.getString("jMenu2.text")); // NOI18N
-        jMenu2.setName("jMenu2"); // NOI18N
+        basicArithmeticMenu.setText(resourceMap.getString("basicArithmeticMenu.text")); // NOI18N
+        basicArithmeticMenu.setName("basicArithmeticMenu"); // NOI18N
 
         additionMenuItem.setText(resourceMap.getString("additionMenuItem.text")); // NOI18N
         additionMenuItem.setName("additionMenuItem"); // NOI18N
@@ -230,7 +263,7 @@ public class KryptoProjektView extends FrameView {
                 additionMenuItemActionPerformed(evt);
             }
         });
-        jMenu2.add(additionMenuItem);
+        basicArithmeticMenu.add(additionMenuItem);
 
         subtractionMenuItem.setText(resourceMap.getString("subtractionMenuItem.text")); // NOI18N
         subtractionMenuItem.setName("subtractionMenuItem"); // NOI18N
@@ -239,7 +272,7 @@ public class KryptoProjektView extends FrameView {
                 subtractionMenuItemActionPerformed(evt);
             }
         });
-        jMenu2.add(subtractionMenuItem);
+        basicArithmeticMenu.add(subtractionMenuItem);
 
         multiplicationMenuItem.setText(resourceMap.getString("multiplicationMenuItem.text")); // NOI18N
         multiplicationMenuItem.setName("multiplicationMenuItem"); // NOI18N
@@ -248,7 +281,7 @@ public class KryptoProjektView extends FrameView {
                 multiplicationMenuItemActionPerformed(evt);
             }
         });
-        jMenu2.add(multiplicationMenuItem);
+        basicArithmeticMenu.add(multiplicationMenuItem);
 
         divisionMenuItem.setText(resourceMap.getString("divisionMenuItem.text")); // NOI18N
         divisionMenuItem.setName("divisionMenuItem"); // NOI18N
@@ -257,7 +290,7 @@ public class KryptoProjektView extends FrameView {
                 divisionMenuItemActionPerformed(evt);
             }
         });
-        jMenu2.add(divisionMenuItem);
+        basicArithmeticMenu.add(divisionMenuItem);
 
         modMenuItem.setText(resourceMap.getString("modMenuItem.text")); // NOI18N
         modMenuItem.setName("modMenuItem"); // NOI18N
@@ -266,7 +299,7 @@ public class KryptoProjektView extends FrameView {
                 modMenuItemActionPerformed(evt);
             }
         });
-        jMenu2.add(modMenuItem);
+        basicArithmeticMenu.add(modMenuItem);
 
         samMenuItem.setText(resourceMap.getString("samMenuItem.text")); // NOI18N
         samMenuItem.setName("samMenuItem"); // NOI18N
@@ -275,7 +308,7 @@ public class KryptoProjektView extends FrameView {
                 samMenuItemActionPerformed(evt);
             }
         });
-        jMenu2.add(samMenuItem);
+        basicArithmeticMenu.add(samMenuItem);
 
         sammodMenuItem.setText(resourceMap.getString("sammodMenuItem.text")); // NOI18N
         sammodMenuItem.setName("sammodMenuItem"); // NOI18N
@@ -284,7 +317,7 @@ public class KryptoProjektView extends FrameView {
                 sammodMenuItemActionPerformed(evt);
             }
         });
-        jMenu2.add(sammodMenuItem);
+        basicArithmeticMenu.add(sammodMenuItem);
 
         gcdMenuItem.setText(resourceMap.getString("gcdMenuItem.text")); // NOI18N
         gcdMenuItem.setName("gcdMenuItem"); // NOI18N
@@ -293,7 +326,7 @@ public class KryptoProjektView extends FrameView {
                 gcdMenuItemActionPerformed(evt);
             }
         });
-        jMenu2.add(gcdMenuItem);
+        basicArithmeticMenu.add(gcdMenuItem);
 
         phiMenuItem.setText(resourceMap.getString("phiMenuItem.text")); // NOI18N
         phiMenuItem.setName("phiMenuItem"); // NOI18N
@@ -302,9 +335,9 @@ public class KryptoProjektView extends FrameView {
                 phiMenuItemActionPerformed(evt);
             }
         });
-        jMenu2.add(phiMenuItem);
+        basicArithmeticMenu.add(phiMenuItem);
 
-        basicMenu.add(jMenu2);
+        basicMenu.add(basicArithmeticMenu);
 
         zMenuItem.setText(resourceMap.getString("zMenuItem.text")); // NOI18N
         zMenuItem.setName("zMenuItem"); // NOI18N
@@ -338,9 +371,9 @@ public class KryptoProjektView extends FrameView {
         });
         primeTestMenu.add(fermatMenuItem);
 
-        jMenuItem1.setText(resourceMap.getString("jMenuItem1.text")); // NOI18N
-        jMenuItem1.setName("jMenuItem1"); // NOI18N
-        primeTestMenu.add(jMenuItem1);
+        lucasMenuItem.setText(resourceMap.getString("lucasMenuItem.text")); // NOI18N
+        lucasMenuItem.setName("lucasMenuItem"); // NOI18N
+        primeTestMenu.add(lucasMenuItem);
 
         jMenuItem2.setText(resourceMap.getString("jMenuItem2.text")); // NOI18N
         jMenuItem2.setName("jMenuItem2"); // NOI18N
@@ -351,8 +384,8 @@ public class KryptoProjektView extends FrameView {
         coderMenu.setText(resourceMap.getString("coderMenu.text")); // NOI18N
         coderMenu.setName("coderMenu"); // NOI18N
 
-        jMenu11.setText(resourceMap.getString("jMenu11.text")); // NOI18N
-        jMenu11.setName("jMenu11"); // NOI18N
+        hammingMenu.setText(resourceMap.getString("hammingMenu.text")); // NOI18N
+        hammingMenu.setName("hammingMenu"); // NOI18N
 
         initHammingCodeMenuItem.setText(resourceMap.getString("initHammingCodeMenuItem.text")); // NOI18N
         initHammingCodeMenuItem.setName("initHammingCodeMenuItem"); // NOI18N
@@ -361,7 +394,7 @@ public class KryptoProjektView extends FrameView {
                 initHammingCodeMenuItemActionPerformed(evt);
             }
         });
-        jMenu11.add(initHammingCodeMenuItem);
+        hammingMenu.add(initHammingCodeMenuItem);
 
         encodeMenuItem.setText(resourceMap.getString("encodeMenuItem.text")); // NOI18N
         encodeMenuItem.setName("encodeMenuItem"); // NOI18N
@@ -370,7 +403,7 @@ public class KryptoProjektView extends FrameView {
                 encodeMenuItemActionPerformed(evt);
             }
         });
-        jMenu11.add(encodeMenuItem);
+        hammingMenu.add(encodeMenuItem);
 
         syndromMenuItem.setText(resourceMap.getString("syndromMenuItem.text")); // NOI18N
         syndromMenuItem.setName("syndromMenuItem"); // NOI18N
@@ -379,7 +412,7 @@ public class KryptoProjektView extends FrameView {
                 syndromMenuItemActionPerformed(evt);
             }
         });
-        jMenu11.add(syndromMenuItem);
+        hammingMenu.add(syndromMenuItem);
 
         decodeMenuItem.setText(resourceMap.getString("decodeMenuItem.text")); // NOI18N
         decodeMenuItem.setName("decodeMenuItem"); // NOI18N
@@ -388,7 +421,7 @@ public class KryptoProjektView extends FrameView {
                 decodeMenuItemActionPerformed(evt);
             }
         });
-        jMenu11.add(decodeMenuItem);
+        hammingMenu.add(decodeMenuItem);
 
         createErrorsMenuItem.setText(resourceMap.getString("createErrorsMenuItem.text")); // NOI18N
         createErrorsMenuItem.setName("createErrorsMenuItem"); // NOI18N
@@ -397,7 +430,7 @@ public class KryptoProjektView extends FrameView {
                 createErrorsMenuItemActionPerformed(evt);
             }
         });
-        jMenu11.add(createErrorsMenuItem);
+        hammingMenu.add(createErrorsMenuItem);
 
         hammingDistanceMenuItem.setText(resourceMap.getString("hammingDistanceMenuItem.text")); // NOI18N
         hammingDistanceMenuItem.setName("hammingDistanceMenuItem"); // NOI18N
@@ -406,7 +439,7 @@ public class KryptoProjektView extends FrameView {
                 hammingDistanceMenuItemActionPerformed(evt);
             }
         });
-        jMenu11.add(hammingDistanceMenuItem);
+        hammingMenu.add(hammingDistanceMenuItem);
 
         vectorWeightMenuItem.setText(resourceMap.getString("vectorWeightMenuItem.text")); // NOI18N
         vectorWeightMenuItem.setName("vectorWeightMenuItem"); // NOI18N
@@ -415,9 +448,9 @@ public class KryptoProjektView extends FrameView {
                 vectorWeightMenuItemActionPerformed(evt);
             }
         });
-        jMenu11.add(vectorWeightMenuItem);
+        hammingMenu.add(vectorWeightMenuItem);
 
-        coderMenu.add(jMenu11);
+        coderMenu.add(hammingMenu);
 
         mainMenuBar.add(coderMenu);
 
@@ -629,6 +662,7 @@ public class KryptoProjektView extends FrameView {
     }//GEN-LAST:event_createErrorsMenuItemActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem additionMenuItem;
+    private javax.swing.JMenu basicArithmeticMenu;
     private javax.swing.JMenu basicMenu;
     private javax.swing.JMenu coderMenu;
     private javax.swing.JMenuItem createErrorsMenuItem;
@@ -638,10 +672,9 @@ public class KryptoProjektView extends FrameView {
     private javax.swing.JMenuItem fermatMenuItem;
     private javax.swing.JMenuItem gcdMenuItem;
     private javax.swing.JMenuItem hammingDistanceMenuItem;
+    private javax.swing.JMenu hammingMenu;
     private javax.swing.JMenuItem initHammingCodeMenuItem;
     private javax.swing.JMenu jMenu10;
-    private javax.swing.JMenu jMenu11;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
@@ -651,8 +684,8 @@ public class KryptoProjektView extends FrameView {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuBar jMenuBar3;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem lucasMenuItem;
     private javax.swing.JMenuBar mainMenuBar;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuItem modMenuItem;
