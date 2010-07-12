@@ -19,6 +19,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import kryptoprojekt.controller.XMLReader;
 
 /**
  *
@@ -31,6 +32,7 @@ public class Kit extends JInternalFrame {
     protected HashMap<String, Object> results;
     protected LinkedList<Kit> parents, children;
     private static Thread refresher;
+    protected static XMLReader xmlReader = XMLReader.getInstance("./languageFiles/english.xml");
 
     public Kit(ConnectionHandler handler) {
         super("#" + id++, false, true, false, false);

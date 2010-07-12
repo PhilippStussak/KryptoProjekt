@@ -115,9 +115,7 @@ public class KryptoProjektView extends FrameView {
                 }
             }
         });
-        //Create XMLReader instance
-        XMLReader xmlReader = XMLReader.getInstance("./languageFiles/english.xml");
-        initializeControlsLanguage(xmlReader);
+        initializeControlsLanguage(Kit.xmlReader);
     }
 
     private void initializeControlsLanguage(XMLReader xml) {
