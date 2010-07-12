@@ -14,6 +14,7 @@ package kryptoprojekt.primeFrames;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Color;
+import java.awt.Insets;
 import java.util.LinkedList;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
@@ -123,7 +124,7 @@ public class LucasFrame extends Kit{
             }
 
             public void keyReleased(KeyEvent e) {
-                if (LogicValidator.isInteger(basesTextField.getText())) {
+                if (LogicValidator.isTermMultiplication(basesTextField.getText())) {
                     basesTextField.setForeground(Color.black);
                 } else {
                     basesTextField.setForeground(Color.red);
@@ -175,13 +176,16 @@ public class LucasFrame extends Kit{
         l.setText("Factors, splittet with '*'");
         jPanel1.add(l, c);
 
-        c.weightx = 0.2;
+        c = new GridBagConstraints();
+        c.weightx = 0.6;
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
         c.gridy = 1;
+        c.gridwidth = 2;
         jPanel1.add(basesTextField, c);
 
-        c.weightx = 0.4;
+        c = new GridBagConstraints();
+        //c.weightx = 0.4;
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
         c.gridy = 2;
@@ -189,21 +193,25 @@ public class LucasFrame extends Kit{
         l2.setText("Modulo:");
         jPanel1.add(l2, c);
 
+        c = new GridBagConstraints();
         c.weightx = 0.2;
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
         c.gridy = 3;
         jPanel1.add(moduloTextField, c);
 
-        c.weightx = 0.01;
-        c.fill = GridBagConstraints.BOTH;
-        c.gridx = 1;
-        c.gridy = 1;
-        jPanel1.add(new JLabel("+"), c);
-
-        c.weightx = 0.2;
+        c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 2;
+        c.gridy = 1;
+        c.anchor = GridBagConstraints.CENTER;
+        c.insets = new Insets(1,2,1,2);
+        jPanel1.add(new JLabel("+"), c);
+
+        c = new GridBagConstraints();
+        c.weightx = 0.4;
+        c.fill = GridBagConstraints.BOTH;
+        c.gridx = 3;
         c.gridy = 1;
         jPanel1.add(summandTextField, c);
 

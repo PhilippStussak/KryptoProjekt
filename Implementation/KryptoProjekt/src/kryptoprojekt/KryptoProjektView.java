@@ -188,6 +188,7 @@ public class KryptoProjektView extends FrameView {
         primeFieldMenuItem = new javax.swing.JMenuItem();
         primeTestMenu = new javax.swing.JMenu();
         fermatMenuItem = new javax.swing.JMenuItem();
+        lucasMenuItem = new javax.swing.JMenuItem();
         rabinMenuItem = new javax.swing.JMenuItem();
         coderMenu = new javax.swing.JMenu();
         hammingMenu = new javax.swing.JMenu();
@@ -226,7 +227,7 @@ public class KryptoProjektView extends FrameView {
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 254, Short.MAX_VALUE)
+            .addGap(0, 249, Short.MAX_VALUE)
         );
 
         mainMenuBar.setName("mainMenuBar"); // NOI18N
@@ -362,6 +363,11 @@ public class KryptoProjektView extends FrameView {
 
         primeTestMenu.setText(resourceMap.getString("primeTestMenu.text")); // NOI18N
         primeTestMenu.setName("primeTestMenu"); // NOI18N
+        primeTestMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                primeTestMenuActionPerformed(evt);
+            }
+        });
 
         fermatMenuItem.setText(resourceMap.getString("fermatMenuItem.text")); // NOI18N
         fermatMenuItem.setName("fermatMenuItem"); // NOI18N
@@ -371,6 +377,15 @@ public class KryptoProjektView extends FrameView {
             }
         });
         primeTestMenu.add(fermatMenuItem);
+
+        lucasMenuItem.setText(resourceMap.getString("lucasMenuItem.text")); // NOI18N
+        lucasMenuItem.setName("lucasMenuItem"); // NOI18N
+        lucasMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lucasMenuItemActionPerformed(evt);
+            }
+        });
+        primeTestMenu.add(lucasMenuItem);
 
         rabinMenuItem.setText(resourceMap.getString("rabinMenuItem.text")); // NOI18N
         rabinMenuItem.setName("rabinMenuItem"); // NOI18N
@@ -669,6 +684,16 @@ public class KryptoProjektView extends FrameView {
         desktop.add(kit);
     }//GEN-LAST:event_rabinMenuItemActionPerformed
 
+    private void primeTestMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_primeTestMenuActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_primeTestMenuActionPerformed
+
+    private void lucasMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lucasMenuItemActionPerformed
+        Kit kit = new LucasFrame(handler);
+        kit.setVisible(true);
+        desktop.add(kit);
+    }//GEN-LAST:event_lucasMenuItemActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem additionMenuItem;
     private javax.swing.JMenu basicArithmeticMenu;
@@ -693,6 +718,7 @@ public class KryptoProjektView extends FrameView {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuBar jMenuBar3;
+    private javax.swing.JMenuItem lucasMenuItem;
     private javax.swing.JMenuBar mainMenuBar;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuItem modMenuItem;

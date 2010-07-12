@@ -34,10 +34,15 @@ public class MillerRabinZ extends MillerRabinTest<Z>{
                 Z twoObj = new Z(2); //um zu testen ob es eine gerade Zahl ist
                 double probability = calculateProbability(bases);
                 for (Z checkPrime : moduls){
+                    /*ACHTUNG
+                     * Sollte ich vielleicht wegen machen dieses "if", da ja der MillerRabin-Test Algorithmus feststellen
+                     * soll, dass es keine Primzahl ist und nicht durch solche Aktionen.
+                     */
                     if (checkPrime.mod(twoObj).equals(zeroObj)&& !checkPrime.equals(twoObj)){
                         primeResult.add(new Tuple<Boolean, Double>(false, 1.0));
                         continue;
                     }
+                    //Ende if, welche ich vielleicht entfernen möchte
                     boolean isPrime = millerRabinCheck(checkPrime);
                     if (isPrime){
                         if (calcProp) {
@@ -121,7 +126,7 @@ public class MillerRabinZ extends MillerRabinTest<Z>{
                     int potenzK = 1; //ist der 'k' Exponent
                     for (Z twoFactor = twoObj; twoFactor.compareTo(maxPower) <= 0; twoFactor=twoFactor.multiply(twoObj)){
                         assert potenzK <= maxPower.intValue(): "Too many Iterations. assertZaehler: "+potenzK+ ", maxPower: " +maxPower ;
-                        if (Basic.squareAndMultiply(newBase, twoFactor, checkPrime).equals(new Z(checkPrime.subtract(oneObj).toString()))){ //Wenn n-1 rauskommt, handelt es sich um eine Primzahl                            
+                        if (Basic.squareAndMultiply(newBase, twoFactor, checkPrime).first().equals(new Z(checkPrime.subtract(oneObj).toString()))){ //Wenn n-1 rauskommt, handelt es sich um eine Primzahl
                             continue nextBase;
                         }
                         ++potenzK;
