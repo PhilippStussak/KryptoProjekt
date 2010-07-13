@@ -141,7 +141,7 @@ public class LucasFrame extends Kit{
             }
 
             public void keyReleased(KeyEvent e) {
-                if (LogicValidator.isInteger(moduloTextField.getText())) {
+                if (LogicValidator.isPosInteger(moduloTextField.getText())) {
                     moduloTextField.setForeground(Color.black);
                 } else {
                     moduloTextField.setForeground(Color.red);

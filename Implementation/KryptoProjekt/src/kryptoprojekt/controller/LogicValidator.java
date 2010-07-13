@@ -17,9 +17,8 @@ public class LogicValidator {
     private static String intString = "([-+]?[1-9][0-9]*)|0";
     private static String binaryString = "[01]+";
     private static String posintString = "([1-9][0-9]*)|0";
-    private static String termMultiString = "(([0]|((?!0)[1-9]{1}([0-9]{0,}+)))[\\^|\\*]?)*+";
-                                          //"(([0]|((?!0)[1-9]{1}((?!0)[0-9]{0,}+)))[\\^|\\*]?)*+"
-
+    private static String termMultiString = "((([1-9][0-9]*|[0])[\\^])?([1-9][0-9]*|[0])[\\s]*[\\*][\\s]*)*(([1-9][0-9]*|[0])[\\^])?([1-9][0-9]*|[\\s]*[0][\\s]*)";
+    
     private LogicValidator() {
     }
 
