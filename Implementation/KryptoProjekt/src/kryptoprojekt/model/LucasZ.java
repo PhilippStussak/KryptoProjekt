@@ -27,6 +27,9 @@ public class LucasZ extends LucasTest<Z>{
         super(primeFactorsCollection, summandCollection, calcProp);
     }
 
+    public ArrayList<Triple<Boolean, Double, LinkedList<String>>> test2(){
+        return null;
+    }
 
     //gibt zurück ob es sich um eine Primzahl handelt und mit welcher Wahrscheinlichkeit
     public ArrayList<Tuple<Boolean, Double>> test()
@@ -49,7 +52,7 @@ public class LucasZ extends LucasTest<Z>{
                 for (int i = 0; i<factorLines; i++){
                     prime = new ArrayList();
                     prime.add(calculatePrime(listTuplesPrimeFactors.get(i), summands.get(i)));
-                    if (new FermatZ(checkBases.get(i), prime, false).test().get(0).first()){
+                    if (new FermatZ(checkBases.get(i), prime, false).test2().get(0).first()){
                         boolean isPrime = lucasCheck(checkBases.get(i), getPrimeFactors(listTuplesPrimeFactors.get(i)), prime.get(0));
                         if(isPrime){
                             if (calcProp){
@@ -65,7 +68,7 @@ public class LucasZ extends LucasTest<Z>{
                         }
                     }else{
                         //Postcondition
-                        assert checkPrimeArgAnswer == true && new FermatZ(checkBases.get(i), prime, false).test().get(0).first() == false: "checkPrimeArgAnswer or Fermat-Test have a false state: checkPrimeArgAnswer = " +checkPrimeArgAnswer+ ", Fermat-Test = " +new FermatZ(checkBases.get(i), prime, false).test().get(0).first();
+                        assert checkPrimeArgAnswer == true && new FermatZ(checkBases.get(i), prime, false).test2().get(0).first() == false: "checkPrimeArgAnswer or Fermat-Test have a false state: checkPrimeArgAnswer = " +checkPrimeArgAnswer+ ", Fermat-Test = " +new FermatZ(checkBases.get(i), prime, false).test2().get(0).first();
                         primeResult.add(new Tuple<Boolean, Double>(false, 1.0));
                         continue;
                     }

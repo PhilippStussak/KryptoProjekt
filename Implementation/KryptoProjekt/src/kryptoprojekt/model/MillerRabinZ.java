@@ -24,6 +24,10 @@ public class MillerRabinZ extends MillerRabinTest<Z>{
             super(bases, moduls, calcProp);
         }
 
+        public ArrayList<Triple<Boolean, Double, LinkedList<String>>> test2(){
+            return null;
+        }
+
         public ArrayList<Tuple<Boolean, Double>> test()
                 throws IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException {
             boolean checkPrimeArgAnswer = checkPrimeArguments();

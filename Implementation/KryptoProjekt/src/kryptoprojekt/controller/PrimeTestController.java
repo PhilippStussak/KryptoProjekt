@@ -30,7 +30,7 @@ public class PrimeTestController {
 
 
     //Fermat Test
-    public static ArrayList<Tuple<Boolean, Double>> primeTestFermat(ArrayList<KryptoType> bases, ArrayList<KryptoType> moduls) throws RuntimeException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException{
+    public static ArrayList<Triple<Boolean, Double, LinkedList<String>>> primeTestFermat(ArrayList<KryptoType> bases, ArrayList<KryptoType> moduls) throws RuntimeException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException{
         if (bases.get(0).getClass().equals(Z.class) && (bases.get(0).getClass().equals(Z.class))){
             ArrayList<Z> basesZ = new ArrayList<Z>();
             ArrayList<Z> modulsZ = new ArrayList<Z>();
@@ -50,11 +50,11 @@ public class PrimeTestController {
         }
     }
 
-    public static ArrayList<Tuple<Boolean, Double>> fermatZPrimeTest(FermatZ fermatZArguments) throws RuntimeException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException{
-        return fermatZArguments.test();
+    public static ArrayList<Triple<Boolean, Double, LinkedList<String>>> fermatZPrimeTest(FermatZ fermatZArguments) throws RuntimeException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException{
+        return fermatZArguments.test2();
     }
 
-    public static ArrayList<Tuple<Boolean, Double>> fermatPolynomTest(FermatZ fermatZArguments) throws RuntimeException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException{
+    public static ArrayList<Triple<Boolean, Double, LinkedList<String>>> fermatPolynomTest(FermatZ fermatZArguments) throws RuntimeException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException{
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

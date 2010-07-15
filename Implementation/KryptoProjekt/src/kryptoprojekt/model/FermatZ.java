@@ -24,6 +24,40 @@ public class FermatZ extends FermatTest<Z>{
     }
 
 
+    public ArrayList<Triple<Boolean, Double, LinkedList<String>>> test2()
+        throws IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException {
+        boolean checkPrimeArgAnswer = checkPrimeArguments();
+        ArrayList<Triple<Boolean, Double, LinkedList<String>>> primeResult = new ArrayList<Triple<Boolean, Double, LinkedList<String>>>();
+        if (checkPrimeArgAnswer) {
+            double probability = calculateProbability();
+            for (Z checkPrime : moduls){
+                boolean isPrime = fermatCheck(checkPrime);
+                    if (isPrime){
+                        if (calcProp) {
+                            //Postcondition
+                            assert checkPrimeArgAnswer == true && isPrime == true && calcProp == true: "checkPrimeArgAnswer or isPrime have a false state: checkPrimeArgAnswer = " +checkPrimeArgAnswer+ ", isPrime = " +isPrime;
+                            primeResult.add(new Triple<Boolean, Double, LinkedList<String>>(isPrime, probability, intermediateValues));
+                            continue;
+                        } else{
+                            assert checkPrimeArgAnswer == true && isPrime == true && calcProp == false: "checkPrimeArgAnswer or isPrime have a false state: checkPrimeArgAnswer = " +checkPrimeArgAnswer+ ", isPrime = " +isPrime;
+                            primeResult.add(new Triple<Boolean, Double, LinkedList<String>>(isPrime, -1.0, intermediateValues)); //es sollte keine Wahrscheinlichkeit berechnet werden
+                            continue;
+                        }
+                    } else{
+                        //Postcondition
+                        assert checkPrimeArgAnswer == true && isPrime == false: "checkPrimeArgAnswer or isPrime have a false state: checkPrimeArgAnswer = " +checkPrimeArgAnswer+ ", isPrime = " +isPrime;
+                        primeResult.add(new Triple<Boolean, Double, LinkedList<String>>(false, 1.0, intermediateValues));
+                        continue;
+                    }
+            }
+            return primeResult;
+        }
+        //Postcondition
+        assert false: "This line should never be reached! checkPrimeArgAnswer = " +checkPrimeArgAnswer;
+        return null;
+    }
+
+    /*
     public ArrayList<Tuple<Boolean, Double>> test()
         throws IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException {
         boolean checkPrimeArgAnswer = checkPrimeArguments();
@@ -55,7 +89,7 @@ public class FermatZ extends FermatTest<Z>{
         //Postcondition
         assert false: "This line should never be reached! checkPrimeArgAnswer = " +checkPrimeArgAnswer;
         return null;
-    }
+    }*/
 
 
     //muss noch überarbeitet werden. Soll so sein wie bei Lucas Test
@@ -92,12 +126,16 @@ public class FermatZ extends FermatTest<Z>{
     private boolean fermatCheck(Z checkPrime)
             throws IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException {
         boolean isPrime = false;
+        intermediateValues = new LinkedList<String>();
 
         Z oneObj = new Z(1); //Die neue Instanz wir mit 1 initialisiert, das ist der Wert der vom Exponenten dann subtrahiert wird
+        Z result;
         int assertPostCondCounter = 0;
         for (Z base : bases) {
             ++assertPostCondCounter;
-            isPrime = Basic.squareAndMultiply(base, checkPrime.subtract(oneObj), checkPrime).first().isONE();
+            result = Basic.squareAndMultiply(base, checkPrime.subtract(oneObj), checkPrime).first();
+            isPrime = result.isONE();
+            intermediateValues.add(base+ "^" +checkPrime.subtract(oneObj)+ " = " +result);
             if (!isPrime) {
                 //Postcondition
                 assert isPrime == false: "isPrime has a false state: isPrime = " +isPrime;

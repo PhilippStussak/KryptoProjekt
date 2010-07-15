@@ -15,6 +15,7 @@ import java.util.*;
  abstract class FermatTest <E extends KryptoType<E>> implements PrimeTest<E>{
     protected TreeSet<E> bases;
     protected TreeSet<E> moduls;
+    protected LinkedList<String> intermediateValues;
     protected boolean calcProp; //ob die Wahrscheinlichkeit berechnet werden soll
     protected static final double probabilityValue = -2; //Wahrscheinlichkeit kann bei Fermat Tests nicht berechnet werden
 

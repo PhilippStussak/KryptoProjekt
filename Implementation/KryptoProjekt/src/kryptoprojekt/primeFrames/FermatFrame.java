@@ -14,12 +14,19 @@ package kryptoprojekt.primeFrames;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.util.LinkedList;
+import javax.swing.JTextPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JLabel;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.StyledDocument;
+import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
 import kryptoprojekt.model.Tuple;
@@ -28,6 +35,7 @@ import kryptoprojekt.model.KryptoType;
 import kryptoprojekt.model.Z;
 import kryptoprojekt.model.PrimeTest;
 import kryptoprojekt.model.FermatZ;
+import kryptoprojekt.model.Triple;
 import kryptoprojekt.controller.PrimeTestController;
 import java.lang.reflect.InvocationTargetException;
 import java.awt.event.KeyEvent;
@@ -42,8 +50,11 @@ public class FermatFrame extends Kit {
 
     private DropTextField basesTextField = getDropTextField();
     private DropTextField moduloTextField = getDropTextField();
-    private String extension = "";
-    private String outputWindow = "";
+    private LinkedList<String> extendList;
+    private LinkedList<LinkedList<String>> extension;
+    private StringBuilder outputWindow;
+    private StyledDocument doc;
+    Font fontSettings;
 
     /** Creates new form FermatFrame */
     public FermatFrame(ConnectionHandler handler) {
@@ -127,20 +138,49 @@ public class FermatFrame extends Kit {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         JInternalFrame frame = new JInternalFrame(getTitle() + "_extension", true, true, true, true);
         frame.setLocation(getX(), getY());
-        frame.setSize(420, 340);
-        JTextArea area = new JTextArea();
-        area.setText(extension);
-        area.setVisible(true);
-        frame.add(area);
+        frame.setSize(400, 340);
+
+        JTextPane fermatPane = new JTextPane(){
+            @Override
+            public boolean getScrollableTracksViewportWidth(){
+                return false;
+            }
+        };
+        fermatPane.setEditable(false);
+        doc = fermatPane.getStyledDocument();
+        Style defaultStyle = doc.getStyle("default");
+        Style intermediateHeadStyle = doc.addStyle("outputHead", defaultStyle);
+        StyleConstants.setFontSize(intermediateHeadStyle, StyleConstants.getFontSize(intermediateHeadStyle)+1);
+        StyleConstants.setBold(intermediateHeadStyle, true);
+        for (LinkedList<String> linkedStringList : extension){
+            append(linkedStringList.pollFirst()+ "\n", intermediateHeadStyle.getName());
+            for (String intermediateValues : linkedStringList){
+                    append(intermediateValues+ "\n", defaultStyle.getName());
+            }
+            append("\n", defaultStyle.getName());
+        }
+        fermatPane.setVisible(true);
+        JScrollPane scrollPane = new JScrollPane(fermatPane, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.getViewport().setBackground(Color.white);
+        frame.add(scrollPane);
         frame.setVisible(true);
         getParent().add(frame);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void append(String text, String styleName){
+        try{
+            doc.insertString(doc.getLength(), text, doc.getStyle(styleName));
+        } catch (BadLocationException e) {
+            //System.err.println("get Message Ausgabe: Fehler in der Start.java: " +e.getMessage());
+            e.printStackTrace();
+        }
+    }
 
     private void initLogicComponents() {
         jPanel1.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
-/*        basesTextField.addKeyListener(new KeyListener() {
+        basesTextField.addKeyListener(new KeyListener() {
 
             public void keyTyped(KeyEvent e) {
             }
@@ -172,7 +212,7 @@ public class FermatFrame extends Kit {
                     moduloTextField.setForeground(Color.red);
                 }
             }
-        });*/
+        });
 
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
@@ -201,14 +241,21 @@ public class FermatFrame extends Kit {
         c.gridy = 3;
         jPanel1.add(moduloTextField, c);
 
-        this.setSize(200, 150);
+        c.weightx = 1;
+        c.fill = GridBagConstraints.BOTH;
+        c.gridwidth = 3;
+        c.gridx = 0;
+        c.gridy = 4;
+        jPanel1.add(getDragList(new Object[]{getTitle() + "_primeFermat"}), c);
+
+        this.setSize(250, 170);
     }
 
     @Override
     public String execute(){
         ArrayList<KryptoType> basen = new ArrayList<KryptoType>();
         ArrayList<KryptoType> moduls = new ArrayList<KryptoType>();
-        ArrayList<Tuple<Boolean, Double>> result;
+        ArrayList<Triple<Boolean, Double, LinkedList<String>>> result;
 
         if(basesTextField.getResult() != null)
             basen.add((KryptoType)basesTextField.getResult());
@@ -221,11 +268,8 @@ public class FermatFrame extends Kit {
 
         //Strings[] stringtest = basen.split("\\$");
 
-
         try{
             result = PrimeTestController.primeTestFermat(basen, moduls);
-            results.put(getTitle() + "_prime", result);
-            //return "In Window " + getTitle() + ": " + basen.get(0) + " ^ "+moduls.get(0).subtract(new Z(1))+ " mod "+moduls.get(0)+ " = " + result.get(0).first();
         }catch(RuntimeException e){
             return e.getMessage();
         }catch(NoSuchMethodException e){
@@ -237,23 +281,29 @@ public class FermatFrame extends Kit {
         }catch(InvocationTargetException e){
             return e.getMessage();
         }
-        extension = "";
-        outputWindow = "";
+        extendList = new LinkedList<String>();
+        extension = new LinkedList<LinkedList<String>>();
+        outputWindow = new StringBuilder();
         int i = 0;
         String probability = "";
-        for(Tuple<Boolean, Double> output: result){
+        for(Triple<Boolean, Double, LinkedList<String>> output: result){
             if (output.second() == -2.0){
-                probability = "n.d.";
+                probability = "undefined";
             }else{
                 double probDouble = output.second()*100;
                 probability = String.valueOf(probDouble)+"%";
-            }            
-            extension += basen.get(i) + " ^ "+moduls.get(i).subtract(new Z(1))+ " mod "+moduls.get(i)+ " = " + output.first()+ "   probability = " +probability;
-            outputWindow += moduls.get(i) + ": "  + result.get(i).first()+ "\n";
+            }                    
+            extendList = output.third();
+            extendList.addFirst(moduls.get(i)+ ":");
+            extendList.addLast("result");
+            extendList.addLast(moduls.get(i)+ " is prime number: " +output.first()+ "    probability = " +probability);
+            extension.add(extendList);
+
+            outputWindow.append(moduls.get(i) + ": "  + result.get(i).first()+ "\n");
+            results.put(getTitle() + "_primeFermat", output.first());
             i++;
         }
-        //return "In Window " + getTitle() + ": " + "\n\nPrimzahlen:\n" +moduls.get(0)+ ": "  + result.get(0).first();
-        return "In Window " + getTitle() + ": " + "\n\nPrimzahlen:\n" +outputWindow;
+        return "In Window " + getTitle() + ": " + "\n\nPrimzahlen:\n" +outputWindow.toString();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

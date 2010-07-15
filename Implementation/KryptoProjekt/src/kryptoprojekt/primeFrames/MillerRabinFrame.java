@@ -33,6 +33,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import kryptoprojekt.controller.LogicValidator;
+import kryptoprojekt.controller.XMLReader;
 /**
  *
  * @author Michael
@@ -49,7 +50,15 @@ public class MillerRabinFrame extends Kit {
         super(handler);
         initComponents();
         initLogicComponents();
+        initializeControlsLanguage(Kit.xmlReader);
     }
+
+    private void initializeControlsLanguage(XMLReader xml) {
+        //startMenuItem.setText(xml.getTagElement("KryptoView", "startMenuItem"));
+        //basicMenu.setText(xml.getTagElement("KryptoView", "basicMenu"));
+
+    }
+
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -96,7 +105,7 @@ public class MillerRabinFrame extends Kit {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 256, Short.MAX_VALUE)
+            .addGap(0, 260, Short.MAX_VALUE)
         );
 
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(kryptoprojekt.KryptoProjektApp.class).getContext().getResourceMap(MillerRabinFrame.class);
