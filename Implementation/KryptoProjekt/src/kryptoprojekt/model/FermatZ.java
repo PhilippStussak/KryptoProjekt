@@ -110,7 +110,7 @@ public class FermatZ extends FermatTest<Z>{
             if (getLowestBase().compareTo(new Z(1)) < 1) {
                 throw new IllegalArgumentException("Basis 'a' zu klein. Sie muss bei Fermat-Test sein:  1 < a < Modul");
             }
-            if (getHighestBase().compareTo(getHighestModul())>=0){
+            if (getHighestBase().compareTo(getLowestModul())>=0){
                 throw new IllegalArgumentException("Basis 'a' zu groß. Sie muss bei Fermat-Test sein:  1 < a < Modul");
             }
         }
@@ -135,7 +135,7 @@ public class FermatZ extends FermatTest<Z>{
             ++assertPostCondCounter;
             result = Basic.squareAndMultiply(base, checkPrime.subtract(oneObj), checkPrime).first();
             isPrime = result.isONE();
-            intermediateValues.add(base+ "^" +checkPrime.subtract(oneObj)+ " = " +result);
+            intermediateValues.add(base+ "^" +checkPrime.subtract(oneObj)+ " mod " +checkPrime+ " = " +result);
             if (!isPrime) {
                 //Postcondition
                 assert isPrime == false: "isPrime has a false state: isPrime = " +isPrime;
