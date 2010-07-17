@@ -595,7 +595,7 @@ public class KryptoProjektView extends FrameView {
         rf.setLocation(0, desktop.getHeight() / 2);
         rf.setVisible(true);
         desktop.add(rf);
-        new Executor(handler, rf).start();
+        new Executor(handler, rf, progressBar).start();
     }//GEN-LAST:event_startMenuItemActionPerformed
 
     private void primeFieldMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_primeFieldMenuItemActionPerformed

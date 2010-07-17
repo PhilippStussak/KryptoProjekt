@@ -16,7 +16,6 @@ import java.awt.GridBagLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
 import kryptoprojekt.controller.BasicController;
@@ -174,6 +173,7 @@ public class AdditionFrame extends Kit {
         results.put(getTitle() + "_sum", result);
         return "In Window " + getTitle() + ": " + value1 + " + " + value2 + " = " + result.toString();
     }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;

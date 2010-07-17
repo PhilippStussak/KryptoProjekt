@@ -14,7 +14,7 @@ import javax.swing.JTextArea;
  *
  * @author Stefan
  */
-class ResultFrame extends JInternalFrame {
+public class ResultFrame extends JInternalFrame {
 
     private static int id = 1;
     private JTextArea textArea = new JTextArea("");
@@ -23,6 +23,15 @@ class ResultFrame extends JInternalFrame {
 
     public ResultFrame() {
         super("result #" + id++, true, true, true, true);
+        initializeComponents();
+    }
+
+    public ResultFrame(String name) {
+        super(name, true, true, true, true);
+        initializeComponents();
+    }
+
+    private void initializeComponents() {
         panel.add(scrollPane);
         this.getContentPane().add(panel);
     }

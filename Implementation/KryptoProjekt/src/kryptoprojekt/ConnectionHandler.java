@@ -4,7 +4,6 @@
  */
 package kryptoprojekt;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -50,7 +49,6 @@ public class ConnectionHandler {
                 iterator.remove();
             }
         }
-
         return frames.remove(kit);
     }
 

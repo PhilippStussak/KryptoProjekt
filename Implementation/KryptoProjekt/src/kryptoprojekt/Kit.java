@@ -22,6 +22,9 @@ import javax.swing.JTextField;
 import kryptoprojekt.controller.XMLReader;
 
 /**
+ * This is a Class which helps to easily create new Components.
+ * It's responsible for the logic "behind" and includes the two Classes,
+ * that are necessary for the logic (DropTextField and DragList).
  *
  * @author Stefan
  */
@@ -34,6 +37,11 @@ public class Kit extends JInternalFrame {
     private static Thread refresher;
     protected static XMLReader xmlReader = XMLReader.getInstance("./languageFiles/english.xml");
 
+    /**
+     * Creates an new Kit with everything necessary for the logic.
+     *
+     * @param handler The ConnectionHandler that is responsible for this Kit.
+     */
     public Kit(ConnectionHandler handler) {
         super("#" + id++, false, true, false, false);
         this.handler = handler;
@@ -78,30 +86,73 @@ public class Kit extends JInternalFrame {
         }
     }
 
+    /**
+     * Method which is called every time the gui has to be repainted.
+     */
     private void method() {
         handler.getDesktop().repaint();
     }
 
+    /**
+     * Returns the result of this Kit, identified by the special key-value id.
+     *
+     * @param id key-value for the special result.
+     * @return The result containing to the key-value id.
+     */
     public Object getResult(String id) {
         return this.results.get(id);
     }
 
+    /**
+     * Returns the parents of this Kit
+     *
+     * @return Returns the parent-Kits of this Kit
+     */
     public LinkedList<Kit> getParents() {
         return parents;
     }
 
+    /**
+     * Returns the children of this Kit
+     *
+     * @return Returns the child-Kits of this Kit
+     */
     public LinkedList<Kit> getChildren() {
         return children;
     }
 
+    /**
+     * Creates a new DragList with the {@param list} as content.
+     * The values of this list are very important for the drag-and-drop
+     * logic, it's recommended, that the values in this list are equals
+     * to the key, which is responsible for identifying the result,
+     * which is stored in the Hashmap.
+     *
+     * @param list key-values to be displayed and used to identify a result.
+     * @return Returns a new DragList-object.
+     */
     public DragList getDragList(Object[] list) {
         return new DragList(list, this);
     }
 
+    /**
+     * Creates a new DropTextField which is needed for the drag-and-drop
+     * logic.
+     *
+     * @return Returns a new DropTextField-object.
+     */
     public DropTextField getDropTextField() {
         return new DropTextField(this);
     }
 
+    /**
+     * This method is necessary for all the Kits that are constructed.
+     * This method has to be overridden, everything inbetween this method is
+     * executed when the start-button on the gui is pressed.
+     *
+     * @return Returns a String which represents the results of the computation
+     * in the special Kit.
+     */
     public String execute() {
         throw new UnsupportedOperationException();
     }
@@ -113,11 +164,23 @@ public class Kit extends JInternalFrame {
         super.dispose();
     }
 
+    /**
+     * This class is used if the drag-and-drop logic is needed.
+     * The elements (displayed) in this list are key-values for
+     * the identification of former results.
+     */
     public class DragList extends JList implements DragGestureListener {
 
         private Kit origin;
 
-        public DragList(Object[] field, Kit origin) {
+        /**
+         * A new DragList can only be instanciated from the method getDragList()
+         * in a Kit.
+         *
+         * @param field the key-values to be displayed.
+         * @param origin the Kit in which this DragList is created.
+         */
+        DragList(Object[] field, Kit origin) {
             super(field);
             this.setDragEnabled(true);
             this.origin = origin;
@@ -130,11 +193,21 @@ public class Kit extends JInternalFrame {
     }
     private static Kit parent;
 
+    /**
+     * This class is used if the drag-and-drop logic is needed.
+     * It's the drop-target for everything dragged by a DragList.
+     */
     public class DropTextField extends JTextField implements DropTargetListener {
 
         private Kit origin, p;
         private String key;
 
+        /**
+         * A new DropTextField can only be instanciated
+         * from the method getDropTextField() in a Kit.
+         *
+         * @param origin the Kit in which this DragList is created.
+         */
         public DropTextField(Kit origin) {
             this.origin = origin;
             new DropTarget(this, this);
@@ -171,9 +244,14 @@ public class Kit extends JInternalFrame {
             return p.getResult(key);
         }
 
+        /**
+         * Used if a connection between two Kits is cutted,
+         * when for example one Kit has been erased.
+         */
         public void removeConnection() {
             key = null;
             p = null;
+            this.setForeground(Color.black);
         }
 
         public void dragEnter(DropTargetDragEvent dtde) {

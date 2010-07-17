@@ -22,6 +22,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
+import kryptoprojekt.ResultFrame;
 import kryptoprojekt.controller.BasicController;
 import kryptoprojekt.controller.LogicValidator;
 import kryptoprojekt.model.KryptoType;
@@ -170,13 +171,10 @@ public class PhiFrame extends Kit {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        JInternalFrame frame = new JInternalFrame(getTitle() + "_extension", true, true, true, true);
+        ResultFrame frame = new ResultFrame(getTitle() + "_extension");
         frame.setLocation(getX(), getY());
         frame.setSize(320, 240);
-        JTextArea area = new JTextArea();
-        area.setText(extension);
-        area.setVisible(true);
-        frame.add(area);
+        frame.addText(extension);
         frame.setVisible(true);
         getParent().add(frame);
     }//GEN-LAST:event_jButton1ActionPerformed
