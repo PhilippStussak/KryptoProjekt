@@ -38,6 +38,7 @@ public class DecodeHammingCodeFrame extends Kit {
         super(handler);
         initComponents();
         initLogicComponents();
+        jLabel1.setText(Kit.xmlReader.getTagElement("DecodeHammingCodeFrame", "HeaderLabel"));
     }
 
     /** This method is called from within the constructor to

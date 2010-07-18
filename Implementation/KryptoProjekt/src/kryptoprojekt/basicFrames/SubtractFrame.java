@@ -38,6 +38,7 @@ public class SubtractFrame extends Kit {
         super(handler);
         initComponents();
         initLogicComponents();
+        jLabel1.setText(Kit.xmlReader.getTagElement("SubstractFrame", "HeaderLabel"));
     }
 
     /** This method is called from within the constructor to

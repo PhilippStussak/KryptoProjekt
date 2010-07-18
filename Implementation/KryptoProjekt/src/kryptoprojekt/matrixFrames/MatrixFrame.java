@@ -31,6 +31,8 @@ public class MatrixFrame extends Kit {
         super(handler);
         initComponents();
         initLogicComponents();
+        jLabel1.setText(Kit.xmlReader.getTagElement("MatrixFrame", "HeaderLabel"));
+        jButton1.setText(Kit.xmlReader.getTagElement("MatrixFrame", "ExtendBtn"));
     }
 
     /** This method is called from within the constructor to

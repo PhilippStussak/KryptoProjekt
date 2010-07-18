@@ -1,11 +1,9 @@
 TODO:
 
 -	Sprachfile Unterstützung
-		+ GUI -->Jens
-		+ Controller -->Jens
 		+ einzelnen Klassen -->jeder selbst
 		+ Kommentare auf englisch übersetzen -->jeder selbst
--	2. Menüleiste (Start, Abbruch -->Stefan, Clear)	-->Jens
+
 -	Exception-Handling verbessern (von Controller soll Meldung zurückkommen) -->jeder selbst
 -	Hilfe.chm-Datei (Benutzerdokumentation)
 (-	Textboxgröße statisch/fest/stabil)
@@ -21,3 +19,7 @@ Erledigt:
 -	Textfarbe muss sich zurückändern, wenn Verbindung aufgelöst wird -->Stefan
 -	Zwischenergebnisse in ScrollbarPane anzeigen für Basic-Frames
 -	JavaDocs für Kit --> Stefan
+-	2. Menüleiste (Start, Abbruch -->Stefan, Clear)	-->Jens
+-	Sprachfile Unterstützung
+		+ Controller -->Jens
+		+	GUI --> Jens

@@ -32,6 +32,7 @@ public class MatrixMultiplyFrame extends Kit {
         super(handler);
         initComponents();
         initLogicComponents();
+        jLabel1.setText(Kit.xmlReader.getTagElement("MatrixMultiplyFrame", "HeaderLabel"));
     }
 
     /** This method is called from within the constructor to

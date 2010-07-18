@@ -29,6 +29,7 @@ public class ZFrame extends Kit {
         super(handler);
         initComponents();
         initLogicComponents();
+        jLabel1.setText(Kit.xmlReader.getTagElement("ZFrame", "HeaderLabel"));
     }
 
     /** This method is called from within the constructor to

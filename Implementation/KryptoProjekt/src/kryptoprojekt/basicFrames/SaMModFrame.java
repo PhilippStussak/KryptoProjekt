@@ -45,6 +45,8 @@ public class SaMModFrame extends Kit {
         super(handler);
         initComponents();
         initLogicComponents();
+        jLabel1.setText(Kit.xmlReader.getTagElement("SaMModFrame", "HeaderLabel"));
+        jButton1.setText(Kit.xmlReader.getTagElement("SaMModFrame", "ExtendBtn"));
     }
 
     private void initLogicComponents() {

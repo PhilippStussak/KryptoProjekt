@@ -39,6 +39,7 @@ public class ModuloFrame extends Kit {
         super(handler);
         initComponents();
         initLogicComponents();
+        jLabel1.setText(Kit.xmlReader.getTagElement("ModuloFrame", "HeaderLabel"));
     }
     private void initLogicComponents() {
 

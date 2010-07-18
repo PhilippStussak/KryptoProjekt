@@ -155,6 +155,11 @@ public class KryptoProjektView extends FrameView {
         startBtnOnBar.setText(xml.getTagElement("KryptoView", "startBtnOnBar"));
         cancelBtnOnBar.setText(xml.getTagElement("KryptoView", "cancelBtnOnBar"));
         clearBtnOnBar.setText(xml.getTagElement("KryptoView", "clearBtnOnBar"));
+        matrixMenu.setText(xml.getTagElement("KryptoView", "matrixMenu"));
+        newMatrixMenuItem.setText(xml.getTagElement("KryptoView", "newMatrixMenuItem"));
+        matrixMultiplyMenuItem.setText(xml.getTagElement("KryptoView", "matrixMultiplyMenuItem"));
+        newMatrixPrimeFieldMenuItem.setText(xml.getTagElement("KryptoView", "newMatrixPrimeFieldMenuItem"));
+        addMatrixMenuItem.setText(xml.getTagElement("KryptoView", "addMatrixMenuItem"));
     }
 
     @Action
@@ -199,10 +204,10 @@ public class KryptoProjektView extends FrameView {
         extendedGCDItem = new javax.swing.JMenuItem();
         phiMenuItem = new javax.swing.JMenuItem();
         matrixMenu = new javax.swing.JMenu();
-        matrixItem = new javax.swing.JMenuItem();
-        matrixPrimeFieldItem = new javax.swing.JMenuItem();
-        addMatrixItem = new javax.swing.JMenuItem();
-        matrixMultiplyItem = new javax.swing.JMenuItem();
+        newMatrixMenuItem = new javax.swing.JMenuItem();
+        newMatrixPrimeFieldMenuItem = new javax.swing.JMenuItem();
+        addMatrixMenuItem = new javax.swing.JMenuItem();
+        matrixMultiplyMenuItem = new javax.swing.JMenuItem();
         zMenuItem = new javax.swing.JMenuItem();
         primeFieldMenuItem = new javax.swing.JMenuItem();
         primeTestMenu = new javax.swing.JMenu();
@@ -308,7 +313,6 @@ public class KryptoProjektView extends FrameView {
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 254, Short.MAX_VALUE)
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addComponent(secondBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -437,41 +441,36 @@ public class KryptoProjektView extends FrameView {
         matrixMenu.setText(resourceMap.getString("matrixMenu.text")); // NOI18N
         matrixMenu.setName("matrixMenu"); // NOI18N
 
-        matrixItem.setText(resourceMap.getString("matrixItem.text")); // NOI18N
-        matrixItem.setName("matrixItem"); // NOI18N
-        matrixItem.addActionListener(new java.awt.event.ActionListener() {
+        newMatrixMenuItem.setText(resourceMap.getString("newMatrixMenuItem.text")); // NOI18N
+        newMatrixMenuItem.setName("newMatrixMenuItem"); // NOI18N
+        newMatrixMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                matrixItemActionPerformed(evt);
+                newMatrixMenuItemActionPerformed(evt);
             }
         });
-        matrixMenu.add(matrixItem);
+        matrixMenu.add(newMatrixMenuItem);
 
-        matrixPrimeFieldItem.setText(resourceMap.getString("matrixPrimeFieldItem.text")); // NOI18N
-        matrixPrimeFieldItem.setName("matrixPrimeFieldItem"); // NOI18N
-        matrixPrimeFieldItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                matrixPrimeFieldItemActionPerformed(evt);
-            }
-        });
-        matrixMenu.add(matrixPrimeFieldItem);
+        newMatrixPrimeFieldMenuItem.setText(resourceMap.getString("newMatrixPrimeFieldMenuItem.text")); // NOI18N
+        newMatrixPrimeFieldMenuItem.setName("newMatrixPrimeFieldMenuItem"); // NOI18N
+        matrixMenu.add(newMatrixPrimeFieldMenuItem);
 
-        addMatrixItem.setText(resourceMap.getString("addMatrixItem.text")); // NOI18N
-        addMatrixItem.setName("addMatrixItem"); // NOI18N
-        addMatrixItem.addActionListener(new java.awt.event.ActionListener() {
+        addMatrixMenuItem.setText(resourceMap.getString("addMatrixMenuItem.text")); // NOI18N
+        addMatrixMenuItem.setName("addMatrixMenuItem"); // NOI18N
+        addMatrixMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addMatrixItemActionPerformed(evt);
+                addMatrixMenuItemActionPerformed(evt);
             }
         });
-        matrixMenu.add(addMatrixItem);
+        matrixMenu.add(addMatrixMenuItem);
 
-        matrixMultiplyItem.setText(resourceMap.getString("matrixMultiplyItem.text")); // NOI18N
-        matrixMultiplyItem.setName("matrixMultiplyItem"); // NOI18N
-        matrixMultiplyItem.addActionListener(new java.awt.event.ActionListener() {
+        matrixMultiplyMenuItem.setText(resourceMap.getString("matrixMultiplyMenuItem.text")); // NOI18N
+        matrixMultiplyMenuItem.setName("matrixMultiplyMenuItem"); // NOI18N
+        matrixMultiplyMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                matrixMultiplyItemActionPerformed(evt);
+                matrixMultiplyMenuItemActionPerformed(evt);
             }
         });
-        matrixMenu.add(matrixMultiplyItem);
+        matrixMenu.add(matrixMultiplyMenuItem);
 
         basicMenu.add(matrixMenu);
 
@@ -832,23 +831,23 @@ public class KryptoProjektView extends FrameView {
         desktop.add(kit);
     }//GEN-LAST:event_lucasMenuItemActionPerformed
 
-    private void matrixItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_matrixItemActionPerformed
+    private void newMatrixMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newMatrixMenuItemActionPerformed
         Kit kit = new MatrixFrame(handler);
         kit.setVisible(true);
         desktop.add(kit);
-    }//GEN-LAST:event_matrixItemActionPerformed
+    }//GEN-LAST:event_newMatrixMenuItemActionPerformed
 
-    private void addMatrixItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addMatrixItemActionPerformed
+    private void addMatrixMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addMatrixMenuItemActionPerformed
         Kit kit = new MatrixAddFrame(handler);
         kit.setVisible(true);
         desktop.add(kit);
-    }//GEN-LAST:event_addMatrixItemActionPerformed
+    }//GEN-LAST:event_addMatrixMenuItemActionPerformed
 
-    private void matrixMultiplyItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_matrixMultiplyItemActionPerformed
+    private void matrixMultiplyMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_matrixMultiplyMenuItemActionPerformed
         Kit kit = new MatrixMultiplyFrame(handler);
         kit.setVisible(true);
         desktop.add(kit);
-    }//GEN-LAST:event_matrixMultiplyItemActionPerformed
+    }//GEN-LAST:event_matrixMultiplyMenuItemActionPerformed
 
     private void matrixPrimeFieldItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_matrixPrimeFieldItemActionPerformed
         Kit kit = new MatrixPrimeFieldFrame(handler);
@@ -877,7 +876,7 @@ public class KryptoProjektView extends FrameView {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem addMatrixItem;
+    private javax.swing.JMenuItem addMatrixMenuItem;
     private javax.swing.JMenuItem additionMenuItem;
     private javax.swing.JMenu basicArithmeticMenu;
     private javax.swing.JMenu basicMenu;
@@ -908,12 +907,12 @@ public class KryptoProjektView extends FrameView {
     private javax.swing.JPanel mainForm;
     private javax.swing.JMenuBar mainMenuBar;
     private javax.swing.JPanel mainPanel;
-    private javax.swing.JMenuItem matrixItem;
     private javax.swing.JMenu matrixMenu;
-    private javax.swing.JMenuItem matrixMultiplyItem;
-    private javax.swing.JMenuItem matrixPrimeFieldItem;
+    private javax.swing.JMenuItem matrixMultiplyMenuItem;
     private javax.swing.JMenuItem modMenuItem;
     private javax.swing.JMenuItem multiplicationMenuItem;
+    private javax.swing.JMenuItem newMatrixMenuItem;
+    private javax.swing.JMenuItem newMatrixPrimeFieldMenuItem;
     private javax.swing.JMenuItem phiMenuItem;
     private javax.swing.JMenuItem primeFieldMenuItem;
     private javax.swing.JMenu primeTestMenu;

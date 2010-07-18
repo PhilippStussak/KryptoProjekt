@@ -41,6 +41,8 @@ public class PhiFrame extends Kit {
         super(handler);
         initComponents();
         initLogicComponents();
+        jLabel1.setText(Kit.xmlReader.getTagElement("PhiFrame", "HeaderLabel"));
+        jButton1.setText(Kit.xmlReader.getTagElement("PhiFrame", "ExtendBtn"));
     }
 
     private void initLogicComponents() {

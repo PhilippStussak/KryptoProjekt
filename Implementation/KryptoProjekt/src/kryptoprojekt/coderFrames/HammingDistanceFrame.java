@@ -34,6 +34,7 @@ public class HammingDistanceFrame extends Kit {
         super(handler);
         initComponents();
         initLogicComponents();
+        jLabel1.setText(Kit.xmlReader.getTagElement("HammingDistanceFrame", "HeaderLabel"));
     }
 
     private void initLogicComponents() {

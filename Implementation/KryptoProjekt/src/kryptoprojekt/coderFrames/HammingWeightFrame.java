@@ -37,6 +37,7 @@ public class HammingWeightFrame extends Kit {
         super(handler);
         initComponents();
         initLogicComponents();
+        jLabel1.setText(Kit.xmlReader.getTagElement("HammingWeightFrame", "HeaderLabel"));
     }
 
     private void initLogicComponents() {
@@ -60,7 +61,7 @@ public class HammingWeightFrame extends Kit {
         c.gridwidth = 3;
         c.gridx = 0;
         c.gridy = 2;
-        jPanel1.add(getDragList(new Object[]{getTitle() + "Weight"}), c);
+        jPanel1.add(getDragList(new Object[]{getTitle() + "_weight"}), c);
 
         this.setSize(160, 120);
     }
@@ -68,7 +69,7 @@ public class HammingWeightFrame extends Kit {
     @Override
     public String execute() {
         Z result = CoderController.hammingWeight((Matrix<PrimeFieldElement>) textVector1.getResult());
-        results.put(getTitle() + "Weight", result);
+        results.put(getTitle() + "_weight", result);
         return Kit.xmlReader.getTagElement("HammingWeightFrame", "VectorWeight") + ": " + result.toString();
     }
 

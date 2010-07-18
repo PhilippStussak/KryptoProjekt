@@ -38,6 +38,7 @@ public class MultiplicationFrame extends Kit {
         super(handler);
         initComponents();
         initLogicComponents();
+        jLabel1.setText(Kit.xmlReader.getTagElement("MultiplicationFrame", "HeaderLabel"));
     }
 
     /** This method is called from within the constructor to

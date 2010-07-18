@@ -41,6 +41,8 @@ public class GCDFrame extends Kit {
         super(handler);
         initComponents();
         initLogicComponents();
+        jLabel1.setText(Kit.xmlReader.getTagElement("GCDFrame", "HeaderLabel"));
+        jButton1.setText(Kit.xmlReader.getTagElement("GCDFrame", "ExtendBtn"));
     }
 
     private void initLogicComponents() {

@@ -1,4 +1,4 @@
-<?xml version="1.1" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.5" maxVersion="1.7">
   <NonVisualComponents>
@@ -258,40 +258,37 @@
                 <Property name="name" type="java.lang.String" value="matrixMenu" noResource="true"/>
               </Properties>
               <SubComponents>
-                <MenuItem class="javax.swing.JMenuItem" name="matrixItem">
+                <MenuItem class="javax.swing.JMenuItem" name="newMatrixMenuItem">
                   <Properties>
-                    <Property name="text" type="java.lang.String" resourceKey="matrixItem.text"/>
-                    <Property name="name" type="java.lang.String" value="matrixItem" noResource="true"/>
+                    <Property name="text" type="java.lang.String" resourceKey="newMatrixMenuItem.text"/>
+                    <Property name="name" type="java.lang.String" value="newMatrixMenuItem" noResource="true"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="matrixItemActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newMatrixMenuItemActionPerformed"/>
                   </Events>
                 </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="matrixPrimeFieldItem">
+                <MenuItem class="javax.swing.JMenuItem" name="newMatrixPrimeFieldMenuItem">
                   <Properties>
-                    <Property name="text" type="java.lang.String" resourceKey="matrixPrimeFieldItem.text"/>
-                    <Property name="name" type="java.lang.String" value="matrixPrimeFieldItem" noResource="true"/>
+                    <Property name="text" type="java.lang.String" resourceKey="newMatrixPrimeFieldMenuItem.text"/>
+                    <Property name="name" type="java.lang.String" value="newMatrixPrimeFieldMenuItem" noResource="true"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="addMatrixMenuItem">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" resourceKey="addMatrixMenuItem.text"/>
+                    <Property name="name" type="java.lang.String" value="addMatrixMenuItem" noResource="true"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="matrixPrimeFieldItemActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addMatrixMenuItemActionPerformed"/>
                   </Events>
                 </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="addMatrixItem">
+                <MenuItem class="javax.swing.JMenuItem" name="matrixMultiplyMenuItem">
                   <Properties>
-                    <Property name="text" type="java.lang.String" resourceKey="addMatrixItem.text"/>
-                    <Property name="name" type="java.lang.String" value="addMatrixItem" noResource="true"/>
+                    <Property name="text" type="java.lang.String" resourceKey="matrixMultiplyMenuItem.text"/>
+                    <Property name="name" type="java.lang.String" value="matrixMultiplyMenuItem" noResource="true"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addMatrixItemActionPerformed"/>
-                  </Events>
-                </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="matrixMultiplyItem">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" resourceKey="matrixMultiplyItem.text"/>
-                    <Property name="name" type="java.lang.String" value="matrixMultiplyItem" noResource="true"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="matrixMultiplyItemActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="matrixMultiplyMenuItemActionPerformed"/>
                   </Events>
                 </MenuItem>
               </SubComponents>

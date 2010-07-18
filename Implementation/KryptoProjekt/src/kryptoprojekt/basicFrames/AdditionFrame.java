@@ -37,6 +37,7 @@ public class AdditionFrame extends Kit {
         super(handler);
         initComponents();
         initLogicComponents();
+        jLabel1.setText(Kit.xmlReader.getTagElement("AdditionFrame", "HeaderLabel"));
     }
 
     /** This method is called from within the constructor to

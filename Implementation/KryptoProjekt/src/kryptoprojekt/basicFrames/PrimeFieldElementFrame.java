@@ -37,6 +37,9 @@ public class PrimeFieldElementFrame extends Kit {
         super(handler);
         initComponents();
         initLogicComponents();
+        jLabel1.setText(Kit.xmlReader.getTagElement("PrimeFieldElementFrame", "HeaderLabel"));
+        addTableBtn.setText(Kit.xmlReader.getTagElement("PrimeFieldElementFrame", "AddTableBtn"));
+        mulTableBtn.setText(Kit.xmlReader.getTagElement("PrimeFieldElementFrame", "MulTableBtn"));
     }
 
     private void initLogicComponents() {
@@ -149,8 +152,8 @@ public class PrimeFieldElementFrame extends Kit {
 
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        mulTableBtn = new javax.swing.JButton();
+        addTableBtn = new javax.swing.JButton();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -170,22 +173,22 @@ public class PrimeFieldElementFrame extends Kit {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 289, Short.MAX_VALUE)
+            .addGap(0, 297, Short.MAX_VALUE)
         );
 
-        jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
-        jButton1.setName("jButton1"); // NOI18N
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        mulTableBtn.setText(resourceMap.getString("mulTableBtn.text")); // NOI18N
+        mulTableBtn.setName("mulTableBtn"); // NOI18N
+        mulTableBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                mulTableBtnActionPerformed(evt);
             }
         });
 
-        jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
-        jButton2.setName("jButton2"); // NOI18N
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        addTableBtn.setText(resourceMap.getString("addTableBtn.text")); // NOI18N
+        addTableBtn.setName("addTableBtn"); // NOI18N
+        addTableBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                addTableBtnActionPerformed(evt);
             }
         });
 
@@ -199,10 +202,10 @@ public class PrimeFieldElementFrame extends Kit {
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
-                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
+                        .addComponent(addTableBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)))
+                        .addComponent(mulTableBtn)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -210,10 +213,10 @@ public class PrimeFieldElementFrame extends Kit {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
+                    .addComponent(mulTableBtn)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel1)
-                        .addComponent(jButton2)))
+                        .addComponent(addTableBtn)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -222,7 +225,7 @@ public class PrimeFieldElementFrame extends Kit {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void addTableBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTableBtnActionPerformed
         KryptoType baseValue;
         try {
             if (textField2.getResult() != null) {
@@ -240,9 +243,9 @@ public class PrimeFieldElementFrame extends Kit {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Empty base-field or base not prime!");
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_addTableBtnActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void mulTableBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mulTableBtnActionPerformed
         KryptoType baseValue;
         try {
             if (textField2.getResult() != null) {
@@ -260,11 +263,11 @@ public class PrimeFieldElementFrame extends Kit {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Empty base-field or base not prime!");
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_mulTableBtnActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton addTableBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton mulTableBtn;
     // End of variables declaration//GEN-END:variables
 }

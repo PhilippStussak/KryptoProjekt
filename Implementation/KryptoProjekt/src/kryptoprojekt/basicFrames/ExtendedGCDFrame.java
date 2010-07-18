@@ -41,6 +41,8 @@ public class ExtendedGCDFrame extends Kit {
         super(handler);
         initComponents();
         initLogicComponents();
+        jLabel1.setText(Kit.xmlReader.getTagElement("ExtendedGCDFrame", "HeaderLabel"));
+        jButton1.setText(Kit.xmlReader.getTagElement("ExtendedGCDFrame", "ExtendBtn"));
     }
 
     /** This method is called from within the constructor to

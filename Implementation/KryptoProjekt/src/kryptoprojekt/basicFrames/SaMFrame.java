@@ -44,6 +44,8 @@ public class SaMFrame extends Kit {
         super(handler);
         initComponents();
         initLogicComponents();
+        jLabel1.setText(Kit.xmlReader.getTagElement("SaMFrame", "HeaderLabel"));
+        jButton1.setText(Kit.xmlReader.getTagElement("SaMFrame", "ExtendBtn"));
     }
 
     private void initLogicComponents() {
