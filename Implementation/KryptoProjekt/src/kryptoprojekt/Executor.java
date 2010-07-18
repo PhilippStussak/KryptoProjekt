@@ -57,29 +57,31 @@ public class Executor extends Thread {
     @Override
     public void run() {
         final long time = System.currentTimeMillis();
+        Kit recentKit = null;
         for (Kit kit : orderOfExecution) {
             try {
-                progressMessage(kit.execute());
+                recentKit = kit;
+                progressMessage(kit.getTitle(), kit.execute());
                 progressBar((int)(progress += timeslot), kit.getTitle(), true);
             } catch (NullPointerException npe) {
-                exception("Parameter in Window " + kit.getTitle() + " is missing!");
+                exception(Kit.xmlReader.getTagElement("Executor", "MissingParamException") + " " + kit.getTitle());
             } catch (ClassCastException cce) {
-                exception("Wrong parameter in Window " + kit.getTitle() + "!");
+                exception(Kit.xmlReader.getTagElement("Executor", "WrongParam") + " " + kit.getTitle() + "!");
             } catch (Exception e) {
-                exception("Undefined Exception in Window " + kit.getTitle() + "!");
+                exception(Kit.xmlReader.getTagElement("Executor", "UndefinedException") + kit.getTitle() + "!");
             }
         }
         progressBar(100, "", true);
-        progressMessage("compute time: " + (System.currentTimeMillis() - time));
+        progressMessage(recentKit.getTitle(), Kit.xmlReader.getTagElement("Executor", "ComputeTime") + ": " + (System.currentTimeMillis() - time));
         progressBar(100, "", false);
     }
 
-    private void progressMessage(final String progressMessage) {
+    private void progressMessage(final String kitTitle, final String progressMessage) {
         try {
             EventQueue.invokeAndWait(new Runnable() {
 
                 public void run() {
-                    rf.addText(progressMessage);
+                    rf.addText(Kit.xmlReader.getTagElement("Executor", "InWindow") + " " + kitTitle + ": \n" + progressMessage);
                 }
             });
         } catch (InterruptedException ex) {

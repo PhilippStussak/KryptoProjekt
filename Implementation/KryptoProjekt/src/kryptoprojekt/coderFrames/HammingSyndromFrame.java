@@ -119,7 +119,7 @@ public class HammingSyndromFrame extends Kit {
         c.gridx = 0;
         c.gridy = 0;
         JLabel l = new JLabel();
-        l.setText("HammingCodeElement");
+        l.setText("HammingCode Element");
         jPanel1.add(l, c);
 
         c.fill = GridBagConstraints.BOTH;
@@ -130,7 +130,7 @@ public class HammingSyndromFrame extends Kit {
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
         c.gridy = 2;
-        jPanel1.add(getDragList(new Object[] {getTitle() + "HammingCode Element"}), c);
+        jPanel1.add(getDragList(new Object[] {getTitle() + "_hcElem"}), c);
 
         this.setSize(160, 120);
     }
@@ -139,10 +139,10 @@ public class HammingSyndromFrame extends Kit {
     public String execute() {
          if(textField1.getResult() != null){
         HammingCode result = CoderController.calculateHammingSyndrom((HammingCode)textField1.getResult());
-        results.put(getTitle() + "HammingCode Element", result);
-        return "Syndrom: " + result.getSyndrom();
+        results.put(getTitle() + "_hcElem", result);
+        return Kit.xmlReader.getTagElement("HammingSyndromFrame", "Syndrom") + ": " + result.getSyndrom();
          }
-         return "No HammingCode element found";
+         return Kit.xmlReader.getTagElement("HammingFrames", "NoHammingCodeElement");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -44,13 +44,13 @@ public class HammingDistanceFrame extends Kit {
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
         c.gridy = 0;
-        jPanel1.add(new JLabel("Vector 1:"), c);
+        jPanel1.add(new JLabel(Kit.xmlReader.getTagElement("HammingDistanceFrame", "Vector") + " 1:"), c);
 
         c.weightx = 0.5;
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 2;
         c.gridy = 0;
-        jPanel1.add(new JLabel("Vektor 2:"), c);
+        jPanel1.add(new JLabel(Kit.xmlReader.getTagElement("HammingDistanceFrame", "Vector") + " 2:"), c);
 
         c.weightx = 0.495;
         c.fill = GridBagConstraints.BOTH;

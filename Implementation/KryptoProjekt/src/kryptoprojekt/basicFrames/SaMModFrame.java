@@ -164,7 +164,7 @@ public class SaMModFrame extends Kit {
         extension = "";
         for(String s : (LinkedList<String>)result.second())
             extension += s + "\n";
-        return "In Window " + getTitle() + ": " + value1.toString() + " ^ " + value2.toString() + " mod " + value3.toString() + " = " + result.first().toString();
+        return value1.toString() + " ^ " + value2.toString() + " mod " + value3.toString() + " = " + result.first().toString();
     }
 
     @SuppressWarnings("unchecked")

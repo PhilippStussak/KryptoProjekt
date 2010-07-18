@@ -101,7 +101,7 @@ public class PhiFrame extends Kit {
         extension = "";
         for(Z tmp : result.second())
             extension += tmp +" ";
-        return "In window " + getTitle() + ": phi(" + value1.toString() + ") = " +result.first().toString();
+        return "phi(" + value1.toString() + ") = " +result.first().toString();
     }
 
     @SuppressWarnings("unchecked")

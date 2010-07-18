@@ -87,7 +87,7 @@ public class GCDFrame extends Kit {
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
         c.gridy = 0;
-        jPanel1.add(new JLabel("GCD("), c);
+        jPanel1.add(new JLabel(Kit.xmlReader.getTagElement("GCDFrame", "GCD") + "("), c);
 
         c.weightx = 0.46;
         c.fill = GridBagConstraints.BOTH;
@@ -140,7 +140,7 @@ public class GCDFrame extends Kit {
         extension = "";
         for(Object[] o : (LinkedList<Object[]>)result.second())
             extension += o[0] + " = " + o[1] + " * " + o[2] + " + " + o[3] + "\n";
-        return "In Window " + getTitle() + ": " + "GCD(" + value1.toString() + ", " + value2.toString() + ") = " +  result.first().toString();
+        return Kit.xmlReader.getTagElement("GCDFrame", "GCD") + "(" + value1.toString() + ", " + value2.toString() + ") = " +  result.first().toString();
     }
 
     @SuppressWarnings("unchecked")

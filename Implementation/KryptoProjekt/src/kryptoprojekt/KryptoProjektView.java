@@ -31,7 +31,7 @@ import kryptoprojekt.coderFrames.EncodeHammingCodeFrame;
 import kryptoprojekt.coderFrames.HammingDistanceFrame;
 import kryptoprojekt.coderFrames.HammingSyndromFrame;
 import kryptoprojekt.coderFrames.HammingWeightFrame;
-import kryptoprojekt.coderFrames.InitHammingJFrame;
+import kryptoprojekt.coderFrames.InitHammingFrame;
 import kryptoprojekt.controller.XMLReader;
 import kryptoprojekt.primeFrames.FermatFrame;
 import kryptoprojekt.primeFrames.LucasFrame;
@@ -53,12 +53,13 @@ public class KryptoProjektView extends FrameView {
         desktop = new Desktop(handler);
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
+        mainPanel.setAlignmentX(50);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
                 mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(desktop, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE));
         mainPanelLayout.setVerticalGroup(
                 mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(desktop, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE));
-
+        secondBar.setVisible(true);
         // status bar initialization - message timeout, idle icon and busy animation, etc
         ResourceMap resourceMap = getResourceMap();
         int messageTimeout = resourceMap.getInteger("StatusBar.messageTimeout");
@@ -135,7 +136,7 @@ public class KryptoProjektView extends FrameView {
         phiMenuItem.setText(xml.getTagElement("KryptoView", "phiMenuItem"));
         primeTestMenu.setText(xml.getTagElement("KryptoView", "primeTestMenu"));
         fermatMenuItem.setText(xml.getTagElement("KryptoView", "fermatMenuItem"));
-        //lucasMenuItem.setText(xml.getTagElement("KryptoView", "lucasMenuItem"));
+        lucasMenuItem.setText(xml.getTagElement("KryptoView", "lucasMenuItem"));
         coderMenu.setText(xml.getTagElement("KryptoView", "coderMenu"));
         hammingMenu.setText(xml.getTagElement("KryptoView", "hammingMenu"));
         initHammingCodeMenuItem.setText(xml.getTagElement("KryptoView", "initHammingCodeMenuItem"));
@@ -145,6 +146,9 @@ public class KryptoProjektView extends FrameView {
         createErrorsMenuItem.setText(xml.getTagElement("KryptoView", "createErrorsMenuItem"));
         hammingDistanceMenuItem.setText(xml.getTagElement("KryptoView", "hammingDistanceMenuItem"));
         vectorWeightMenuItem.setText(xml.getTagElement("KryptoView", "vectorWeightMenuItem"));
+        startBtnOnBar.setText(xml.getTagElement("KryptoView", "startBtnOnBar"));
+        cancelBtnOnBar.setText(xml.getTagElement("KryptoView", "cancelBtnOnBar"));
+        clearBtnOnBar.setText(xml.getTagElement("KryptoView", "clearBtnOnBar"));
     }
 
     @Action
@@ -167,6 +171,10 @@ public class KryptoProjektView extends FrameView {
     private void initComponents() {
 
         mainPanel = new javax.swing.JPanel();
+        secondBar = new javax.swing.JPanel();
+        startBtnOnBar = new javax.swing.JButton();
+        cancelBtnOnBar = new javax.swing.JButton();
+        clearBtnOnBar = new javax.swing.JButton();
         mainMenuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
         startMenuItem = new javax.swing.JMenuItem();
@@ -215,22 +223,71 @@ public class KryptoProjektView extends FrameView {
         jMenu9 = new javax.swing.JMenu();
         jMenu10 = new javax.swing.JMenu();
 
+        mainPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         mainPanel.setName("mainPanel"); // NOI18N
+
+        secondBar.setName("secondBar"); // NOI18N
+
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(kryptoprojekt.KryptoProjektApp.class).getContext().getResourceMap(KryptoProjektView.class);
+        startBtnOnBar.setText(resourceMap.getString("startBtnOnBar.text")); // NOI18N
+        startBtnOnBar.setName("startBtnOnBar"); // NOI18N
+        startBtnOnBar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                startBtnOnBarActionPerformed(evt);
+            }
+        });
+
+        cancelBtnOnBar.setText(resourceMap.getString("cancelBtnOnBar.text")); // NOI18N
+        cancelBtnOnBar.setName("cancelBtnOnBar"); // NOI18N
+        cancelBtnOnBar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelBtnOnBarActionPerformed(evt);
+            }
+        });
+
+        clearBtnOnBar.setText(resourceMap.getString("clearBtnOnBar.text")); // NOI18N
+        clearBtnOnBar.setName("clearBtnOnBar"); // NOI18N
+        clearBtnOnBar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearBtnOnBarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout secondBarLayout = new javax.swing.GroupLayout(secondBar);
+        secondBar.setLayout(secondBarLayout);
+        secondBarLayout.setHorizontalGroup(
+            secondBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(secondBarLayout.createSequentialGroup()
+                .addComponent(startBtnOnBar)
+                .addGap(18, 18, 18)
+                .addComponent(cancelBtnOnBar)
+                .addGap(18, 18, 18)
+                .addComponent(clearBtnOnBar)
+                .addContainerGap(185, Short.MAX_VALUE))
+        );
+        secondBarLayout.setVerticalGroup(
+            secondBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(secondBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(startBtnOnBar)
+                .addComponent(cancelBtnOnBar)
+                .addComponent(clearBtnOnBar))
+        );
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(secondBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 249, Short.MAX_VALUE)
+            .addGroup(mainPanelLayout.createSequentialGroup()
+                .addComponent(secondBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(231, 231, 231))
         );
 
         mainMenuBar.setName("mainMenuBar"); // NOI18N
 
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(kryptoprojekt.KryptoProjektApp.class).getContext().getResourceMap(KryptoProjektView.class);
         fileMenu.setText(resourceMap.getString("fileMenu.text")); // NOI18N
         fileMenu.setName("fileMenu"); // NOI18N
 
@@ -590,13 +647,17 @@ public class KryptoProjektView extends FrameView {
     }//GEN-LAST:event_decodeMenuItemActionPerformed
 
     private void startMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startMenuItemActionPerformed
+        startCalculation();
+    }//GEN-LAST:event_startMenuItemActionPerformed
+
+    private void startCalculation() {
         ResultFrame rf = new ResultFrame();
         rf.setSize(desktop.getWidth(), desktop.getHeight() / 2);
         rf.setLocation(0, desktop.getHeight() / 2);
         rf.setVisible(true);
         desktop.add(rf);
         new Executor(handler, rf, progressBar).start();
-    }//GEN-LAST:event_startMenuItemActionPerformed
+    }
 
     private void primeFieldMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_primeFieldMenuItemActionPerformed
         Kit kit = new PrimeFieldElementFrame(handler);
@@ -629,7 +690,7 @@ public class KryptoProjektView extends FrameView {
     }//GEN-LAST:event_gcdMenuItemActionPerformed
 
     private void initHammingCodeMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_initHammingCodeMenuItemActionPerformed
-        Kit kit = new InitHammingJFrame(handler);
+        Kit kit = new InitHammingFrame(handler);
         kit.setVisible(true);
         desktop.add(kit);
     }//GEN-LAST:event_initHammingCodeMenuItemActionPerformed
@@ -692,10 +753,24 @@ public class KryptoProjektView extends FrameView {
         desktop.add(kit);
     }//GEN-LAST:event_lucasMenuItemActionPerformed
 
+    private void startBtnOnBarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startBtnOnBarActionPerformed
+        startCalculation();
+    }//GEN-LAST:event_startBtnOnBarActionPerformed
+
+    private void cancelBtnOnBarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnOnBarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cancelBtnOnBarActionPerformed
+
+    private void clearBtnOnBarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearBtnOnBarActionPerformed
+        desktop.removeAll();
+    }//GEN-LAST:event_clearBtnOnBarActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem additionMenuItem;
     private javax.swing.JMenu basicArithmeticMenu;
     private javax.swing.JMenu basicMenu;
+    private javax.swing.JButton cancelBtnOnBar;
+    private javax.swing.JButton clearBtnOnBar;
     private javax.swing.JMenu coderMenu;
     private javax.swing.JMenuItem createErrorsMenuItem;
     private javax.swing.JMenuItem decodeMenuItem;
@@ -728,6 +803,8 @@ public class KryptoProjektView extends FrameView {
     private javax.swing.JMenuItem rabinMenuItem;
     private javax.swing.JMenuItem samMenuItem;
     private javax.swing.JMenuItem sammodMenuItem;
+    private javax.swing.JPanel secondBar;
+    private javax.swing.JButton startBtnOnBar;
     private javax.swing.JMenuItem startMenuItem;
     private javax.swing.JLabel statusAnimationLabel;
     private javax.swing.JLabel statusMessageLabel;

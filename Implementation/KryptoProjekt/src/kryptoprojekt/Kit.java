@@ -271,7 +271,7 @@ public class Kit extends JInternalFrame {
                 Transferable ta = dtde.getTransferable();
                 if (ta.isDataFlavorSupported(DataFlavor.stringFlavor)) {
                     if (parent == origin) {
-                        JOptionPane.showMessageDialog(null, "Drop on same frame not possible!");
+                        JOptionPane.showMessageDialog(null, xmlReader.getTagElement("Kit", "DropOnsameFrame"));
                     } else {
                         Connection con = new Connection(parent, origin, this);
                         Connection old = handler.removeSameTarget(con);
@@ -279,9 +279,9 @@ public class Kit extends JInternalFrame {
                             origin.parents.remove(old.getParent());
                         }
                         if (circle(parent, origin)) {
-                            JOptionPane.showMessageDialog(null, "Recursion not possible!");
+                            JOptionPane.showMessageDialog(null, xmlReader.getTagElement("Kit", "OnRecursion"));
                         } else if (!handler.add(con)) {
-                            JOptionPane.showMessageDialog(null, "Connection already exists!");
+                            JOptionPane.showMessageDialog(null, xmlReader.getTagElement("Kit", "ConnectionAlreadyExists"));
                         } else {
                             dtde.acceptDrop(DnDConstants.ACTION_COPY);
                             String text = (String) ta.getTransferData(DataFlavor.stringFlavor);
@@ -296,7 +296,7 @@ public class Kit extends JInternalFrame {
                         }
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Wrong data!");
+                    JOptionPane.showMessageDialog(null, xmlReader.getTagElement("Kit", "WrongData"));
                     dtde.rejectDrop();
                 }
             } catch (Exception e) {

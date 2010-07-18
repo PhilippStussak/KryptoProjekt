@@ -30,7 +30,13 @@
 		<createErrorsMenuItem>Create Errors in encoded word</createErrorsMenuItem>
 		<hammingDistanceMenuItem>Calculate Hamming Distance</hammingDistanceMenuItem>
 		<vectorWeightMenuItem>Calculate Vector Weight</vectorWeightMenuItem>
+		<startBtnOnBar>Start</startBtnOnBar>
+		<cancelBtnOnBar>Cancel</cancelBtnOnBar>
+		<clearBtnOnBar>Clear</clearBtnOnBar>
 	</KryptoView>
+	<PrimeTestController>
+		<FalseKryptoTypes>Kryptotypes are different. You have to enter the same Kryptotypes. e.g. Z, Z</FalseKryptoTypes>
+	</PrimeTestController>
 	<HammingCode>
         <encodeException>SourceCodeWord or generatorMatrix is not calculated yet.</encodeException>
 		<detectErrorNullException>Syndrom is not calculated yet.</detectErrorNullException>
@@ -42,7 +48,67 @@
 		<hammingDistanceRowException>Only matrices with one row are allowed!</hammingDistanceRowException>
 		<hammingDistanceColumnException>Matrices should have same ColumnCapacity!</hammingDistanceColumnException>
     </HammingCode>
+	<HammingFrames>
+		<NoHammingCodeElement>No HammingCode element found</NoHammingCodeElement>
+	</HammingFrames>
+	<CreateHammingErrorFrame>
+		<ErrorProbability>Probability of errorCreation (0-1)</ErrorProbability>
+		<ReturnedProbability>generated errors with probability of </ReturnedProbability>
+	</CreateHammingErrorFrame>
+	<DecodeHammingCodeFrame>
+		<correctWordCeckbox>correct encoded word?</correctWordCeckbox>
+		<NoErrorsCreated>No errors created</NoErrorsCreated>
+		<DecodedWord>decoded word: </DecodedWord>
+		<ErrorInEncodedWord>\nError in encoded word </ErrorInEncodedWord>
+		<AtPosition> at position </AtPosition>
+		<CorrectedDecodedWord>\ncorrected decoded word: </CorrectedDecodedWord>
+	</DecodeHammingCodeFrame>
+	<EncodeHammingCodeFrame>
+		<EncodedWord>encoded word: </EncodedWord>
+	</EncodeHammingCodeFrame>
+	<HammingDistanceFrame>
+		<Vector>Vector</Vector>
+	</HammingDistanceFrame>
+	<HammingSyndromFrame>
+		<Syndrom>Syndrom</Syndrom>
+	</HammingSyndromFrame>
+	<HammingWeightFrame>
+		<Vector>Vector</Vector>
+		<VectorWeight>Vectorweight</VectorWeight>
+	</HammingWeightFrame>
+	<InitHammingFrame>
+		<SourceCodeword>source codeword</SourceCodeword>
+		<GeneratorMatrix>generator matrix</GeneratorMatrix>
+		<ControlMatrix>control matrix</ControlMatrix>
+		<NoSourceCodeword>no source codeword</NoSourceCodeword>
+		<InitHammingCodeReturn>Init Hamming Code with source codeword </InitHammingCodeReturn>
+	</InitHammingFrame>
+	<GCDFrame>
+		<GCD>GCD</GCD>
+	</GCDFrame>
+	<PrimeFieldElementFrame>
+		<Value>Value</Value>
+		<Base>Base</Base>
+		<PrimeFieldReturn1>PrimeField with base = </PrimeFieldReturn1>
+		<PrimeFieldReturn2> and value = </PrimeFieldReturn2>
+	</PrimeFieldElementFrame>
 	<General>
 		<UnsupportedOperationException>Not supported yet.</UnsupportedOperationException>
 	</General>
+	<Kit>
+		<DropOnSameFrame>Drop on same frame not possible!</DropOnSameFrame>
+		<OnRecursion>Recursion not possible!</OnRecursion>
+		<ConnectionAlreadyExists>Connection already exists!</ConnectionAlreadyExists>
+		<WrongData>Wrong data!</WrongData>
+	</Kit>
+	<Executor>
+		<ComputeTime>compute time</ComputeTime>
+		<InWindow>In window</InWindow>
+		<MissingParamException>Missing parameter in window</MissingParamException>
+		<WrongParam>Wrong parameter in window</WrongParam>
+		<UndefinedException>Undefined Exception in Window</UndefinedException>
+	</Executor>
+	<ResultFrame>
+		<Result>Result</Result>
+	</ResultFrame>
  </languagefile>
