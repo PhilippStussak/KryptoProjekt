@@ -271,7 +271,7 @@ public class Kit extends JInternalFrame {
                 Transferable ta = dtde.getTransferable();
                 if (ta.isDataFlavorSupported(DataFlavor.stringFlavor)) {
                     if (parent == origin) {
-                        JOptionPane.showMessageDialog(null, xmlReader.getTagElement("Kit", "DropOnsameFrame"));
+                        JOptionPane.showMessageDialog(null, xmlReader.getTagElement("Kit", "DropOnSameFrame"));
                     } else {
                         Connection con = new Connection(parent, origin, this);
                         Connection old = handler.removeSameTarget(con);
