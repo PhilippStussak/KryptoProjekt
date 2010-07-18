@@ -30,7 +30,7 @@ public class PrimeTestController {
 
 
     //Fermat Test
-    public static ArrayList<Triple<Boolean, Double, LinkedList<String>>> primeTestFermat(ArrayList<KryptoType> bases, ArrayList<KryptoType> moduls) throws RuntimeException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException{
+    public static ArrayList<Triple<Boolean, Double, LinkedList<String>>> primeTestFermat(ArrayList<KryptoType> bases, ArrayList<KryptoType> moduls, boolean calcProb) throws RuntimeException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException{
         if (bases.get(0).getClass().equals(Z.class) && (bases.get(0).getClass().equals(Z.class))){
             ArrayList<Z> basesZ = new ArrayList<Z>();
             ArrayList<Z> modulsZ = new ArrayList<Z>();
@@ -41,7 +41,7 @@ public class PrimeTestController {
             for(KryptoType<Z> modul : moduls){
                 modulsZ.add((Z)modul);
             }
-            return fermatZPrimeTest(new FermatZ(basesZ, modulsZ, true));
+            return fermatZPrimeTest(new FermatZ(basesZ, modulsZ, calcProb));
             
         }else if (bases.get(0).getClass().equals(Polynom.class) && (bases.get(0).getClass().equals(Polynom.class))){
             throw new UnsupportedOperationException("Not supported yet.");

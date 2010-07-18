@@ -15,16 +15,22 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Insets;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.regex.Pattern;
+import javax.swing.border.Border;
+import javax.swing.BorderFactory;
+import javax.swing.JCheckBox;
 import javax.swing.JTextPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JLabel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
 import javax.swing.text.Style;
@@ -36,12 +42,17 @@ import java.util.ArrayList;
 import kryptoprojekt.model.KryptoType;
 import kryptoprojekt.model.Z;
 import kryptoprojekt.model.PrimeTest;
+import kryptoprojekt.model.PrimeUtility;
 import kryptoprojekt.model.FermatZ;
 import kryptoprojekt.model.Triple;
 import kryptoprojekt.controller.PrimeTestController;
 import java.lang.reflect.InvocationTargetException;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 import kryptoprojekt.controller.LogicValidator;
 
 /**
@@ -50,13 +61,18 @@ import kryptoprojekt.controller.LogicValidator;
  */
 public class FermatFrame extends Kit {
 
+    private JCheckBox probabilityCB;
     private DropTextField basesTextField = getDropTextField();
     private DropTextField moduloTextField = getDropTextField();
+    private JLabel randomSPLabel;
+    private JSpinner randomNumberSP;
     private LinkedList<String> extendList;
     private LinkedList<LinkedList<String>> extension;
+    private LinkedList<Integer> probBases;
     private StringBuilder outputWindow;
     private StyledDocument doc;
     private Font fontSettings;
+    private boolean calcProb; //ob die Wahrscheinlichkeit beim FermatTest berechnet werden soll
     private boolean correctArguments; //zeigt an, ob für Basen und Moduls korrekte Werte übergeben wurden
 
     /** Creates new form FermatFrame */
@@ -76,31 +92,35 @@ public class FermatFrame extends Kit {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
+        jPanelPrime = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
+        jPanelSettings = new javax.swing.JPanel();
+        jPanelDropList = new javax.swing.JPanel();
 
         setClosable(true);
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDoubleBuffered(true);
         setName("Form"); // NOI18N
+        setPreferredSize(new java.awt.Dimension(280, 190));
 
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(kryptoprojekt.KryptoProjektApp.class).getContext().getResourceMap(FermatFrame.class);
         jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
         jLabel1.setName("jLabel1"); // NOI18N
 
-        jPanel1.setName("jPanel1"); // NOI18N
+        jPanelPrime.setName("jPanelPrime"); // NOI18N
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 380, Short.MAX_VALUE)
+        javax.swing.GroupLayout jPanelPrimeLayout = new javax.swing.GroupLayout(jPanelPrime);
+        jPanelPrime.setLayout(jPanelPrimeLayout);
+        jPanelPrimeLayout.setHorizontalGroup(
+            jPanelPrimeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 78, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 257, Short.MAX_VALUE)
+        jPanelPrimeLayout.setVerticalGroup(
+            jPanelPrimeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 80, Short.MAX_VALUE)
         );
 
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
+        jButton1.setAlignmentX(0.5F);
         jButton1.setName("jButton1"); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -108,30 +128,66 @@ public class FermatFrame extends Kit {
             }
         });
 
+        jPanelSettings.setMinimumSize(new java.awt.Dimension(0, 0));
+        jPanelSettings.setName("jPanelSettings"); // NOI18N
+        jPanelSettings.setPreferredSize(new java.awt.Dimension(135, 183));
+
+        javax.swing.GroupLayout jPanelSettingsLayout = new javax.swing.GroupLayout(jPanelSettings);
+        jPanelSettings.setLayout(jPanelSettingsLayout);
+        jPanelSettingsLayout.setHorizontalGroup(
+            jPanelSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 166, Short.MAX_VALUE)
+        );
+        jPanelSettingsLayout.setVerticalGroup(
+            jPanelSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 80, Short.MAX_VALUE)
+        );
+
+        jPanelDropList.setName("jPanelDropList"); // NOI18N
+
+        javax.swing.GroupLayout jPanelDropListLayout = new javax.swing.GroupLayout(jPanelDropList);
+        jPanelDropList.setLayout(jPanelDropListLayout);
+        jPanelDropListLayout.setHorizontalGroup(
+            jPanelDropListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 250, Short.MAX_VALUE)
+        );
+        jPanelDropListLayout.setVerticalGroup(
+            jPanelDropListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 13, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanelDropList, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 258, Short.MAX_VALUE)
-                        .addComponent(jButton1)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jPanelPrime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton1)
+                            .addComponent(jPanelSettings, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jButton1)))
+                        .addComponent(jButton1))
+                    .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanelPrime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelSettings, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanelDropList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -182,8 +238,11 @@ public class FermatFrame extends Kit {
     }
 
     private void initLogicComponents() {
-        jPanel1.setLayout(new GridBagLayout());
+        jPanelPrime.setLayout(new GridBagLayout());
+        jPanelSettings.setLayout(new GridBagLayout());
+        jPanelDropList.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
+        this.setSize(260, 210);
 
         basesTextField.addKeyListener(new KeyListener() {
 
@@ -208,7 +267,7 @@ public class FermatFrame extends Kit {
                         k = -1;
                         if(dashPos >0 && dashPos < numbSequence.length()-1){
                             if(LogicValidator.isPosInteger(String.valueOf(numbSequence.charAt(dashPos-1))) && LogicValidator.isPosInteger(String.valueOf(numbSequence.charAt(dashPos+1)))){
-                            numbSequence = numbSequence.deleteCharAt(dashPos);
+                            numbSequence = numbSequence.deleteCharAt(dashPos); //löscht "-" Zeichen und daher wird positive Int Zahl erkannt
                                  k = dashPos;
                             }else{
                                 dashPos = -1; //wrong parameter
@@ -291,42 +350,188 @@ public class FermatFrame extends Kit {
             }
         });
 
-        c.fill = GridBagConstraints.BOTH;
+   //JPanelPrime
+      //prime input
+        c = new GridBagConstraints();
+        c.fill = GridBagConstraints.NONE;
+        c.anchor = GridBagConstraints.NORTHWEST;
         c.gridx = 0;
         c.gridy = 0;
-        JLabel l = new JLabel();
-        l.setText("Base:");
-        jPanel1.add(l, c);
+        c.weightx = 0;
+        c.weighty = 0;
+        JLabel primeLabel = new JLabel();
+        primeLabel.setText("check whether prime:");
+        //primeLabel.setText("mod:");
+        jPanelPrime.add(primeLabel, c);
 
-        c.weightx = 0.2;
-        c.fill = GridBagConstraints.BOTH;
+        
+        c = new GridBagConstraints();
+        c.ipadx = 80;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.anchor = GridBagConstraints.NORTHWEST;
+        c.weightx = 0.5;
+        c.weighty = 0;
         c.gridx = 0;
         c.gridy = 1;
-        jPanel1.add(basesTextField, c);
+        jPanelPrime.add(moduloTextField, c);
 
-        c.weightx = 0.4;
-        c.fill = GridBagConstraints.BOTH;
+      //base input
+        c = new GridBagConstraints();
+        c.fill = GridBagConstraints.NONE;
+        c.anchor = GridBagConstraints.NORTHWEST;
+        c.insets = new Insets(5,0,0,0);
         c.gridx = 0;
         c.gridy = 2;
-        JLabel l2 = new JLabel();
-        l2.setText("Modul:");
-        jPanel1.add(l2, c);
+        c.weightx = 0;
+        c.weighty = 0;
+        JLabel baseLabel = new JLabel();
+        baseLabel.setText("bases:");
+        jPanelPrime.add(baseLabel, c);
 
-        c.weightx = 0.2;
-        c.fill = GridBagConstraints.BOTH;
+        c = new GridBagConstraints();
+        c.ipadx = 80;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.anchor = GridBagConstraints.NORTHWEST;
+        c.weightx = 0.5;
+        c.weighty = 0.5;
         c.gridx = 0;
         c.gridy = 3;
-        jPanel1.add(moduloTextField, c);
+        jPanelPrime.add(basesTextField, c);
 
+   //JPanelDropList
+      //drop List
+        c = new GridBagConstraints();
         c.weightx = 1;
         c.fill = GridBagConstraints.BOTH;
-        c.gridwidth = 3;
+        c.gridwidth = 1;
         c.gridx = 0;
         c.gridy = 4;
-        jPanel1.add(getDragList(new Object[]{getTitle() + "_primeFermat"}), c);
+        jPanelDropList.add(getDragList(new Object[]{getTitle() + "_primeFermat"}), c);
 
-        this.setSize(250, 170);
+   //JPanelSettings
+        Border settingsBorder = BorderFactory.createTitledBorder("settings");
+        jPanelSettings.setBorder(settingsBorder);
+
+        /*
+        //probability Label
+        c = new GridBagConstraints();
+        c.fill = GridBagConstraints.NONE;
+        c.weightx = 0.5;
+        c.anchor = GridBagConstraints.NORTHWEST;
+       // c.gridwidth = 1;
+        //c.gridheight = 0;
+        c.gridx = 0;
+        c.gridy = 0;
+        JLabel probabilityLabel = new JLabel();
+        probabilityLabel.setFont(probabilityLabel.getFont().deriveFont(probabilityLabel.getFont().getSize2D()-0.6f));
+        probabilityLabel.setText("calc. probability");
+        probabilityLabel.setHorizontalAlignment(JLabel.LEFT);
+        jPanelSettings.add(probabilityLabel, c);
+         * */
+         
+         
+        //checkbox Probability
+        c = new GridBagConstraints();
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.anchor = GridBagConstraints.NORTHWEST;
+        c.gridwidth = 2;
+        c.gridx = 0;
+        c.gridy = 0;
+        c.weightx = 0.5;
+        c.weighty = 0;
+        probabilityCB = new JCheckBox("calc. probability", true);
+        calcProb = true;
+        probabilityCB.setFont(probabilityCB.getFont().deriveFont(probabilityCB.getFont().getSize2D()-0.6f));
+        probabilityCB.setHorizontalAlignment(JLabel.LEFT);
+        probabilityCB.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent e) {
+                if(e.getStateChange() == ItemEvent.DESELECTED){
+                    calcProb = false;
+                }else{
+                    calcProb = true;
+                }
+            }
+        });
+        jPanelSettings.add(probabilityCB, c);
+
+        //random spinner label number
+        c = new GridBagConstraints();
+        c.fill = GridBagConstraints.NONE;
+        c.anchor = GridBagConstraints.NORTHWEST;
+        c.insets = new Insets(3,20,0,0);
+        c.gridx = 0;
+        c.gridy = 2;
+        c.weightx = 0;
+        c.weighty = 0.5;
+        randomSPLabel = new JLabel();
+        randomSPLabel.setFont(randomSPLabel.getFont().deriveFont(randomSPLabel.getFont().getSize2D()-0.6f));
+        randomSPLabel.setText("number");
+        randomSPLabel.setEnabled(false);
+        jPanelSettings.add(randomSPLabel, c);
+
+        //spinner number of random bases
+        c = new GridBagConstraints();
+        c.ipadx = 20;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.anchor = GridBagConstraints.NORTHWEST;
+        c.insets = new Insets(0,3,0,0);
+        c.gridx = 1;
+        c.gridy = 2;
+        c.weightx = 0.5;
+        c.weighty = 0;
+        randomNumberSP = new JSpinner(new SpinnerNumberModel(3, 1, 9999, 1));
+        randomNumberSP.setFont(randomNumberSP.getFont().deriveFont(randomNumberSP.getFont().getSize2D()-0.6f));
+        randomNumberSP.setEnabled(false);
+        randomNumberSP.addChangeListener(new ChangeListener(){
+            public void stateChanged(ChangeEvent e){
+                LinkedList<KryptoType> moduls = new LinkedList<KryptoType>(splitInputToZ(moduloTextField.getText()));
+                if(!moduls.isEmpty()){
+                    Integer zahl = (Integer)randomNumberSP.getValue();
+                    basesTextField.setText("");
+                    if(zahl >0 && zahl<=9999){
+                        int maxProbNumbers = Integer.parseInt(moduls.getFirst().toString())-2; //ACHTUNG, BEI DER PRIMZAHL 2 MUSS MAN IRGENDWIE SICH WAS EINFALLEN LASSEN. DA VIELLEICHT BASIS 1 ÜBERGEBEN
+                        zahl = zahl<maxProbNumbers ? zahl : maxProbNumbers;
+                        probBases = new LinkedList<Integer>(PrimeUtility.getRandomNumber(2, Integer.parseInt(moduls.getFirst().toString()), zahl));
+                        StringBuilder probBasesString = new StringBuilder("");
+                        for (int i = 0; i<probBases.size(); i++){
+                            probBasesString.append(probBases.get(i)+", ");
+                        }
+                        basesTextField.setText(probBasesString.toString());
+                    }
+                }
+            }
+        });
+        jPanelSettings.add(randomNumberSP, c);
+
+        //checkbox random bases
+        c = new GridBagConstraints();
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.anchor = GridBagConstraints.NORTHWEST;
+        c.gridwidth = 2;
+        c.gridx = 0;
+        c.gridy = 1;
+        c.weightx = 0.5;
+        c.weighty = 0;
+        JCheckBox randomBasesCB = new JCheckBox("random bases", false);
+        randomBasesCB.setFont(randomBasesCB.getFont().deriveFont(randomBasesCB.getFont().getSize2D()-0.6f));
+        randomBasesCB.setHorizontalAlignment(JLabel.LEFT);
+        randomBasesCB.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent e) {
+                if(e.getStateChange() == ItemEvent.SELECTED){
+                    basesTextField.setEnabled(false);
+                    basesTextField.setText("");
+                    randomSPLabel.setEnabled(true);
+                    randomNumberSP.setEnabled(true);
+                }else{
+                    basesTextField.setEnabled(true);
+                    randomSPLabel.setEnabled(false);
+                    randomNumberSP.setEnabled(false);
+                }
+            }
+        });
+        jPanelSettings.add(randomBasesCB, c);
     }
+
 
     //löscht den übergebenen char aus dem übergebenen String raus
     private StringBuilder deleteChar(StringBuilder originalString, String delChar, int fromIndex){
@@ -414,7 +619,7 @@ public class FermatFrame extends Kit {
             moduls = splitInputToZ(moduloTextField.getText());        
 
         try{
-            result = PrimeTestController.primeTestFermat(basen, moduls);
+            result = PrimeTestController.primeTestFermat(basen, moduls, calcProb);
         }catch(RuntimeException e){
             return e.getMessage();
         }catch(NoSuchMethodException e){
@@ -433,17 +638,20 @@ public class FermatFrame extends Kit {
         String probability = "";
         for(Triple<Boolean, Double, LinkedList<String>> output: result){
             if (output.second() == -2.0){
-                probability = "undefined";
-            }else{
+                probability = "    probability = undefined";
+            }else if(output.second() == -1.0){
+                probability = "";
+            }
+            else{
                 double probDouble = output.second()*100;
-                probability = String.valueOf(probDouble)+"%";
+                probability = "    probability = " +String.valueOf(probDouble)+"%";
             }                    
             extendList = output.third(); //erhält von der jeweiligen Primzahl die Zwischenschritte
             extendList.addFirst(moduls.get(i)+ ":");
             extendList.addLast("result");
-            extendList.addLast(moduls.get(i)+ " is prime number: " +output.first()+ "    probability = " +probability);
+            extendList.addLast(moduls.get(i)+ " is prime number: " +output.first() +probability);
             extension.add(extendList);
-
+            
             outputWindow.append(moduls.get(i) + ": "  + result.get(i).first()+ "\n");
             results.put(getTitle() + "_primeFermat", output.first());
             i++;
@@ -454,7 +662,9 @@ public class FermatFrame extends Kit {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanelDropList;
+    private javax.swing.JPanel jPanelPrime;
+    private javax.swing.JPanel jPanelSettings;
     // End of variables declaration//GEN-END:variables
 
 

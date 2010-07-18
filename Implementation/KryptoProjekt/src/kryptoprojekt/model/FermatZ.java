@@ -19,8 +19,8 @@ public class FermatZ extends FermatTest<Z>{
      * Erzeugt ein Fermat-Test Objekt für den PrimeType Z.
      * Erwartet eine beliebige Liste mit Basen und Zahlen die auf Primzahleigenschaft getestet werden.
      */
-    public FermatZ(Collection<Z> bases, Collection<Z> moduls, boolean calcProp){
-        super(bases, moduls, calcProp);
+    public FermatZ(Collection<Z> bases, Collection<Z> moduls, boolean calcProb){
+        super(bases, moduls, calcProb);
     }
 
 
@@ -33,21 +33,26 @@ public class FermatZ extends FermatTest<Z>{
             for (Z checkPrime : moduls){
                 boolean isPrime = fermatCheck(checkPrime);
                     if (isPrime){
-                        if (calcProp) {
+                        if (calcProb) {
                             //Postcondition
-                            assert checkPrimeArgAnswer == true && isPrime == true && calcProp == true: "checkPrimeArgAnswer or isPrime have a false state: checkPrimeArgAnswer = " +checkPrimeArgAnswer+ ", isPrime = " +isPrime;
+                            assert checkPrimeArgAnswer == true && isPrime == true && calcProb == true: "checkPrimeArgAnswer or isPrime have a false state: checkPrimeArgAnswer = " +checkPrimeArgAnswer+ ", isPrime = " +isPrime;
                             primeResult.add(new Triple<Boolean, Double, LinkedList<String>>(isPrime, probability, intermediateValues));
                             continue;
                         } else{
-                            assert checkPrimeArgAnswer == true && isPrime == true && calcProp == false: "checkPrimeArgAnswer or isPrime have a false state: checkPrimeArgAnswer = " +checkPrimeArgAnswer+ ", isPrime = " +isPrime;
+                            assert checkPrimeArgAnswer == true && isPrime == true && calcProb == false: "checkPrimeArgAnswer or isPrime have a false state: checkPrimeArgAnswer = " +checkPrimeArgAnswer+ ", isPrime = " +isPrime;
                             primeResult.add(new Triple<Boolean, Double, LinkedList<String>>(isPrime, -1.0, intermediateValues)); //es sollte keine Wahrscheinlichkeit berechnet werden
                             continue;
                         }
                     } else{
                         //Postcondition
                         assert checkPrimeArgAnswer == true && isPrime == false: "checkPrimeArgAnswer or isPrime have a false state: checkPrimeArgAnswer = " +checkPrimeArgAnswer+ ", isPrime = " +isPrime;
-                        primeResult.add(new Triple<Boolean, Double, LinkedList<String>>(false, 1.0, intermediateValues));
-                        continue;
+                        if(calcProb){
+                            primeResult.add(new Triple<Boolean, Double, LinkedList<String>>(false, 1.0, intermediateValues));
+                            continue;
+                        }else{
+                            primeResult.add(new Triple<Boolean, Double, LinkedList<String>>(false, -1.0, intermediateValues));
+                            continue;
+                        }
                     }
             }
             return primeResult;
@@ -67,13 +72,13 @@ public class FermatZ extends FermatTest<Z>{
             for (Z checkPrime : moduls){
                 boolean isPrime = fermatCheck(checkPrime);
                     if (isPrime){
-                        if (calcProp) {
+                        if (calcProb) {
                             //Postcondition
-                            assert checkPrimeArgAnswer == true && isPrime == true && calcProp == true: "checkPrimeArgAnswer or isPrime have a false state: checkPrimeArgAnswer = " +checkPrimeArgAnswer+ ", isPrime = " +isPrime;
+                            assert checkPrimeArgAnswer == true && isPrime == true && calcProb == true: "checkPrimeArgAnswer or isPrime have a false state: checkPrimeArgAnswer = " +checkPrimeArgAnswer+ ", isPrime = " +isPrime;
                             primeResult.add(new Tuple<Boolean, Double>(isPrime, probability));
                             continue;
                         } else{
-                            assert checkPrimeArgAnswer == true && isPrime == true && calcProp == false: "checkPrimeArgAnswer or isPrime have a false state: checkPrimeArgAnswer = " +checkPrimeArgAnswer+ ", isPrime = " +isPrime;
+                            assert checkPrimeArgAnswer == true && isPrime == true && calcProb == false: "checkPrimeArgAnswer or isPrime have a false state: checkPrimeArgAnswer = " +checkPrimeArgAnswer+ ", isPrime = " +isPrime;
                             primeResult.add(new Tuple<Boolean, Double>(isPrime, -1.0)); //es sollte keine Wahrscheinlichkeit berechnet werden
                             continue;
                         }

@@ -16,14 +16,14 @@ import java.util.*;
 public abstract class MillerRabinTest <E extends KryptoType<E>> implements PrimeTest<E> {
     protected TreeSet<E> bases;
     protected TreeSet<E> moduls;
-    protected boolean calcProp; //ob die Wahrscheinlichkeit berechnet werden soll
+    protected boolean calcProb; //ob die Wahrscheinlichkeit berechnet werden soll
     protected static final double probabilityValue = 0.25; //Wahrscheinlichkeitsfaktor das es sich um eine Primzahl handelt
 
 
-    protected MillerRabinTest(Collection<E> bases, Collection<E> modul, boolean calcProp) {
+    protected MillerRabinTest(Collection<E> bases, Collection<E> modul, boolean calcProb) {
         this.bases = new TreeSet<E>(bases);
         this.moduls = new TreeSet<E> (modul);
-        this.calcProp = calcProp;
+        this.calcProb = calcProb;
     }
 
     /* Bestimmt die Faktoren einer geraden Zahl und gibt die Potenz zur 2 und den ungeraden Faktor aus.
@@ -76,8 +76,8 @@ public abstract class MillerRabinTest <E extends KryptoType<E>> implements Prime
             probability = probability * probabilityValue;
         }
         //Postcondition
-        double assertProp; //Hilfsvariable für die assert Anweisung
-        assert (assertProp = Math.pow(probabilityValue, bases.size())) == probability: "Inkonsistenz bei probability Werten: probability = " +probability+ ", assertProp = " +assertProp;
+        double assertProb; //Hilfsvariable für die assert Anweisung
+        assert (assertProb = Math.pow(probabilityValue, bases.size())) == probability: "Inkonsistenz bei probability Werten: probability = " +probability+ ", assertProb = " +assertProb;
         return probability = (1-probability);
     }
         

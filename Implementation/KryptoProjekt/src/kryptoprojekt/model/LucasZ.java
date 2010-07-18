@@ -22,9 +22,9 @@ public class LucasZ extends LucasTest<Z>{
      * 2. Argument: Tuple (Summand, Potenz vom Summanden)
      * 3. Argument: Wahrscheinlichkeit berechnet/ausgegeben, ja oder nein
      */
-    //LucasZ(Collection<Triple<Collection<Z> , Collection<Z>, Collection<Z>>> primeFactorsCollection, Collection<Tuple<Z , Z>> summandCollection, boolean calcProp){
-    public LucasZ(Collection<Triple<ArrayList<Z> , ArrayList<Z>, ArrayList<Z>>> primeFactorsCollection, Collection<Tuple<Z , Z>> summandCollection, boolean calcProp){
-        super(primeFactorsCollection, summandCollection, calcProp);
+    //LucasZ(Collection<Triple<Collection<Z> , Collection<Z>, Collection<Z>>> primeFactorsCollection, Collection<Tuple<Z , Z>> summandCollection, boolean calcProb){
+    public LucasZ(Collection<Triple<ArrayList<Z> , ArrayList<Z>, ArrayList<Z>>> primeFactorsCollection, Collection<Tuple<Z , Z>> summandCollection, boolean calcProb){
+        super(primeFactorsCollection, summandCollection, calcProb);
     }
 
     public ArrayList<Triple<Boolean, Double, LinkedList<String>>> test2(){
@@ -55,13 +55,13 @@ public class LucasZ extends LucasTest<Z>{
                     if (new FermatZ(checkBases.get(i), prime, false).test2().get(0).first()){
                         boolean isPrime = lucasCheck(checkBases.get(i), getPrimeFactors(listTuplesPrimeFactors.get(i)), prime.get(0));
                         if(isPrime){
-                            if (calcProp){
+                            if (calcProb){
                                 //Postcondition
-                                assert checkPrimeArgAnswer == true && isPrime == true && calcProp == true: "checkPrimeArgAnswer or isPrime have a false state: checkPrimeArgAnswer = " +checkPrimeArgAnswer+ ", isPrime = " +isPrime;
+                                assert checkPrimeArgAnswer == true && isPrime == true && calcProb == true: "checkPrimeArgAnswer or isPrime have a false state: checkPrimeArgAnswer = " +checkPrimeArgAnswer+ ", isPrime = " +isPrime;
                                 primeResult.add(new Tuple<Boolean, Double>(isPrime, 1.0));
                                 continue;
                             } else{
-                                assert checkPrimeArgAnswer == true && isPrime == true && calcProp == false: "checkPrimeArgAnswer or isPrime have a false state: checkPrimeArgAnswer = " +checkPrimeArgAnswer+ ", isPrime = " +isPrime;
+                                assert checkPrimeArgAnswer == true && isPrime == true && calcProb == false: "checkPrimeArgAnswer or isPrime have a false state: checkPrimeArgAnswer = " +checkPrimeArgAnswer+ ", isPrime = " +isPrime;
                                 primeResult.add(new Tuple<Boolean, Double>(isPrime, -1.0)); //es sollte keine Wahrscheinlichkeit berechnet werden
                                 continue;
                             }

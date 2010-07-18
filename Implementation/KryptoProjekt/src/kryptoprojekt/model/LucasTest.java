@@ -18,7 +18,7 @@ public abstract class LucasTest <E extends KryptoType<E>> implements PrimeTest<E
     protected Collection<Triple<ArrayList<E> , ArrayList<E>, ArrayList<E>>> primeFactorsCollection; //beinhaltet jeweils ein Triple (Bases, Faktoren und der Potenzen) von jeder Faktorenzeile
     protected Collection<Tuple<E, E>> summandCollection; //pro Primzahlenzeile sind hier der Summand und seine Potenz gespeichert
     protected Collection<ArrayList<Tuple<E, E>>> primeFactorsInListTuples; //Liste pro Primfaktorenzeile mit einer Unterliste, welche die Tuples mit den Faktoren und Potenzen enthält
-    protected boolean calcProp; //ob die Wahrscheinlichkeit berechnet werden soll
+    protected boolean calcProb; //ob die Wahrscheinlichkeit berechnet werden soll
     //protected static final double probabilityValue = 1; //Wahrscheinlichkeit ist bei Lucas Test immer 100% oder kann nicht berechnet werden (-2)
     protected static double probabilityValue;
 
@@ -33,10 +33,10 @@ public abstract class LucasTest <E extends KryptoType<E>> implements PrimeTest<E
      * alle Summanden aus der Collection einmal an die Primfaktorenliste hinten angehängt werden.
      * - 3. Argument wird angegeben ob die Wahrscheinlichkeit berechnet/ausgegeben werden soll.
      */
-    protected LucasTest(Collection<Triple<ArrayList<E> , ArrayList<E>, ArrayList<E>>> primeFactorsCollection, Collection<Tuple<E , E>> summandCollection, boolean calcProp){
+    protected LucasTest(Collection<Triple<ArrayList<E> , ArrayList<E>, ArrayList<E>>> primeFactorsCollection, Collection<Tuple<E , E>> summandCollection, boolean calcProb){
         this.primeFactorsCollection = primeFactorsCollection; //beinhaltet jeweils ein Triple (Bases, Faktoren und der Potenzen) von jeder Faktorenzeile
         this.summandCollection = summandCollection; //pro Primzahlenzeile sind hier der Summand und seine Potenz gespeichert
-        this.calcProp = calcProp;
+        this.calcProb = calcProb;
         if (!checkSummandsOne(summandCollection)){
             lucastTestCompatibleFactoization(primeFactorsCollection); //not supported yet
         }

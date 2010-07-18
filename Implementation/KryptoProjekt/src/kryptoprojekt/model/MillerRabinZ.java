@@ -20,8 +20,8 @@ public class MillerRabinZ extends MillerRabinTest<Z>{
          * Erzeugt ein Miller-Rabin-Test Objekt für den PrimeType Z.
          * Erwartet eine beliebige Liste mit Basen und Zahlen die auf Primzahleigenschaft getestet werden sollen.
         */
-        public MillerRabinZ(Collection<Z> bases, Collection<Z> moduls, boolean calcProp){
-            super(bases, moduls, calcProp);
+        public MillerRabinZ(Collection<Z> bases, Collection<Z> moduls, boolean calcProb){
+            super(bases, moduls, calcProb);
         }
 
         public ArrayList<Triple<Boolean, Double, LinkedList<String>>> test2(){
@@ -49,13 +49,13 @@ public class MillerRabinZ extends MillerRabinTest<Z>{
                     //Ende if, welche ich vielleicht entfernen möchte
                     boolean isPrime = millerRabinCheck(checkPrime);
                     if (isPrime){
-                        if (calcProp) {
+                        if (calcProb) {
                             //Postcondition
-                            assert checkPrimeArgAnswer == true && isPrime == true && calcProp == true: "checkPrimeArgAnswer or isPrime have a false state: checkPrimeArgAnswer = " +checkPrimeArgAnswer+ ", isPrime = " +isPrime;
+                            assert checkPrimeArgAnswer == true && isPrime == true && calcProb == true: "checkPrimeArgAnswer or isPrime have a false state: checkPrimeArgAnswer = " +checkPrimeArgAnswer+ ", isPrime = " +isPrime;
                             primeResult.add(new Tuple<Boolean, Double>(isPrime, probability));
                             continue;                            
                         } else{
-                            assert checkPrimeArgAnswer == true && isPrime == true && calcProp == false: "checkPrimeArgAnswer or isPrime have a false state: checkPrimeArgAnswer = " +checkPrimeArgAnswer+ ", isPrime = " +isPrime;
+                            assert checkPrimeArgAnswer == true && isPrime == true && calcProb == false: "checkPrimeArgAnswer or isPrime have a false state: checkPrimeArgAnswer = " +checkPrimeArgAnswer+ ", isPrime = " +isPrime;
                             primeResult.add(new Tuple<Boolean, Double>(isPrime, -1.0)); //es sollte keine Wahrscheinlichkeit berechnet werden
                             continue;
                         }
