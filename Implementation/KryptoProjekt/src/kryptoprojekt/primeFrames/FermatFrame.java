@@ -16,6 +16,7 @@ import java.awt.GridBagLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Insets;
+import java.awt.Toolkit;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.regex.Pattern;
@@ -116,7 +117,7 @@ public class FermatFrame extends Kit {
         );
         jPanelPrimeLayout.setVerticalGroup(
             jPanelPrimeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 80, Short.MAX_VALUE)
+            .addGap(0, 105, Short.MAX_VALUE)
         );
 
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
@@ -128,7 +129,7 @@ public class FermatFrame extends Kit {
             }
         });
 
-        jPanelSettings.setMinimumSize(new java.awt.Dimension(0, 0));
+        jPanelSettings.setMinimumSize(new java.awt.Dimension(120, 97));
         jPanelSettings.setName("jPanelSettings"); // NOI18N
         jPanelSettings.setPreferredSize(new java.awt.Dimension(135, 183));
 
@@ -140,7 +141,7 @@ public class FermatFrame extends Kit {
         );
         jPanelSettingsLayout.setVerticalGroup(
             jPanelSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 80, Short.MAX_VALUE)
+            .addGap(0, 105, Short.MAX_VALUE)
         );
 
         jPanelDropList.setName("jPanelDropList"); // NOI18N
@@ -185,7 +186,7 @@ public class FermatFrame extends Kit {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanelPrime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanelSettings, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE))
+                    .addComponent(jPanelSettings, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanelDropList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
