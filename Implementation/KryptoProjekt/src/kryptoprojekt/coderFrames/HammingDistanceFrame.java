@@ -34,6 +34,7 @@ public class HammingDistanceFrame extends Kit {
         super(handler);
         initComponents();
         initLogicComponents();
+        jLabel1.setText(Kit.xmlReader.getTagElement("HammingDistanceFrame", "HeaderLabel"));
     }
 
     private void initLogicComponents() {
@@ -44,13 +45,13 @@ public class HammingDistanceFrame extends Kit {
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
         c.gridy = 0;
-        jPanel1.add(new JLabel("Vector 1:"), c);
+        jPanel1.add(new JLabel(Kit.xmlReader.getTagElement("HammingDistanceFrame", "Vector") + " 1:"), c);
 
         c.weightx = 0.5;
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 2;
         c.gridy = 0;
-        jPanel1.add(new JLabel("Vektor 2:"), c);
+        jPanel1.add(new JLabel(Kit.xmlReader.getTagElement("HammingDistanceFrame", "Vector") + " 2:"), c);
 
         c.weightx = 0.495;
         c.fill = GridBagConstraints.BOTH;
@@ -82,11 +83,15 @@ public class HammingDistanceFrame extends Kit {
 
     @Override
     public String execute() {
+        try {
         Object result = CoderController.calculateHammingDistance(
                             (Matrix<PrimeFieldElement>) textVector1.getResult(),
                             (Matrix<PrimeFieldElement>) textVector2.getResult());
         results.put(getTitle() + "_distance", result);
         return result.toString();
+        } catch (IllegalArgumentException e) {
+            return Kit.xmlReader.getTagElement("HammingCode", e.getMessage());
+        }
     }
 
     /** This method is called from within the constructor to

@@ -25,6 +25,7 @@ import java.util.*;
  */
 public class PrimeTestController {
 
+    private static XMLReader xml = XMLReader.getInstance("./languageFiles/english.xml");
     private PrimeTestController() {
     }
 
@@ -44,9 +45,9 @@ public class PrimeTestController {
             return fermatZPrimeTest(new FermatZ(basesZ, modulsZ, calcProb));
             
         }else if (bases.get(0).getClass().equals(Polynom.class) && (bases.get(0).getClass().equals(Polynom.class))){
-            throw new UnsupportedOperationException("Not supported yet.");
+            throw new UnsupportedOperationException(xml.getTagElement("General", "UnsupportedOperationException"));
         }else{
-            throw new IllegalArgumentException("Kryptotypes are different. You have to enter the same Kryptotypes. e.g. Z, Z");
+            throw new IllegalArgumentException(xml.getTagElement("PrimeTestController", "FalseKryptoTypes"));
         }
     }
 
@@ -55,7 +56,7 @@ public class PrimeTestController {
     }
 
     public static ArrayList<Triple<Boolean, Double, LinkedList<String>>> fermatPolynomTest(FermatZ fermatZArguments) throws RuntimeException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException{
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException(xml.getTagElement("General", "UnsupportedOperationException"));
     }
 
 
@@ -74,9 +75,9 @@ public class PrimeTestController {
             return rabinZPrimeTest(new MillerRabinZ(basesZ, modulsZ, true));
 
         }else if (bases.get(0).getClass().equals(Polynom.class) && (bases.get(0).getClass().equals(Polynom.class))){
-            throw new UnsupportedOperationException("Not supported yet.");
+            throw new UnsupportedOperationException(xml.getTagElement("General", "UnsupportedOperationException"));
         }else{
-            throw new IllegalArgumentException("Kryptotypes are different. You have to enter the same Kryptotypes. e.g. Z, Z");
+            throw new IllegalArgumentException(xml.getTagElement("PrimeTestController", "FalseKryptoTypes"));
         }
     }
 
@@ -85,7 +86,7 @@ public class PrimeTestController {
     }
 
     public static ArrayList<Tuple<Boolean, Double>> rabintPolynomTest(MillerRabinZ fermatZArguments) throws RuntimeException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException{
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException(xml.getTagElement("General", "UnsupportedOperationException"));
     }
 
 
@@ -97,9 +98,9 @@ public class PrimeTestController {
                 return lucasZPrimeTest(new LucasZ(primeFactorsCollection, summandCollection, true));
                 //return rabinZPrimeTest(new LucasZ(basesZ, modulsZ, true));
             } else if(triples.first().getClass().equals(Z.class) && triples.second().getClass().equals(Z.class)){
-                throw new UnsupportedOperationException("Not supported yet.");
+                throw new UnsupportedOperationException(xml.getTagElement("General", "UnsupportedOperationException"));
             }else{
-                throw new IllegalArgumentException("Kryptotypes are different. You have to enter the same Kryptotypes. e.g. Z, Z");
+                throw new IllegalArgumentException(xml.getTagElement("PrimeTestController", "FalseKryptoTypes"));
             }
         }
         throw new IllegalArgumentException("This line should never been reached");
@@ -111,7 +112,7 @@ public class PrimeTestController {
     }
 
     public static ArrayList<Tuple<Boolean, Double>> lucasPolynomTest(LucasZ fermatZArguments) throws RuntimeException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException{
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException(xml.getTagElement("General", "UnsupportedOperationException"));
     }
 
 }

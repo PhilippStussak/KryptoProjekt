@@ -29,6 +29,7 @@ public class ZFrame extends Kit {
         super(handler);
         initComponents();
         initLogicComponents();
+        jLabel1.setText(Kit.xmlReader.getTagElement("ZFrame", "HeaderLabel"));
     }
 
     /** This method is called from within the constructor to
@@ -118,7 +119,7 @@ public class ZFrame extends Kit {
 
     @Override
     public String execute() {
-        return "In Window " + getTitle() + ": " + results.get(getTitle() + "_number").toString();
+        return results.get(getTitle() + "_number").toString();
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -39,6 +39,7 @@ public class ModuloFrame extends Kit {
         super(handler);
         initComponents();
         initLogicComponents();
+        jLabel1.setText(Kit.xmlReader.getTagElement("ModuloFrame", "HeaderLabel"));
     }
     private void initLogicComponents() {
 
@@ -120,7 +121,7 @@ public class ModuloFrame extends Kit {
 
         KryptoType result = BasicController.calculateModulo(value1, value2);
         results.put(getTitle() + "_mod", result);
-        return "In Window " + getTitle() + ": " + value1.toString() + " mod " + value2.toString() + " = " + result.toString();
+        return value1.toString() + " mod " + value2.toString() + " = " + result.toString();
     }
 
     @SuppressWarnings("unchecked")

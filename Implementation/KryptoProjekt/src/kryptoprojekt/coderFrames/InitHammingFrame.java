@@ -32,7 +32,7 @@ import kryptoprojekt.model.PrimeFieldElement;
  *
  * @author mario
  */
-public class InitHammingJFrame extends Kit {
+public class InitHammingFrame extends Kit {
 
 
     private DropTextField textGeneratorMatrix = getDropTextField();
@@ -42,10 +42,11 @@ public class InitHammingJFrame extends Kit {
 
 
     /** Creates new form InitHammingJFrame */
-    public InitHammingJFrame(ConnectionHandler handler) {
+    public InitHammingFrame(ConnectionHandler handler) {
         super(handler);
         initComponents();
         initLogicComponents();
+        jLabel1.setText(Kit.xmlReader.getTagElement("InitHammingFrame", "HeaderLabel"));
     }
 
     /** This method is called from within the constructor to
@@ -58,6 +59,7 @@ public class InitHammingJFrame extends Kit {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -73,8 +75,12 @@ public class InitHammingJFrame extends Kit {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 310, Short.MAX_VALUE)
+            .addGap(0, 298, Short.MAX_VALUE)
         );
+
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(kryptoprojekt.KryptoProjektApp.class).getContext().getResourceMap(InitHammingFrame.class);
+        jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
+        jLabel1.setName("jLabel1"); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -82,14 +88,18 @@ public class InitHammingJFrame extends Kit {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -124,7 +134,7 @@ public class InitHammingJFrame extends Kit {
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
         c.gridy = 0;
-        jPanel1.add(new JLabel("source codeword"), c);
+        jPanel1.add(new JLabel(Kit.xmlReader.getTagElement("InitHammingFrame", "SourceCodeword")), c);
 
         c.weightx = 0.5;
         c.fill = GridBagConstraints.BOTH;
@@ -137,7 +147,7 @@ public class InitHammingJFrame extends Kit {
         c.gridwidth = 3;
         c.gridx = 0;
         c.gridy = 2;
-        jPanel1.add(getDragList(new Object[] {getTitle() + "source codeword"}), c);
+        jPanel1.add(getDragList(new Object[] {getTitle() + "_srcCodeword"}), c);
         
         textGeneratorMatrix.setEnabled(false);
 
@@ -164,7 +174,7 @@ public class InitHammingJFrame extends Kit {
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
         c.gridy = 4;
-        jPanel1.add(new JLabel("generator matrix"), c);
+        jPanel1.add(new JLabel(Kit.xmlReader.getTagElement("InitHammingFrame", "GeneratorMatrix")), c);
 
         c.weightx = 0.5;
         c.fill = GridBagConstraints.BOTH;
@@ -178,43 +188,53 @@ public class InitHammingJFrame extends Kit {
         c.gridwidth = 3;
         c.gridx = 0;
         c.gridy = 6;
-        jPanel1.add(getDragList(new Object[] {getTitle() + "generatorMatrix"}), c);
+        jPanel1.add(getDragList(new Object[] {getTitle() + "_genMatrix"}), c);
 
         c.weightx = 0.5;
         c.fill = GridBagConstraints.BOTH;
         c.gridwidth = 3;
         c.gridx = 0;
         c.gridy = 7;
-        jPanel1.add(getDragList(new Object[] {getTitle() + "HammingCode Element"}), c);
+        jPanel1.add(getDragList(new Object[] {getTitle() + "_hcElem"}), c);
         
 
-        this.setSize(180, 200);
+        this.setSize(180, 210);
     }
 
     @Override
     public String execute() {
+        try {
         Matrix<PrimeFieldElement> generatorM = null;
         HammingCode hc = null;
         String value1;
          if(!textSourceCodeword.getText().equals(""))
             value1 = textSourceCodeword.getText();
         else
-            return "no source codeword";
+            return Kit.xmlReader.getTagElement("InitHammingFrame", "NoSourceCodeword");
 
         if (enableMatrix.isSelected()) {
+            if (textGeneratorMatrix.getResult() instanceof Matrix)
+                generatorM = (Matrix<PrimeFieldElement>)textGeneratorMatrix.getResult();
+            else return Kit.xmlReader.getTagElement("InitHammingFrame", "NoMatrixElement");
             hc = CoderController.initHammingCode(true, generatorM, value1);
         } else {
             hc = CoderController.initHammingCode(false, null, value1);
         }
-        results.put(getTitle() + "HammingCode Element", hc);
-        results.put(getTitle() + "generatorMatrix", textGeneratorMatrix);
-        results.put(getTitle() + "source codeword", textSourceCodeword);
+        results.put(getTitle() + "_hcElem", hc);
+        results.put(getTitle() + "_genMatrix", textGeneratorMatrix);
+        results.put(getTitle() + "_srcCodeword", textSourceCodeword);
 
-        return "Init Hamming Code with source codeword "+hc.getSourceCodeWord()+ "\ngenerator matrix: \n"+ hc.getGeneratorMatrix().toString()+ "\ncontrol matrix: \n"+ hc.getControlMatrix().toString();
+        return "Init Hamming Code with source codeword " + hc.getSourceCodeWord() +
+                "\n" + Kit.xmlReader.getTagElement("InitHammingFrame", "GeneratorMatrix") + ": \n" + hc.getGeneratorMatrix().toString() +
+                "\n" + Kit.xmlReader.getTagElement("InitHammingFrame", "ControlMatrix") + ": \n" + hc.getControlMatrix().toString();
+        } catch (IllegalArgumentException e) {
+            return Kit.xmlReader.getTagElement("HammingCode", e.getMessage());
+        }
 
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 

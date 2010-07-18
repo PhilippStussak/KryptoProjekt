@@ -38,6 +38,7 @@ public class DivisionFrame extends Kit {
         super(handler);
         initComponents();
         initLogicComponents();
+        jLabel1.setText(Kit.xmlReader.getTagElement("DivisionFrame", "HeaderLabel"));
     }
 
     /** This method is called from within the constructor to
@@ -177,7 +178,7 @@ public class DivisionFrame extends Kit {
         KryptoType result = BasicController.division(value1, value2);
 
         results.put(getTitle() + "_quotient", result);
-        return "In Window " + getTitle() + ": " + value1.toString() + " / " + value2.toString() + " = " + result.toString();
+        return value1.toString() + " / " + value2.toString() + " = " + result.toString();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

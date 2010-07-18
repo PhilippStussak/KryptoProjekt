@@ -1,19 +1,25 @@
 TODO:
 
 -	Sprachfile Unterstützung
-		+ GUI -->Jens
-		+ Controller -->Jens
 		+ einzelnen Klassen -->jeder selbst
 		+ Kommentare auf englisch übersetzen -->jeder selbst
--	2. Menüleiste (Start, Abbruch -->Stefan, Clear)	-->Jens
 -	Exception-Handling verbessern (von Controller soll Meldung zurückkommen) -->jeder selbst
--	Progressbar -->Stefan
--	Hilfe.chm-Datei (Benutzerdokumentation)
+-	Hilfe-Datei wahrscheinlich als *.pdf (Benutzerdokumentation)
 (-	Textboxgröße statisch/fest/stabil)
--	Textfarbe muss sich zurückändern, wenn Verbindung aufgelöst wird -->Stefan
 -	Entwicklerdokumentation (Erklärung von UML-Diagramm, Baukastenprinzip, erstellen von Frames)
--	JavaDocs (Model-Package komplett) -->jeder eigene Klassen, fpr Kit -->Stefan
+-	JavaDocs (Model-Package komplett) -->jeder eigene Klassen
+(-	Maximalausrechnedauer)
+-	Zwischenergebnisse in ScrollbarPane anzeigen (zu verwendende Klasse: kryptoprojekt.ResultFrame) -->jeder selbst
+
+Erledigt:
+-	Progressbar -->Stefan
+-	Textfarbe muss sich zurückändern, wenn Verbindung aufgelöst wird -->Stefan
+-	Zwischenergebnisse in ScrollbarPane anzeigen für Basic-Frames
+-	JavaDocs für Kit --> Stefan
 -	Matrix-Bausteine -->Phil, Stefan
 -	GaloisField addTable- und multiplyTable-Frames -->Phil
-(-	Maximalausrechnedauer)
--	Zwischenergebnisse in ScrollbarPane anzeigen (Klasse schon vorhanden -> Stefan fragen) -->jeder selbst 
+-	2. Menüleiste (Start, Abbruch -->Stefan, Clear)	-->Jens
+-	Sprachfile Unterstützung
+		+ Controller -->Jens
+		+	GUI --> Jens
+-	Exception-Handling verbessern (von Controller soll Meldung zurückkommen) -->im HammingCode fertig

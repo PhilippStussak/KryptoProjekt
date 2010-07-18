@@ -105,10 +105,11 @@ public class XMLReader {
                     Element fstNmElmnt = (Element) fstNmElmntLst.item(0);
                     NodeList fstNm = fstNmElmnt.getChildNodes();
                     //returns value of element if found
-                    return fstNm.item(0).getNodeValue();
+                    if (fstNm.item(0) != null)
+                        return fstNm.item(0).getNodeValue();
                 }
         }
-        //returns null if element not found
-        return null;
+        //returns name of the element if no translation found
+        return element;
     }
 }

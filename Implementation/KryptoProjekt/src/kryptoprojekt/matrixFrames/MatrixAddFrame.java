@@ -4,41 +4,35 @@
  */
 
 /*
- * SubtractFrame.java
+ * MatrixAddFrame.java
  *
- * Created on 20.06.2010, 19:35:50
+ * Created on 18.07.2010, 14:36:32
  */
 
-package kryptoprojekt.basicFrames;
+package kryptoprojekt.matrixFrames;
 
-import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import javax.swing.JLabel;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
-import kryptoprojekt.controller.BasicController;
-import kryptoprojekt.controller.LogicValidator;
-import kryptoprojekt.model.KryptoType;
-import kryptoprojekt.model.Z;
+import kryptoprojekt.model.Matrix;
 
 /**
  *
  * @author Stefan
  */
-public class SubtractFrame extends Kit {
+public class MatrixAddFrame extends Kit {
 
     private DropTextField textField1 = getDropTextField();
     private DropTextField textField2 = getDropTextField();
 
-    /** Creates new form SubtractFrame */
-    public SubtractFrame(ConnectionHandler handler) {
+    /** Creates new form MatrixAddFrame */
+    public MatrixAddFrame(ConnectionHandler handler) {
         super(handler);
         initComponents();
         initLogicComponents();
-        jLabel1.setText(Kit.xmlReader.getTagElement("SubstractFrame", "HeaderLabel"));
+        jLabel1.setText(Kit.xmlReader.getTagElement("MatrixAddFrame", "HeaderLabel"));
     }
 
     /** This method is called from within the constructor to
@@ -54,19 +48,23 @@ public class SubtractFrame extends Kit {
         jPanel1 = new javax.swing.JPanel();
 
         setClosable(true);
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setName("Form"); // NOI18N
 
-        jLabel1.setText("subtraction");
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(kryptoprojekt.KryptoProjektApp.class).getContext().getResourceMap(MatrixAddFrame.class);
+        jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
+        jLabel1.setName("jLabel1"); // NOI18N
+
+        jPanel1.setName("jPanel1"); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 199, Short.MAX_VALUE)
+            .addGap(0, 380, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 150, Short.MAX_VALUE)
+            .addGap(0, 262, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -76,7 +74,7 @@ public class SubtractFrame extends Kit {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel1))
                 .addContainerGap())
         );
@@ -95,43 +93,12 @@ public class SubtractFrame extends Kit {
 
     private void initLogicComponents() {
 
-        textField1.addKeyListener(new KeyListener() {
-
-            public void keyTyped(KeyEvent e) {
-            }
-
-            public void keyPressed(KeyEvent e) {
-            }
-
-            public void keyReleased(KeyEvent e) {
-                if (LogicValidator.isInteger(textField1.getText())) {
-                    textField1.setForeground(Color.black);
-                } else {
-                    textField1.setForeground(Color.red);
-                }
-            }
-        });
-
-        textField2.addKeyListener(new KeyListener() {
-
-            public void keyTyped(KeyEvent e) {
-            }
-
-            public void keyPressed(KeyEvent e) {
-            }
-
-            public void keyReleased(KeyEvent e) {
-                if (LogicValidator.isInteger(textField2.getText())) {
-                    textField2.setForeground(Color.black);
-                } else {
-                    textField2.setForeground(Color.red);
-                }
-            }
-        });
-
+        textField1.setEditable(false);
+        textField2.setEditable(false);
+        
         jPanel1.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
-        c.weightx = 0.495;
+        c.weightx = 0.49;
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
         c.gridy = 0;
@@ -141,9 +108,9 @@ public class SubtractFrame extends Kit {
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 1;
         c.gridy = 0;
-        jPanel1.add(new JLabel("-"), c);
+        jPanel1.add(new JLabel("+"), c);
 
-        c.weightx = 0.495;
+        c.weightx = 0.49;
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 2;
         c.gridy = 0;
@@ -154,25 +121,16 @@ public class SubtractFrame extends Kit {
         c.gridwidth = 3;
         c.gridx = 0;
         c.gridy = 1;
-        jPanel1.add(getDragList(new Object[] {getTitle() + "_difference"}), c);
+        jPanel1.add(getDragList(new Object[] {getTitle() + "_matSum"}), c);
 
         this.setSize(160, 120);
     }
 
     @Override
     public String execute() {
-        KryptoType value1, value2;
-        if(textField1.getResult() != null)
-            value1 = (KryptoType)textField1.getResult();
-        else
-            value1 = new Z(textField1.getText());
-        if(textField2.getResult() != null)
-            value2 = (KryptoType)textField2.getResult();
-        else
-            value2 = new Z(textField2.getText());
-        KryptoType result = BasicController.subtraction(value1, value2);
-        results.put(getTitle() + "_difference", result);
-        return value1.toString() + " - " + value2.toString() + " = " + result.toString();
+        Matrix m = ((Matrix)textField1.getResult()).add((Matrix)textField2.getResult());
+        results.put(getTitle() + "_matSum", m);
+        return "\n" + m.toString();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

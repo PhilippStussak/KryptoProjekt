@@ -11,21 +11,17 @@
 package kryptoprojekt.basicFrames;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.LinkedList;
-import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextArea;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
+import kryptoprojekt.ResultFrame;
 import kryptoprojekt.controller.BasicController;
 import kryptoprojekt.controller.LogicValidator;
-import kryptoprojekt.model.Basic;
 import kryptoprojekt.model.KryptoType;
 import kryptoprojekt.model.Tuple;
 import kryptoprojekt.model.Z;
@@ -45,6 +41,8 @@ public class GCDFrame extends Kit {
         super(handler);
         initComponents();
         initLogicComponents();
+        jLabel1.setText(Kit.xmlReader.getTagElement("GCDFrame", "HeaderLabel"));
+        jButton1.setText(Kit.xmlReader.getTagElement("GCDFrame", "ExtendBtn"));
     }
 
     private void initLogicComponents() {
@@ -89,7 +87,7 @@ public class GCDFrame extends Kit {
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
         c.gridy = 0;
-        jPanel1.add(new JLabel("GCD("), c);
+        jPanel1.add(new JLabel(Kit.xmlReader.getTagElement("GCDFrame", "GCD") + "("), c);
 
         c.weightx = 0.46;
         c.fill = GridBagConstraints.BOTH;
@@ -142,7 +140,7 @@ public class GCDFrame extends Kit {
         extension = "";
         for(Object[] o : (LinkedList<Object[]>)result.second())
             extension += o[0] + " = " + o[1] + " * " + o[2] + " + " + o[3] + "\n";
-        return "In Window " + getTitle() + ": " + "GCD(" + value1.toString() + ", " + value2.toString() + ") = " +  result.first().toString();
+        return Kit.xmlReader.getTagElement("GCDFrame", "GCD") + "(" + value1.toString() + ", " + value2.toString() + ") = " +  result.first().toString();
     }
 
     @SuppressWarnings("unchecked")
@@ -212,13 +210,10 @@ public class GCDFrame extends Kit {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        JInternalFrame frame = new JInternalFrame(getTitle() + "_extension", true, true, true, true);
+        ResultFrame frame = new ResultFrame(getTitle() + "_extension");
         frame.setLocation(getX(), getY());
         frame.setSize(320, 240);
-        JTextArea area = new JTextArea();
-        area.setText(extension);
-        area.setVisible(true);
-        frame.add(area);
+        frame.addText(extension);
         frame.setVisible(true);
         getParent().add(frame);
     }//GEN-LAST:event_jButton1ActionPerformed

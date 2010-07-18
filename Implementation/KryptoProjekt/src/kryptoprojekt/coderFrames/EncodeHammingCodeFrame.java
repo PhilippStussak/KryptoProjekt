@@ -35,6 +35,7 @@ public class EncodeHammingCodeFrame extends Kit {
         super(handler);
         initComponents();
         initLogicComponents();
+        jLabel1.setText(Kit.xmlReader.getTagElement("EncodeHammingCodeFrame", "HeaderLabel"));
     }
 
     /** This method is called from within the constructor to
@@ -118,7 +119,7 @@ public class EncodeHammingCodeFrame extends Kit {
         c.gridx = 0;
         c.gridy = 0;
         JLabel l = new JLabel();
-        l.setText("HammingCodeElement");
+        l.setText("HammingCode Element");
         jPanel1.add(l, c);
 
         c.fill = GridBagConstraints.BOTH;
@@ -129,7 +130,7 @@ public class EncodeHammingCodeFrame extends Kit {
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
         c.gridy = 2;
-        jPanel1.add(getDragList(new Object[]{getTitle() + "HammingCode Element"}), c);
+        jPanel1.add(getDragList(new Object[]{getTitle() + "_hcElem"}), c);
 
         this.setSize(150, 120);
 
@@ -137,13 +138,17 @@ public class EncodeHammingCodeFrame extends Kit {
 
     @Override
     public String execute() {
+        try {
         if (textField1.getResult() != null) {
             HammingCode result = CoderController.encodeHammingCode((HammingCode) textField1.getResult());
-            results.put(getTitle() + "HammingCode Element", result);
+            results.put(getTitle() + "_hcElem", result);
 
-            return "encoded word: " + result.getEncodedWord();
+            return Kit.xmlReader.getTagElement("EncodeHammingCodeFrame", "EncodedWord") + result.getEncodedWord();
         } else {
-            return "No HammingCode element found";
+            return Kit.xmlReader.getTagElement("HammingFrames", "NoHammingCodeElement");
+        }
+        } catch (RuntimeException e) {
+            return Kit.xmlReader.getTagElement("HammingCode", e.getMessage());
         }
     }
 

@@ -30,7 +30,18 @@
 		<createErrorsMenuItem>Create Errors in encoded word</createErrorsMenuItem>
 		<hammingDistanceMenuItem>Calculate Hamming Distance</hammingDistanceMenuItem>
 		<vectorWeightMenuItem>Calculate Vector Weight</vectorWeightMenuItem>
+		<startBtnOnBar>Start</startBtnOnBar>
+		<cancelBtnOnBar>Cancel</cancelBtnOnBar>
+		<clearBtnOnBar>Clear</clearBtnOnBar>
+		<matrixMenu>Matrices</matrixMenu>
+		<newMatrixMenuItem>New matrix (Z)</newMatrixMenuItem>
+		<matrixMultiplyMenuItem>Multiply matrices</matrixMultiplyMenuItem>
+		<newMatrixPrimeFieldMenuItem>New matrix (Primefield)</newMatrixPrimeFieldMenuItem>
+		<addMatrixMenuItem>Add matrices</addMatrixMenuItem>
 	</KryptoView>
+	<PrimeTestController>
+		<FalseKryptoTypes>Kryptotypes are different. You have to enter the same Kryptotypes. e.g. Z, Z</FalseKryptoTypes>
+	</PrimeTestController>
 	<HammingCode>
         <encodeException>SourceCodeWord or generatorMatrix is not calculated yet.</encodeException>
 		<detectErrorNullException>Syndrom is not calculated yet.</detectErrorNullException>
@@ -42,7 +53,129 @@
 		<hammingDistanceRowException>Only matrices with one row are allowed!</hammingDistanceRowException>
 		<hammingDistanceColumnException>Matrices should have same ColumnCapacity!</hammingDistanceColumnException>
     </HammingCode>
+	<HammingFrames>
+		<NoHammingCodeElement>No HammingCode element found</NoHammingCodeElement>
+	</HammingFrames>
+	<CreateHammingErrorFrame>
+		<ErrorProbability>Probability of errorCreation (0-1)</ErrorProbability>
+		<ReturnedProbability>generated errors with probability of </ReturnedProbability>
+		<HeaderLabel>Create errors in encodedWord</HeaderLabel>
+	</CreateHammingErrorFrame>
+	<DecodeHammingCodeFrame>
+		<correctWordCeckbox>correct encoded word?</correctWordCeckbox>
+		<NoErrorsCreated>No errors created</NoErrorsCreated>
+		<DecodedWord>decoded word: </DecodedWord>
+		<ErrorInEncodedWord>\nError in encoded word </ErrorInEncodedWord>
+		<AtPosition> at position </AtPosition>
+		<CorrectedDecodedWord>\ncorrected decoded word: </CorrectedDecodedWord>
+		<HeaderLabel>Decode the codeword</HeaderLabel>
+	</DecodeHammingCodeFrame>
+	<EncodeHammingCodeFrame>
+		<EncodedWord>encoded word: </EncodedWord>
+		<HeaderLabel>Encode the codeword</HeaderLabel>
+	</EncodeHammingCodeFrame>
+	<HammingDistanceFrame>
+		<Vector>Vector</Vector>
+		<HeaderLabel>Calculate hammingdistance</HeaderLabel>
+	</HammingDistanceFrame>
+	<HammingSyndromFrame>
+		<Syndrom>Syndrom</Syndrom>
+		<HeaderLabel>Calculate syndrom</HeaderLabel>
+	</HammingSyndromFrame>
+	<HammingWeightFrame>
+		<Vector>Vector</Vector>
+		<VectorWeight>Vectorweight</VectorWeight>
+		<HeaderLabel>Calculate vectorweight</HeaderLabel>
+	</HammingWeightFrame>
+	<InitHammingFrame>
+		<SourceCodeword>source codeword</SourceCodeword>
+		<GeneratorMatrix>generator matrix</GeneratorMatrix>
+		<ControlMatrix>control matrix</ControlMatrix>
+		<NoSourceCodeword>no source codeword</NoSourceCodeword>
+		<InitHammingCodeReturn>Init Hamming Code with source codeword </InitHammingCodeReturn>
+		<HeaderLabel>Create a hammingcode element</HeaderLabel>
+		<NoMatrixElement>Wrong parameter, this isn't a matrix element</NoMatrixElement>
+	</InitHammingFrame>
+	<GCDFrame>
+		<GCD>GCD</GCD>
+		<HeaderLabel>GCD</HeaderLabel>
+		<ExtendBtn>Extend</ExtendBtn>
+	</GCDFrame>
+	<PrimeFieldElementFrame>
+		<Value>Value</Value>
+		<Base>Base</Base>
+		<PrimeFieldReturn1>PrimeField with base = </PrimeFieldReturn1>
+		<PrimeFieldReturn2> and value = </PrimeFieldReturn2>
+		<HeaderLabel>Create Primefield Element</HeaderLabel>
+		<AddTableBtn>Addition table</AddTableBtn>
+		<MulTableBtn>Multiplication Table</MulTableBtn>
+	</PrimeFieldElementFrame>
+	<AdditionFrame>
+		<HeaderLabel>Addition</HeaderLabel>
+	</AdditionFrame>
+	<DivisionFrame>
+		<HeaderLabel>Division</HeaderLabel>
+	</DivisionFrame>
+	<ExtendedGCDFrame>
+		<HeaderLabel>Extended GCD</HeaderLabel>
+		<ExtendBtn>Extend</ExtendBtn>
+	</ExtendedGCDFrame>
+	<ModuloFrame>
+		<HeaderLabel>Modulo</HeaderLabel>
+	</ModuloFrame>
+	<MultiplicationFrame>
+		<HeaderLabel>Multiplication</HeaderLabel>
+	</MultiplicationFrame>
+	<PhiFrame>
+		<HeaderLabel>Phi function</HeaderLabel>
+		<ExtendBtn>Extend</ExtendBtn>
+	</PhiFrame>
+	<SaMFrame>
+		<HeaderLabel>Square &amp; Multiply</HeaderLabel>
+		<ExtendBtn>Extend</ExtendBtn>
+	</SaMFrame>
+	<SaMModFrame>
+		<HeaderLabel>Square &amp; Multiply (Modulo)</HeaderLabel>
+		<ExtendBtn>Extend</ExtendBtn>
+	</SaMModFrame>
+	<SubstractFrame>
+		<HeaderLabel>Substraction</HeaderLabel>
+	</SubstractFrame>
+	<ZFrame>
+		<HeaderLabel>Z (Integer)</HeaderLabel>
+	</ZFrame>
+	<MatrixAddFrame>
+		<HeaderLabel>Matrix addition</HeaderLabel>
+	</MatrixAddFrame>
+	<MatrixFrame>
+		<HeaderLabel>Create new matrix</HeaderLabel>
+		<ExtendBtn>Extend</ExtendBtn>
+	</MatrixFrame>
+	<MatrixMultiplyFrame>
+		<HeaderLabel>Matrix multiplication</HeaderLabel>
+	</MatrixMultiplyFrame>
+	<MatrixPrimeFieldFrame>
+		<HeaderLabel>Create new matrix with Primefields</HeaderLabel>
+		<ExtendBtn>Extend</ExtendBtn>
+		<PrimefieldLabel>Primefield</PrimefieldLabel>
+	</MatrixPrimeFieldFrame>
 	<General>
 		<UnsupportedOperationException>Not supported yet.</UnsupportedOperationException>
 	</General>
+	<Kit>
+		<DropOnSameFrame>Drop on same frame not possible!</DropOnSameFrame>
+		<OnRecursion>Recursion not possible!</OnRecursion>
+		<ConnectionAlreadyExists>Connection already exists!</ConnectionAlreadyExists>
+		<WrongData>Wrong data!</WrongData>
+	</Kit>
+	<Executor>
+		<ComputeTime>compute time</ComputeTime>
+		<InWindow>In window</InWindow>
+		<MissingParamException>Missing parameter in window</MissingParamException>
+		<WrongParam>Wrong parameter in window</WrongParam>
+		<UndefinedException>Undefined Exception in Window</UndefinedException>
+	</Executor>
+	<ResultFrame>
+		<Result>Result</Result>
+	</ResultFrame>
  </languagefile>

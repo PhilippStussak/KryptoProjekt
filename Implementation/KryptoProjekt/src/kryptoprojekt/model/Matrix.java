@@ -7,7 +7,7 @@ import java.util.Arrays;
  *
  * @author Stefan
  */
-public class Matrix<E extends KryptoType<E>>      {
+public class Matrix<E extends KryptoType<E>> {
 
     private int x, y;
     private E[][] matrix;
@@ -126,34 +126,6 @@ public class Matrix<E extends KryptoType<E>>      {
         return result;
     }
 
-    @Override
-    public String toString() {
-        int maxLength = 0;
-        String[][] string = new String[matrix.length][];
-        for (int i = 0; i < matrix.length; i++) {
-            string[i] = new String[matrix[i].length];
-            for (int j = 0; j < matrix[i].length; j++) {
-                String s =  matrix[i][j].toString();
-                maxLength = Math.max(maxLength, s.length());
-                string[i][j] = s;
-            }
-        }
-        String result = "";
-        for (int i = 0; i < string.length; i++) {
-            for (int j = 0; j < string[i].length; j++) {
-                String s = string[i][j];
-                for (int k = 0; k < maxLength + 1 - string[i][j].length(); k++) {
-                    s = " " + s;
-                }
-                result += s;
-            }
-            result += "\n";
-        }
-        return result;
-    }
-
-    
-
     /**
      * Translates a String-representation of a matrix
      * into a new instance of type Matrix<Z>.
@@ -164,7 +136,7 @@ public class Matrix<E extends KryptoType<E>>      {
      * The number of elements of each row must be the same.
      *
      * @param matrix String representation of the new Matrix.
-     * @return
+     * @return new Matrix<Z>
      */
     public static Matrix<Z> valueOf(String matrix) {
         String[] s = matrix.replace(" ", "").split("[|]+");
@@ -180,6 +152,30 @@ public class Matrix<E extends KryptoType<E>>      {
             }
         }
         return new Matrix<Z>(field);
+    }
+
+    /**
+     * Translates a String-representation of a matrix
+     * into a new instance of type Matrix<PrimeFieldElement>.
+     * The format of the String must be:
+     * column elements seperated by a ',';
+     * rows seperated by a '|';
+     * example: "1,2|3,4".
+     * The number of elements of each row must be the same.
+     * The modul has to be a prime.
+     *
+     * @param matrix String representation of the new Matrix.
+     * @param primefield for the new Matrix.
+     * @return new Matrix<PrimeFieldElement>
+     */
+    public static Matrix<PrimeFieldElement> valueOf(String matrix, String modul) {
+        Z mod = new Z(modul);
+        Matrix<Z> m = valueOf(matrix);
+        PrimeFieldElement[][] newMatrix = new PrimeFieldElement[m.x][m.y];
+        for(int i = 0; i < m.x; i++)
+            for(int j = 0; j < m.y; j++)
+                newMatrix[i][j] = new PrimeFieldElement(m.matrix[i][j], mod);
+        return new Matrix<PrimeFieldElement>(newMatrix);
     }
 
     /**
@@ -211,17 +207,109 @@ public class Matrix<E extends KryptoType<E>>      {
         if (o instanceof Matrix) {
             try {
                 Matrix<E> m = (Matrix<E>) o;
-                if(this.x != m.x || this.y != m.y)
+                if (this.x != m.x || this.y != m.y) {
                     return false;
-                for(int i = 0; i < x; i++)
-                    for(int j = 0; j < y; j++)
-                        if(!this.matrix[i][j].equals(m.matrix[i][j]))
+                }
+                for (int i = 0; i < x; i++) {
+                    for (int j = 0; j < y; j++) {
+                        if (!this.matrix[i][j].equals(m.matrix[i][j])) {
                             return false;
+                        }
+                    }
+                }
                 return true;
             } catch (Exception e) {
                 return false;
             }
         }
         return false;
+    }
+
+    @Override
+    public String toString() {
+        Tuple<Integer, String[][]> tuple = stringFormat();
+        int maxLength = tuple.first();
+        String[][] string = tuple.second();
+        String result = "";
+        for (int i = 0; i < string.length; i++) {
+            for (int j = 0; j < string[i].length; j++) {
+                String s = string[i][j];
+                for (int k = 0; k < maxLength + 1 - string[i][j].length(); k++) {
+                    s = " " + s;
+                }
+                result += s;
+            }
+            result += "\n";
+        }
+        return result;
+    }
+
+    /**
+     * toString-method to get a String-representation of this Matrix
+     * with indices.
+     *
+     * @return String-representation of this Matrix with indices.
+     */
+    public String toStringWithIndex() {
+        Tuple<Integer, String[][]> tuple = stringFormat();
+        int maxLength = tuple.first();
+        String[][] string = tuple.second();
+        String result = "";
+        String seperate = "";
+        for (int i = 0; i < String.valueOf(string.length - 1).length() - 1; i++) {
+            result += " ";
+            seperate += "-";
+        }
+        result += "#";
+        seperate += "-";
+        for (int i = 0; i < string[0].length; i++) {
+            String s = String.valueOf(i);
+            for (int j = 0; j < maxLength + 1 - String.valueOf(i).length(); j++) {
+                s = " " + s;
+            }
+            result += "|" + s;
+            seperate += "+";
+            for (int j = 0; j < maxLength + 1; j++)
+                seperate += "-";
+        }
+        result += "\n";
+        seperate += "\n";
+        for (int i = 0; i < string.length; i++) {
+            result += seperate;
+            for (int j = 0; j < String.valueOf(string.length - 1).length() - String.valueOf(i).length(); j++) {
+                result += " ";
+            }
+            result += i;
+            for (int j = 0; j < string[i].length; j++) {
+                String s = string[i][j];
+                for (int k = 0; k < maxLength + 1 - string[i][j].length(); k++) {
+                    s = " " + s;
+                }
+                result += "|" + s;
+            }
+            result += "\n";
+        }
+        return result;
+    }
+
+    /**
+     * For internal use.
+     *
+     * @return the maximum length of digits of the elements,
+     * and this Matrix formatted as String[][].
+     * {@code Tuple(max, String[][])}
+     */
+    private Tuple<Integer, String[][]> stringFormat() {
+        int maxLength = 0;
+        String[][] string = new String[matrix.length][];
+        for (int i = 0; i < matrix.length; i++) {
+            string[i] = new String[matrix[i].length];
+            for (int j = 0; j < matrix[i].length; j++) {
+                String s = matrix[i][j].toString();
+                maxLength = Math.max(maxLength, s.length());
+                string[i][j] = s;
+            }
+        }
+        return new Tuple<Integer, String[][]>(maxLength, string);
     }
 }

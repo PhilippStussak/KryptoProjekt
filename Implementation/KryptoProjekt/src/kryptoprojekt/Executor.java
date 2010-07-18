@@ -4,9 +4,13 @@
  */
 package kryptoprojekt;
 
-import java.util.Date;
+import java.awt.EventQueue;
+import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JProgressBar;
 
 /**
  *
@@ -14,48 +18,110 @@ import javax.swing.JOptionPane;
  */
 public class Executor extends Thread {
 
-    LinkedList<Kit> orderOfExecution = new LinkedList<Kit>();
-    ResultFrame rf;
+    private LinkedList<Kit> orderOfExecution = new LinkedList<Kit>();
+    private ResultFrame rf;
+    private JProgressBar progressBar;
+    private double progress = 0;
+    private double timeslot;
 
-    public Executor(ConnectionHandler handler, ResultFrame rf) {
+    public Executor(ConnectionHandler handler, ResultFrame rf, JProgressBar progressBar) {
+        progressBar.setStringPainted(true);
         LinkedList<Kit> frames = new LinkedList<Kit>();
         for (Kit kit : handler.getFrames()) {
             frames.add(kit);
         }
         this.rf = rf;
+        this.progressBar = progressBar;
         for (Kit kit : frames) {
             if (kit.getChildren().size() == 0) {
                 insert(kit);
             }
         }
+        timeslot = 100. / orderOfExecution.size();
+        this.setDaemon(true);
     }
 
     private void insert(Kit k) {
         if (k.getParents().size() == 0) {
-            orderOfExecution.add(k);
+            if(!orderOfExecution.contains(k))
+                orderOfExecution.add(k);
             return;
         } else {
             for (Kit kit : k.getParents()) {
                 insert(kit);
             }
-            orderOfExecution.add(k);
+            if(!orderOfExecution.contains(k))
+                orderOfExecution.add(k);
         }
     }
 
     @Override
     public void run() {
-        long time = System.currentTimeMillis();
+        final long time = System.currentTimeMillis();
+        Kit recentKit = null;
         for (Kit kit : orderOfExecution) {
             try {
-                rf.addText(kit.execute());
+                recentKit = kit;
+                progressBar((int)(progress += timeslot), kit.getTitle(), true);
+                progressMessage(kit.getTitle(), kit.execute());
             } catch (NullPointerException npe) {
-                JOptionPane.showMessageDialog(rf, "Parameter in Window " + kit.getTitle() + " is missing!");
+                exception(Kit.xmlReader.getTagElement("Executor", "MissingParamException") + " " + kit.getTitle());
             } catch (ClassCastException cce) {
-                JOptionPane.showMessageDialog(rf, "Wrong parameter in Window " + kit.getTitle() + "!");
+                exception(Kit.xmlReader.getTagElement("Executor", "WrongParam") + " " + kit.getTitle() + "!");
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(rf, e.getMessage());
+                exception(Kit.xmlReader.getTagElement("Executor", "UndefinedException") + kit.getTitle() + "!");
             }
         }
-        rf.addText("compute time: " + (System.currentTimeMillis() - time) + "ms");
+        progressBar(100, "", true);
+        if (recentKit != null)
+            progressMessage(recentKit.getTitle(), Kit.xmlReader.getTagElement("Executor", "ComputeTime") + ": " + (System.currentTimeMillis() - time));
+        progressBar(100, "", false);
+    }
+
+    private void progressMessage(final String kitTitle, final String progressMessage) {
+        try {
+            EventQueue.invokeAndWait(new Runnable() {
+
+                public void run() {
+                    rf.addText(Kit.xmlReader.getTagElement("Executor", "InWindow") + " " + kitTitle + ": \n" + progressMessage);
+                }
+            });
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Executor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvocationTargetException ex) {
+            Logger.getLogger(Executor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void progressBar(final int progress, final String text, final boolean visible) {
+        try {
+            EventQueue.invokeAndWait(new Runnable() {
+
+                public void run() {
+                    progressBar.setVisible(visible);
+                    progressBar.setValue(progress);
+                    progressBar.setString(text);
+                }
+            });
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Executor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvocationTargetException ex) {
+            Logger.getLogger(Executor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void exception(final String message) {
+        try {
+            EventQueue.invokeAndWait(new Runnable() {
+
+                public void run() {
+                    JOptionPane.showMessageDialog(rf, message);
+                }
+            });
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Executor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvocationTargetException ex) {
+            Logger.getLogger(Executor.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

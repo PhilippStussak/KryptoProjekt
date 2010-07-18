@@ -33,7 +33,7 @@ public class CoderController {
         return hc;
     }
 
-    public static HammingCode encodeHammingCode(HammingCode hc) {
+    public static HammingCode encodeHammingCode(HammingCode hc) throws NullPointerException{
         hc.encode();
 
         return hc;
@@ -44,7 +44,7 @@ public class CoderController {
         return hc;
     }
 
-    public static HammingCode initHammingCode(boolean enableMatrix, Matrix<PrimeFieldElement> generatorM, String sourceCodeWord) {
+    public static HammingCode initHammingCode (boolean enableMatrix, Matrix<PrimeFieldElement> generatorM, String sourceCodeWord) throws IllegalArgumentException{
         HammingCode result = null;
         if (enableMatrix && generatorM != null) {
             result = new HammingCode(generatorM, sourceCodeWord);
@@ -55,7 +55,7 @@ public class CoderController {
         return result;
     }
 
-    public static Z calculateHammingDistance(Matrix<PrimeFieldElement> vector1, Matrix<PrimeFieldElement> vector2) {
+    public static Z calculateHammingDistance(Matrix<PrimeFieldElement> vector1, Matrix<PrimeFieldElement> vector2) throws IllegalArgumentException{
         Z result = HammingCode.hammingDistance(vector1, vector2);
 
         return result;

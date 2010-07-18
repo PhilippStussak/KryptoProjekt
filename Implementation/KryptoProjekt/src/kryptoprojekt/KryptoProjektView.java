@@ -18,6 +18,7 @@ import javax.swing.Icon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import kryptoprojekt.basicFrames.DivisionFrame;
+import kryptoprojekt.basicFrames.ExtendedGCDFrame;
 import kryptoprojekt.basicFrames.GCDFrame;
 import kryptoprojekt.basicFrames.ModuloFrame;
 import kryptoprojekt.basicFrames.MultiplicationFrame;
@@ -31,8 +32,12 @@ import kryptoprojekt.coderFrames.EncodeHammingCodeFrame;
 import kryptoprojekt.coderFrames.HammingDistanceFrame;
 import kryptoprojekt.coderFrames.HammingSyndromFrame;
 import kryptoprojekt.coderFrames.HammingWeightFrame;
-import kryptoprojekt.coderFrames.InitHammingJFrame;
+import kryptoprojekt.coderFrames.InitHammingFrame;
 import kryptoprojekt.controller.XMLReader;
+import kryptoprojekt.matrixFrames.MatrixAddFrame;
+import kryptoprojekt.matrixFrames.MatrixFrame;
+import kryptoprojekt.matrixFrames.MatrixMultiplyFrame;
+import kryptoprojekt.matrixFrames.MatrixPrimeFieldFrame;
 import kryptoprojekt.primeFrames.FermatFrame;
 import kryptoprojekt.primeFrames.LucasFrame;
 import kryptoprojekt.primeFrames.MillerRabinFrame;
@@ -52,13 +57,15 @@ public class KryptoProjektView extends FrameView {
 
         desktop = new Desktop(handler);
 
-        javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
-        mainPanel.setLayout(mainPanelLayout);
-        mainPanelLayout.setHorizontalGroup(
-                mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(desktop, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE));
-        mainPanelLayout.setVerticalGroup(
-                mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(desktop, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE));
-
+        javax.swing.GroupLayout mainFormLayout = new javax.swing.GroupLayout(mainForm);
+        mainForm.setLayout(mainFormLayout);
+        mainFormLayout.setHorizontalGroup(
+                mainFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).
+                addComponent(desktop, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE));
+        mainFormLayout.setVerticalGroup(
+                mainFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).
+                addComponent(desktop, javax.swing.GroupLayout.Alignment.TRAILING,
+                             javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE));
         // status bar initialization - message timeout, idle icon and busy animation, etc
         ResourceMap resourceMap = getResourceMap();
         int messageTimeout = resourceMap.getInteger("StatusBar.messageTimeout");
@@ -135,7 +142,7 @@ public class KryptoProjektView extends FrameView {
         phiMenuItem.setText(xml.getTagElement("KryptoView", "phiMenuItem"));
         primeTestMenu.setText(xml.getTagElement("KryptoView", "primeTestMenu"));
         fermatMenuItem.setText(xml.getTagElement("KryptoView", "fermatMenuItem"));
-        //lucasMenuItem.setText(xml.getTagElement("KryptoView", "lucasMenuItem"));
+        lucasMenuItem.setText(xml.getTagElement("KryptoView", "lucasMenuItem"));
         coderMenu.setText(xml.getTagElement("KryptoView", "coderMenu"));
         hammingMenu.setText(xml.getTagElement("KryptoView", "hammingMenu"));
         initHammingCodeMenuItem.setText(xml.getTagElement("KryptoView", "initHammingCodeMenuItem"));
@@ -145,6 +152,14 @@ public class KryptoProjektView extends FrameView {
         createErrorsMenuItem.setText(xml.getTagElement("KryptoView", "createErrorsMenuItem"));
         hammingDistanceMenuItem.setText(xml.getTagElement("KryptoView", "hammingDistanceMenuItem"));
         vectorWeightMenuItem.setText(xml.getTagElement("KryptoView", "vectorWeightMenuItem"));
+        startBtnOnBar.setText(xml.getTagElement("KryptoView", "startBtnOnBar"));
+        cancelBtnOnBar.setText(xml.getTagElement("KryptoView", "cancelBtnOnBar"));
+        clearBtnOnBar.setText(xml.getTagElement("KryptoView", "clearBtnOnBar"));
+        matrixMenu.setText(xml.getTagElement("KryptoView", "matrixMenu"));
+        newMatrixMenuItem.setText(xml.getTagElement("KryptoView", "newMatrixMenuItem"));
+        matrixMultiplyMenuItem.setText(xml.getTagElement("KryptoView", "matrixMultiplyMenuItem"));
+        newMatrixPrimeFieldMenuItem.setText(xml.getTagElement("KryptoView", "newMatrixPrimeFieldMenuItem"));
+        addMatrixMenuItem.setText(xml.getTagElement("KryptoView", "addMatrixMenuItem"));
     }
 
     @Action
@@ -167,6 +182,11 @@ public class KryptoProjektView extends FrameView {
     private void initComponents() {
 
         mainPanel = new javax.swing.JPanel();
+        mainForm = new javax.swing.JPanel();
+        secondBar = new javax.swing.JPanel();
+        startBtnOnBar = new javax.swing.JButton();
+        cancelBtnOnBar = new javax.swing.JButton();
+        clearBtnOnBar = new javax.swing.JButton();
         mainMenuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
         startMenuItem = new javax.swing.JMenuItem();
@@ -181,7 +201,13 @@ public class KryptoProjektView extends FrameView {
         samMenuItem = new javax.swing.JMenuItem();
         sammodMenuItem = new javax.swing.JMenuItem();
         gcdMenuItem = new javax.swing.JMenuItem();
+        extendedGCDItem = new javax.swing.JMenuItem();
         phiMenuItem = new javax.swing.JMenuItem();
+        matrixMenu = new javax.swing.JMenu();
+        newMatrixMenuItem = new javax.swing.JMenuItem();
+        newMatrixPrimeFieldMenuItem = new javax.swing.JMenuItem();
+        addMatrixMenuItem = new javax.swing.JMenuItem();
+        matrixMultiplyMenuItem = new javax.swing.JMenuItem();
         zMenuItem = new javax.swing.JMenuItem();
         primeFieldMenuItem = new javax.swing.JMenuItem();
         primeTestMenu = new javax.swing.JMenu();
@@ -215,22 +241,86 @@ public class KryptoProjektView extends FrameView {
         jMenu9 = new javax.swing.JMenu();
         jMenu10 = new javax.swing.JMenu();
 
+        mainPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         mainPanel.setName("mainPanel"); // NOI18N
+
+        mainForm.setName("mainForm"); // NOI18N
+
+        javax.swing.GroupLayout mainFormLayout = new javax.swing.GroupLayout(mainForm);
+        mainForm.setLayout(mainFormLayout);
+        mainFormLayout.setHorizontalGroup(
+            mainFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        mainFormLayout.setVerticalGroup(
+            mainFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 324, Short.MAX_VALUE)
+        );
+
+        secondBar.setName("secondBar"); // NOI18N
+
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(kryptoprojekt.KryptoProjektApp.class).getContext().getResourceMap(KryptoProjektView.class);
+        startBtnOnBar.setText(resourceMap.getString("startBtnOnBar.text")); // NOI18N
+        startBtnOnBar.setName("startBtnOnBar"); // NOI18N
+        startBtnOnBar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                startBtnOnBarActionPerformed(evt);
+            }
+        });
+
+        cancelBtnOnBar.setText(resourceMap.getString("cancelBtnOnBar.text")); // NOI18N
+        cancelBtnOnBar.setName("cancelBtnOnBar"); // NOI18N
+        cancelBtnOnBar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelBtnOnBarActionPerformed(evt);
+            }
+        });
+
+        clearBtnOnBar.setText(resourceMap.getString("clearBtnOnBar.text")); // NOI18N
+        clearBtnOnBar.setName("clearBtnOnBar"); // NOI18N
+        clearBtnOnBar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearBtnOnBarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout secondBarLayout = new javax.swing.GroupLayout(secondBar);
+        secondBar.setLayout(secondBarLayout);
+        secondBarLayout.setHorizontalGroup(
+            secondBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(secondBarLayout.createSequentialGroup()
+                .addComponent(startBtnOnBar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cancelBtnOnBar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(clearBtnOnBar)
+                .addContainerGap(201, Short.MAX_VALUE))
+        );
+        secondBarLayout.setVerticalGroup(
+            secondBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(secondBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(startBtnOnBar)
+                .addComponent(cancelBtnOnBar)
+                .addComponent(clearBtnOnBar))
+        );
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(secondBar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(mainForm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 249, Short.MAX_VALUE)
+            .addGroup(mainPanelLayout.createSequentialGroup()
+                .addComponent(secondBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(mainForm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         mainMenuBar.setName("mainMenuBar"); // NOI18N
 
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(kryptoprojekt.KryptoProjektApp.class).getContext().getResourceMap(KryptoProjektView.class);
         fileMenu.setText(resourceMap.getString("fileMenu.text")); // NOI18N
         fileMenu.setName("fileMenu"); // NOI18N
 
@@ -328,6 +418,15 @@ public class KryptoProjektView extends FrameView {
         });
         basicArithmeticMenu.add(gcdMenuItem);
 
+        extendedGCDItem.setText(resourceMap.getString("extendedGCDItem.text")); // NOI18N
+        extendedGCDItem.setName("extendedGCDItem"); // NOI18N
+        extendedGCDItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                extendedGCDItemActionPerformed(evt);
+            }
+        });
+        basicArithmeticMenu.add(extendedGCDItem);
+
         phiMenuItem.setText(resourceMap.getString("phiMenuItem.text")); // NOI18N
         phiMenuItem.setName("phiMenuItem"); // NOI18N
         phiMenuItem.addActionListener(new java.awt.event.ActionListener() {
@@ -338,6 +437,42 @@ public class KryptoProjektView extends FrameView {
         basicArithmeticMenu.add(phiMenuItem);
 
         basicMenu.add(basicArithmeticMenu);
+
+        matrixMenu.setText(resourceMap.getString("matrixMenu.text")); // NOI18N
+        matrixMenu.setName("matrixMenu"); // NOI18N
+
+        newMatrixMenuItem.setText(resourceMap.getString("newMatrixMenuItem.text")); // NOI18N
+        newMatrixMenuItem.setName("newMatrixMenuItem"); // NOI18N
+        newMatrixMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newMatrixMenuItemActionPerformed(evt);
+            }
+        });
+        matrixMenu.add(newMatrixMenuItem);
+
+        newMatrixPrimeFieldMenuItem.setText(resourceMap.getString("newMatrixPrimeFieldMenuItem.text")); // NOI18N
+        newMatrixPrimeFieldMenuItem.setName("newMatrixPrimeFieldMenuItem"); // NOI18N
+        matrixMenu.add(newMatrixPrimeFieldMenuItem);
+
+        addMatrixMenuItem.setText(resourceMap.getString("addMatrixMenuItem.text")); // NOI18N
+        addMatrixMenuItem.setName("addMatrixMenuItem"); // NOI18N
+        addMatrixMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addMatrixMenuItemActionPerformed(evt);
+            }
+        });
+        matrixMenu.add(addMatrixMenuItem);
+
+        matrixMultiplyMenuItem.setText(resourceMap.getString("matrixMultiplyMenuItem.text")); // NOI18N
+        matrixMultiplyMenuItem.setName("matrixMultiplyMenuItem"); // NOI18N
+        matrixMultiplyMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                matrixMultiplyMenuItemActionPerformed(evt);
+            }
+        });
+        matrixMenu.add(matrixMultiplyMenuItem);
+
+        basicMenu.add(matrixMenu);
 
         zMenuItem.setText(resourceMap.getString("zMenuItem.text")); // NOI18N
         zMenuItem.setName("zMenuItem"); // NOI18N
@@ -590,13 +725,17 @@ public class KryptoProjektView extends FrameView {
     }//GEN-LAST:event_decodeMenuItemActionPerformed
 
     private void startMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startMenuItemActionPerformed
+        startCalculation();
+    }//GEN-LAST:event_startMenuItemActionPerformed
+
+    private void startCalculation() {
         ResultFrame rf = new ResultFrame();
         rf.setSize(desktop.getWidth(), desktop.getHeight() / 2);
         rf.setLocation(0, desktop.getHeight() / 2);
         rf.setVisible(true);
         desktop.add(rf);
-        new Executor(handler, rf).start();
-    }//GEN-LAST:event_startMenuItemActionPerformed
+        new Executor(handler, rf, progressBar).start();
+    }
 
     private void primeFieldMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_primeFieldMenuItemActionPerformed
         Kit kit = new PrimeFieldElementFrame(handler);
@@ -629,7 +768,7 @@ public class KryptoProjektView extends FrameView {
     }//GEN-LAST:event_gcdMenuItemActionPerformed
 
     private void initHammingCodeMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_initHammingCodeMenuItemActionPerformed
-        Kit kit = new InitHammingJFrame(handler);
+        Kit kit = new InitHammingFrame(handler);
         kit.setVisible(true);
         desktop.add(kit);
     }//GEN-LAST:event_initHammingCodeMenuItemActionPerformed
@@ -692,15 +831,63 @@ public class KryptoProjektView extends FrameView {
         desktop.add(kit);
     }//GEN-LAST:event_lucasMenuItemActionPerformed
 
+    private void newMatrixMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newMatrixMenuItemActionPerformed
+        Kit kit = new MatrixFrame(handler);
+        kit.setVisible(true);
+        desktop.add(kit);
+    }//GEN-LAST:event_newMatrixMenuItemActionPerformed
+
+    private void addMatrixMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addMatrixMenuItemActionPerformed
+        Kit kit = new MatrixAddFrame(handler);
+        kit.setVisible(true);
+        desktop.add(kit);
+    }//GEN-LAST:event_addMatrixMenuItemActionPerformed
+
+    private void matrixMultiplyMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_matrixMultiplyMenuItemActionPerformed
+        Kit kit = new MatrixMultiplyFrame(handler);
+        kit.setVisible(true);
+        desktop.add(kit);
+    }//GEN-LAST:event_matrixMultiplyMenuItemActionPerformed
+
+    private void matrixPrimeFieldItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_matrixPrimeFieldItemActionPerformed
+        Kit kit = new MatrixPrimeFieldFrame(handler);
+        kit.setVisible(true);
+        desktop.add(kit);
+    }//GEN-LAST:event_matrixPrimeFieldItemActionPerformed
+
+    private void extendedGCDItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_extendedGCDItemActionPerformed
+        Kit kit = new ExtendedGCDFrame(handler);
+        kit.setVisible(true);
+        desktop.add(kit);
+    }//GEN-LAST:event_extendedGCDItemActionPerformed
+
+    private void startBtnOnBarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startBtnOnBarActionPerformed
+        startCalculation();
+    }//GEN-LAST:event_startBtnOnBarActionPerformed
+
+    private void cancelBtnOnBarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnOnBarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cancelBtnOnBarActionPerformed
+
+    private void clearBtnOnBarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearBtnOnBarActionPerformed
+        desktop.removeAll();
+        desktop.repaint();
+    }//GEN-LAST:event_clearBtnOnBarActionPerformed
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem addMatrixMenuItem;
     private javax.swing.JMenuItem additionMenuItem;
     private javax.swing.JMenu basicArithmeticMenu;
     private javax.swing.JMenu basicMenu;
+    private javax.swing.JButton cancelBtnOnBar;
+    private javax.swing.JButton clearBtnOnBar;
     private javax.swing.JMenu coderMenu;
     private javax.swing.JMenuItem createErrorsMenuItem;
     private javax.swing.JMenuItem decodeMenuItem;
     private javax.swing.JMenuItem divisionMenuItem;
     private javax.swing.JMenuItem encodeMenuItem;
+    private javax.swing.JMenuItem extendedGCDItem;
     private javax.swing.JMenuItem fermatMenuItem;
     private javax.swing.JMenuItem gcdMenuItem;
     private javax.swing.JMenuItem hammingDistanceMenuItem;
@@ -717,10 +904,15 @@ public class KryptoProjektView extends FrameView {
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuBar jMenuBar3;
     private javax.swing.JMenuItem lucasMenuItem;
+    private javax.swing.JPanel mainForm;
     private javax.swing.JMenuBar mainMenuBar;
     private javax.swing.JPanel mainPanel;
+    private javax.swing.JMenu matrixMenu;
+    private javax.swing.JMenuItem matrixMultiplyMenuItem;
     private javax.swing.JMenuItem modMenuItem;
     private javax.swing.JMenuItem multiplicationMenuItem;
+    private javax.swing.JMenuItem newMatrixMenuItem;
+    private javax.swing.JMenuItem newMatrixPrimeFieldMenuItem;
     private javax.swing.JMenuItem phiMenuItem;
     private javax.swing.JMenuItem primeFieldMenuItem;
     private javax.swing.JMenu primeTestMenu;
@@ -728,6 +920,8 @@ public class KryptoProjektView extends FrameView {
     private javax.swing.JMenuItem rabinMenuItem;
     private javax.swing.JMenuItem samMenuItem;
     private javax.swing.JMenuItem sammodMenuItem;
+    private javax.swing.JPanel secondBar;
+    private javax.swing.JButton startBtnOnBar;
     private javax.swing.JMenuItem startMenuItem;
     private javax.swing.JLabel statusAnimationLabel;
     private javax.swing.JLabel statusMessageLabel;
