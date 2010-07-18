@@ -50,7 +50,8 @@ public class Executor extends Thread {
             for (Kit kit : k.getParents()) {
                 insert(kit);
             }
-            orderOfExecution.add(k);
+            if(!orderOfExecution.contains(k))
+                orderOfExecution.add(k);
         }
     }
 
@@ -59,14 +60,14 @@ public class Executor extends Thread {
         final long time = System.currentTimeMillis();
         for (Kit kit : orderOfExecution) {
             try {
-                progressMessage(kit.execute());
                 progressBar((int)(progress += timeslot), kit.getTitle(), true);
+                progressMessage(kit.execute());
             } catch (NullPointerException npe) {
                 exception("Parameter in Window " + kit.getTitle() + " is missing!");
             } catch (ClassCastException cce) {
                 exception("Wrong parameter in Window " + kit.getTitle() + "!");
             } catch (Exception e) {
-                exception("Undefined Exception in Window " + kit.getTitle() + "!");
+                exception(kit.getTitle() + ": " + e.getMessage());
             }
         }
         progressBar(100, "", true);
