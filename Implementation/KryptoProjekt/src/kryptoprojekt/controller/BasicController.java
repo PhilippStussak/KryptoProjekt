@@ -58,4 +58,8 @@ public class BasicController {
     public static <E extends KryptoType> Tuple<KryptoType<E>, LinkedList<String>> squareAndMultiply(E kt1, E kt2, E kt3){
         return Basic.squareAndMultiply(kt1, kt2, kt3);
     }
+
+    public static <E extends KryptoType> Tuple<E, String> extendedGCD(E e1, E e2) {
+        return Basic.extendedGCD(e1, e2);
+    }
 }

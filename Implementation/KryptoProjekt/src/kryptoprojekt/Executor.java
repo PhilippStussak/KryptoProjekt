@@ -50,7 +50,8 @@ public class Executor extends Thread {
             for (Kit kit : k.getParents()) {
                 insert(kit);
             }
-            orderOfExecution.add(k);
+            if(!orderOfExecution.contains(k))
+                orderOfExecution.add(k);
         }
     }
 
@@ -61,8 +62,8 @@ public class Executor extends Thread {
         for (Kit kit : orderOfExecution) {
             try {
                 recentKit = kit;
-                progressMessage(kit.getTitle(), kit.execute());
                 progressBar((int)(progress += timeslot), kit.getTitle(), true);
+                progressMessage(kit.getTitle(), kit.execute());
             } catch (NullPointerException npe) {
                 exception(Kit.xmlReader.getTagElement("Executor", "MissingParamException") + " " + kit.getTitle());
             } catch (ClassCastException cce) {

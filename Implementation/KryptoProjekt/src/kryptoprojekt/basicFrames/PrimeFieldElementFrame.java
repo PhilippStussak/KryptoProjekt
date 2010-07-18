@@ -234,7 +234,7 @@ public class PrimeFieldElementFrame extends Kit {
             ResultFrame frame = new ResultFrame(getTitle() + "_extension");
             frame.setLocation(getX(), getY());
             frame.setSize(320, 240);
-            frame.addText(new PrimeFieldElement(new Z(1), (Z) baseValue).getAddTable().toString());
+            frame.addText(new PrimeFieldElement(new Z(1), (Z) baseValue).getAddTable().toStringWithIndex());
             frame.setVisible(true);
             getParent().add(frame);
         } catch (Exception e) {
@@ -254,7 +254,7 @@ public class PrimeFieldElementFrame extends Kit {
             ResultFrame frame = new ResultFrame(getTitle() + "_extension");
             frame.setLocation(getX(), getY());
             frame.setSize(320, 240);
-            frame.addText(new PrimeFieldElement(new Z(1), (Z) baseValue).getMultiplyTable().toString());
+            frame.addText(new PrimeFieldElement(new Z(1), (Z) baseValue).getMultiplyTable().toStringWithIndex());
             frame.setVisible(true);
             getParent().add(frame);
         } catch (Exception e) {

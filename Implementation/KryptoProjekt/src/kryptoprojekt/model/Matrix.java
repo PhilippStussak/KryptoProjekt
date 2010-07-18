@@ -136,7 +136,7 @@ public class Matrix<E extends KryptoType<E>> {
      * The number of elements of each row must be the same.
      *
      * @param matrix String representation of the new Matrix.
-     * @return
+     * @return new Matrix<Z>
      */
     public static Matrix<Z> valueOf(String matrix) {
         String[] s = matrix.replace(" ", "").split("[|]+");
@@ -152,6 +152,30 @@ public class Matrix<E extends KryptoType<E>> {
             }
         }
         return new Matrix<Z>(field);
+    }
+
+    /**
+     * Translates a String-representation of a matrix
+     * into a new instance of type Matrix<PrimeFieldElement>.
+     * The format of the String must be:
+     * column elements seperated by a ',';
+     * rows seperated by a '|';
+     * example: "1,2|3,4".
+     * The number of elements of each row must be the same.
+     * The modul has to be a prime.
+     *
+     * @param matrix String representation of the new Matrix.
+     * @param primefield for the new Matrix.
+     * @return new Matrix<PrimeFieldElement>
+     */
+    public static Matrix<PrimeFieldElement> valueOf(String matrix, String modul) {
+        Z mod = new Z(modul);
+        Matrix<Z> m = valueOf(matrix);
+        PrimeFieldElement[][] newMatrix = new PrimeFieldElement[m.x][m.y];
+        for(int i = 0; i < m.x; i++)
+            for(int j = 0; j < m.y; j++)
+                newMatrix[i][j] = new PrimeFieldElement(m.matrix[i][j], mod);
+        return new Matrix<PrimeFieldElement>(newMatrix);
     }
 
     /**
