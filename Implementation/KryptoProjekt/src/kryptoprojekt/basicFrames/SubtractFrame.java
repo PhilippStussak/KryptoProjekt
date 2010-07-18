@@ -171,7 +171,7 @@ public class SubtractFrame extends Kit {
             value2 = new Z(textField2.getText());
         KryptoType result = BasicController.subtraction(value1, value2);
         results.put(getTitle() + "_difference", result);
-        return "In Window " + getTitle() + ": " + value1.toString() + " - " + value2.toString() + " = " + result.toString();
+        return value1.toString() + " - " + value2.toString() + " = " + result.toString();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

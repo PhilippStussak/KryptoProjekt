@@ -128,7 +128,7 @@ public class CreateHammingErrorFrame extends Kit {
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
         c.gridy = 2;
-        jPanel1.add(new JLabel("Probability of errorCreation (0-1)"), c);
+        jPanel1.add(new JLabel(Kit.xmlReader.getTagElement("CreateHammingErrorFrame", "ErrorProbability")), c);
 
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
@@ -138,7 +138,7 @@ public class CreateHammingErrorFrame extends Kit {
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
         c.gridy = 4;
-        jPanel1.add(getDragList(new Object[] {getTitle() + "HammingCode Element"}), c);
+        jPanel1.add(getDragList(new Object[] {getTitle() + "_hcElem"}), c);
 
         this.setSize(200, 160);
     }
@@ -147,11 +147,11 @@ public class CreateHammingErrorFrame extends Kit {
     public String execute() {
          if (hcField.getResult() != null) {
         HammingCode hc = CoderController.createHammingError((HammingCode) hcField.getResult(), field.getText());
-        results.put(getTitle() + "HammingCode Element", hc);
-        return "generated errors with " + Double.parseDouble(field.getText())*100 + "% probability";
+        results.put(getTitle() + "_hcElem", hc);
+        return Kit.xmlReader.getTagElement("CreateErrorProbability", "ReturnedProbability") + Double.parseDouble(field.getText())*100 + "%";
          }
          else {
-            return "No HammingCode element found";
+            return Kit.xmlReader.getTagElement("HammingFrames", "NoHammingCodeElement");
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

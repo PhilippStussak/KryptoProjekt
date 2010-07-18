@@ -31,7 +31,7 @@ import kryptoprojekt.model.HammingCode;
 public class DecodeHammingCodeFrame extends Kit {
 
     private DropTextField hcField = getDropTextField();
-    private JCheckBox enableMatrix = new JCheckBox("correct encoded word");
+    private JCheckBox correctWordCeckbox = new JCheckBox(Kit.xmlReader.getTagElement("DecodeHammingCodeFrame", "correctWordCeckbox"));
 
     /** Creates new form DecodeHammingCodeFrame */
     public DecodeHammingCodeFrame(ConnectionHandler handler) {
@@ -116,10 +116,10 @@ public class DecodeHammingCodeFrame extends Kit {
         c.gridwidth = 3;
         c.gridx = 0;
         c.gridy = 2;
-        jPanel1.add(getDragList(new Object[] {getTitle() + "HammingCode Element"}), c);
+        jPanel1.add(getDragList(new Object[] {getTitle() + "_hcElem"}), c);
 
         final DragList corrDecodedWord = getDragList(new Object[] {getTitle() + "corrected decoded word"});
-        enableMatrix.addItemListener(
+        correctWordCeckbox.addItemListener(
                 new ItemListener() {
 
                     public void itemStateChanged(ItemEvent e) {
@@ -135,7 +135,7 @@ public class DecodeHammingCodeFrame extends Kit {
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
         c.gridy = 3;
-        jPanel1.add(enableMatrix, c);
+        jPanel1.add(correctWordCeckbox, c);
 
         c.weightx = 0.5;
         c.fill = GridBagConstraints.BOTH;
@@ -160,16 +160,19 @@ public class DecodeHammingCodeFrame extends Kit {
         try{
         HammingCode result = CoderController.decodeHammingCode((HammingCode) hcField.getResult());
         if(result.getErrorPos() == -1)
-            return "No errors created";
-        if(enableMatrix.isSelected()){
-            results.put(getTitle() + "HammingCode Element", result);
+            return Kit.xmlReader.getTagElement("DecodeHammingCodeFrame", "NoErrorsCreated");
+        if(correctWordCeckbox.isSelected()){
+            results.put(getTitle() + "_hcElem", result);
             results.put(getTitle() + "decoded word", result.getDecodedWord());
             results.put(getTitle() + "corrected decoded word", result.getCorrectedDecodedWord());
-            return "decoded word: " + result.getDecodedWord() +"\nError in encoded word " + result.getEncodedWord() + " at position "+ result.getErrorPos() + "\ncorrected decoded word: " + result.getCorrectedDecodedWord();
+            return Kit.xmlReader.getTagElement("DecodeHammingCodeFrame", "DecodedWord") + result.getDecodedWord() +
+                   Kit.xmlReader.getTagElement("DecodeHammingCodeFrame", "ErrorInEncodedWord") +
+                   result.getEncodedWord() + Kit.xmlReader.getTagElement("DecodeHammingCodeFrame", "AtPosition") + result.getErrorPos() +
+                   Kit.xmlReader.getTagElement("DecodeHammingCodeFrame", "CorrectedDecodedWord") + result.getCorrectedDecodedWord();
         }
-        results.put(getTitle() + "HammingCode Element", result);
+        results.put(getTitle() + "_hcElem", result);
         results.put(getTitle() + "decoded word", result.getDecodedWord());
-        return "decoded word: " + result.getDecodedWord();
+        return Kit.xmlReader.getTagElement("DecodeHammingCodeFrame", "DecodedWord") + result.getDecodedWord();
         }catch(RuntimeException r){
             return r.getMessage();
         }

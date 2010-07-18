@@ -47,7 +47,7 @@ public class HammingWeightFrame extends Kit {
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
         c.gridy = 0;
-        jPanel1.add(new JLabel("Vector 1:"), c);
+        jPanel1.add(new JLabel(Kit.xmlReader.getTagElement("HammingWeightFrame", "Vector") + " 1:"), c);
 
         c.weightx = 0.495;
         c.fill = GridBagConstraints.BOTH;
@@ -69,7 +69,7 @@ public class HammingWeightFrame extends Kit {
     public String execute() {
         Z result = CoderController.hammingWeight((Matrix<PrimeFieldElement>) textVector1.getResult());
         results.put(getTitle() + "Weight", result);
-        return result.toString();
+        return Kit.xmlReader.getTagElement("HammingWeightFrame", "VectorWeight") + ": " + result.toString();
     }
 
     /** This method is called from within the constructor to

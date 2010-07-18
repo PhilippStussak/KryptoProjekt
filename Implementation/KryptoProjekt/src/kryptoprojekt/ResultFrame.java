@@ -22,7 +22,7 @@ public class ResultFrame extends JInternalFrame {
     private JPanel panel = new JPanel(new BorderLayout());
 
     public ResultFrame() {
-        super("result #" + id++, true, true, true, true);
+        super(Kit.xmlReader.getTagElement("ResultFrame", "Result") + " #" + id++, true, true, true, true);
         initializeComponents();
     }
 

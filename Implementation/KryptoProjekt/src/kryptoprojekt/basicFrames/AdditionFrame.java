@@ -171,7 +171,7 @@ public class AdditionFrame extends Kit {
             value2 = new Z(textField2.getText());
         KryptoType result = BasicController.addition(value1, value2);
         results.put(getTitle() + "_sum", result);
-        return "In Window " + getTitle() + ": " + value1 + " + " + value2 + " = " + result.toString();
+        return value1 + " + " + value2 + " = " + result.toString();
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
