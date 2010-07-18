@@ -184,6 +184,14 @@ public class PrimeFieldElement implements KryptoType<PrimeFieldElement> {
 
     /**
      * Calculates the Addition-Table for this PrimeField based on its base
+     * @return new Matrix Add-Table for this PrimeField
+     */
+    public Matrix getAddTable(){
+        return getAddTable(base.intValue(), base.intValue());
+    }
+
+    /**
+     * Calculates the Addition-Table for this PrimeField based on its base
      * @param maximum rows and colums
      * @return new Matrix Add-Table for this PrimeField
      */
@@ -197,6 +205,14 @@ public class PrimeFieldElement implements KryptoType<PrimeFieldElement> {
             }
         }
         return new Matrix(addTable);
+    }
+
+    /**
+     * Calculates the Multiply-Table for this PrimeField based on its base
+     * @return new Matrix Multply-Table for this PrimeField
+     */
+    public Matrix getMultiplyTable(){
+        return getMultiplyTable(base.intValue(), base.intValue());
     }
 
     /**

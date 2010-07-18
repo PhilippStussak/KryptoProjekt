@@ -8,7 +8,6 @@
  *
  * Created on 26.06.2010, 18:57:52
  */
-
 package kryptoprojekt.basicFrames;
 
 import java.awt.Color;
@@ -17,8 +16,10 @@ import java.awt.GridBagLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
+import kryptoprojekt.ResultFrame;
 import kryptoprojekt.controller.LogicValidator;
 import kryptoprojekt.model.*;
 
@@ -112,24 +113,26 @@ public class PrimeFieldElementFrame extends Kit {
         c.gridwidth = 3;
         c.gridx = 0;
         c.gridy = 2;
-        jPanel1.add(getDragList(new Object[] {getTitle() + "_elem"}), c);
+        jPanel1.add(getDragList(new Object[]{getTitle() + "_elem"}), c);
 
-        this.setSize(160, 120);
+        this.setSize(350, 150);
     }
 
     @Override
     public String execute() {
         KryptoType value1, value2;
-        if(textField1.getResult() != null)
-            value1 = (KryptoType)textField1.getResult();
-        else
+        if (textField1.getResult() != null) {
+            value1 = (KryptoType) textField1.getResult();
+        } else {
             value1 = new Z(textField1.getText());
-        if(textField2.getResult() != null)
-            value2 = (KryptoType)textField2.getResult();
-        else
+        }
+        if (textField2.getResult() != null) {
+            value2 = (KryptoType) textField2.getResult();
+        } else {
             value2 = new Z(textField2.getText());
+        }
 
-        PrimeFieldElement result = new PrimeFieldElement((Z)value1, (Z)value2);
+        PrimeFieldElement result = new PrimeFieldElement((Z) value1, (Z) value2);
         results.put(getTitle() + "_elem", result);
         return "In window " + getTitle() + ": PrimeField with base = " + result.getPrimeElemBase() + " and value = " + result.getPrimeElemValue();
     }
@@ -145,6 +148,8 @@ public class PrimeFieldElementFrame extends Kit {
 
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -160,12 +165,28 @@ public class PrimeFieldElementFrame extends Kit {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 380, Short.MAX_VALUE)
+            .addGap(0, 392, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 258, Short.MAX_VALUE)
+            .addGap(0, 289, Short.MAX_VALUE)
         );
+
+        jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
+        jButton1.setName("jButton1"); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
+        jButton2.setName("jButton2"); // NOI18N
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -175,14 +196,23 @@ public class PrimeFieldElementFrame extends Kit {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(jButton2)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -191,9 +221,49 @@ public class PrimeFieldElementFrame extends Kit {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        KryptoType baseValue;
+        try {
+            if (textField2.getResult() != null) {
+                baseValue = (KryptoType) textField2.getResult();
+            } else {
+                baseValue = new Z(textField2.getText());
+            }
+
+            ResultFrame frame = new ResultFrame(getTitle() + "_extension");
+            frame.setLocation(getX(), getY());
+            frame.setSize(320, 240);
+            frame.addText(new PrimeFieldElement(new Z(1), (Z) baseValue).getAddTable().toString());
+            frame.setVisible(true);
+            getParent().add(frame);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Empty base-field or base not prime!");
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        KryptoType baseValue;
+        try {
+            if (textField2.getResult() != null) {
+                baseValue = (KryptoType) textField2.getResult();
+            } else {
+                baseValue = new Z(textField2.getText());
+            }
+
+            ResultFrame frame = new ResultFrame(getTitle() + "_extension");
+            frame.setLocation(getX(), getY());
+            frame.setSize(320, 240);
+            frame.addText(new PrimeFieldElement(new Z(1), (Z) baseValue).getMultiplyTable().toString());
+            frame.setVisible(true);
+            getParent().add(frame);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Empty base-field or base not prime!");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
-
 }
