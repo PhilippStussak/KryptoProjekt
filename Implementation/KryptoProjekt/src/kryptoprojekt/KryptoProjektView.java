@@ -52,14 +52,15 @@ public class KryptoProjektView extends FrameView {
 
         desktop = new Desktop(handler);
 
-        javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
-        mainPanel.setAlignmentX(50);
-        mainPanel.setLayout(mainPanelLayout);
-        mainPanelLayout.setHorizontalGroup(
-                mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(desktop, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE));
-        mainPanelLayout.setVerticalGroup(
-                mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(desktop, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE));
-        secondBar.setVisible(true);
+        javax.swing.GroupLayout mainFormLayout = new javax.swing.GroupLayout(mainForm);
+        mainForm.setLayout(mainFormLayout);
+        mainFormLayout.setHorizontalGroup(
+                mainFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).
+                addComponent(desktop, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE));
+        mainFormLayout.setVerticalGroup(
+                mainFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).
+                addComponent(desktop, javax.swing.GroupLayout.Alignment.TRAILING,
+                             javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE));
         // status bar initialization - message timeout, idle icon and busy animation, etc
         ResourceMap resourceMap = getResourceMap();
         int messageTimeout = resourceMap.getInteger("StatusBar.messageTimeout");
@@ -171,6 +172,7 @@ public class KryptoProjektView extends FrameView {
     private void initComponents() {
 
         mainPanel = new javax.swing.JPanel();
+        mainForm = new javax.swing.JPanel();
         secondBar = new javax.swing.JPanel();
         startBtnOnBar = new javax.swing.JButton();
         cancelBtnOnBar = new javax.swing.JButton();
@@ -226,6 +228,19 @@ public class KryptoProjektView extends FrameView {
         mainPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         mainPanel.setName("mainPanel"); // NOI18N
 
+        mainForm.setName("mainForm"); // NOI18N
+
+        javax.swing.GroupLayout mainFormLayout = new javax.swing.GroupLayout(mainForm);
+        mainForm.setLayout(mainFormLayout);
+        mainFormLayout.setHorizontalGroup(
+            mainFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        mainFormLayout.setVerticalGroup(
+            mainFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 324, Short.MAX_VALUE)
+        );
+
         secondBar.setName("secondBar"); // NOI18N
 
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(kryptoprojekt.KryptoProjektApp.class).getContext().getResourceMap(KryptoProjektView.class);
@@ -259,11 +274,11 @@ public class KryptoProjektView extends FrameView {
             secondBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(secondBarLayout.createSequentialGroup()
                 .addComponent(startBtnOnBar)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(cancelBtnOnBar)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(clearBtnOnBar)
-                .addContainerGap(185, Short.MAX_VALUE))
+                .addContainerGap(201, Short.MAX_VALUE))
         );
         secondBarLayout.setVerticalGroup(
             secondBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -277,13 +292,15 @@ public class KryptoProjektView extends FrameView {
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(secondBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(secondBar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(mainForm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addComponent(secondBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(231, 231, 231))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(mainForm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         mainMenuBar.setName("mainMenuBar"); // NOI18N
@@ -763,6 +780,7 @@ public class KryptoProjektView extends FrameView {
 
     private void clearBtnOnBarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearBtnOnBarActionPerformed
         desktop.removeAll();
+        desktop.repaint();
     }//GEN-LAST:event_clearBtnOnBarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -792,6 +810,7 @@ public class KryptoProjektView extends FrameView {
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuBar jMenuBar3;
     private javax.swing.JMenuItem lucasMenuItem;
+    private javax.swing.JPanel mainForm;
     private javax.swing.JMenuBar mainMenuBar;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuItem modMenuItem;
