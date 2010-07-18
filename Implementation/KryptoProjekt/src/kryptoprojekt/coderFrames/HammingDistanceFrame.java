@@ -83,11 +83,15 @@ public class HammingDistanceFrame extends Kit {
 
     @Override
     public String execute() {
+        try {
         Object result = CoderController.calculateHammingDistance(
                             (Matrix<PrimeFieldElement>) textVector1.getResult(),
                             (Matrix<PrimeFieldElement>) textVector2.getResult());
         results.put(getTitle() + "_distance", result);
         return result.toString();
+        } catch (IllegalArgumentException e) {
+            return Kit.xmlReader.getTagElement("HammingCode", e.getMessage());
+        }
     }
 
     /** This method is called from within the constructor to

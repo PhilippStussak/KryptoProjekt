@@ -94,6 +94,7 @@
 		<NoSourceCodeword>no source codeword</NoSourceCodeword>
 		<InitHammingCodeReturn>Init Hamming Code with source codeword </InitHammingCodeReturn>
 		<HeaderLabel>Create a hammingcode element</HeaderLabel>
+		<NoMatrixElement>Wrong parameter, this isn't a matrix element</NoMatrixElement>
 	</InitHammingFrame>
 	<GCDFrame>
 		<GCD>GCD</GCD>

@@ -175,7 +175,7 @@ public class DecodeHammingCodeFrame extends Kit {
         results.put(getTitle() + "decoded word", result.getDecodedWord());
         return Kit.xmlReader.getTagElement("DecodeHammingCodeFrame", "DecodedWord") + result.getDecodedWord();
         }catch(RuntimeException r){
-            return r.getMessage();
+            return Kit.xmlReader.getTagElement("HammingCode", r.getMessage());
         }
     }
 

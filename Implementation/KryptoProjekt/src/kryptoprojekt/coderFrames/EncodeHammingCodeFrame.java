@@ -138,6 +138,7 @@ public class EncodeHammingCodeFrame extends Kit {
 
     @Override
     public String execute() {
+        try {
         if (textField1.getResult() != null) {
             HammingCode result = CoderController.encodeHammingCode((HammingCode) textField1.getResult());
             results.put(getTitle() + "_hcElem", result);
@@ -145,6 +146,9 @@ public class EncodeHammingCodeFrame extends Kit {
             return Kit.xmlReader.getTagElement("EncodeHammingCodeFrame", "EncodedWord") + result.getEncodedWord();
         } else {
             return Kit.xmlReader.getTagElement("HammingFrames", "NoHammingCodeElement");
+        }
+        } catch (RuntimeException e) {
+            return Kit.xmlReader.getTagElement("HammingCode", e.getMessage());
         }
     }
 

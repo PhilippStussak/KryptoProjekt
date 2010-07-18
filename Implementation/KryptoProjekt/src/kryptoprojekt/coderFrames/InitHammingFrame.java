@@ -203,6 +203,7 @@ public class InitHammingFrame extends Kit {
 
     @Override
     public String execute() {
+        try {
         Matrix<PrimeFieldElement> generatorM = null;
         HammingCode hc = null;
         String value1;
@@ -212,6 +213,9 @@ public class InitHammingFrame extends Kit {
             return Kit.xmlReader.getTagElement("InitHammingFrame", "NoSourceCodeword");
 
         if (enableMatrix.isSelected()) {
+            if (textGeneratorMatrix.getResult() instanceof Matrix)
+                generatorM = (Matrix<PrimeFieldElement>)textGeneratorMatrix.getResult();
+            else return Kit.xmlReader.getTagElement("InitHammingFrame", "NoMatrixElement");
             hc = CoderController.initHammingCode(true, generatorM, value1);
         } else {
             hc = CoderController.initHammingCode(false, null, value1);
@@ -223,6 +227,9 @@ public class InitHammingFrame extends Kit {
         return "Init Hamming Code with source codeword " + hc.getSourceCodeWord() +
                 "\n" + Kit.xmlReader.getTagElement("InitHammingFrame", "GeneratorMatrix") + ": \n" + hc.getGeneratorMatrix().toString() +
                 "\n" + Kit.xmlReader.getTagElement("InitHammingFrame", "ControlMatrix") + ": \n" + hc.getControlMatrix().toString();
+        } catch (IllegalArgumentException e) {
+            return Kit.xmlReader.getTagElement("HammingCode", e.getMessage());
+        }
 
     }
 
