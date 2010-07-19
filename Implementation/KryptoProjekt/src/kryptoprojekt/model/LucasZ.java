@@ -97,7 +97,7 @@ public class LucasZ extends LucasTest<Z>{
             if(argsCorrect){
                 //int i = 0;
                 for (Z primeCheck : maxBases){
-                    if (primeCheck.compareTo(one) < 0){
+                    if (primeCheck.compareTo(one) < 0){ //Vorsicht, die Primzahl ist +1 größer als die Basis, deshalb Test <0
                          /*if(primeCheck.isONE()){
                              if(isPrimeTwo(i)){
                                  i++;
@@ -121,7 +121,7 @@ public class LucasZ extends LucasTest<Z>{
                 int i = 0;
                 for(Z maxBase : maxBases){
                     if (maxBase.compareTo(one) <= 0){
-                        if(maxBase.isONE()){
+                        if(maxBase.isONE()){ //wenn ja, könnte die 2 als Primzahl übergeben wurden sein
                             if(isPrimeTwo(i)){
                                 i++;
                                 continue;
@@ -135,7 +135,7 @@ public class LucasZ extends LucasTest<Z>{
                     i++;
                 }
             }
-            //checkt ob alle angegebenen Basen größer 1 sind
+            //checkt ob alle angegebenen Basen größer 1 sind und kleiner als das Modul (mögliche Primzahl)
             if(argsCorrect){
                 int i = 0;
                 for(TreeSet<Z> base : basesSet){
@@ -161,8 +161,7 @@ public class LucasZ extends LucasTest<Z>{
                 }
             }//Ende Prüfung Basentest
 
-
-            //Prüfung ob die Anzahl der übergebenen Faktorzeilen konsistenz sind (es muss gleich viele Zeilen mit Basen wir Summanden geben).
+            //Prüfung ob die Anzahl der übergebenen Faktorzeilen konsistenz sind (es muss gleich viele Zeilen mit Basen wie Summanden geben).
             if(argsCorrect){
                 if (maxBases.size() != summandCollection.size()){
                     //throw new IllegalArgumentException("Fehler: Anzahl von Faktorenzeilen und Summandenzeilen sind unterschiedlich. Basen = " +maxBases.size()+ " Summanden = " +summandCollection.size());

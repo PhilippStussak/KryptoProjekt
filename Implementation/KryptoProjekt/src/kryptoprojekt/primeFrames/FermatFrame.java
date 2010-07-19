@@ -18,8 +18,10 @@ import java.awt.Font;
 import java.awt.Insets;
 import java.awt.Toolkit;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.regex.Pattern;
+import java.util.TreeSet;
 import javax.swing.border.Border;
 import javax.swing.BorderFactory;
 import javax.swing.JCheckBox;
@@ -485,14 +487,29 @@ public class FermatFrame extends Kit {
         randomNumberSP.setEnabled(false);
         randomNumberSP.addChangeListener(new ChangeListener(){
             public void stateChanged(ChangeEvent e){
-                LinkedList<KryptoType> moduls = new LinkedList<KryptoType>(splitInputToZ(moduloTextField.getText()));
+                TreeSet<KryptoType> moduls = new TreeSet<KryptoType>(splitInputToZ(moduloTextField.getText()));
                 if(!moduls.isEmpty()){
-                    Integer zahl = (Integer)randomNumberSP.getValue();
+                    Integer numberRandomBases = (Integer)randomNumberSP.getValue();
                     basesTextField.setText("");
-                    if(zahl >0 && zahl<=9999){
-                        int maxProbNumbers = Integer.parseInt(moduls.getFirst().toString())-2; //ACHTUNG, BEI DER PRIMZAHL 2 MUSS MAN IRGENDWIE SICH WAS EINFALLEN LASSEN. DA VIELLEICHT BASIS 1 ÜBERGEBEN
-                        zahl = zahl<maxProbNumbers ? zahl : maxProbNumbers;
-                        probBases = new LinkedList<Integer>(PrimeUtility.getRandomNumber(2, Integer.parseInt(moduls.getFirst().toString()), zahl));
+                    if(numberRandomBases >0 && numberRandomBases<=9999){
+                        int endProbBaseRange; //max. Zahl für eine zufallsgenerierte Basis
+                        if(Integer.parseInt(moduls.first().toString()) == 2){ //Achtung, möglicherweise funktioniert das nur für KryptoType 'Z'
+                            Iterator<KryptoType> itModuls = moduls.iterator();
+                            itModuls.next();
+                            if(itModuls.hasNext()){
+                                endProbBaseRange = Integer.parseInt(itModuls.next().toString()); //Achtung, möglicherweise funktioniert das nur für KryptoType 'Z'
+                                int maxProbNumbers = endProbBaseRange-2; //Achtung, möglicherweise funktioniert das nur für KryptoType 'Z'
+                                numberRandomBases = numberRandomBases<maxProbNumbers ? numberRandomBases : maxProbNumbers;
+                            }else{
+                                endProbBaseRange = 2;
+                                numberRandomBases = 1;
+                            }
+                        } else{
+                            endProbBaseRange = Integer.parseInt(moduls.first().toString());
+                            int maxProbNumbers = endProbBaseRange-2;
+                            numberRandomBases = numberRandomBases<maxProbNumbers ? numberRandomBases : maxProbNumbers;
+                        }
+                        probBases = new LinkedList<Integer>(PrimeUtility.getRandomNumber(2, endProbBaseRange, numberRandomBases));
                         StringBuilder probBasesString = new StringBuilder("");
                         for (int i = 0; i<probBases.size(); i++){
                             probBasesString.append(probBases.get(i)+", ");
@@ -525,6 +542,7 @@ public class FermatFrame extends Kit {
                     randomNumberSP.setEnabled(true);
                 }else{
                     basesTextField.setEnabled(true);
+                    basesTextField.setText("");
                     randomSPLabel.setEnabled(false);
                     randomNumberSP.setEnabled(false);
                 }

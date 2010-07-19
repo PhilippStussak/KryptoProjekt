@@ -14,7 +14,7 @@ import java.util.*;
 //Ist die Oberklasse für alle verschiedenen KryptoTypen die einen Lucas Test machen können.
 public abstract class LucasTest <E extends KryptoType<E>> implements PrimeTest<E> {
     protected Collection<TreeSet<E>> basesSet; //beinhaltet die übergebenen Basen, auf der die Lucas Test Primfaktoren auf Primzahl überprüft werden sollen pro Lucas Test Primfaktoren
-    protected Collection<E> maxBases; //enthält den Wert der maximalen Basen für den Primzahltest pro übergebene Lucas-Test Faktorenzeile
+    protected Collection<E> maxBases; //enthält den Wert der maximalen Basen für den Primzahltest pro übergebenen Lucas-Test Term
     protected Collection<Triple<ArrayList<E> , ArrayList<E>, ArrayList<E>>> primeFactorsCollection; //beinhaltet jeweils ein Triple (Bases, Faktoren und der Potenzen) von jeder Faktorenzeile
     protected Collection<Tuple<E, E>> summandCollection; //pro Primzahlenzeile sind hier der Summand und seine Potenz gespeichert
     protected Collection<ArrayList<Tuple<E, E>>> primeFactorsInListTuples; //Liste pro Primfaktorenzeile mit einer Unterliste, welche die Tuples mit den Faktoren und Potenzen enthält
@@ -122,7 +122,7 @@ public abstract class LucasTest <E extends KryptoType<E>> implements PrimeTest<E
         for (ArrayList<Tuple<E, E>> primeFactors : primeFactorsInListTuples) {
             maxBase.add(calculateMaxBasesSeparate(primeFactors, tupleSummandList.get(counter)));
 
-            //Wenn keine Basen für eine LucasTest Faktorenzeile (also null) übergeben wurden, werden alle Basen von 2 bis maxBase für diese Faktorenzeile aufgefüllt
+            //Wenn keine Basen für einen Lucas Term (also null) übergeben wurden, werden alle Basen von 2 bis maxBase für diesen Term aufgefüllt
 
             if (triples.get(counter).first().isEmpty()){
                 TreeSet<E> baseToAdd = new TreeSet<E>();
@@ -221,7 +221,7 @@ public abstract class LucasTest <E extends KryptoType<E>> implements PrimeTest<E
     }
 
 
-    //berechnet aus den Primfaktoren das Modul
+    //berechnet aus den Primfaktoren das Modul (die Zahl welche auf Primzahleigenschaft untersucht werden soll)
     protected E calculatePrime(Collection<Tuple<E, E>> primeFactors, Tuple<E, E> summands){
         int numberOfprimeFactors = primeFactors.size(); //beinhaltet aus wie vielen Tuplen (entspricht den Primfaktoren) die Collection besteht
         ArrayList<Tuple<E, E>> primeFactorList;
