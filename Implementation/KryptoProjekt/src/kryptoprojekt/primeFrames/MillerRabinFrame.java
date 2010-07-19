@@ -662,11 +662,11 @@ public class MillerRabinFrame extends Kit {
         if(basesTextField.getResult() != null)
             basen.add((KryptoType)basesTextField.getResult());
         else
-            basen.add(new Z (basesTextField.getText()));
+            basen = splitInputToZ(basesTextField.getText());
         if(moduloTextField.getResult() != null)
             moduls.add((KryptoType)moduloTextField.getResult());
         else
-            moduls.add(new Z(moduloTextField.getText()));
+            moduls = splitInputToZ(moduloTextField.getText()); 
 
         try{
             result = PrimeTestController.primeTestRabin(basen, moduls, calcProb);

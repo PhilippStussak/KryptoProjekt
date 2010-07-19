@@ -35,6 +35,7 @@ public abstract class MillerRabinTest <E extends KryptoType<E>> implements Prime
         //Precondition
         assert evenNumber.compareTo(evenNumber.newInstance("1")) > 0 : "An even number cannot be less than <2. argument passed: " +evenNumber;
         assert evenNumber.mod(evenNumber.newInstance("2")).compareTo(evenNumber.newInstance("0")) == 0 : "It is not even number. number passed: " +evenNumber;
+//ACHTUNG: HIER MUSS ICH NOCH EINE EXCEPTION WERFEN, DASS DER USER EINE UNGERADE ZAHL EINGEBEN MUSS!!!!!!!!!!!!!!!!!!!!
 
         E dividend;
         final E divisor = evenNumber.newInstance("2");

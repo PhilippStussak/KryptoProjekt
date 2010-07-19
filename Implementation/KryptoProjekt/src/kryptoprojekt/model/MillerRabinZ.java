@@ -135,16 +135,18 @@ public class MillerRabinZ extends MillerRabinTest<Z>{
                     firstTest = Basic.squareAndMultiply(base, oddFactor, checkPrime).first();
                     intermediateValues.add(base+ "^" +oddFactor+ " mod " +checkPrime+ " = " +firstTest);
                     if((firstTest).isONE() || firstTest.equals(checkPrime.subtract(oneObj))) {
+                        intermediateValues.add("");
                         continue;
                     } else{
                         Z newBase = firstTest;
-                        assert oddFactor.compareTo(new Z(2147483647)) <0 : "oddFactor is too large (I think). oddFactor: " +oddFactor;
+                        //assert oddFactor.compareTo(new Z(2147483647)) <0 : "oddFactor is too large (I think). oddFactor: " +oddFactor;
                         int potenzK = 1; //ist der 'k' Exponent
                         for (Z twoFactor = twoObj; twoFactor.compareTo(maxPower) <= 0; twoFactor=twoFactor.multiply(twoObj)){
                             assert potenzK <= maxPower.intValue(): "Too many Iterations. assertZaehler: "+potenzK+ ", maxPower: " +maxPower ;
                             result = Basic.squareAndMultiply(newBase, twoFactor, checkPrime).first();
                             intermediateValues.add("(" +newBase+ ")^2^" +potenzK+ " mod " +checkPrime+ " = " +result);
                             if (result.equals(new Z(checkPrime.subtract(oneObj).toString()))){ //Wenn n-1 rauskommt, handelt es sich um eine Primzahl
+                                intermediateValues.add("");
                                 continue nextBase;
                             }
                             ++potenzK;
