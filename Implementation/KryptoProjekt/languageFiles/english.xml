@@ -112,6 +112,7 @@
 		<HeaderLabel>Create Primefield Element</HeaderLabel>
 		<AddTableBtn>Addition table</AddTableBtn>
 		<MulTableBtn>Multiplication Table</MulTableBtn>
+		<guiTableException>Empty base-field or base not prime</guiTableException>
 	</PrimeFieldElementFrame>
 	<AdditionFrame>
 		<HeaderLabel>Addition</HeaderLabel>

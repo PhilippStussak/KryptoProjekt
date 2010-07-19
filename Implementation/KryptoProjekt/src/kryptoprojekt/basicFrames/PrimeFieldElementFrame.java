@@ -118,7 +118,7 @@ public class PrimeFieldElementFrame extends Kit {
         c.gridy = 2;
         jPanel1.add(getDragList(new Object[]{getTitle() + "_elem"}), c);
 
-        this.setSize(350, 150);
+        this.setSize(420, 150);
     }
 
     @Override
@@ -241,7 +241,7 @@ public class PrimeFieldElementFrame extends Kit {
             frame.setVisible(true);
             getParent().add(frame);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Empty base-field or base not prime!");
+            JOptionPane.showMessageDialog(null, Kit.xmlReader.getTagElement("PrimeFieldElementFrame", "guiTableException"));
         }
     }//GEN-LAST:event_addTableBtnActionPerformed
 
@@ -261,7 +261,7 @@ public class PrimeFieldElementFrame extends Kit {
             frame.setVisible(true);
             getParent().add(frame);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Empty base-field or base not prime!");
+            JOptionPane.showMessageDialog(null, Kit.xmlReader.getTagElement("PrimeFieldElementFrame", "guiTableException"));
         }
     }//GEN-LAST:event_mulTableBtnActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
