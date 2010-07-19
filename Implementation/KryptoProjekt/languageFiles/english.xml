@@ -133,6 +133,8 @@
 	<PhiFrame>
 		<HeaderLabel>Phi function</HeaderLabel>
 		<ExtendBtn>Extend</ExtendBtn>
+		<BigNumber>Number too big!</BigNumber>
+		<LowNumber>Phi-function only takes numbers greater than 0</LowNumber>
 	</PhiFrame>
 	<SaMFrame>
 		<HeaderLabel>Square &amp; Multiply</HeaderLabel>

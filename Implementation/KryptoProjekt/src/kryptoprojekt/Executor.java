@@ -77,7 +77,7 @@ public class Executor extends Thread {
         }
         progressBar(100, "", true);
         if (recentKit != null)
-            progressMessage(recentKit.getTitle(), Kit.xmlReader.getTagElement("Executor", "ComputeTime") + ": " + (System.currentTimeMillis() - time));
+            progressMessage("final", Kit.xmlReader.getTagElement("Executor", "ComputeTime") + ": " + (System.currentTimeMillis() - time));
         progressBar(100, "", false);
     }
 
@@ -86,7 +86,10 @@ public class Executor extends Thread {
             EventQueue.invokeAndWait(new Runnable() {
 
                 public void run() {
-                    rf.addText(Kit.xmlReader.getTagElement("Executor", "InWindow") + " " + kitTitle + ": \n" + progressMessage);
+                    if(!kitTitle.equals("final"))
+                        rf.addText(Kit.xmlReader.getTagElement("Executor", "InWindow") + " " + kitTitle + ": \n" + progressMessage);
+                    else
+                        rf.addText("\n" + progressMessage);
                 }
             });
         } catch (InterruptedException ex) {

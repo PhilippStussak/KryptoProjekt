@@ -8,7 +8,6 @@
  *
  * Created on 27.06.2010, 13:01:11
  */
-
 package kryptoprojekt.basicFrames;
 
 import java.awt.Color;
@@ -32,7 +31,7 @@ import kryptoprojekt.model.Z;
  * @author phil
  */
 public class PhiFrame extends Kit {
-    
+
     private DropTextField textField1 = getDropTextField();
     private String extension = "";
 
@@ -83,7 +82,7 @@ public class PhiFrame extends Kit {
         c.gridwidth = 2;
         c.gridx = 0;
         c.gridy = 1;
-        jPanel1.add(getDragList(new Object[] {getTitle() + "_phi"}), c);
+        jPanel1.add(getDragList(new Object[]{getTitle() + "_phi"}), c);
 
         this.setSize(160, 120);
     }
@@ -91,17 +90,26 @@ public class PhiFrame extends Kit {
     @Override
     public String execute() {
         KryptoType value1;
-        if(textField1.getResult() != null)
-            value1 = (KryptoType)textField1.getResult();
-        else
+        if (textField1.getResult() != null) {
+            value1 = (KryptoType) textField1.getResult();
+        } else {
             value1 = new Z(textField1.getText());
-
-        Tuple<Z, LinkedList<Z>> result = BasicController.calculatePhi((Z) value1);
-        results.put(getTitle() + "_phi", result.first());
-        extension = "";
-        for(Z tmp : result.second())
-            extension += tmp +" ";
-        return "phi(" + value1.toString() + ") = " +result.first().toString();
+        }
+        try {
+            Tuple<Z, LinkedList<Z>> result = BasicController.calculatePhi((Z) value1);
+            results.put(getTitle() + "_phi", result.first());
+            extension = "";
+            for (Z tmp : result.second()) {
+                extension += tmp + " ";
+            }
+            return "phi(" + value1.toString() + ") = " + result.first().toString();
+        } catch (Exception e) {
+            if (value1.compareTo(new Z(0)) <= 0) {
+                return xmlReader.getTagElement("PhiFrame", "LowNumber");
+            } else {
+                return xmlReader.getTagElement("PhiFrame", "BigNumber");
+            }
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -178,11 +186,9 @@ public class PhiFrame extends Kit {
         frame.setVisible(true);
         getParent().add(frame);
     }//GEN-LAST:event_jButton1ActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
-
 }
