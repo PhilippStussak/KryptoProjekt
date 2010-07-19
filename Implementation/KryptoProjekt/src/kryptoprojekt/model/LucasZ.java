@@ -27,6 +27,10 @@ public class LucasZ extends LucasTest<Z>{
         super(primeFactorsCollection, summandCollection, calcProb);
     }
 
+    public LucasZ(Collection<Z> bases, Collection<Tuple<Z, Z>> primeFactors, Collection<Tuple<Z, Z>> summands, boolean calcProb){
+        super(bases, primeFactors, summands, calcProb);
+    }
+
     public ArrayList<Triple<Boolean, Double, LinkedList<String>>> test2(){
         return null;
     }
