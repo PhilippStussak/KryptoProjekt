@@ -32,7 +32,7 @@ public class PrimeTestController {
 
     //Fermat Test
     public static ArrayList<Triple<Boolean, Double, LinkedList<String>>> primeTestFermat(ArrayList<KryptoType> bases, ArrayList<KryptoType> moduls, boolean calcProb) throws RuntimeException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException{
-        if (bases.get(0).getClass().equals(Z.class) && (bases.get(0).getClass().equals(Z.class))){
+        if (bases.get(0).getClass().equals(Z.class) && (moduls.get(0).getClass().equals(Z.class))){
             ArrayList<Z> basesZ = new ArrayList<Z>();
             ArrayList<Z> modulsZ = new ArrayList<Z>();
   
@@ -44,7 +44,7 @@ public class PrimeTestController {
             }
             return fermatZPrimeTest(new FermatZ(basesZ, modulsZ, calcProb));
             
-        }else if (bases.get(0).getClass().equals(Polynom.class) && (bases.get(0).getClass().equals(Polynom.class))){
+        }else if (bases.get(0).getClass().equals(Polynom.class) && (moduls.get(0).getClass().equals(Polynom.class))){
             throw new UnsupportedOperationException(xml.getTagElement("General", "UnsupportedOperationException"));
         }else{
             throw new IllegalArgumentException(xml.getTagElement("PrimeTestController", "FalseKryptoTypes"));
@@ -63,7 +63,7 @@ public class PrimeTestController {
 
     //Miller-Rabin Test
     public static ArrayList<Triple<Boolean, Double, LinkedList<String>>> primeTestRabin(ArrayList<KryptoType> bases, ArrayList<KryptoType> moduls, boolean calcProb) throws RuntimeException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException{
-        if (bases.get(0).getClass().equals(Z.class) && (bases.get(0).getClass().equals(Z.class))){
+        if (bases.get(0).getClass().equals(Z.class) && (moduls.get(0).getClass().equals(Z.class))){
             ArrayList<Z> basesZ = new ArrayList<Z>();
             ArrayList<Z> modulsZ = new ArrayList<Z>();
 
@@ -75,7 +75,7 @@ public class PrimeTestController {
             }
             return rabinZPrimeTest(new MillerRabinZ(basesZ, modulsZ, calcProb));
 
-        }else if (bases.get(0).getClass().equals(Polynom.class) && (bases.get(0).getClass().equals(Polynom.class))){
+        }else if (bases.get(0).getClass().equals(Polynom.class) && (moduls.get(0).getClass().equals(Polynom.class))){
             throw new UnsupportedOperationException(xml.getTagElement("General", "UnsupportedOperationException"));
         }else{
             throw new IllegalArgumentException(xml.getTagElement("PrimeTestController", "FalseKryptoTypes"));
@@ -106,7 +106,39 @@ public class PrimeTestController {
         }
         throw new IllegalArgumentException("This line should never been reached");
         //return null; //dürfte niemals erreicht werden
-    }    
+    }
+
+    /*
+    public LucasZ(Collection<Z> bases, Collection<Tuple<Z, Z>> primeFactors, Collection<Tuple<Z, Z>> summands, boolean calcProb){
+        super(bases, primeFactors, summands, calcProb);
+    }
+*/
+
+     //public static ArrayList<Triple<Boolean, Double, LinkedList<String>>> primeTestLucas(ArrayList<KryptoType> bases, ArrayList<Tuple<KryptoType, KryptoType>> primeFactors, ArrayList<Tuple<KryptoType, KryptoType>> summands, boolean calcProb) throws RuntimeException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException{
+    public static ArrayList<Triple<Boolean, Double, LinkedList<String>>> primeTestLucas(ArrayList<KryptoType> bases, ArrayList<KryptoType> primeFactors, ArrayList<KryptoType> factorPowers, ArrayList<KryptoType> summands, ArrayList<KryptoType> summandPowers, boolean calcProb)
+            throws RuntimeException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException{
+        if (bases.get(0).getClass().equals(Z.class) && (primeFactors.get(0).getClass().equals(Z.class))){
+            ArrayList<Z> basesZ = new ArrayList<Z>();
+            ArrayList<Tuple<Z, Z>> primeFactorsZ = new ArrayList<Tuple<Z, Z>>();
+            ArrayList<Tuple<Z, Z>> summandsZ = new ArrayList<Tuple<Z, Z>>();
+
+            for(KryptoType<Z> base : bases){
+                basesZ.add((Z)base);
+            }
+            for(KryptoType<Z> primeFactor : primeFactors){
+               // KryptoType<Z> factor = primeFactor.first();
+
+
+                //primeFactorsZ.add(primeFactor);
+            }
+            //return rabinZPrimeTest(new MillerRabinZ(basesZ, modulsZ, calcProb));
+
+        //}else if (bases.get(0).getClass().equals(Polynom.class) && (moduls.get(0).getClass().equals(Polynom.class))){
+            throw new UnsupportedOperationException(xml.getTagElement("General", "UnsupportedOperationException"));
+        }else{
+            throw new IllegalArgumentException(xml.getTagElement("PrimeTestController", "FalseKryptoTypes"));
+        }
+    }
 
     public static ArrayList<Triple<Boolean, Double, LinkedList<String>>> lucasZPrimeTest(LucasZ lucasZArguments) throws RuntimeException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException{
         return lucasZArguments.test();

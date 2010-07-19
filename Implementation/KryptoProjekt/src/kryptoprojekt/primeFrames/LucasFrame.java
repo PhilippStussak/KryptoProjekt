@@ -48,6 +48,8 @@ public class LucasFrame extends Kit{
     private DropTextField summandTextField = getDropTextField();
     private String extension = "";
     private String outputWindow = "";
+    private boolean calcProb; //ob die Wahrscheinlichkeit beim Lucas-Test berechnet werden soll
+    private boolean correctArguments; //zeigt an, ob für Basen und Moduls korrekte Werte übergeben wurden
 
     /** Creates new form LucasFrame */
     public LucasFrame(ConnectionHandler handler) {
@@ -220,13 +222,21 @@ public class LucasFrame extends Kit{
 
     @Override
     public String execute() {
-        //KryptoType value1, value2;
-        //PrimeTest t1 = new FermatZ(basen, primeFill, calcProp);
+        ArrayList<KryptoType> bases = new ArrayList<KryptoType>();
+        //ArrayList<Tuple<KryptoType, KryptoType>> primeFactors = new ArrayList<Tuple<KryptoType, KryptoType>>();
+        ArrayList<KryptoType> primeFactors = new ArrayList<KryptoType>();
+        ArrayList<KryptoType> factorPowers = new ArrayList<KryptoType>();
+        //ArrayList<Tuple<KryptoType, KryptoType>> summands = new ArrayList<Tuple<KryptoType, KryptoType>>();
+        ArrayList<KryptoType> summands = new ArrayList<KryptoType>();
+        ArrayList<KryptoType> summandPowers = new ArrayList<KryptoType>();
+        ArrayList<Triple<Boolean, Double, LinkedList<String>>> result; //beinhaltet für jede Primzahl einzeln ob es prime ist, Wahrscheinlichkeit, Zwischenschritte
+
+
         ArrayList<Z> basen = new ArrayList<Z>();
         ArrayList<Z> factors = new ArrayList<Z>();
         ArrayList<Z> summand = new ArrayList<Z>();
         ArrayList<Z> powers = new ArrayList<Z>();
-        ArrayList<Triple<Boolean, Double, LinkedList<String>>> result; //beinhaltet für jede Primzahl einzeln ob es prime ist, Wahrscheinlichkeit, Zwischenschritte
+       /* ArrayList<Triple<Boolean, Double, LinkedList<String>>> result; //beinhaltet für jede Primzahl einzeln ob es prime ist, Wahrscheinlichkeit, Zwischenschritte
 
         //ACHTUNG, ES MÜSSEN NOCH POWER EINGABEFELDER EINGERICHTET WERDEN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         //lucasPrimeFactors Triple erzeugen
@@ -237,10 +247,12 @@ public class LucasFrame extends Kit{
         //Summanden Liste erzeugen
         Tuple<Z, Z> sum = new Tuple<Z, Z>(new Z(1), new Z(1)); //lege ich bereits so fest, bitte das Eingabefeld bei dem Summanden gleich auf 1 setzen
         ArrayList<Tuple<Z, Z>> summands = new ArrayList<Tuple<Z, Z>>();
-        summands.add(sum);
-
-
-
+        summands.add(sum);*
+/*
+    public LucasZ(Collection<Z> bases, Collection<Tuple<Z, Z>> primeFactors, Collection<Tuple<Z, Z>> summands, boolean calcProb){
+        super(bases, primeFactors, summands, calcProb);
+    }
+*/
         if(basesTextField.getResult() != null)
             factors.add((Z)basesTextField.getResult());
         else
@@ -248,9 +260,9 @@ public class LucasFrame extends Kit{
 
         //ACHTUNG, MODUL WIRD BEI DEM LUCAS-TEST NICHT GEBRAUCHT
         if(moduloTextField.getResult() != null)
-            basen.add((Z)moduloTextField.getResult());
+            bases.add((Z)moduloTextField.getResult());
         else
-            basen.add(new Z(moduloTextField.getText()));
+            bases.add(new Z(moduloTextField.getText()));
         //ACHTUNG, MODUL WIRD BEI DEM LUCAS-TEST NICHT GEBRAUCHT
 
 
@@ -260,7 +272,7 @@ public class LucasFrame extends Kit{
             summand.add(new Z(summandTextField.getText()));
 
         try{
-            result = PrimeTestController.primeTestLucas(lucasPrimeFactors, summands, true);
+            result = PrimeTestController.primeTestLucas(bases, primeFactors, factorPowers, summands, summandPowers, calcProb);
             results.put(getTitle() + "_prime", result);
             //return "In Window " + getTitle() + ": " + basen.get(0) + " ^ "+moduls.get(0).subtract(new Z(1))+ " mod "+moduls.get(0)+ " = " + result.get(0).first();
         }catch(RuntimeException e){
