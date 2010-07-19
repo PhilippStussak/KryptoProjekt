@@ -139,12 +139,14 @@ public class MatrixPrimeFieldFrame extends Kit {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        ResultFrame frame = new ResultFrame(getTitle() + "_extension");
-        frame.setLocation(getX(), getY());
-        frame.setSize(320, 240);
-        frame.addText(((Matrix<PrimeFieldElement>)results.get(getTitle() + "_matrix")).toStringWithIndex());
-        frame.setVisible(true);
-        getParent().add(frame);
+        if (results.get(getTitle() + "_matrix") != null) {
+            ResultFrame frame = new ResultFrame(getTitle() + "_extension");
+            frame.setLocation(getX(), getY());
+            frame.setSize(320, 240);
+            frame.addText(((Matrix<PrimeFieldElement>) results.get(getTitle() + "_matrix")).toStringWithIndex());
+            frame.setVisible(true);
+            getParent().add(frame);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
@@ -174,14 +176,13 @@ public class MatrixPrimeFieldFrame extends Kit {
         results.put(getTitle() + "_matrix", null);
         jPanel1.setLayout(new BorderLayout());
         jPanel1.add(list);
-        this.setSize(200, 150);
+        this.setSize(280, 150);
     }
 
     @Override
     public String execute() {
         return "\n" + results.get(getTitle() + "_matrix").toString();
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel headerLbl;
     private javax.swing.JButton jButton1;
