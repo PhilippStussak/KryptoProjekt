@@ -55,13 +55,14 @@ public class PrimeTestController {
         return fermatZArguments.test();
     }
 
-    public static ArrayList<Triple<Boolean, Double, LinkedList<String>>> fermatPolynomTest(FermatZ fermatZArguments) throws RuntimeException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException{
+    public static ArrayList<Triple<Boolean, Double, LinkedList<String>>> fermatPolynomTest(FermatZ fermatPolynomArguments) throws RuntimeException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException{
         throw new UnsupportedOperationException(xml.getTagElement("General", "UnsupportedOperationException"));
     }
 
+    
 
     //Miller-Rabin Test
-    public static ArrayList<Tuple<Boolean, Double>> primeTestRabin(ArrayList<KryptoType> bases, ArrayList<KryptoType> moduls) throws RuntimeException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException{
+    public static ArrayList<Triple<Boolean, Double, LinkedList<String>>> primeTestRabin(ArrayList<KryptoType> bases, ArrayList<KryptoType> moduls, boolean calcProb) throws RuntimeException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException{
         if (bases.get(0).getClass().equals(Z.class) && (bases.get(0).getClass().equals(Z.class))){
             ArrayList<Z> basesZ = new ArrayList<Z>();
             ArrayList<Z> modulsZ = new ArrayList<Z>();
@@ -72,7 +73,7 @@ public class PrimeTestController {
             for(KryptoType<Z> modul : moduls){
                 modulsZ.add((Z)modul);
             }
-            return rabinZPrimeTest(new MillerRabinZ(basesZ, modulsZ, true));
+            return rabinZPrimeTest(new MillerRabinZ(basesZ, modulsZ, calcProb));
 
         }else if (bases.get(0).getClass().equals(Polynom.class) && (bases.get(0).getClass().equals(Polynom.class))){
             throw new UnsupportedOperationException(xml.getTagElement("General", "UnsupportedOperationException"));
@@ -81,21 +82,21 @@ public class PrimeTestController {
         }
     }
 
-    public static ArrayList<Tuple<Boolean, Double>> rabinZPrimeTest(MillerRabinZ fermatZArguments) throws RuntimeException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException{
-        return fermatZArguments.test();
+    public static ArrayList<Triple<Boolean, Double, LinkedList<String>>> rabinZPrimeTest(MillerRabinZ millerRabinZArguments) throws RuntimeException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException{
+        return millerRabinZArguments.test();
     }
 
-    public static ArrayList<Tuple<Boolean, Double>> rabintPolynomTest(MillerRabinZ fermatZArguments) throws RuntimeException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException{
+    public static ArrayList<Triple<Boolean, Double, LinkedList<String>>> rabintPolynomTest(MillerRabinZ millerRabinPolynonArguments) throws RuntimeException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException{
         throw new UnsupportedOperationException(xml.getTagElement("General", "UnsupportedOperationException"));
     }
 
 
 
     //Lucas Test
-    public static ArrayList<Tuple<Boolean, Double>> primeTestLucas(ArrayList<Triple<ArrayList<Z> , ArrayList<Z>, ArrayList<Z>>> primeFactorsCollection, ArrayList<Tuple<Z , Z>> summandCollection, boolean calcProp) throws RuntimeException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException{
+    public static ArrayList<Triple<Boolean, Double, LinkedList<String>>> primeTestLucas(ArrayList<Triple<ArrayList<Z> , ArrayList<Z>, ArrayList<Z>>> primeFactorsCollection, ArrayList<Tuple<Z , Z>> summandCollection, boolean calcProb) throws RuntimeException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException{
         for (Triple<ArrayList<Z>, ArrayList<Z>, ArrayList<Z>> triples : primeFactorsCollection){ //ACHTUNG, FALSCH, es atand überall E da
             if(triples.first().getClass().equals(Z.class) && triples.second().getClass().equals(Z.class)){
-                return lucasZPrimeTest(new LucasZ(primeFactorsCollection, summandCollection, true));
+                return lucasZPrimeTest(new LucasZ(primeFactorsCollection, summandCollection, calcProb));
                 //return rabinZPrimeTest(new LucasZ(basesZ, modulsZ, true));
             } else if(triples.first().getClass().equals(Z.class) && triples.second().getClass().equals(Z.class)){
                 throw new UnsupportedOperationException(xml.getTagElement("General", "UnsupportedOperationException"));
@@ -107,11 +108,11 @@ public class PrimeTestController {
         //return null; //dürfte niemals erreicht werden
     }    
 
-    public static ArrayList<Tuple<Boolean, Double>> lucasZPrimeTest(LucasZ fermatZArguments) throws RuntimeException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException{
-        return fermatZArguments.test();
+    public static ArrayList<Triple<Boolean, Double, LinkedList<String>>> lucasZPrimeTest(LucasZ lucasZArguments) throws RuntimeException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException{
+        return lucasZArguments.test();
     }
 
-    public static ArrayList<Tuple<Boolean, Double>> lucasPolynomTest(LucasZ fermatZArguments) throws RuntimeException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException{
+    public static ArrayList<Triple<Boolean, Double, LinkedList<String>>> lucasPolynomTest(LucasZ lucasPolynomArguments) throws RuntimeException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException{
         throw new UnsupportedOperationException(xml.getTagElement("General", "UnsupportedOperationException"));
     }
 

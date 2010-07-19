@@ -14,24 +14,46 @@ package kryptoprojekt.primeFrames;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.Insets;
+import java.awt.Toolkit;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.regex.Pattern;
+import java.util.TreeSet;
+import javax.swing.border.Border;
+import javax.swing.BorderFactory;
+import javax.swing.JCheckBox;
+import javax.swing.JTextPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JLabel;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.StyledDocument;
+import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
-import kryptoprojekt.model.Tuple;
 import java.util.ArrayList;
 import kryptoprojekt.model.KryptoType;
 import kryptoprojekt.model.Z;
 import kryptoprojekt.model.PrimeTest;
-import kryptoprojekt.model.FermatZ;
+import kryptoprojekt.model.PrimeUtility;
+import kryptoprojekt.model.Triple;
 import kryptoprojekt.controller.PrimeTestController;
 import java.lang.reflect.InvocationTargetException;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 import kryptoprojekt.controller.LogicValidator;
 import kryptoprojekt.controller.XMLReader;
 /**
@@ -40,10 +62,21 @@ import kryptoprojekt.controller.XMLReader;
  */
 public class MillerRabinFrame extends Kit {
 
-    DropTextField basesTextField = getDropTextField();
-    DropTextField moduloTextField = getDropTextField();
-    private String extension = "";
-    private String outputWindow = "";
+    private DropTextField basesTextField = getDropTextField();
+    private DropTextField moduloTextField = getDropTextField();
+    private JCheckBox probabilityCB;
+    private JLabel randomSPLabel;
+    private JSpinner randomNumberSP;
+    private LinkedList<String> extendList;
+    private LinkedList<LinkedList<String>> extension;
+    private LinkedList<Integer> probBases;
+    private StringBuilder outputWindow;
+    private StyledDocument doc;
+    private Font fontSettings;
+    private boolean calcProb; //ob die Wahrscheinlichkeit beim Miller-Rabin-Test berechnet werden soll
+    private boolean correctArguments; //zeigt an, ob für Basen und Moduls korrekte Werte übergeben wurden
+
+
 
     /** Creates new form MillerRabinFrame */
     public MillerRabinFrame(ConnectionHandler handler) {
@@ -152,17 +185,48 @@ public class MillerRabinFrame extends Kit {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         JInternalFrame frame = new JInternalFrame(getTitle() + "_extension", true, true, true, true);
         frame.setLocation(getX(), getY());
-        frame.setSize(420, 340);
-        JTextArea area = new JTextArea();
-        area.setText(extension);
-        area.setVisible(true);
-        frame.add(area);
+        frame.setSize(400, 340);
+
+        JTextPane millerRabinPane = new JTextPane(){
+            @Override
+            public boolean getScrollableTracksViewportWidth(){
+                return false;
+            }
+        };
+        millerRabinPane.setEditable(false);
+        doc = millerRabinPane.getStyledDocument();
+        Style defaultStyle = doc.getStyle("default");
+        Style intermediateHeadStyle = doc.addStyle("outputHead", defaultStyle);
+        StyleConstants.setFontSize(intermediateHeadStyle, StyleConstants.getFontSize(intermediateHeadStyle)+1);
+        StyleConstants.setBold(intermediateHeadStyle, true);
+        if(extension != null){
+            for (LinkedList<String> linkedStringList : extension){
+                append(linkedStringList.pollFirst()+ "\n", intermediateHeadStyle.getName());
+                for (String intermediateValues : linkedStringList){
+                        append(intermediateValues+ "\n", defaultStyle.getName());
+                }
+                append("\n", defaultStyle.getName());
+            }
+        }
+        millerRabinPane.setVisible(true);
+        JScrollPane scrollPane = new JScrollPane(millerRabinPane, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.getViewport().setBackground(Color.white);
+        frame.add(scrollPane);
         frame.setVisible(true);
         getParent().add(frame);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void append(String text, String styleName){
+        try{
+            doc.insertString(doc.getLength(), text, doc.getStyle(styleName));
+        } catch (BadLocationException e) {
+            //System.err.println("get Message Ausgabe: Fehler in der Start.java: " +e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
     private void extendButtonClick(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_extendButtonClick
-        jButton1.setText(Kit.xmlReader.getTagElement("", ""));
+        jButton1.setText(Kit.xmlReader.getTagElement("MillerRabinFrame", "ExtendBtn"));
     }//GEN-LAST:event_extendButtonClick
 
     private void initLogicComponents() {
@@ -203,7 +267,7 @@ public class MillerRabinFrame extends Kit {
     public String execute(){
         ArrayList<KryptoType> basen = new ArrayList<KryptoType>();
         ArrayList<KryptoType> moduls = new ArrayList<KryptoType>();
-        ArrayList<Tuple<Boolean, Double>> result;
+        ArrayList<Triple<Boolean, Double, LinkedList<String>>> result; //beinhaltet für jede Primzahl einzeln ob es prime ist, Wahrscheinlichkeit, Zwischenschritte
 
         if(basesTextField.getResult() != null)
             basen.add((KryptoType)basesTextField.getResult());
@@ -214,13 +278,8 @@ public class MillerRabinFrame extends Kit {
         else
             moduls.add(new Z(moduloTextField.getText()));
 
-        //Strings[] stringtest = basen.split("\\$");
-
-
         try{
-            result = PrimeTestController.primeTestRabin(basen, moduls);
-            results.put(getTitle() + "_prime", result);
-            //return "In Window " + getTitle() + ": " + basen.get(0) + " ^ "+moduls.get(0).subtract(new Z(1))+ " mod "+moduls.get(0)+ " = " + result.get(0).first();
+            result = PrimeTestController.primeTestRabin(basen, moduls, calcProb);
         }catch(RuntimeException e){
             return e.getMessage();
         }catch(NoSuchMethodException e){
@@ -232,23 +291,30 @@ public class MillerRabinFrame extends Kit {
         }catch(InvocationTargetException e){
             return e.getMessage();
         }
-        extension = "";
-        outputWindow = "";
+
+        extendList = new LinkedList<String>(); //Zwischenschritte von der aktuell getesteten Primzahl
+        extension = new LinkedList<LinkedList<String>>(); //ist die Gesamtliste an Zwischenschritten von allen Primzahlen wenn auf den Button extend geklickt wird
+        outputWindow = new StringBuilder(); //für das untere Ausgabefenster
         int i = 0;
         String probability = "";
-        for(Tuple<Boolean, Double> output: result){
-            if (output.second() == -2.0){ //dies korrigieren, gibt es bei MillerRabin nicht. Wenn nur -1
-                probability = "n.d.";
+        for(Triple<Boolean, Double, LinkedList<String>> output: result){
+            if (output.second() == -1.0){
+                probability = "";
             }else{
                 double probDouble = output.second()*100;
-                probability = String.valueOf(probDouble)+"%";
+                probability = "    probability = " +String.valueOf(probDouble)+"%";
             }
-            extension += basen.get(i) + " ^ "+moduls.get(i).subtract(new Z(1))+ " mod "+moduls.get(i)+ " = " + output.first()+ "   probability = " +probability;
-            outputWindow += moduls.get(i) + ": "  + result.get(i).first()+ "\n";
+            extendList = output.third(); //erhält von der jeweiligen Primzahl die Zwischenschritte
+            extendList.addFirst(moduls.get(i)+ ":");
+            extendList.addLast("result");
+            extendList.addLast(moduls.get(i)+ " is prime number: " +output.first() +probability);
+            extension.add(extendList);
+
+            outputWindow.append(moduls.get(i) + ": "  + result.get(i).first()+ "\n");
+            results.put(getTitle() + "_primeMillerRabin", output.first());
             i++;
         }
-        //return "In Window " + getTitle() + ": " + "\n\nPrimzahlen:\n" +moduls.get(0)+ ": "  + result.get(0).first();
-        return "In Window " + getTitle() + ": " + "\n\nPrimzahlen:\n" +outputWindow;
+        return "In Window " + getTitle() + ": " + "\n\nprime numbers:\n" +outputWindow.toString();
     }
 
 

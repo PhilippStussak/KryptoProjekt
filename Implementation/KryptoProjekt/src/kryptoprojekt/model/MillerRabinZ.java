@@ -32,19 +32,8 @@ public class MillerRabinZ extends MillerRabinTest<Z>{
             
             ArrayList<Triple<Boolean, Double, LinkedList<String>>> primeResult = new ArrayList<Triple<Boolean, Double, LinkedList<String>>>();
             if (checkPrimeArgAnswer) {
-                Z zeroObj = new Z(0); //um zu testen ob es eine gerade Zahl ist (Rest muss 0 ergeben)
-                Z twoObj = new Z(2); //um zu testen ob es eine gerade Zahl ist
                 double probability = calculateProbability(bases);
                 for (Z checkPrime : moduls){
-                    /*ACHTUNG
-                     * Sollte ich vielleicht wegen machen dieses "if", da ja der MillerRabin-Test Algorithmus feststellen
-                     * soll, dass es keine Primzahl ist und nicht durch solche Aktionen.
-                     */
-                    /*if (checkPrime.mod(twoObj).equals(zeroObj)&& !checkPrime.equals(twoObj)){
-                        primeResult.add(new Tuple<Boolean, Double>(false, 1.0));
-                        continue;
-                    }*/
-                    //Ende if, welche ich vielleicht entfernen möchte
                     boolean isPrime = millerRabinCheck(checkPrime);
                     if (isPrime){
                         if (calcProb) {

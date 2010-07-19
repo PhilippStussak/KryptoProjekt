@@ -42,6 +42,9 @@
 	<PrimeTestController>
 		<FalseKryptoTypes>Kryptotypes are different. You have to enter the same Kryptotypes. e.g. Z, Z</FalseKryptoTypes>
 	</PrimeTestController>
+	<MillerRabinFrame>
+		<ExtendBtn>Extend</ExtendBtn>
+	</MillerRabinFrame>
 	<HammingCode>
         <encodeException>SourceCodeWord or generatorMatrix is not calculated yet.</encodeException>
 		<detectErrorNullException>Syndrom is not calculated yet.</detectErrorNullException>

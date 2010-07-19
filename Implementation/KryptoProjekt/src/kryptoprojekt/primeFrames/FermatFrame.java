@@ -40,7 +40,6 @@ import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
-import kryptoprojekt.model.Tuple;
 import java.util.ArrayList;
 import kryptoprojekt.model.KryptoType;
 import kryptoprojekt.model.Z;
@@ -77,6 +76,8 @@ public class FermatFrame extends Kit {
     private Font fontSettings;
     private boolean calcProb; //ob die Wahrscheinlichkeit beim FermatTest berechnet werden soll
     private boolean correctArguments; //zeigt an, ob für Basen und Moduls korrekte Werte übergeben wurden
+
+
 
     /** Creates new form FermatFrame */
     public FermatFrame(ConnectionHandler handler) {
@@ -650,9 +651,10 @@ public class FermatFrame extends Kit {
         }catch(InvocationTargetException e){
             return e.getMessage();
         }
-        extendList = new LinkedList<String>();
-        extension = new LinkedList<LinkedList<String>>(); //ist die Gesamtliste an Zwischenschritten wenn auf den Button extend geklickt wird
-        outputWindow = new StringBuilder();
+        
+        extendList = new LinkedList<String>(); //Zwischenschritte von der aktuell getesteten Primzahl
+        extension = new LinkedList<LinkedList<String>>(); //ist die Gesamtliste an Zwischenschritten von allen Primzahlen wenn auf den Button extend geklickt wird
+        outputWindow = new StringBuilder(); //für das untere Ausgabefenster
         int i = 0;
         String probability = "";
         for(Triple<Boolean, Double, LinkedList<String>> output: result){

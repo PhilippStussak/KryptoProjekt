@@ -226,7 +226,7 @@ public class LucasFrame extends Kit{
         ArrayList<Z> factors = new ArrayList<Z>();
         ArrayList<Z> summand = new ArrayList<Z>();
         ArrayList<Z> powers = new ArrayList<Z>();
-        ArrayList<Tuple<Boolean, Double>> result;
+        ArrayList<Triple<Boolean, Double, LinkedList<String>>> result; //beinhaltet für jede Primzahl einzeln ob es prime ist, Wahrscheinlichkeit, Zwischenschritte
 
         //ACHTUNG, ES MÜSSEN NOCH POWER EINGABEFELDER EINGERICHTET WERDEN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         //lucasPrimeFactors Triple erzeugen
@@ -286,7 +286,7 @@ public class LucasFrame extends Kit{
         outputWindow = "";
         int i = 0;
         String probability = "";
-        for(Tuple<Boolean, Double> output: result){
+        for(Triple<Boolean, Double, LinkedList<String>> output: result){
             if (output.second() == -2.0){ //dies korrigieren, gibt es bei MillerRabin nicht. Wenn nur -1
                 probability = "n.d.";
             }else{
