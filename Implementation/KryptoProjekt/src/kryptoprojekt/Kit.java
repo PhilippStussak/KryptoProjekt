@@ -252,6 +252,7 @@ public class Kit extends JInternalFrame {
             key = null;
             p = null;
             this.setForeground(Color.black);
+            this.setText("");
         }
 
         public void dragEnter(DropTargetDragEvent dtde) {
