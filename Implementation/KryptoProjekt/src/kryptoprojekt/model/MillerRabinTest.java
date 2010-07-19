@@ -16,6 +16,7 @@ import java.util.*;
 public abstract class MillerRabinTest <E extends KryptoType<E>> implements PrimeTest<E> {
     protected TreeSet<E> bases;
     protected TreeSet<E> moduls;
+    protected LinkedList<String> intermediateValues;
     protected boolean calcProb; //ob die Wahrscheinlichkeit berechnet werden soll
     protected static final double probabilityValue = 0.25; //Wahrscheinlichkeitsfaktor das es sich um eine Primzahl handelt
 
@@ -27,14 +28,13 @@ public abstract class MillerRabinTest <E extends KryptoType<E>> implements Prime
     }
 
     /* Bestimmt die Faktoren einer geraden Zahl und gibt die Potenz zur 2 und den ungeraden Faktor aus.
-     * Konnte die Zahl nicht in Faktoren zerlegt werden, wird -1, -1 zurückgegeben.
+     * Konnte die Zahl nicht in Faktoren zerlegt werden, wird -1 zurückgegeben.
      * Falls keine gerade Zahl übergeben wurde, wird eine Exception geworfen.
      */
     protected Tuple<E, E> factorizeEven(E evenNumber){
         //Precondition
         assert evenNumber.compareTo(evenNumber.newInstance("1")) > 0 : "An even number cannot be less than <2. argument passed: " +evenNumber;
-        assert evenNumber.isONE() || evenNumber.mod(evenNumber.newInstance("2")).compareTo(evenNumber.newInstance("0")) == 0 : "It is not even number. number passed: " +evenNumber;
-
+        assert evenNumber.mod(evenNumber.newInstance("2")).compareTo(evenNumber.newInstance("0")) == 0 : "It is not even number. number passed: " +evenNumber;
 
         E dividend;
         final E divisor = evenNumber.newInstance("2");
@@ -68,7 +68,7 @@ public abstract class MillerRabinTest <E extends KryptoType<E>> implements Prime
         assert !bases.isEmpty(): "No bases were passed.";
         assert probabilityValue <=1: "probabilityValue isn't <= 1: probabilityValue = " +probabilityValue;
         assert probabilityValue >=0: "probabilityValue isn't >= 0: probabilityValue = " +probabilityValue;
-        assert probabilityValue == 0.25: "probabilityValue ist bei Miller-Rabin Test 0.25. Eingestellt ist aber: " +probabilityValue;
+        assert probabilityValue == 0.25: "probabilityValue at Miller-Rabin-Test is 0.25. but set is: " +probabilityValue;
         assert bases.size() >0: "bases has no elements";
         numbOfBases = bases.size();
         probability = 1;
@@ -77,7 +77,7 @@ public abstract class MillerRabinTest <E extends KryptoType<E>> implements Prime
         }
         //Postcondition
         double assertProb; //Hilfsvariable für die assert Anweisung
-        assert (assertProb = Math.pow(probabilityValue, bases.size())) == probability: "Inkonsistenz bei probability Werten: probability = " +probability+ ", assertProb = " +assertProb;
+        assert (assertProb = Math.pow(probabilityValue, bases.size())) == probability: "Inconsistency in probability values: probability = " +probability+ ", assertProb = " +assertProb;
         return probability = (1-probability);
     }
         

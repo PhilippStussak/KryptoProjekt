@@ -52,7 +52,7 @@ public class PrimeTestController {
     }
 
     public static ArrayList<Triple<Boolean, Double, LinkedList<String>>> fermatZPrimeTest(FermatZ fermatZArguments) throws RuntimeException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException{
-        return fermatZArguments.test2();
+        return fermatZArguments.test();
     }
 
     public static ArrayList<Triple<Boolean, Double, LinkedList<String>>> fermatPolynomTest(FermatZ fermatZArguments) throws RuntimeException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException{

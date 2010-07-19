@@ -25,14 +25,6 @@ public interface PrimeTest<E extends KryptoType<E>> {
      * -2 wird zurückgegeben wenn es eine Primzahl sein könnte, oder wenn für diesen Primzahltest keine Wahrscheinlichkeit berechnet werden kann.
      * (bei Fermat: (true, -2), bei LucasTest: (false, -2)
      */
-    
-    /*
-    ArrayList<Tuple<Boolean, Double>> test()
+    ArrayList<Triple<Boolean, Double, LinkedList<String>>> test()
             throws IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException;
-     *
-     */
-
-    ArrayList<Triple<Boolean, Double, LinkedList<String>>> test2()
-            throws IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException;
-
 }
