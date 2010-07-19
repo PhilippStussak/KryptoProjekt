@@ -140,6 +140,7 @@ public class KryptoProjektView extends FrameView {
         samMenuItem.setText(xml.getTagElement("KryptoView", "samMenuItem"));
         sammodMenuItem.setText(xml.getTagElement("KryptoView", "sammodMenuItem"));
         gcdMenuItem.setText(xml.getTagElement("KryptoView", "gcdMenuItem"));
+        extendedGCDItem.setText(xml.getTagElement("KryptoView", "extendedGCDItem"));
         phiMenuItem.setText(xml.getTagElement("KryptoView", "phiMenuItem"));
         primeTestMenu.setText(xml.getTagElement("KryptoView", "primeTestMenu"));
         fermatMenuItem.setText(xml.getTagElement("KryptoView", "fermatMenuItem"));

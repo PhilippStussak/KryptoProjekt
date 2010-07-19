@@ -16,6 +16,7 @@
 		<samMenuItem>Square and Multiply</samMenuItem>
 		<sammodMenuItem>Square and Multiply (Modulo)</sammodMenuItem>
 		<gcdMenuItem>Great Common Divisor</gcdMenuItem>
+		<extendedGCDItem>Extended GCD</extendedGCDItem>
 		<phiMenuItem>Phi-Function</phiMenuItem>
 		<primeTestMenu>Primetests</primeTestMenu>
 		<fermatMenuItem>Fermat Test</fermatMenuItem>
