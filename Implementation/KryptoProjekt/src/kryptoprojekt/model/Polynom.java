@@ -9,7 +9,7 @@ package kryptoprojekt.model;
  * @author mario
  */
 
-//Class is not tested yet
+//Class is not tested and finished yet
 public class Polynom {
 
     private Z[] polynom;

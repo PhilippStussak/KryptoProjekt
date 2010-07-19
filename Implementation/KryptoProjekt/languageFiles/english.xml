@@ -112,6 +112,7 @@
 		<HeaderLabel>Create Primefield Element</HeaderLabel>
 		<AddTableBtn>Addition table</AddTableBtn>
 		<MulTableBtn>Multiplication Table</MulTableBtn>
+		<guiTableException>Empty base-field or base not prime</guiTableException>
 	</PrimeFieldElementFrame>
 	<AdditionFrame>
 		<HeaderLabel>Addition</HeaderLabel>
@@ -132,6 +133,8 @@
 	<PhiFrame>
 		<HeaderLabel>Phi function</HeaderLabel>
 		<ExtendBtn>Extend</ExtendBtn>
+		<BigNumber>Number too big!</BigNumber>
+		<LowNumber>Phi-function only takes numbers greater than 0</LowNumber>
 	</PhiFrame>
 	<SaMFrame>
 		<HeaderLabel>Square &amp; Multiply</HeaderLabel>

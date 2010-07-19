@@ -49,6 +49,7 @@ public class KryptoProjektView extends FrameView {
 
     private Desktop desktop;
     private ConnectionHandler handler = new ConnectionHandler();
+    private Executor executor;
 
     public KryptoProjektView(SingleFrameApplication app) {
         super(app);
@@ -452,6 +453,11 @@ public class KryptoProjektView extends FrameView {
 
         newMatrixPrimeFieldMenuItem.setText(resourceMap.getString("newMatrixPrimeFieldMenuItem.text")); // NOI18N
         newMatrixPrimeFieldMenuItem.setName("newMatrixPrimeFieldMenuItem"); // NOI18N
+        newMatrixPrimeFieldMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newMatrixPrimeFieldMenuItemActionPerformed(evt);
+            }
+        });
         matrixMenu.add(newMatrixPrimeFieldMenuItem);
 
         addMatrixMenuItem.setText(resourceMap.getString("addMatrixMenuItem.text")); // NOI18N
@@ -734,7 +740,8 @@ public class KryptoProjektView extends FrameView {
         rf.setLocation(0, desktop.getHeight() / 2);
         rf.setVisible(true);
         desktop.add(rf);
-        new Executor(handler, rf, progressBar).start();
+        executor = new Executor(handler, rf, progressBar);
+        executor.start();
     }
 
     private void primeFieldMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_primeFieldMenuItemActionPerformed
@@ -866,13 +873,20 @@ public class KryptoProjektView extends FrameView {
     }//GEN-LAST:event_startBtnOnBarActionPerformed
 
     private void cancelBtnOnBarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnOnBarActionPerformed
-        // TODO add your handling code here:
+        executor.stop();
+        progressBar.setVisible(false);
     }//GEN-LAST:event_cancelBtnOnBarActionPerformed
 
     private void clearBtnOnBarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearBtnOnBarActionPerformed
         desktop.removeAll();
         desktop.repaint();
     }//GEN-LAST:event_clearBtnOnBarActionPerformed
+
+    private void newMatrixPrimeFieldMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newMatrixPrimeFieldMenuItemActionPerformed
+        Kit kit = new MatrixPrimeFieldFrame(handler);
+        kit.setVisible(true);
+        desktop.add(kit);
+    }//GEN-LAST:event_newMatrixPrimeFieldMenuItemActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

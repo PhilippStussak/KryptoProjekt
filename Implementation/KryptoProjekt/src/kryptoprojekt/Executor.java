@@ -66,15 +66,18 @@ public class Executor extends Thread {
                 progressMessage(kit.getTitle(), kit.execute());
             } catch (NullPointerException npe) {
                 exception(Kit.xmlReader.getTagElement("Executor", "MissingParamException") + " " + kit.getTitle());
+                break;
             } catch (ClassCastException cce) {
                 exception(Kit.xmlReader.getTagElement("Executor", "WrongParam") + " " + kit.getTitle() + "!");
+                break;
             } catch (Exception e) {
                 exception(Kit.xmlReader.getTagElement("Executor", "UndefinedException") + kit.getTitle() + "!");
+                break;
             }
         }
         progressBar(100, "", true);
         if (recentKit != null)
-            progressMessage(recentKit.getTitle(), Kit.xmlReader.getTagElement("Executor", "ComputeTime") + ": " + (System.currentTimeMillis() - time));
+            progressMessage("final", Kit.xmlReader.getTagElement("Executor", "ComputeTime") + ": " + (System.currentTimeMillis() - time));
         progressBar(100, "", false);
     }
 
@@ -83,7 +86,10 @@ public class Executor extends Thread {
             EventQueue.invokeAndWait(new Runnable() {
 
                 public void run() {
-                    rf.addText(Kit.xmlReader.getTagElement("Executor", "InWindow") + " " + kitTitle + ": \n" + progressMessage);
+                    if(!kitTitle.equals("final"))
+                        rf.addText(Kit.xmlReader.getTagElement("Executor", "InWindow") + " " + kitTitle + ": \n" + progressMessage);
+                    else
+                        rf.addText("\n" + progressMessage);
                 }
             });
         } catch (InterruptedException ex) {

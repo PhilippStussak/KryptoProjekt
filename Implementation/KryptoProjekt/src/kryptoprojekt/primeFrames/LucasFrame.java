@@ -175,7 +175,7 @@ public class LucasFrame extends Kit{
         c.gridx = 0;
         c.gridy = 0;
         JLabel l = new JLabel();
-        l.setText("Factors, splittet with '*'");
+        l.setText("prime factors");
         jPanel1.add(l, c);
 
         c = new GridBagConstraints();
@@ -192,7 +192,7 @@ public class LucasFrame extends Kit{
         c.gridx = 0;
         c.gridy = 2;
         JLabel l2 = new JLabel();
-        l2.setText("Modulo:");
+        l2.setText("bases:");
         jPanel1.add(l2, c);
 
         c = new GridBagConstraints();
@@ -216,6 +216,8 @@ public class LucasFrame extends Kit{
         c.gridx = 3;
         c.gridy = 1;
         jPanel1.add(summandTextField, c);
+        summandTextField.setText("1");
+        summandTextField.setEnabled(false);
 
         this.setSize(300, 150);
     }
