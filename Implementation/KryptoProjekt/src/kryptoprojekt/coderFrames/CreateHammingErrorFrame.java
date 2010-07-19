@@ -16,6 +16,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.regex.Pattern;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import kryptoprojekt.ConnectionHandler;
@@ -96,7 +97,7 @@ public class CreateHammingErrorFrame extends Kit {
     }// </editor-fold>//GEN-END:initComponents
 
     private void initLogicComponents() {
-        hcField.addKeyListener(new KeyListener() {
+        field.addKeyListener(new KeyListener() {
 
             public void keyTyped(KeyEvent e) {
             }
@@ -105,10 +106,10 @@ public class CreateHammingErrorFrame extends Kit {
             }
 
             public void keyReleased(KeyEvent e) {
-                if (hcField.getResult() instanceof HammingCode) {
-                    hcField.setForeground(Color.black);
+                if (Pattern.matches("(?:1|0|0\\.[\\d]+)", field.getText())) {
+                    field.setForeground(Color.black);
                 } else {
-                    hcField.setForeground(Color.red);
+                    field.setForeground(Color.red);
                 }
             }
         });
@@ -147,6 +148,7 @@ public class CreateHammingErrorFrame extends Kit {
     @Override
     public String execute() {
          if (hcField.getResult() != null) {
+
         HammingCode hc = CoderController.createHammingError((HammingCode) hcField.getResult(), field.getText());
         results.put(getTitle() + "_hcElem", hc);
         return Kit.xmlReader.getTagElement("CreateErrorProbability", "ReturnedProbability") + Double.parseDouble(field.getText())*100 + "%";
