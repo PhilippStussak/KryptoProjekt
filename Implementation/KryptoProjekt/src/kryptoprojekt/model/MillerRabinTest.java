@@ -34,16 +34,16 @@ public abstract class MillerRabinTest <E extends KryptoType<E>> implements Prime
     protected Tuple<E, E> factorizeEven(E evenNumber){
         //Precondition
         assert evenNumber.compareTo(evenNumber.newInstance("1")) > 0 : "An even number cannot be less than <2. argument passed: " +evenNumber;
-        assert evenNumber.mod(evenNumber.newInstance("2")).compareTo(evenNumber.newInstance("0")) == 0 : "It is not even number. number passed: " +evenNumber;
-//ACHTUNG: HIER MUSS ICH NOCH EINE EXCEPTION WERFEN, DASS DER USER EINE UNGERADE ZAHL EINGEBEN MUSS!!!!!!!!!!!!!!!!!!!!
+        //assert evenNumber.mod(evenNumber.newInstance("2")).compareTo(evenNumber.newInstance("0")) == 0 : "It is not even number. number passed: " +evenNumber;
 
         E dividend;
         final E divisor = evenNumber.newInstance("2");
         E quotient = evenNumber;
         int power = 0;
         if (!quotient.mod(divisor).isZERO()){
-            throw new IllegalArgumentException("It is an even number. number passed: " +quotient);
+            throw new IllegalArgumentException("You have to pass an odd number!!!");
         }
+        //assert evenNumber.mod(evenNumber.newInstance("2")).compareTo(evenNumber.newInstance("0")) == 0 : "It is not even number. number passed: " +evenNumber;
         while(quotient.mod(divisor).isZERO()){
             dividend = quotient;
             quotient = dividend.divide(divisor);

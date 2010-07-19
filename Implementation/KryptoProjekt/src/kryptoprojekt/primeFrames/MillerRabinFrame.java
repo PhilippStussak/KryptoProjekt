@@ -166,7 +166,7 @@ public class MillerRabinFrame extends Kit {
         jPanelSettingsMiller.setLayout(jPanelSettingsMillerLayout);
         jPanelSettingsMillerLayout.setHorizontalGroup(
             jPanelSettingsMillerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 160, Short.MAX_VALUE)
+            .addGap(0, 164, Short.MAX_VALUE)
         );
         jPanelSettingsMillerLayout.setVerticalGroup(
             jPanelSettingsMillerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -195,13 +195,13 @@ public class MillerRabinFrame extends Kit {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanelDropListMiller, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanelPrimeMiller, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(millerRabinTestLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(ExtendBtMiller)
-                            .addComponent(jPanelSettingsMiller, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE))))
+                            .addComponent(jPanelSettingsMiller, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
