@@ -123,6 +123,7 @@
 	<ExtendedGCDFrame>
 		<HeaderLabel>Extended GCD</HeaderLabel>
 		<ExtendBtn>Extend</ExtendBtn>
+		<returnString>extended GCD</returnString>
 	</ExtendedGCDFrame>
 	<ModuloFrame>
 		<HeaderLabel>Modulo</HeaderLabel>

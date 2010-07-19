@@ -221,7 +221,7 @@ public class ExtendedGCDFrame extends Kit {
         extension = "";
         for(String s : (LinkedList<String>)result.second())
             extension += s + "\n";
-        return "extended GCD(" + value1.toString() + ", " + value2.toString() + ") = " + result.first().toString();
+        return Kit.xmlReader.getTagElement("ExtendedGCD", "returnString") + "(" + value1.toString() + ", " + value2.toString() + ") = " + result.first().toString();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
