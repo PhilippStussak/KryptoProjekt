@@ -77,7 +77,7 @@ public class Executor extends Thread {
         }
         progressBar(100, "", true);
         if (recentKit != null)
-            progressMessage("final", Kit.xmlReader.getTagElement("Executor", "ComputeTime") + ": " + (System.currentTimeMillis() - time));
+            progressMessage("final", Kit.xmlReader.getTagElement("Executor", "ComputeTime") + ": " + (System.currentTimeMillis() - time) + "ms");
         progressBar(100, "", false);
     }
 

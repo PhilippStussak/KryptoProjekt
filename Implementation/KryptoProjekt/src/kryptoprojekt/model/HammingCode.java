@@ -397,10 +397,10 @@ public class HammingCode extends Coder {
         HammingCode newHc = new HammingCode(codeWord);
 
         newHc.sourceCodeWord = this.sourceCodeWord.copy();
-        newHc.encodedWord = this.encodedWord.copy();
-        newHc.syndrom = this.syndrom.copy();
-        newHc.decodedWord = this.decodedWord.copy();
-        newHc.correctedDecodedWord = this.correctedDecodedWord.copy();
+        newHc.encodedWord = this.encodedWord == null ? null : this.encodedWord.copy();
+        newHc.syndrom = this.syndrom == null ? null : this.syndrom.copy();
+        newHc.decodedWord = this.decodedWord == null ? null : this.decodedWord.copy();
+        newHc.correctedDecodedWord = this.correctedDecodedWord == null ? null : this.correctedDecodedWord.copy();
         newHc.errorPosition = this.errorPosition;
         newHc.errorsFound = this.errorsFound;
 

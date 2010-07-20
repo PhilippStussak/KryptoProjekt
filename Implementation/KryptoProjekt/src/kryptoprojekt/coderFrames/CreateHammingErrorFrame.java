@@ -151,7 +151,7 @@ public class CreateHammingErrorFrame extends Kit {
 
         HammingCode hc = CoderController.createHammingError((HammingCode) hcField.getResult(), field.getText());
         results.put(getTitle() + "_hcElem", hc);
-        return Kit.xmlReader.getTagElement("CreateErrorProbability", "ReturnedProbability") + Double.parseDouble(field.getText())*100 + "%";
+        return Kit.xmlReader.getTagElement("CreateHammingErrorFrame", "ReturnedProbability") + " " + Double.parseDouble(field.getText())*100 + "%";
          }
          else {
             return Kit.xmlReader.getTagElement("HammingFrames", "NoHammingCodeElement");

@@ -45,7 +45,7 @@ public class CoderController {
         HammingCode newHc = hc.copy();
         
         newHc.generateBitError(Double.parseDouble(probability));
-        return newHc;
+        return newHc.copy();
     }
 
     public static HammingCode initHammingCode (boolean enableMatrix, Matrix<PrimeFieldElement> generatorM, String sourceCodeWord) throws IllegalArgumentException{

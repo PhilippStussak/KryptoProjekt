@@ -62,7 +62,7 @@
 	</HammingFrames>
 	<CreateHammingErrorFrame>
 		<ErrorProbability>Probability of errorCreation (0-1)</ErrorProbability>
-		<ReturnedProbability>generated errors with probability of </ReturnedProbability>
+		<ReturnedProbability>generated errors with probability of</ReturnedProbability>
 		<HeaderLabel>Create errors in encodedWord</HeaderLabel>
 	</CreateHammingErrorFrame>
 	<DecodeHammingCodeFrame>
@@ -169,6 +169,7 @@
 	</MatrixPrimeFieldFrame>
 	<General>
 		<UnsupportedOperationException>Not supported yet.</UnsupportedOperationException>
+		<XMLNoPath>First instance-creation of XMLReader needs a correct path to a *.xml-language file.</XMLNoPath>
 	</General>
 	<Kit>
 		<DropOnSameFrame>Drop on same frame not possible!</DropOnSameFrame>

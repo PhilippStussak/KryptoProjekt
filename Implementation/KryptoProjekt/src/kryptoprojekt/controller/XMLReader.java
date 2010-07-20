@@ -79,7 +79,7 @@ public class XMLReader {
     public synchronized static XMLReader getInstance(String filePath) {
         if (instance == null) {
             if (filePath == null || filePath.isEmpty())
-                throw new IllegalArgumentException("First instance-creation of XMLReader needs a correct path to a *.xml-language file.");
+                throw new IllegalArgumentException("XMLNoPath");
             instance = new XMLReader(filePath);
         }
         return instance;
