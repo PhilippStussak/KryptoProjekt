@@ -16,6 +16,7 @@
 		<samMenuItem>Square and Multiply</samMenuItem>
 		<sammodMenuItem>Square and Multiply (Modulo)</sammodMenuItem>
 		<gcdMenuItem>Great Common Divisor</gcdMenuItem>
+		<extendedGCDItem>Extended GCD</extendedGCDItem>
 		<phiMenuItem>Phi-Function</phiMenuItem>
 		<primeTestMenu>Primetests</primeTestMenu>
 		<fermatMenuItem>Fermat Test</fermatMenuItem>
@@ -123,6 +124,7 @@
 	<ExtendedGCDFrame>
 		<HeaderLabel>Extended GCD</HeaderLabel>
 		<ExtendBtn>Extend</ExtendBtn>
+		<returnString>extended GCD</returnString>
 	</ExtendedGCDFrame>
 	<ModuloFrame>
 		<HeaderLabel>Modulo</HeaderLabel>
@@ -133,6 +135,8 @@
 	<PhiFrame>
 		<HeaderLabel>Phi function</HeaderLabel>
 		<ExtendBtn>Extend</ExtendBtn>
+		<BigNumber>Number too big!</BigNumber>
+		<LowNumber>Phi-function only takes numbers greater than 0</LowNumber>
 	</PhiFrame>
 	<SaMFrame>
 		<HeaderLabel>Square &amp; Multiply</HeaderLabel>

@@ -8,7 +8,6 @@
  *
  * Created on 18.07.2010, 14:04:14
  */
-
 package kryptoprojekt.matrixFrames;
 
 import java.awt.BorderLayout;
@@ -129,12 +128,14 @@ public class MatrixFrame extends Kit {
     }//GEN-LAST:event_jTextField1KeyReleased
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        ResultFrame frame = new ResultFrame(getTitle() + "_extension");
-        frame.setLocation(getX(), getY());
-        frame.setSize(320, 240);
-        frame.addText(((Matrix<Z>)results.get(getTitle() + "_matrix")).toStringWithIndex());
-        frame.setVisible(true);
-        getParent().add(frame);
+        if (results.get(getTitle() + "_matrix") != null) {
+            ResultFrame frame = new ResultFrame(getTitle() + "_extension");
+            frame.setLocation(getX(), getY());
+            frame.setSize(320, 240);
+            frame.addText(((Matrix<Z>) results.get(getTitle() + "_matrix")).toStringWithIndex());
+            frame.setVisible(true);
+            getParent().add(frame);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void initLogicComponents() {
@@ -150,12 +151,10 @@ public class MatrixFrame extends Kit {
     public String execute() {
         return getTitle() + ":\n" + results.get(getTitle() + "_matrix").toString();
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
-
 }
