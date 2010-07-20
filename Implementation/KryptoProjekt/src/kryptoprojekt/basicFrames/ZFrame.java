@@ -105,7 +105,6 @@ public class ZFrame extends Kit {
             results.put(getTitle() + "_number", null);
             jTextField1.setForeground(Color.red);
         }
-        updateUI();
     }//GEN-LAST:event_jTextField1KeyReleased
 
     private void initLogicComponents() {
