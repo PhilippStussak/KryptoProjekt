@@ -365,7 +365,6 @@ public class FermatFrame extends Kit {
         c.weighty = 0;
         JLabel primeLabel = new JLabel();
         primeLabel.setText("check whether prime:");
-        //primeLabel.setText("mod:");
         jPanelPrime.add(primeLabel, c);
 
         
@@ -628,6 +627,7 @@ public class FermatFrame extends Kit {
         ArrayList<KryptoType> basen = new ArrayList<KryptoType>();
         ArrayList<KryptoType> moduls = new ArrayList<KryptoType>();
         ArrayList<Triple<Boolean, Double, LinkedList<String>>> result; //beinhaltet für jede Primzahl einzeln ob es prime ist, Wahrscheinlichkeit, Zwischenschritte
+        LinkedList<KryptoType> posResults = new LinkedList<KryptoType>(); //beinhaltet die erkannten Primzahlen für die Weiterleitung an ein anderes Fenster
 
         if(basesTextField.getResult() != null)
             basen.add((KryptoType)basesTextField.getResult());
@@ -666,17 +666,20 @@ public class FermatFrame extends Kit {
             else{
                 double probDouble = output.second()*100;
                 probability = "    probability = " +String.valueOf(probDouble)+"%";
-            }                    
+            }
+            if(output.first() == true){
+                posResults.add(moduls.get(i));
+            }
             extendList = output.third(); //erhält von der jeweiligen Primzahl die Zwischenschritte
             extendList.addFirst(moduls.get(i)+ ":");
             extendList.addLast("result");
             extendList.addLast(moduls.get(i)+ " is prime number: " +output.first() +probability);
             extension.add(extendList);
             
-            outputWindow.append(moduls.get(i) + ": "  + result.get(i).first()+ "\n");
-            results.put(getTitle() + "_primeFermat", output.first());
+            outputWindow.append(moduls.get(i) + ": "  + result.get(i).first()+ "\n");     
             i++;
         }
+        results.put(getTitle() + "_primeFermat", posResults);
         return "In Window " + getTitle() + ": " + "\n\nprime numbers:\n" +outputWindow.toString();
     }
 

@@ -11,30 +11,53 @@
 
 package kryptoprojekt.primeFrames;
 
+
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Insets;
+import java.awt.Toolkit;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.regex.Pattern;
+import java.util.TreeSet;
+import javax.swing.border.Border;
+import javax.swing.BorderFactory;
+import javax.swing.JCheckBox;
+import javax.swing.JTextPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JLabel;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.StyledDocument;
+import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
-import kryptoprojekt.model.Tuple;
-import kryptoprojekt.model.Triple;
 import java.util.ArrayList;
+import kryptoprojekt.model.Basic;
 import kryptoprojekt.model.KryptoType;
 import kryptoprojekt.model.Z;
 import kryptoprojekt.model.PrimeTest;
+import kryptoprojekt.model.PrimeUtility;
 import kryptoprojekt.model.FermatZ;
-import kryptoprojekt.model.Basic;
+import kryptoprojekt.model.Triple;
+import kryptoprojekt.model.Tuple;
 import kryptoprojekt.controller.PrimeTestController;
 import java.lang.reflect.InvocationTargetException;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 import kryptoprojekt.controller.LogicValidator;
 
 /**
@@ -43,13 +66,15 @@ import kryptoprojekt.controller.LogicValidator;
  */
 public class LucasFrame extends Kit{
 
+    private DropTextField primeFactorsTextField = getDropTextField();
     private DropTextField basesTextField = getDropTextField();
-    private DropTextField moduloTextField = getDropTextField();
     private DropTextField summandTextField = getDropTextField();
-    private String extension = "";
-    private String outputWindow = "";
     private boolean calcProb; //ob die Wahrscheinlichkeit beim Lucas-Test berechnet werden soll
     private boolean correctArguments; //zeigt an, ob für Basen und Moduls korrekte Werte übergeben wurden
+    private LinkedList<String> extendList;
+    private LinkedList<LinkedList<String>> extension;
+    private StyledDocument doc;
+    private StringBuilder outputWindow;
 
     /** Creates new form LucasFrame */
     public LucasFrame(ConnectionHandler handler) {
@@ -68,28 +93,59 @@ public class LucasFrame extends Kit{
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        jPanelDropListLucas = new javax.swing.JPanel();
+        extendBtLucas = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(true);
         setDoubleBuffered(true);
+        setMinimumSize(new java.awt.Dimension(200, 200));
         setName("Form"); // NOI18N
+        setPreferredSize(new java.awt.Dimension(350, 300));
 
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(kryptoprojekt.KryptoProjektApp.class).getContext().getResourceMap(LucasFrame.class);
         jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
         jLabel1.setName("jLabel1"); // NOI18N
 
+        jPanelDropListLucas.setName("jPanelDropListLucas"); // NOI18N
+
+        javax.swing.GroupLayout jPanelDropListLucasLayout = new javax.swing.GroupLayout(jPanelDropListLucas);
+        jPanelDropListLucas.setLayout(jPanelDropListLucasLayout);
+        jPanelDropListLucasLayout.setHorizontalGroup(
+            jPanelDropListLucasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 335, Short.MAX_VALUE)
+        );
+        jPanelDropListLucasLayout.setVerticalGroup(
+            jPanelDropListLucasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 13, Short.MAX_VALUE)
+        );
+
+        extendBtLucas.setText(resourceMap.getString("ExtendBtLucas.text")); // NOI18N
+        extendBtLucas.setAlignmentX(0.5F);
+        extendBtLucas.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        extendBtLucas.setName("ExtendBtLucas"); // NOI18N
+        extendBtLucas.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        extendBtLucas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                extendBtLucasActionPerformed(evt);
+            }
+        });
+
+        jPanel1.setMinimumSize(new java.awt.Dimension(200, 180));
         jPanel1.setName("jPanel1"); // NOI18N
+        jPanel1.setPreferredSize(new java.awt.Dimension(450, 450));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 380, Short.MAX_VALUE)
+            .addGap(0, 335, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 301, Short.MAX_VALUE)
+            .addGap(0, 120, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -97,25 +153,102 @@ public class LucasFrame extends Kit{
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 217, Short.MAX_VALUE)
+                        .addComponent(extendBtLucas))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanelDropListLucas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(extendBtLucas)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanelDropListLucas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void append(String text, String styleName){
+        try{
+            doc.insertString(doc.getLength(), text, doc.getStyle(styleName));
+        } catch (BadLocationException e) {
+            //System.err.println("get Message Ausgabe: Error in Start.java: " +e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private void extendBtLucasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_extendBtLucasActionPerformed
+        JInternalFrame frame = new JInternalFrame(getTitle() + "_extension", true, true, true, true);
+        frame.setLocation(getX(), getY());
+        frame.setSize(400, 340);
+
+        JTextPane fermatPane = new JTextPane(){
+            @Override
+            public boolean getScrollableTracksViewportWidth(){
+                return false;
+            }
+        };
+        fermatPane.setEditable(false);
+        doc = fermatPane.getStyledDocument();
+        Style defaultStyle = doc.getStyle("default");
+        Style intermediateHeadStyle = doc.addStyle("outputHead", defaultStyle);
+        StyleConstants.setFontSize(intermediateHeadStyle, StyleConstants.getFontSize(intermediateHeadStyle)+1);
+        StyleConstants.setBold(intermediateHeadStyle, true);
+        if(extension != null){
+            for (LinkedList<String> linkedStringList : extension){
+                append(linkedStringList.pollFirst()+ "\n", intermediateHeadStyle.getName());
+                for (String intermediateValues : linkedStringList){
+                    append(intermediateValues+ "\n", defaultStyle.getName());
+                }
+                append("\n", defaultStyle.getName());
+            }
+        }
+        fermatPane.setVisible(true);
+        JScrollPane scrollPane = new JScrollPane(fermatPane, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.getViewport().setBackground(Color.white);
+        frame.add(scrollPane);
+        frame.setVisible(true);
+        getParent().add(frame);
+}//GEN-LAST:event_extendBtLucasActionPerformed
+
     private void initLogicComponents() {
+        jPanelDropListLucas.setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+        this.setSize(260, 210);
+
+        primeFactorsTextField.addKeyListener(new KeyListener() {
+
+            public void keyTyped(KeyEvent e) {
+            }
+
+            public void keyPressed(KeyEvent e) {
+            }
+
+            public void keyReleased(KeyEvent e) {
+                if (LogicValidator.isTermMultiplication(primeFactorsTextField.getText())) {
+                    primeFactorsTextField.setForeground(Color.black);
+                } else {
+                    primeFactorsTextField.setForeground(Color.red);
+                }
+            }
+        });
 
         basesTextField.addKeyListener(new KeyListener() {
 
@@ -126,27 +259,45 @@ public class LucasFrame extends Kit{
             }
 
             public void keyReleased(KeyEvent e) {
-                if (LogicValidator.isTermMultiplication(basesTextField.getText())) {
+                StringBuilder numbSequence = new StringBuilder(basesTextField.getText());
+                int dashPos = 0;
+                boolean checkOther = true;
+
+                //checkt ob vor und hinter dem '-' eine Zahl steht. Wenn nein, markiere bases textfield rot.
+                int assertCounter = 0;
+                if(dashPos != -1){
+                    for(int k = 0; k < numbSequence.length() && k>=0;){
+                        assert assertCounter < basesTextField.getText().length(): "Too many iterations.";
+                        dashPos = numbSequence.indexOf("-", k);
+                        k = -1;
+                        if(dashPos >0 && dashPos < numbSequence.length()-1){
+                            if(LogicValidator.isPosInteger(String.valueOf(numbSequence.charAt(dashPos-1))) && LogicValidator.isPosInteger(String.valueOf(numbSequence.charAt(dashPos+1)))){
+                            numbSequence = numbSequence.deleteCharAt(dashPos); //löscht "-" Zeichen und daher wird positive Int Zahl erkannt
+                                 k = dashPos;
+                            }else{
+                                dashPos = -1; //wrong parameter
+                                checkOther = false;
+                            }
+                        }else if(dashPos == 0){
+                            dashPos = -1; //wrong parameter
+                            checkOther = false;
+                        }
+                        assertCounter++;
+                    }
+                    assertCounter = 0;
+                }
+
+                if (checkOther){
+                    numbSequence = deleteChar(numbSequence, ","); //alle Kommata löschen
+                    numbSequence = deleteChar(numbSequence, "."); //alle Punkte löschen
+                    numbSequence = deleteChar(numbSequence, " "); //alle Leerzeichen löschen
+                }
+                if (LogicValidator.isPosInteger(numbSequence.toString())) {
                     basesTextField.setForeground(Color.black);
+                    correctArguments = true;
                 } else {
                     basesTextField.setForeground(Color.red);
-                }
-            }
-        });
-
-        moduloTextField.addKeyListener(new KeyListener() {
-
-            public void keyTyped(KeyEvent e) {
-            }
-
-            public void keyPressed(KeyEvent e) {
-            }
-
-            public void keyReleased(KeyEvent e) {
-                if (LogicValidator.isPosInteger(moduloTextField.getText())) {
-                    moduloTextField.setForeground(Color.black);
-                } else {
-                    moduloTextField.setForeground(Color.red);
+                    correctArguments = false;
                 }
             }
         });
@@ -169,8 +320,8 @@ public class LucasFrame extends Kit{
         });
 
         jPanel1.setLayout(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
 
+        c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
         c.gridy = 0;
@@ -184,7 +335,13 @@ public class LucasFrame extends Kit{
         c.gridx = 0;
         c.gridy = 1;
         c.gridwidth = 2;
-        jPanel1.add(basesTextField, c);
+        jPanel1.add(primeFactorsTextField, c);
+
+        c = new GridBagConstraints();
+        c.gridx = 4;
+        c.gridy = 0;
+        jPanel1.add(extendBtLucas);
+
 
         c = new GridBagConstraints();
         //c.weightx = 0.4;
@@ -200,7 +357,18 @@ public class LucasFrame extends Kit{
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
         c.gridy = 3;
-        jPanel1.add(moduloTextField, c);
+        jPanel1.add(basesTextField, c);
+
+      //JPanelDropListLucas
+        //drop List
+        c = new GridBagConstraints();
+        c.weightx = 1;
+        //c.weighty = 1;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridwidth = 1;
+        c.gridx = 0;
+        c.gridy = 4;
+        jPanelDropListLucas.add(getDragList(new Object[]{getTitle() + "_primeLucas"}), c);
 
         c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
@@ -222,61 +390,125 @@ public class LucasFrame extends Kit{
         this.setSize(300, 150);
     }
 
+    //löscht den übergebenen char aus dem übergebenen String raus
+    private StringBuilder deleteChar(StringBuilder originalString, String delChar, int fromIndex){
+        StringBuilder withoutCharString = new StringBuilder(originalString);
+        int charPosition = withoutCharString.indexOf(delChar, fromIndex);
+        while(charPosition >=0){
+            withoutCharString = withoutCharString.deleteCharAt(charPosition);
+            charPosition = withoutCharString.indexOf(delChar, charPosition);
+        }
+        return withoutCharString;
+    }
+
+    private StringBuilder deleteChar(StringBuilder originalString, String delChar){
+        return deleteChar(originalString, delChar, 0);
+    }
+
+
+    //splittet die Zahlenreihe in eine ArrayList auf
+    //1.250, 15.0.0, 17, 18,,,19,,  21, , 23  24,25, 26,   28,,,  ,,29 , 30,54,  ,, ,,, , ,, ,  ,,  31, ..., .31, 21..., 60-65... //diese Zahlen in der Anordnung in die Testklasse aufnehmen - müssen dem regulären Ausdruck standhalten
+    private ArrayList<KryptoType> splitInputToZ(String splitMe){
+        Pattern baseModulSeparator = Pattern.compile("(([,]+[\\s]*)+|([\\s]+[,]*)+)"); //split an input list of bases and moduls(primes)
+        Pattern dashSeparator = Pattern.compile("[\\-]");
+        StringBuilder numbSequence = new StringBuilder(splitMe);
+        int delPointPos = 0;
+
+        if(correctArguments == false){
+            throw new IllegalArgumentException("Wrong parameters found for bases, modules in window Lucas-Test " +getTitle());
+        }
+        //entfernt alle Punkte aus der Zahlenreihe
+        for (int i = 0; i < numbSequence.length() && i>=0;){
+            delPointPos = numbSequence.indexOf(".", i);
+            if(delPointPos != -1){
+                numbSequence = numbSequence.deleteCharAt(delPointPos);
+            }
+            i = delPointPos;
+        }
+        String[] result = baseModulSeparator.split(numbSequence);
+        ArrayList<KryptoType> resultZ = new ArrayList<KryptoType>();
+        for(String s : result){
+            if(s.contains("-")){ //prüft ob eine range übergeben wurde und füllt diese auf
+                String[] range = dashSeparator.split(s);
+                resultZ.addAll(fillKryptoTypeZList(range));
+                continue;
+            }
+            resultZ.add(new Z(s));
+        }
+        return resultZ;
+    }
+
+    //Füllt eine Liste mit Z von start bis end auf
+    private ArrayList<Z> fillKryptoTypeZList(String[] range){
+        //Precondition
+        assert range.length == 2: "Error, the array has more than 2 elements: " +Arrays.toString(range);
+        ArrayList<Z> listKrypto = new ArrayList<Z>();
+        int first = Integer.valueOf(range[0]);
+        int second = Integer.valueOf(range[1]);
+        int start, end;
+
+        if(first <= second){
+            start = first;
+            end = second;
+        }else{
+            start =second;
+            end = first;
+        }
+        while(start <= end){
+            listKrypto.add(new Z(start));
+            start++;
+        }
+        return listKrypto;
+    }
+
+
+    private LinkedList<Tuple<Z, Z>> getFactors(String s) {
+              LinkedList<Tuple<Z, Z>> result = new LinkedList<Tuple<Z, Z>>();
+              for(String factor : s.replaceAll("[ ]+", "").split("\\*")) {
+                  String[] baseExponent = factor.split("\\^");
+                  result.add(new Tuple<Z, Z>(new Z(baseExponent[0]), new Z((baseExponent.length == 2) ? baseExponent[1] : "1" )));
+              }
+              return result;
+    }
+
     @Override
     public String execute() {
         ArrayList<KryptoType> bases = new ArrayList<KryptoType>();
-        //ArrayList<Tuple<KryptoType, KryptoType>> primeFactors = new ArrayList<Tuple<KryptoType, KryptoType>>();
         ArrayList<KryptoType> primeFactors = new ArrayList<KryptoType>();
         ArrayList<KryptoType> factorPowers = new ArrayList<KryptoType>();
-        //ArrayList<Tuple<KryptoType, KryptoType>> summands = new ArrayList<Tuple<KryptoType, KryptoType>>();
         ArrayList<KryptoType> summands = new ArrayList<KryptoType>();
         ArrayList<KryptoType> summandPowers = new ArrayList<KryptoType>();
         ArrayList<Triple<Boolean, Double, LinkedList<String>>> result; //beinhaltet für jede Primzahl einzeln ob es prime ist, Wahrscheinlichkeit, Zwischenschritte
+        LinkedList<KryptoType> posResults = new LinkedList<KryptoType>(); //beinhaltet die erkannten Primzahlen für die Weiterleitung an ein anderes Fenster
 
-
-        ArrayList<Z> basen = new ArrayList<Z>();
         ArrayList<Z> factors = new ArrayList<Z>();
-        ArrayList<Z> summand = new ArrayList<Z>();
         ArrayList<Z> powers = new ArrayList<Z>();
-       /* ArrayList<Triple<Boolean, Double, LinkedList<String>>> result; //beinhaltet für jede Primzahl einzeln ob es prime ist, Wahrscheinlichkeit, Zwischenschritte
+        LinkedList<Tuple<Z, Z>> factorsLinkedList = new LinkedList<Tuple<Z, Z>>();
 
-        //ACHTUNG, ES MÜSSEN NOCH POWER EINGABEFELDER EINGERICHTET WERDEN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        //lucasPrimeFactors Triple erzeugen
-        Triple<ArrayList<Z>, ArrayList<Z>, ArrayList<Z>> primeFactors = new Triple<ArrayList<Z>, ArrayList<Z>, ArrayList<Z>>(basen, factors, powers);
-        ArrayList<Triple<ArrayList<Z>, ArrayList<Z>, ArrayList<Z>>> lucasPrimeFactors = new ArrayList<Triple<ArrayList<Z>, ArrayList<Z>, ArrayList<Z>>>();
-        lucasPrimeFactors.add(primeFactors);
 
-        //Summanden Liste erzeugen
-        Tuple<Z, Z> sum = new Tuple<Z, Z>(new Z(1), new Z(1)); //lege ich bereits so fest, bitte das Eingabefeld bei dem Summanden gleich auf 1 setzen
-        ArrayList<Tuple<Z, Z>> summands = new ArrayList<Tuple<Z, Z>>();
-        summands.add(sum);*
-/*
-    public LucasZ(Collection<Z> bases, Collection<Tuple<Z, Z>> primeFactors, Collection<Tuple<Z, Z>> summands, boolean calcProb){
-        super(bases, primeFactors, summands, calcProb);
-    }
-*/
+        if(primeFactorsTextField.getResult() != null)
+            factors.add((Z)primeFactorsTextField.getResult());
+        else
+            factorsLinkedList = getFactors(primeFactorsTextField.getText());  {
+            //factors.add(new Z (primeFactorsTextField.getText()));
+            for(Tuple<Z, Z> factorsL : factorsLinkedList){
+                primeFactors.add(factorsL.first());
+                factorPowers.add(factorsL.second());
+            }
+        }
+        
         if(basesTextField.getResult() != null)
-            factors.add((Z)basesTextField.getResult());
+            bases.add((Z)basesTextField.getResult());
         else
-            factors.add(new Z (basesTextField.getText()));
-
-        //ACHTUNG, MODUL WIRD BEI DEM LUCAS-TEST NICHT GEBRAUCHT
-        if(moduloTextField.getResult() != null)
-            bases.add((Z)moduloTextField.getResult());
-        else
-            bases.add(new Z(moduloTextField.getText()));
-        //ACHTUNG, MODUL WIRD BEI DEM LUCAS-TEST NICHT GEBRAUCHT
-
-
+            bases = splitInputToZ(basesTextField.getText());
         if(summandTextField.getResult() != null)
-            summand.add((Z)summandTextField.getResult());
+            summands.add((Z)summandTextField.getResult());
         else
-            summand.add(new Z(summandTextField.getText()));
+            summands.add(new Z(summandTextField.getText()));
+            summandPowers.add(new Z("1"));
 
         try{
             result = PrimeTestController.primeTestLucas(bases, primeFactors, factorPowers, summands, summandPowers, calcProb);
-            results.put(getTitle() + "_prime", result);
-            //return "In Window " + getTitle() + ": " + basen.get(0) + " ^ "+moduls.get(0).subtract(new Z(1))+ " mod "+moduls.get(0)+ " = " + result.get(0).first();
         }catch(RuntimeException e){
             return e.getMessage();
         }catch(NoSuchMethodException e){
@@ -289,38 +521,46 @@ public class LucasFrame extends Kit{
             return e.getMessage();
         }
 
-        Z primeValue = new Z("1");
-        int j = 0;
-        for (Z factor : factors){
-            primeValue = primeValue.multiply(Basic.squareAndMultiply(factor, powers.get(j)).first());
-            ++j;
-        }
-
-        extension = "";
-        outputWindow = "";
+        extendList = new LinkedList<String>(); //Zwischenschritte von der aktuell getesteten Primzahl
+        extension = new LinkedList<LinkedList<String>>(); //ist die Gesamtliste an Zwischenschritten von allen Primzahlen wenn auf den Button extend geklickt wird
+        outputWindow = new StringBuilder(); //für das untere Ausgabefensterr();
         int i = 0;
+        String verifiedNumb; //enthält die Zahl die auf Primzahleigenschafft überprüft wurde
         String probability = "";
         for(Triple<Boolean, Double, LinkedList<String>> output: result){
-            if (output.second() == -2.0){ //dies korrigieren, gibt es bei MillerRabin nicht. Wenn nur -1
-                probability = "n.d.";
-            }else{
-                double probDouble = output.second()*100;
-                probability = String.valueOf(probDouble)+"%";
+            if (output.second() == -2.0){
+                probability = "    probability = undefined";
+            }else if(output.second() == -1.0){
+                probability = "";
             }
-   
-   //DIESE AUSKOMMENTIERTEN FELDER WIEDER AKTIVIEREN. ICH WEIß NOCH NICHT WIE MAN BASEN, HIER AM BESTEN AUSGIBT. ES IST DAS PRODUKT primeVALUE was ich oben stehen habe         
-   //         extension += basen.get(i) + " ^ "+moduls.get(i).subtract(new Z(1))+ " mod "+moduls.get(i)+ " = " + output.first()+ "   probability = " +probability;
-   //         outputWindow += moduls.get(i) + ": "  + result.get(i).first()+ "\n";
+            else{
+                double probDouble = output.second()*100;
+                probability = "    probability = " +String.valueOf(probDouble)+"%";
+            }
+            extendList = output.third(); //erhält von der jeweiligen Primzahl die Zwischenschritte
+            verifiedNumb = extendList.getFirst();
+            if(output.first() == true){
+                posResults.add(new Z(verifiedNumb));
+            }
+            extendList.addFirst(extendList.pollFirst()+ ":");
+            extendList.addLast("result");
+            extendList.addLast(verifiedNumb+ " is prime number: " +output.first() +probability);
+
+            extension.add(extendList);
+
+            outputWindow.append(verifiedNumb+ ": "  + result.get(i).first()+ "\n");
+            KryptoType er = new Z("2");            
             i++;
         }
-        //return "In Window " + getTitle() + ": " + "\n\nPrimzahlen:\n" +moduls.get(0)+ ": "  + result.get(0).first();
-   //     return "In Window " + getTitle() + ": " + basen + " + " + moduls + " = ";// + result.toString();
-        return "";
+        results.put(getTitle() + "_primeLucas", posResults);
+        return "In Window " + getTitle() + ": " + "\n\nprime numbers:\n" +outputWindow.toString();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton extendBtLucas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanelDropListLucas;
     // End of variables declaration//GEN-END:variables
 
 
