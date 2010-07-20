@@ -21,6 +21,7 @@ public abstract class LucasTest <E extends KryptoType<E>> implements PrimeTest<E
     protected boolean calcProb; //ob die Wahrscheinlichkeit berechnet werden soll
     //protected static final double probabilityValue = 1; //Wahrscheinlichkeit ist bei Lucas Test immer 100% oder kann nicht berechnet werden (-2)
     protected static double probabilityValue;
+    protected LinkedList<String> intermediateValues;
 
     //ACHTUNG, OB NUR BESTIMMTE ODER ALLE BASEN BERECHNET WERDEN SOLLEN, GIBT DIE GUI AN. SIE ÜBERGIBT ENTWEDER EINE LISTE DER ZU BERECHNENTEN BASEN ODER
     //null(engl.)WENN ALLE BASEN BERECHNET WERDEN SOLLEN. DAZU WIRD DANN DIE METHODE calculateMaxBasesSeparate aufgerufen.
@@ -48,16 +49,21 @@ public abstract class LucasTest <E extends KryptoType<E>> implements PrimeTest<E
     }
     
     protected LucasTest(Collection<E> bases, Collection<Tuple<E, E>> primeFactors, Collection<Tuple<E, E>> summands, boolean calcProb){
-        Collection<E> factors = new ArrayList<E>();
-        Collection<E> powers = new ArrayList<E>();
+        ArrayList<E> factors = new ArrayList<E>();
+        ArrayList<E> powers = new ArrayList<E>();
+        ArrayList<E> basesArrayList = new ArrayList<E>(bases);
         for(Tuple<E, E> primeFactor : primeFactors){
             factors.add(primeFactor.first());
             powers.add(primeFactor.second());
         }
+
+        
+        //basesArrayList.addAll(bases);
         ArrayList<Triple<ArrayList<E>, ArrayList<E>, ArrayList<E>>> lucasPrimeFactors = new ArrayList<Triple<ArrayList<E>, ArrayList<E>, ArrayList<E>>>();
-        Triple<Collection<E>, Collection<E>, Collection<E>> triplePrimeFactors = new Triple<Collection<E>, Collection<E>, Collection<E>>(bases, factors, powers);
-        this.primeFactorsCollection = primeFactorsCollection; //beinhaltet jeweils ein Triple (Bases, Faktoren und der Potenzen) von jeder Faktorenzeile
-        this.summandCollection = summandCollection; //pro Primzahlenzeile sind hier der Summand und seine Potenz gespeichert
+        Triple<ArrayList<E>, ArrayList<E>, ArrayList<E>> triplePrimeFactors = new Triple<ArrayList<E>, ArrayList<E>, ArrayList<E>>(basesArrayList, factors, powers);
+        lucasPrimeFactors.add(triplePrimeFactors);
+        this.primeFactorsCollection = lucasPrimeFactors; //beinhaltet jeweils ein Triple (Bases, Faktoren und der Potenzen) von jeder Faktorenzeile
+        this.summandCollection = summands; //pro Primzahlenzeile sind hier der Summand und seine Potenz gespeichert
         this.calcProb = calcProb;
         if (!checkSummandsOne(summandCollection)){
             lucastTestCompatibleFactoization(primeFactorsCollection); //not supported yet

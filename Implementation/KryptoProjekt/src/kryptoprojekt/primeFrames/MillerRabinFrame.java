@@ -111,6 +111,7 @@ public class MillerRabinFrame extends Kit {
         jPanelDropListMiller = new javax.swing.JPanel();
 
         setClosable(true);
+        setResizable(true);
         setDoubleBuffered(true);
         setName("Form"); // NOI18N
         setPreferredSize(new java.awt.Dimension(280, 190));

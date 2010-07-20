@@ -38,53 +38,57 @@ public class LucasZ extends LucasTest<Z>{
     //gibt zurück ob es sich um eine Primzahl handelt und mit welcher Wahrscheinlichkeit
     public ArrayList<Triple<Boolean, Double, LinkedList<String>>> test()
                 throws IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException {
-                        ArrayList<Tuple<Boolean, Double>> primeResult = new ArrayList<Tuple<Boolean, Double>>();
-            ArrayList<Z> prime;
-            double probability;
+        ArrayList<Z> prime;
+        double probability;
 
-            boolean checkPrimeArgAnswer = checkPrimeArguments().first();
-            String argsCorrectMessage = checkPrimeArguments().second();
+        boolean checkPrimeArgAnswer = checkPrimeArguments().first();
+        String argsCorrectMessage = checkPrimeArguments().second();
 
-            if (checkPrimeArgAnswer) { //die IllegalArgumentException löst die checkPrimeArguments Methode aus, brauch ich hier also nicht abfangen
-                assert new TreeSet<Z>(maxBases).first().compareTo(new Z(1)) >= 0: "Found prime number less than 2: value prime number = " +new TreeSet<Z>(maxBases).first().add(new Z(1))+ ", value base = "+new TreeSet<Z>(maxBases).first();
-                ArrayList<TreeSet<Z>> checkBases = new ArrayList<TreeSet<Z>>(basesSet);
-                ArrayList<ArrayList<Tuple<Z, Z>>> listTuplesPrimeFactors = new ArrayList<ArrayList<Tuple<Z, Z>>>(primeFactorsInListTuples);
-                ArrayList<Tuple<Z, Z>> summands = new ArrayList<Tuple<Z, Z>>(summandCollection);
-                ArrayList<Z> maxBasesA = new ArrayList<Z>(maxBases);
+        ArrayList<Triple<Boolean, Double, LinkedList<String>>> primeResult = new ArrayList<Triple<Boolean, Double, LinkedList<String>>>();
+        if (checkPrimeArgAnswer) {
+            assert new TreeSet<Z>(maxBases).first().compareTo(new Z(1)) >= 0: "Found prime number less than 2: value prime number = " +new TreeSet<Z>(maxBases).first().add(new Z(1))+ ", value base = "+new TreeSet<Z>(maxBases).first();
+            ArrayList<TreeSet<Z>> checkBases = new ArrayList<TreeSet<Z>>(basesSet);
+            ArrayList<ArrayList<Tuple<Z, Z>>> listTuplesPrimeFactors = new ArrayList<ArrayList<Tuple<Z, Z>>>(primeFactorsInListTuples);
+            ArrayList<Tuple<Z, Z>> summands = new ArrayList<Tuple<Z, Z>>(summandCollection);
+            ArrayList<Z> maxBasesA = new ArrayList<Z>(maxBases);
+            Triple<Boolean, Double, LinkedList<String>> result;
 
-                int factorLines = primeFactorsCollection.size();
-                for (int i = 0; i<factorLines; i++){
-                    prime = new ArrayList();
-                    prime.add(calculatePrime(listTuplesPrimeFactors.get(i), summands.get(i)));
-                    if (new FermatZ(checkBases.get(i), prime, false).test().get(0).first()){
-                        boolean isPrime = lucasCheck(checkBases.get(i), getPrimeFactors(listTuplesPrimeFactors.get(i)), prime.get(0));
-                        if(isPrime){
-                            if (calcProb){
-                                //Postcondition
-                                assert checkPrimeArgAnswer == true && isPrime == true && calcProb == true: "checkPrimeArgAnswer or isPrime have a false state: checkPrimeArgAnswer = " +checkPrimeArgAnswer+ ", isPrime = " +isPrime;
-                                primeResult.add(new Tuple<Boolean, Double>(isPrime, 1.0));
-                                continue;
-                            } else{
-                                assert checkPrimeArgAnswer == true && isPrime == true && calcProb == false: "checkPrimeArgAnswer or isPrime have a false state: checkPrimeArgAnswer = " +checkPrimeArgAnswer+ ", isPrime = " +isPrime;
-                                primeResult.add(new Tuple<Boolean, Double>(isPrime, -1.0)); //es sollte keine Wahrscheinlichkeit berechnet werden
-                                continue;
-                            }
+            int factorLines = primeFactorsCollection.size();
+            for (int i = 0; i<factorLines; i++){
+                prime = new ArrayList();
+                prime.add(calculatePrime(listTuplesPrimeFactors.get(i), summands.get(i)));
+                intermediateValues = new LinkedList<String>();
+                intermediateValues.add(prime.get(i).toString());
+                result = new FermatZ(checkBases.get(i), prime, false).test().get(0);
+                intermediateValues.add(result.third().getFirst());
+                if (result.first()){
+                    boolean isPrime = lucasCheck(checkBases.get(i), getPrimeFactors(listTuplesPrimeFactors.get(i)), prime.get(0));
+                    if(isPrime){
+                        if (calcProb){
+                            //Postcondition
+                            assert checkPrimeArgAnswer == true && isPrime == true && calcProb == true: "checkPrimeArgAnswer or isPrime have a false state: checkPrimeArgAnswer = " +checkPrimeArgAnswer+ ", isPrime = " +isPrime;
+                            primeResult.add(new Triple<Boolean, Double, LinkedList<String>>(isPrime, 1.0, intermediateValues));
+                            continue;
+                        } else{
+                            assert checkPrimeArgAnswer == true && isPrime == true && calcProb == false: "checkPrimeArgAnswer or isPrime have a false state: checkPrimeArgAnswer = " +checkPrimeArgAnswer+ ", isPrime = " +isPrime;
+                            primeResult.add(new Triple<Boolean, Double, LinkedList<String>>(isPrime, -1.0, intermediateValues)); //es sollte keine Wahrscheinlichkeit berechnet werden
+                            continue;
                         }
-                    }else{
-                        //Postcondition
-                        assert checkPrimeArgAnswer == true && new FermatZ(checkBases.get(i), prime, false).test().get(0).first() == false: "checkPrimeArgAnswer or Fermat-Test have a false state: checkPrimeArgAnswer = " +checkPrimeArgAnswer+ ", Fermat-Test = " +new FermatZ(checkBases.get(i), prime, false).test().get(0).first();
-                        primeResult.add(new Tuple<Boolean, Double>(false, 1.0));
-                        continue;
                     }
-                    probability = calculateProbability(maxBasesA.get(i), checkBases.get(i), listTuplesPrimeFactors.get(i));
-                    primeResult.add(new Tuple<Boolean, Double>(false, probability)); //probability = 1 --> it is not a prime number; probability = -2 --> it could be a prime number
+                }else{
+                    //Postcondition
+                    assert checkPrimeArgAnswer == true && new FermatZ(checkBases.get(i), prime, false).test().get(0).first() == false: "checkPrimeArgAnswer or Fermat-Test have a false state: checkPrimeArgAnswer = " +checkPrimeArgAnswer+ ", Fermat-Test = " +new FermatZ(checkBases.get(i), prime, false).test().get(0).first();
+                    primeResult.add(new Triple<Boolean, Double, LinkedList<String>>(false, 1.0, intermediateValues));
+                    continue;
                 }
-                assert !primeResult.isEmpty():"primeResult is empty: primeResult = " +primeResult.toString();
-                return null;
-                //return primeResult;
-            } else{
-                throw new IllegalArgumentException(argsCorrectMessage);
+                probability = calculateProbability(maxBasesA.get(i), checkBases.get(i), listTuplesPrimeFactors.get(i));
+                primeResult.add(new Triple<Boolean, Double, LinkedList<String>>(false, probability, intermediateValues)); //probability = 1 --> it is not a prime number; probability = -2 --> it could be a prime number
             }
+            assert !primeResult.isEmpty():"primeResult is empty: primeResult = " +primeResult.toString();
+            return primeResult;
+        } else{
+            throw new IllegalArgumentException(argsCorrectMessage);
+        }
     }
 
 
@@ -195,12 +199,14 @@ public class LucasZ extends LucasTest<Z>{
             Z oneObj = new Z(1); //wird verwendet um zu schauen ob 1 rauskommt
             Z modul = checkPrime;
             Z phiOfModul = modul.subtract(new Z(1)); //entspricht n-1
+            Z result;
+
+            //ArrayList<Z> fermatModul = new ArrayList<Z>();
 
             //macht den Primzahltest
-            ArrayList<Z> primeFactorsA = new ArrayList<Z>(primeFactors);
-            ArrayList<Z> fermatModul = new ArrayList<Z>();
+            ArrayList<Z> primeFactorsA = new ArrayList<Z>(primeFactors);            
 
-            fermatModul.add(modul);
+            //fermatModul.add(modul);
             boolean isPrime = false;
             for(Z base : bases){
                 for(Z factor : primeFactorsA){
@@ -208,9 +214,11 @@ public class LucasZ extends LucasTest<Z>{
                         continue;
                     }
                     isPrime = true;
-                    if(Basic.squareAndMultiply(base, (phiOfModul.divide(factor)),modul).first().equals(oneObj)){
-                        System.out.println("Eigentlich muss es falsch sein");
+                    result = Basic.squareAndMultiply(base, (phiOfModul.divide(factor)),modul).first();
+                    intermediateValues.add(base+ "^" +phiOfModul+ "/" +factor+ " mod " +modul+ " = " +result);
+                    if(result.equals(oneObj)){
                         isPrime = false;
+                        intermediateValues.add("");
                         break;
                     }
                 }

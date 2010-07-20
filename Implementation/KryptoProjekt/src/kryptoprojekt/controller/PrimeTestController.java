@@ -98,7 +98,7 @@ public class PrimeTestController {
             if(triples.first().getClass().equals(Z.class) && triples.second().getClass().equals(Z.class)){
                 return lucasZPrimeTest(new LucasZ(primeFactorsCollection, summandCollection, calcProb));
                 //return rabinZPrimeTest(new LucasZ(basesZ, modulsZ, true));
-            } else if(triples.first().getClass().equals(Z.class) && triples.second().getClass().equals(Z.class)){
+            } else if(triples.first().getClass().equals(Polynom.class) && triples.second().getClass().equals(Polynom.class)){
                 throw new UnsupportedOperationException(xml.getTagElement("General", "UnsupportedOperationException"));
             }else{
                 throw new IllegalArgumentException(xml.getTagElement("PrimeTestController", "FalseKryptoTypes"));
@@ -119,21 +119,41 @@ public class PrimeTestController {
             throws RuntimeException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException{
         if (bases.get(0).getClass().equals(Z.class) && (primeFactors.get(0).getClass().equals(Z.class))){
             ArrayList<Z> basesZ = new ArrayList<Z>();
-            ArrayList<Tuple<Z, Z>> primeFactorsZ = new ArrayList<Tuple<Z, Z>>();
-            ArrayList<Tuple<Z, Z>> summandsZ = new ArrayList<Tuple<Z, Z>>();
+            ArrayList<Z> primeFactorsZ = new ArrayList<Z>();
+            ArrayList<Z> primeFactorsZPowers = new ArrayList<Z>();
+            ArrayList<Z> summandsZ = new ArrayList<Z>();
+            ArrayList<Z> summandsZPowers = new ArrayList<Z>();
+            ArrayList<Tuple<Z, Z>> primeFactorsList = new ArrayList<Tuple<Z, Z>>();
+            ArrayList<Tuple<Z, Z>> summandList = new ArrayList<Tuple<Z, Z>>();
 
             for(KryptoType<Z> base : bases){
                 basesZ.add((Z)base);
             }
             for(KryptoType<Z> primeFactor : primeFactors){
-               // KryptoType<Z> factor = primeFactor.first();
-
-
-                //primeFactorsZ.add(primeFactor);
+                primeFactorsZ.add((Z)primeFactor);
             }
-            //return rabinZPrimeTest(new MillerRabinZ(basesZ, modulsZ, calcProb));
+            for(KryptoType<Z> factorPower : factorPowers){
+                primeFactorsZPowers.add((Z)factorPower);
+            }
+            for(KryptoType<Z> summand : summands){
+                summandsZ.add((Z)summand);
+            }
+            for(KryptoType<Z> summandPower : summandPowers){
+                summandsZPowers.add((Z)summandPower);
+            }
 
-        //}else if (bases.get(0).getClass().equals(Polynom.class) && (moduls.get(0).getClass().equals(Polynom.class))){
+            int lengthFactors = primeFactorsZ.size();
+            for (int i = 0; i<lengthFactors; i++){
+                primeFactorsList.add(new Tuple<Z, Z>(primeFactorsZ.get(i), primeFactorsZPowers.get(i)));
+            }
+
+            int lengthSummands = summandsZ.size();
+            for (int i = 0; i<lengthSummands; i++){
+                summandList.add(new Tuple<Z, Z>(summandsZ.get(i), summandsZPowers.get(i)));
+            }
+            return lucasZPrimeTest(new LucasZ(basesZ, primeFactorsList, summandList, calcProb));
+
+        }else if (bases.get(0).getClass().equals(Polynom.class) && (primeFactors.get(0).getClass().equals(Polynom.class))){
             throw new UnsupportedOperationException(xml.getTagElement("General", "UnsupportedOperationException"));
         }else{
             throw new IllegalArgumentException(xml.getTagElement("PrimeTestController", "FalseKryptoTypes"));

@@ -102,9 +102,10 @@ public class FermatFrame extends Kit {
         jPanelDropList = new javax.swing.JPanel();
 
         setClosable(true);
+        setResizable(true);
         setDoubleBuffered(true);
         setName("Form"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(280, 190));
+        setPreferredSize(new java.awt.Dimension(290, 190));
 
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(kryptoprojekt.KryptoProjektApp.class).getContext().getResourceMap(FermatFrame.class);
         fermatTestLabel.setText(resourceMap.getString("fermatTestLabel.text")); // NOI18N
@@ -116,11 +117,11 @@ public class FermatFrame extends Kit {
         jPanelPrime.setLayout(jPanelPrimeLayout);
         jPanelPrimeLayout.setHorizontalGroup(
             jPanelPrimeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 79, Short.MAX_VALUE)
+            .addGap(0, 59, Short.MAX_VALUE)
         );
         jPanelPrimeLayout.setVerticalGroup(
             jPanelPrimeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 97, Short.MAX_VALUE)
+            .addGap(0, 112, Short.MAX_VALUE)
         );
 
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
@@ -132,19 +133,19 @@ public class FermatFrame extends Kit {
             }
         });
 
-        jPanelSettings.setMinimumSize(new java.awt.Dimension(120, 97));
+        jPanelSettings.setMinimumSize(new java.awt.Dimension(130, 110));
         jPanelSettings.setName("jPanelSettings"); // NOI18N
-        jPanelSettings.setPreferredSize(new java.awt.Dimension(135, 183));
+        jPanelSettings.setPreferredSize(new java.awt.Dimension(180, 183));
 
         javax.swing.GroupLayout jPanelSettingsLayout = new javax.swing.GroupLayout(jPanelSettings);
         jPanelSettings.setLayout(jPanelSettingsLayout);
         jPanelSettingsLayout.setHorizontalGroup(
             jPanelSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 165, Short.MAX_VALUE)
+            .addGap(0, 214, Short.MAX_VALUE)
         );
         jPanelSettingsLayout.setVerticalGroup(
             jPanelSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 97, Short.MAX_VALUE)
+            .addGap(0, 112, Short.MAX_VALUE)
         );
 
         jPanelDropList.setName("jPanelDropList"); // NOI18N
@@ -153,11 +154,11 @@ public class FermatFrame extends Kit {
         jPanelDropList.setLayout(jPanelDropListLayout);
         jPanelDropListLayout.setHorizontalGroup(
             jPanelDropListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 250, Short.MAX_VALUE)
+            .addGap(0, 279, Short.MAX_VALUE)
         );
         jPanelDropListLayout.setVerticalGroup(
             jPanelDropListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 13, Short.MAX_VALUE)
+            .addGap(0, 18, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -175,7 +176,7 @@ public class FermatFrame extends Kit {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jButton1)
-                            .addComponent(jPanelSettings, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE))))
+                            .addComponent(jPanelSettings, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -188,9 +189,9 @@ public class FermatFrame extends Kit {
                     .addComponent(fermatTestLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanelPrime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanelSettings, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jPanelSettings, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
+                    .addComponent(jPanelPrime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanelDropList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
