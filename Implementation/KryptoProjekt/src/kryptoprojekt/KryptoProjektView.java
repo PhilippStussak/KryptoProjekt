@@ -880,6 +880,7 @@ public class KryptoProjektView extends FrameView {
 
     private void clearBtnOnBarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearBtnOnBarActionPerformed
         desktop.removeAll();
+        handler.reset();
         desktop.repaint();
     }//GEN-LAST:event_clearBtnOnBarActionPerformed
 

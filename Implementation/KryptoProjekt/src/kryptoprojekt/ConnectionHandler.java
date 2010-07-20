@@ -94,4 +94,9 @@ public class ConnectionHandler {
         }
         return null;
     }
+
+    public void reset() {
+        frames = new LinkedList<Kit>();
+        connections = new LinkedList<Connection>();
+    }
 }

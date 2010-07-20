@@ -10,6 +10,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
+import java.io.InputStream;
+import java.net.URL;
 import javax.swing.JDesktopPane;
 
 /**
@@ -29,9 +31,12 @@ public class Desktop extends JDesktopPane {
         this.setVisible(true);
         this.setDoubleBuffered(true);
         try {
-            image = javax.imageio.ImageIO.read(new java.net.URL(getClass().getResource("resources\\panelBackground.png"), "resources\\panelBackground.png"));
+            URL url = new URL(getClass().getResource("resources/panelBackground.png").toString());
+            InputStream stream = url.openStream();
+            image = javax.imageio.ImageIO.read(stream);
         } catch (Exception e) {
         }
+        this.setBackground(Color.white);
         handler.setDesktop(this);
     }
 
