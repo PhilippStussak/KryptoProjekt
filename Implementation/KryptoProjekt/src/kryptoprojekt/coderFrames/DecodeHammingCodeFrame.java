@@ -119,7 +119,7 @@ public class DecodeHammingCodeFrame extends Kit {
         c.gridy = 2;
         jPanel1.add(getDragList(new Object[] {getTitle() + "_hcElem"}), c);
 
-        final DragList corrDecodedWord = getDragList(new Object[] {getTitle() + "corrected decoded word"});
+        final DragList corrDecodedWord = getDragList(new Object[] {getTitle() + "_corrected decoded word"});
         correctWordCeckbox.addItemListener(
                 new ItemListener() {
 
@@ -143,7 +143,7 @@ public class DecodeHammingCodeFrame extends Kit {
         c.gridwidth = 3;
         c.gridx = 0;
         c.gridy = 6;
-        jPanel1.add(getDragList(new Object[] {getTitle() + "decoded word"}), c);
+        jPanel1.add(getDragList(new Object[] {getTitle() + "_decoded word"}), c);
 
         c.weightx = 0.5;
         c.fill = GridBagConstraints.BOTH;
@@ -164,15 +164,15 @@ public class DecodeHammingCodeFrame extends Kit {
             return Kit.xmlReader.getTagElement("DecodeHammingCodeFrame", "NoErrorsCreated");
         if(correctWordCeckbox.isSelected()){
             results.put(getTitle() + "_hcElem", result);
-            results.put(getTitle() + "decoded word", result.getDecodedWord());
-            results.put(getTitle() + "corrected decoded word", result.getCorrectedDecodedWord());
+            results.put(getTitle() + "_decoded word", result.getDecodedWord());
+            results.put(getTitle() + "_corrected decoded word", result.getCorrectedDecodedWord());
             return Kit.xmlReader.getTagElement("DecodeHammingCodeFrame", "DecodedWord") + result.getDecodedWord() + "\n" +
                    Kit.xmlReader.getTagElement("DecodeHammingCodeFrame", "ErrorInEncodedWord") +
                    result.getEncodedWord() + Kit.xmlReader.getTagElement("DecodeHammingCodeFrame", "AtPosition") + result.getErrorPos() + "\n" +
                    Kit.xmlReader.getTagElement("DecodeHammingCodeFrame", "CorrectedDecodedWord") + result.getCorrectedDecodedWord();
         }
         results.put(getTitle() + "_hcElem", result);
-        results.put(getTitle() + "decoded word", result.getDecodedWord());
+        results.put(getTitle() + "_decoded word", result.getDecodedWord());
         return Kit.xmlReader.getTagElement("DecodeHammingCodeFrame", "DecodedWord") + result.getDecodedWord();
         }catch(RuntimeException r){
             return Kit.xmlReader.getTagElement("HammingCode", r.getMessage());
