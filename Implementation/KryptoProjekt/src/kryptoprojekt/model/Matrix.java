@@ -312,4 +312,18 @@ public class Matrix<E extends KryptoType<E>> {
         }
         return new Tuple<Integer, String[][]>(maxLength, string);
     }
+
+    /**
+     * Creates a copy of a matrix opject.
+     * @return matrix copy of {@code this} object
+     */
+    public Matrix<E> copy() {
+        E[][] e = (E[][]) new KryptoType[x][y];
+
+        for (int i=0; i<x; i++)
+            for (int j=0; j<y; j++)
+                e[i][j] = matrix[i][j];
+
+        return new Matrix<E>(e);
+    }
 }

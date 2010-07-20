@@ -34,14 +34,18 @@ public class CoderController {
     }
 
     public static HammingCode encodeHammingCode(HammingCode hc) throws NullPointerException{
-        hc.encode();
+        HammingCode newHc = new HammingCode(hc.getSourceCodeWord());
+        
+        newHc.encode();
 
-        return hc;
+        return newHc;
     }
 
     public static HammingCode createHammingError(HammingCode hc, String probability) {
-        hc.generateBitError(Double.parseDouble(probability));
-        return hc;
+        HammingCode newHc = hc.copy();
+        
+        newHc.generateBitError(Double.parseDouble(probability));
+        return newHc;
     }
 
     public static HammingCode initHammingCode (boolean enableMatrix, Matrix<PrimeFieldElement> generatorM, String sourceCodeWord) throws IllegalArgumentException{

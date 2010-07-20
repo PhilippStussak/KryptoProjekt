@@ -388,4 +388,22 @@ public class HammingCode extends Coder {
     public String toString() {
         return "";
     }
+
+    /**
+     * Creates a copy of a HammingCode object.
+     * @return a copy of {@code this} object
+     */
+    public HammingCode copy() {
+        HammingCode newHc = new HammingCode(codeWord);
+
+        newHc.sourceCodeWord = this.sourceCodeWord.copy();
+        newHc.encodedWord = this.encodedWord.copy();
+        newHc.syndrom = this.syndrom.copy();
+        newHc.decodedWord = this.decodedWord.copy();
+        newHc.correctedDecodedWord = this.correctedDecodedWord.copy();
+        newHc.errorPosition = this.errorPosition;
+        newHc.errorsFound = this.errorsFound;
+
+        return newHc;
+    }
 }
