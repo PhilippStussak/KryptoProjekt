@@ -8,15 +8,12 @@
  *
  * Created on 29.06.2010, 17:14:20
  */
-
 package kryptoprojekt.primeFrames;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Insets;
-import java.awt.Toolkit;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -27,11 +24,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JCheckBox;
 import javax.swing.JTextPane;
 import javax.swing.JInternalFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
-import javax.swing.JTextArea;
 import javax.swing.JLabel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.text.BadLocationException;
@@ -43,9 +37,7 @@ import kryptoprojekt.Kit;
 import java.util.ArrayList;
 import kryptoprojekt.model.KryptoType;
 import kryptoprojekt.model.Z;
-import kryptoprojekt.model.PrimeTest;
 import kryptoprojekt.model.PrimeUtility;
-import kryptoprojekt.model.FermatZ;
 import kryptoprojekt.model.Triple;
 import kryptoprojekt.controller.PrimeTestController;
 import java.lang.reflect.InvocationTargetException;
@@ -73,11 +65,8 @@ public class FermatFrame extends Kit {
     private LinkedList<Integer> probBases;
     private StringBuilder outputWindow;
     private StyledDocument doc;
-    private Font fontSettings;
     private boolean calcProb; //ob die Wahrscheinlichkeit beim FermatTest berechnet werden soll
     private boolean correctArguments; //zeigt an, ob für Basen und Moduls korrekte Werte übergeben wurden
-
-
 
     /** Creates new form FermatFrame */
     public FermatFrame(ConnectionHandler handler) {
@@ -203,9 +192,10 @@ public class FermatFrame extends Kit {
         frame.setLocation(getX(), getY());
         frame.setSize(400, 340);
 
-        JTextPane fermatPane = new JTextPane(){
+        JTextPane fermatPane = new JTextPane() {
+
             @Override
-            public boolean getScrollableTracksViewportWidth(){
+            public boolean getScrollableTracksViewportWidth() {
                 return false;
             }
         };
@@ -213,13 +203,13 @@ public class FermatFrame extends Kit {
         doc = fermatPane.getStyledDocument();
         Style defaultStyle = doc.getStyle("default");
         Style intermediateHeadStyle = doc.addStyle("outputHead", defaultStyle);
-        StyleConstants.setFontSize(intermediateHeadStyle, StyleConstants.getFontSize(intermediateHeadStyle)+1);
+        StyleConstants.setFontSize(intermediateHeadStyle, StyleConstants.getFontSize(intermediateHeadStyle) + 1);
         StyleConstants.setBold(intermediateHeadStyle, true);
-        if(extension != null){
-            for (LinkedList<String> linkedStringList : extension){
-                append(linkedStringList.pollFirst()+ "\n", intermediateHeadStyle.getName());
-                for (String intermediateValues : linkedStringList){
-                        append(intermediateValues+ "\n", defaultStyle.getName());
+        if (extension != null) {
+            for (LinkedList<String> linkedStringList : extension) {
+                append(linkedStringList.pollFirst() + "\n", intermediateHeadStyle.getName());
+                for (String intermediateValues : linkedStringList) {
+                    append(intermediateValues + "\n", defaultStyle.getName());
                 }
                 append("\n", defaultStyle.getName());
             }
@@ -232,12 +222,12 @@ public class FermatFrame extends Kit {
         getParent().add(frame);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void append(String text, String styleName){
-        try{
+    private void append(String text, String styleName) {
+        try {
             doc.insertString(doc.getLength(), text, doc.getStyle(styleName));
         } catch (BadLocationException e) {
             //System.err.println("get Message Ausgabe: Fehler in der Start.java: " +e.getMessage());
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 
@@ -255,7 +245,7 @@ public class FermatFrame extends Kit {
 
             public void keyPressed(KeyEvent e) {
             }
-            
+
             //checkt ob gültige Eingabe in TextFeld gemacht wurde (Zahlen, Komma, Punkte, Leerzeichen, Bindestriche)
             public void keyReleased(KeyEvent e) {
                 StringBuilder numbSequence = new StringBuilder(basesTextField.getText());
@@ -264,20 +254,20 @@ public class FermatFrame extends Kit {
 
                 //checkt ob vor und hinter dem '-' eine Zahl steht. Wenn nein, markiere bases textfield rot.
                 int assertCounter = 0;
-                if(dashPos != -1){
-                    for(int k = 0; k < numbSequence.length() && k>=0;){
-                        assert assertCounter < basesTextField.getText().length(): "Too many iterations.";
+                if (dashPos != -1) {
+                    for (int k = 0; k < numbSequence.length() && k >= 0;) {
+                        assert assertCounter < basesTextField.getText().length() : "Too many iterations.";
                         dashPos = numbSequence.indexOf("-", k);
                         k = -1;
-                        if(dashPos >0 && dashPos < numbSequence.length()-1){
-                            if(LogicValidator.isPosInteger(String.valueOf(numbSequence.charAt(dashPos-1))) && LogicValidator.isPosInteger(String.valueOf(numbSequence.charAt(dashPos+1)))){
-                            numbSequence = numbSequence.deleteCharAt(dashPos); //löscht "-" Zeichen und daher wird positive Int Zahl erkannt
-                                 k = dashPos;
-                            }else{
+                        if (dashPos > 0 && dashPos < numbSequence.length() - 1) {
+                            if (LogicValidator.isPosInteger(String.valueOf(numbSequence.charAt(dashPos - 1))) && LogicValidator.isPosInteger(String.valueOf(numbSequence.charAt(dashPos + 1)))) {
+                                numbSequence = numbSequence.deleteCharAt(dashPos); //löscht "-" Zeichen und daher wird positive Int Zahl erkannt
+                                k = dashPos;
+                            } else {
                                 dashPos = -1; //wrong parameter
                                 checkOther = false;
                             }
-                        }else if(dashPos == 0){
+                        } else if (dashPos == 0) {
                             dashPos = -1; //wrong parameter
                             checkOther = false;
                         }
@@ -286,7 +276,7 @@ public class FermatFrame extends Kit {
                     assertCounter = 0;
                 }
 
-                if (checkOther){
+                if (checkOther) {
                     numbSequence = deleteChar(numbSequence, ","); //alle Kommata löschen
                     numbSequence = deleteChar(numbSequence, "."); //alle Punkte löschen
                     numbSequence = deleteChar(numbSequence, " "); //alle Leerzeichen löschen
@@ -317,20 +307,20 @@ public class FermatFrame extends Kit {
 
                 //checkt ob vor und hinter dem '-' eine Zahl steht. Wenn nein, markiere modulo textfield rot.
                 int assertCounter = 0;
-                if(dashPos != -1){
-                    for(int k = 0; k < numbSequence.length() && k>=0;){
-                        assert assertCounter < moduloTextField.getText().length(): "Too many iterations.";
+                if (dashPos != -1) {
+                    for (int k = 0; k < numbSequence.length() && k >= 0;) {
+                        assert assertCounter < moduloTextField.getText().length() : "Too many iterations.";
                         dashPos = numbSequence.indexOf("-", k);
                         k = -1;
-                        if(dashPos >0 && dashPos < numbSequence.length()-1){
-                            if(LogicValidator.isPosInteger(String.valueOf(numbSequence.charAt(dashPos-1))) && LogicValidator.isPosInteger(String.valueOf(numbSequence.charAt(dashPos+1)))){
-                            numbSequence = numbSequence.deleteCharAt(dashPos);
-                                 k = dashPos;
-                            }else{
+                        if (dashPos > 0 && dashPos < numbSequence.length() - 1) {
+                            if (LogicValidator.isPosInteger(String.valueOf(numbSequence.charAt(dashPos - 1))) && LogicValidator.isPosInteger(String.valueOf(numbSequence.charAt(dashPos + 1)))) {
+                                numbSequence = numbSequence.deleteCharAt(dashPos);
+                                k = dashPos;
+                            } else {
                                 dashPos = -1; //wrong parameter
                                 checkOther = false;
                             }
-                        }else if(dashPos == 0){
+                        } else if (dashPos == 0) {
                             dashPos = -1; //wrong parameter
                             checkOther = false;
                         }
@@ -339,7 +329,7 @@ public class FermatFrame extends Kit {
                     assertCounter = 0;
                 }
 
-                if (checkOther){
+                if (checkOther) {
                     numbSequence = deleteChar(numbSequence, ","); //alle Kommata löschen
                     numbSequence = deleteChar(numbSequence, "."); //alle Punkte löschen
                     numbSequence = deleteChar(numbSequence, " "); //alle Leerzeichen löschen
@@ -354,8 +344,8 @@ public class FermatFrame extends Kit {
             }
         });
 
-   //JPanelPrime
-      //prime input
+        //JPanelPrime
+        //prime input
         c = new GridBagConstraints();
         c.fill = GridBagConstraints.NONE;
         c.anchor = GridBagConstraints.NORTHWEST;
@@ -367,7 +357,7 @@ public class FermatFrame extends Kit {
         primeLabel.setText("check whether prime:");
         jPanelPrime.add(primeLabel, c);
 
-        
+
         c = new GridBagConstraints();
         c.ipadx = 80;
         c.fill = GridBagConstraints.HORIZONTAL;
@@ -378,11 +368,11 @@ public class FermatFrame extends Kit {
         c.gridy = 1;
         jPanelPrime.add(moduloTextField, c);
 
-      //base input
+        //base input
         c = new GridBagConstraints();
         c.fill = GridBagConstraints.NONE;
         c.anchor = GridBagConstraints.NORTHWEST;
-        c.insets = new Insets(5,0,0,0);
+        c.insets = new Insets(5, 0, 0, 0);
         c.gridx = 0;
         c.gridy = 2;
         c.weightx = 0;
@@ -401,8 +391,8 @@ public class FermatFrame extends Kit {
         c.gridy = 3;
         jPanelPrime.add(basesTextField, c);
 
-   //JPanelDropList
-      //drop List
+        //JPanelDropList
+        //drop List
         c = new GridBagConstraints();
         c.weightx = 1;
         c.fill = GridBagConstraints.BOTH;
@@ -411,7 +401,7 @@ public class FermatFrame extends Kit {
         c.gridy = 4;
         jPanelDropList.add(getDragList(new Object[]{getTitle() + "_primeFermat"}), c);
 
-   //JPanelSettings
+        //JPanelSettings
         Border settingsBorder = BorderFactory.createTitledBorder("settings");
         jPanelSettings.setBorder(settingsBorder);
 
@@ -421,7 +411,7 @@ public class FermatFrame extends Kit {
         c.fill = GridBagConstraints.NONE;
         c.weightx = 0.5;
         c.anchor = GridBagConstraints.NORTHWEST;
-       // c.gridwidth = 1;
+        // c.gridwidth = 1;
         //c.gridheight = 0;
         c.gridx = 0;
         c.gridy = 0;
@@ -431,8 +421,8 @@ public class FermatFrame extends Kit {
         probabilityLabel.setHorizontalAlignment(JLabel.LEFT);
         jPanelSettings.add(probabilityLabel, c);
          * */
-         
-         
+
+
         //checkbox Probability
         c = new GridBagConstraints();
         c.fill = GridBagConstraints.HORIZONTAL;
@@ -444,13 +434,14 @@ public class FermatFrame extends Kit {
         c.weighty = 0;
         probabilityCB = new JCheckBox("calc. probability", true);
         calcProb = true;
-        probabilityCB.setFont(probabilityCB.getFont().deriveFont(probabilityCB.getFont().getSize2D()-0.6f));
+        probabilityCB.setFont(probabilityCB.getFont().deriveFont(probabilityCB.getFont().getSize2D() - 0.6f));
         probabilityCB.setHorizontalAlignment(JLabel.LEFT);
         probabilityCB.addItemListener(new ItemListener() {
+
             public void itemStateChanged(ItemEvent e) {
-                if(e.getStateChange() == ItemEvent.DESELECTED){
+                if (e.getStateChange() == ItemEvent.DESELECTED) {
                     calcProb = false;
-                }else{
+                } else {
                     calcProb = true;
                 }
             }
@@ -461,13 +452,13 @@ public class FermatFrame extends Kit {
         c = new GridBagConstraints();
         c.fill = GridBagConstraints.NONE;
         c.anchor = GridBagConstraints.NORTHWEST;
-        c.insets = new Insets(3,20,0,0);
+        c.insets = new Insets(3, 20, 0, 0);
         c.gridx = 0;
         c.gridy = 2;
         c.weightx = 0;
         c.weighty = 0.5;
         randomSPLabel = new JLabel();
-        randomSPLabel.setFont(randomSPLabel.getFont().deriveFont(randomSPLabel.getFont().getSize2D()-0.6f));
+        randomSPLabel.setFont(randomSPLabel.getFont().deriveFont(randomSPLabel.getFont().getSize2D() - 0.6f));
         randomSPLabel.setText("number");
         randomSPLabel.setEnabled(false);
         jPanelSettings.add(randomSPLabel, c);
@@ -477,42 +468,43 @@ public class FermatFrame extends Kit {
         c.ipadx = 20;
         c.fill = GridBagConstraints.HORIZONTAL;
         c.anchor = GridBagConstraints.NORTHWEST;
-        c.insets = new Insets(0,3,0,0);
+        c.insets = new Insets(0, 3, 0, 0);
         c.gridx = 1;
         c.gridy = 2;
         c.weightx = 0.5;
         c.weighty = 0;
         randomNumberSP = new JSpinner(new SpinnerNumberModel(3, 1, 9999, 1));
-        randomNumberSP.setFont(randomNumberSP.getFont().deriveFont(randomNumberSP.getFont().getSize2D()-0.6f));
+        randomNumberSP.setFont(randomNumberSP.getFont().deriveFont(randomNumberSP.getFont().getSize2D() - 0.6f));
         randomNumberSP.setEnabled(false);
-        randomNumberSP.addChangeListener(new ChangeListener(){
-            public void stateChanged(ChangeEvent e){
+        randomNumberSP.addChangeListener(new ChangeListener() {
+
+            public void stateChanged(ChangeEvent e) {
                 TreeSet<KryptoType> moduls = new TreeSet<KryptoType>(splitInputToZ(moduloTextField.getText()));
-                if(!moduls.isEmpty()){
-                    Integer numberRandomBases = (Integer)randomNumberSP.getValue();
+                if (!moduls.isEmpty()) {
+                    Integer numberRandomBases = (Integer) randomNumberSP.getValue();
                     basesTextField.setText("");
-                    if(numberRandomBases >0 && numberRandomBases<=9999){
+                    if (numberRandomBases > 0 && numberRandomBases <= 9999) {
                         int endProbBaseRange; //max. Zahl für eine zufallsgenerierte Basis
-                        if(Integer.parseInt(moduls.first().toString()) == 2){ //Achtung, möglicherweise funktioniert das nur für KryptoType 'Z'
+                        if (Integer.parseInt(moduls.first().toString()) == 2) { //Achtung, möglicherweise funktioniert das nur für KryptoType 'Z'
                             Iterator<KryptoType> itModuls = moduls.iterator();
                             itModuls.next();
-                            if(itModuls.hasNext()){
+                            if (itModuls.hasNext()) {
                                 endProbBaseRange = Integer.parseInt(itModuls.next().toString()); //Achtung, möglicherweise funktioniert das nur für KryptoType 'Z'
-                                int maxProbNumbers = endProbBaseRange-2; //Achtung, möglicherweise funktioniert das nur für KryptoType 'Z'
-                                numberRandomBases = numberRandomBases<maxProbNumbers ? numberRandomBases : maxProbNumbers;
-                            }else{
+                                int maxProbNumbers = endProbBaseRange - 2; //Achtung, möglicherweise funktioniert das nur für KryptoType 'Z'
+                                numberRandomBases = numberRandomBases < maxProbNumbers ? numberRandomBases : maxProbNumbers;
+                            } else {
                                 endProbBaseRange = 2;
                                 numberRandomBases = 1;
                             }
-                        } else{
+                        } else {
                             endProbBaseRange = Integer.parseInt(moduls.first().toString());
-                            int maxProbNumbers = endProbBaseRange-2;
-                            numberRandomBases = numberRandomBases<maxProbNumbers ? numberRandomBases : maxProbNumbers;
+                            int maxProbNumbers = endProbBaseRange - 2;
+                            numberRandomBases = numberRandomBases < maxProbNumbers ? numberRandomBases : maxProbNumbers;
                         }
                         probBases = new LinkedList<Integer>(PrimeUtility.getRandomNumber(2, endProbBaseRange, numberRandomBases));
                         StringBuilder probBasesString = new StringBuilder("");
-                        for (int i = 0; i<probBases.size(); i++){
-                            probBasesString.append(probBases.get(i)+", ");
+                        for (int i = 0; i < probBases.size(); i++) {
+                            probBasesString.append(probBases.get(i) + ", ");
                         }
                         basesTextField.setText(probBasesString.toString());
                     }
@@ -531,16 +523,17 @@ public class FermatFrame extends Kit {
         c.weightx = 0.5;
         c.weighty = 0;
         JCheckBox randomBasesCB = new JCheckBox("random bases", false);
-        randomBasesCB.setFont(randomBasesCB.getFont().deriveFont(randomBasesCB.getFont().getSize2D()-0.6f));
+        randomBasesCB.setFont(randomBasesCB.getFont().deriveFont(randomBasesCB.getFont().getSize2D() - 0.6f));
         randomBasesCB.setHorizontalAlignment(JLabel.LEFT);
         randomBasesCB.addItemListener(new ItemListener() {
+
             public void itemStateChanged(ItemEvent e) {
-                if(e.getStateChange() == ItemEvent.SELECTED){
+                if (e.getStateChange() == ItemEvent.SELECTED) {
                     basesTextField.setEnabled(false);
                     basesTextField.setText("");
                     randomSPLabel.setEnabled(true);
                     randomNumberSP.setEnabled(true);
-                }else{
+                } else {
                     basesTextField.setEnabled(true);
                     basesTextField.setText("");
                     randomSPLabel.setEnabled(false);
@@ -551,45 +544,44 @@ public class FermatFrame extends Kit {
         jPanelSettings.add(randomBasesCB, c);
     }
 
-
     //löscht den übergebenen char aus dem übergebenen String raus
-    private StringBuilder deleteChar(StringBuilder originalString, String delChar, int fromIndex){
+    private StringBuilder deleteChar(StringBuilder originalString, String delChar, int fromIndex) {
         StringBuilder withoutCharString = new StringBuilder(originalString);
         int charPosition = withoutCharString.indexOf(delChar, fromIndex);
-        while(charPosition >=0){
+        while (charPosition >= 0) {
             withoutCharString = withoutCharString.deleteCharAt(charPosition);
             charPosition = withoutCharString.indexOf(delChar, charPosition);
         }
         return withoutCharString;
     }
 
-    private StringBuilder deleteChar(StringBuilder originalString, String delChar){
+    private StringBuilder deleteChar(StringBuilder originalString, String delChar) {
         return deleteChar(originalString, delChar, 0);
     }
 
     //splittet die Zahlenreihe in eine ArrayList auf
     //1.250, 15.0.0, 17, 18,,,19,,  21, , 23  24,25, 26,   28,,,  ,,29 , 30,54,  ,, ,,, , ,, ,  ,,  31, ..., .31, 21..., 60-65... //diese Zahlen in der Anordnung in die Testklasse aufnehmen - müssen dem regulären Ausdruck standhalten
-    private ArrayList<KryptoType> splitInputToZ(String splitMe){
+    private ArrayList<KryptoType> splitInputToZ(String splitMe) {
         Pattern baseModulSeparator = Pattern.compile("(([,]+[\\s]*)+|([\\s]+[,]*)+)"); //split an input list of bases and moduls(primes)
         Pattern dashSeparator = Pattern.compile("[\\-]");
         StringBuilder numbSequence = new StringBuilder(splitMe);
         int delPointPos = 0;
 
-        if(correctArguments == false){
-            throw new IllegalArgumentException("Wrong parameters found for bases, modules in window Fermat-Test " +getTitle());
+        if (correctArguments == false) {
+            throw new IllegalArgumentException("Wrong parameters found for bases, modules in window Fermat-Test " + getTitle());
         }
         //entfernt alle Punkte aus der Zahlenreihe
-        for (int i = 0; i < numbSequence.length() && i>=0;){
+        for (int i = 0; i < numbSequence.length() && i >= 0;) {
             delPointPos = numbSequence.indexOf(".", i);
-            if(delPointPos != -1){
+            if (delPointPos != -1) {
                 numbSequence = numbSequence.deleteCharAt(delPointPos);
             }
             i = delPointPos;
         }
         String[] result = baseModulSeparator.split(numbSequence);
         ArrayList<KryptoType> resultZ = new ArrayList<KryptoType>();
-        for(String s : result){
-            if(s.contains("-")){ //prüft ob eine range übergeben wurde und füllt diese auf
+        for (String s : result) {
+            if (s.contains("-")) { //prüft ob eine range übergeben wurde und füllt diese auf
                 String[] range = dashSeparator.split(s);
                 resultZ.addAll(fillKryptoTypeZList(range));
                 continue;
@@ -600,22 +592,22 @@ public class FermatFrame extends Kit {
     }
 
     //Füllt eine Liste mit Z von start bis end auf
-    private ArrayList<Z> fillKryptoTypeZList(String[] range){
+    private ArrayList<Z> fillKryptoTypeZList(String[] range) {
         //Precondition
-        assert range.length == 2: "Error, the array has more than 2 elements: " +Arrays.toString(range);
+        assert range.length == 2 : "Error, the array has more than 2 elements: " + Arrays.toString(range);
         ArrayList<Z> listKrypto = new ArrayList<Z>();
         int first = Integer.valueOf(range[0]);
         int second = Integer.valueOf(range[1]);
         int start, end;
-        
-        if(first <= second){
+
+        if (first <= second) {
             start = first;
             end = second;
-        }else{
-            start =second;
+        } else {
+            start = second;
             end = first;
         }
-        while(start <= end){
+        while (start <= end) {
             listKrypto.add(new Z(start));
             start++;
         }
@@ -623,66 +615,66 @@ public class FermatFrame extends Kit {
     }
 
     @Override
-    public String execute(){
+    public String execute() {
         ArrayList<KryptoType> basen = new ArrayList<KryptoType>();
         ArrayList<KryptoType> moduls = new ArrayList<KryptoType>();
         ArrayList<Triple<Boolean, Double, LinkedList<String>>> result; //beinhaltet für jede Primzahl einzeln ob es prime ist, Wahrscheinlichkeit, Zwischenschritte
         LinkedList<KryptoType> posResults = new LinkedList<KryptoType>(); //beinhaltet die erkannten Primzahlen für die Weiterleitung an ein anderes Fenster
 
-        if(basesTextField.getResult() != null)
-            basen.add((KryptoType)basesTextField.getResult());
-        else
+        if (basesTextField.getResult() != null) {
+            basen.add((KryptoType) basesTextField.getResult());
+        } else {
             basen = splitInputToZ(basesTextField.getText());
-        if(moduloTextField.getResult() != null)
-            moduls.add((KryptoType)moduloTextField.getResult());
-        else
-            moduls = splitInputToZ(moduloTextField.getText());        
+        }
+        if (moduloTextField.getResult() != null) {
+            moduls.add((KryptoType) moduloTextField.getResult());
+        } else {
+            moduls = splitInputToZ(moduloTextField.getText());
+        }
 
-        try{
+        try {
             result = PrimeTestController.primeTestFermat(basen, moduls, calcProb);
-        }catch(RuntimeException e){
+        } catch (RuntimeException e) {
             return e.getMessage();
-        }catch(NoSuchMethodException e){
+        } catch (NoSuchMethodException e) {
             return e.getMessage();
-        }catch(InstantiationException e){
+        } catch (InstantiationException e) {
             return e.getMessage();
-        }catch(IllegalAccessException e){
+        } catch (IllegalAccessException e) {
             return e.getMessage();
-        }catch(InvocationTargetException e){
+        } catch (InvocationTargetException e) {
             return e.getMessage();
         }
-        
+
         extendList = new LinkedList<String>(); //Zwischenschritte von der aktuell getesteten Primzahl
         extension = new LinkedList<LinkedList<String>>(); //ist die Gesamtliste an Zwischenschritten von allen Primzahlen wenn auf den Button extend geklickt wird
         outputWindow = new StringBuilder(); //für das untere Ausgabefenster
         int i = 0;
         String probability = "";
-        for(Triple<Boolean, Double, LinkedList<String>> output: result){
-            if (output.second() == -2.0){
+        for (Triple<Boolean, Double, LinkedList<String>> output : result) {
+            if (output.second() == -2.0) {
                 probability = "    probability = undefined";
-            }else if(output.second() == -1.0){
+            } else if (output.second() == -1.0) {
                 probability = "";
+            } else {
+                double probDouble = output.second() * 100;
+                probability = "    probability = " + String.valueOf(probDouble) + "%";
             }
-            else{
-                double probDouble = output.second()*100;
-                probability = "    probability = " +String.valueOf(probDouble)+"%";
-            }
-            if(output.first() == true){
+            if (output.first() == true) {
                 posResults.add(moduls.get(i));
             }
             extendList = output.third(); //erhält von der jeweiligen Primzahl die Zwischenschritte
-            extendList.addFirst(moduls.get(i)+ ":");
+            extendList.addFirst(moduls.get(i) + ":");
             extendList.addLast("result");
-            extendList.addLast(moduls.get(i)+ " is prime number: " +output.first() +probability);
+            extendList.addLast(moduls.get(i) + " is prime number: " + output.first() + probability);
             extension.add(extendList);
-            
-            outputWindow.append(moduls.get(i) + ": "  + result.get(i).first()+ "\n");     
+
+            outputWindow.append(moduls.get(i) + ": " + result.get(i).first() + "\n");
             i++;
         }
         results.put(getTitle() + "_primeFermat", posResults);
-        return "prime numbers:\n" +outputWindow.toString();
+        return "prime numbers:\n" + outputWindow.toString();
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel fermatTestLabel;
     private javax.swing.JButton jButton1;
@@ -690,7 +682,4 @@ public class FermatFrame extends Kit {
     private javax.swing.JPanel jPanelPrime;
     private javax.swing.JPanel jPanelSettings;
     // End of variables declaration//GEN-END:variables
-
-
-
 }
