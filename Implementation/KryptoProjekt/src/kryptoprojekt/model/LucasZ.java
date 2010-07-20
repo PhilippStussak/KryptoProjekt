@@ -75,9 +75,7 @@ public class LucasZ extends LucasTest<Z>{
                             continue;
                         }
                     }
-                }else{
-                    //Postcondition
-                    assert checkPrimeArgAnswer == true && new FermatZ(checkBases.get(i), prime, false).test().get(0).first() == false: "checkPrimeArgAnswer or Fermat-Test have a false state: checkPrimeArgAnswer = " +checkPrimeArgAnswer+ ", Fermat-Test = " +new FermatZ(checkBases.get(i), prime, false).test().get(0).first();
+                }else{                  
                     primeResult.add(new Triple<Boolean, Double, LinkedList<String>>(false, 1.0, intermediateValues));
                     continue;
                 }
@@ -96,74 +94,51 @@ public class LucasZ extends LucasTest<Z>{
         private Tuple<Boolean, String> checkPrimeArguments()
                 throws IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException {
             //Precondition
-            assert !basesSet.isEmpty() && !maxBases.isEmpty() && !primeFactorsCollection.isEmpty() && !summandCollection.isEmpty(): "Mindestens eine Variable ist leer. Anzahl basesSet = " +basesSet.size()+ ", Anzahl maxBases = " +maxBases.size()+ ", Anzahl primeFactorsCollection = "+primeFactorsCollection.size()+ ", Anzahl summandCollection ="+summandCollection.size();
+            assert !basesSet.isEmpty() && !maxBases.isEmpty() && !primeFactorsCollection.isEmpty() && !summandCollection.isEmpty(): "At least one variable is empty. Number basesSet = " +basesSet.size()+ ", Number maxBases = " +maxBases.size()+ ", Number primeFactorsCollection = "+primeFactorsCollection.size()+ ", Number summandCollection ="+summandCollection.size();
 
             boolean argsCorrect = true;
             String argsAnswer = "Arguments are correct.";
             Z one = new Z("1");
+            Z two = new Z("2");
 
             // Prüfung ob die Primzahlen korrekt sind. (p > 1)
             if(argsCorrect){
-                //int i = 0;
                 for (Z primeCheck : maxBases){
-                    if (primeCheck.compareTo(one) < 0){ //Vorsicht, die Primzahl ist +1 größer als die Basis, deshalb Test <0
-                         /*if(primeCheck.isONE()){
-                             if(isPrimeTwo(i)){
-                                 i++;
-                                 continue;
-                             }
-                         }*/
-                         //throw new IllegalArgumentException("Es gibt nur Primzahlen >1");
+                    if (primeCheck.compareTo(one)< 0){ //Vorsicht, die Primzahl ist +1 größer als die Basis, deshalb Test <0. Die Primzahl 2 wird hier durchgelassen
                          argsCorrect = false;
-                         argsAnswer = "Es gibt nur Primzahlen >1";
+                         argsAnswer = "There are only prime numbers >1";
                          break;
                     }
-                    //i++;
                 }
             } //Ende Prüfung Primzahlentest
 
 
-            /* bases check
-             * checkt ob überhaupt eine Basis und diese größer 1 übergeben wurde.
-             */
-            if(argsCorrect){
-                int i = 0;
-                for(Z maxBase : maxBases){
-                    if (maxBase.compareTo(one) <= 0){
-                        if(maxBase.isONE()){ //wenn ja, könnte die 2 als Primzahl übergeben wurden sein
-                            if(isPrimeTwo(i)){
-                                i++;
-                                continue;
-                            }
-                        }
-                        //throw new IllegalArgumentException("Basis 'a' zu klein. Sie muss bei Lucast-Test sein:  1 < a < Modul. Basis = " +maxBase);
-                        argsCorrect = false;
-                        argsAnswer = "Basis 'a' zu klein. Sie muss bei Lucast-Test sein:  1 < a < Modul: Basis = " +maxBase;
-                        break;
-                    }
-                    i++;
-                }
-            }
             //checkt ob alle angegebenen Basen größer 1 sind und kleiner als das Modul (mögliche Primzahl)
             if(argsCorrect){
                 int i = 0;
                 for(TreeSet<Z> base : basesSet){
-                    if (base.last().compareTo(new ArrayList<Z>(maxBases).get(i)) >0){
-                        //throw new IllegalArgumentException("Basis 'a' zu groß. Sie muss bei Lucast-Test sein:  1 < a < Modul. Basis = " +base.last()+ " Modul = " +new ArrayList<Z>(maxBases).get(n));
+                    if (base.last().compareTo(new ArrayList<Z>(maxBases).get(i)) >0 && !new ArrayList<Z>(maxBases).get(i).equals(one)){
                         argsCorrect = false;
-                        argsAnswer = "Basis 'a' zu groß. Sie muss bei Lucast-Test sein:  1 < a < Modul: Basis = " +base.last()+ " Modul = " +new ArrayList<Z>(maxBases).get(i);
+                        argsAnswer = "Base 'a' too large. Lucas-Test requires a base:  1 < a < prime: base = " +base.last()+ " prime = " +new ArrayList<Z>(maxBases).get(i);
                         break;
                     }
                     if (base.first().compareTo(one) <= 0){
-                        if(base.first().isONE() && base.size()==1){
+                        if(base.first().isONE()){
+                            if(base.size() > 1){
+                                Iterator<Z> itModuls = base.iterator();
+                                itModuls.next();
+                                if(base.last().compareTo(itModuls.next()) >=0){
+                                    argsCorrect = false;
+                                    argsAnswer = "Base 'a' too large. Lucas-Test requires a base:  1 < a < prime";
+                                }
+                            }
                             if(isPrimeTwo(i)){
                                 i++;
                                 continue;
                             }
                         }
-                        //throw new IllegalArgumentException("Basis 'a' zu klein. Sie muss bei Lucast-Test sein:  1 < a < Modul. Basis = " +base.first());
                         argsCorrect = false;
-                        argsAnswer = "Basis 'a' zu klein. Sie muss bei Lucast-Test sein:  1 < a < Modul: Basis = " +base.first();
+                        argsAnswer = "Base 'a' too small. Lucas-Test requires a base:  1 < a < prime: base = " +base.first();
                         break;
                     }
                     i++;
@@ -175,7 +150,7 @@ public class LucasZ extends LucasTest<Z>{
                 if (maxBases.size() != summandCollection.size()){
                     //throw new IllegalArgumentException("Fehler: Anzahl von Faktorenzeilen und Summandenzeilen sind unterschiedlich. Basen = " +maxBases.size()+ " Summanden = " +summandCollection.size());
                     argsCorrect = false;
-                    argsAnswer = "Fehler: Anzahl von Faktorenzeilen und Summandenzeilen sind unterschiedlich: Basen = " +maxBases.size()+ " Summanden = " +summandCollection.size();
+                    argsAnswer = "Error: Different number of factor bases and summands: bases = " +maxBases.size()+ " summands = " +summandCollection.size();
                 }
             }//Ende Prüfung Faktorzeilen und und Summandenzeilen
             return new Tuple<Boolean, String>(argsCorrect, argsAnswer);
@@ -201,31 +176,33 @@ public class LucasZ extends LucasTest<Z>{
             Z phiOfModul = modul.subtract(new Z(1)); //entspricht n-1
             Z result;
 
-            //ArrayList<Z> fermatModul = new ArrayList<Z>();
-
             //macht den Primzahltest
-            ArrayList<Z> primeFactorsA = new ArrayList<Z>(primeFactors);            
-
-            //fermatModul.add(modul);
-            boolean isPrime = false;
-            for(Z base : bases){
-                for(Z factor : primeFactorsA){
-                    if(factor.equals(oneObj)){
-                        continue;
+            if(!checkPrime.equals(new Z("2"))){
+                ArrayList<Z> primeFactorsA = new ArrayList<Z>(primeFactors);
+                boolean isPrime = false;
+                for(Z base : bases){
+                    for(Z factor : primeFactorsA){
+                        if(factor.equals(oneObj)){
+                            continue;
+                        }
+                        isPrime = true;
+                        result = Basic.squareAndMultiply(base, (phiOfModul.divide(factor)),modul).first();
+                        intermediateValues.add(base+ "^(" +phiOfModul+ "/" +factor+ ") mod " +modul+ " = " +result);
+                        if(result.equals(oneObj)){
+                            isPrime = false;
+                            intermediateValues.add("");
+                            break;
+                        }
                     }
-                    isPrime = true;
-                    result = Basic.squareAndMultiply(base, (phiOfModul.divide(factor)),modul).first();
-                    intermediateValues.add(base+ "^" +phiOfModul+ "/" +factor+ " mod " +modul+ " = " +result);
-                    if(result.equals(oneObj)){
-                        isPrime = false;
-                        intermediateValues.add("");
-                        break;
+                    if(isPrime){
+                        return true;
                     }
                 }
-                if(isPrime){
-                    return true;
-                }
+                return false;
+            }else{
+                assert Integer.parseInt(checkPrime.toString()) == 2: "Error, checkPrime != 2. checkPrime: " +checkPrime.toString();
+                intermediateValues.add(checkPrime+ " = 1");
+                return true;
             }
-            return false;
         }
 }

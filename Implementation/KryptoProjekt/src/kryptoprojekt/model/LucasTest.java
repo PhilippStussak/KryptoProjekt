@@ -42,7 +42,7 @@ public abstract class LucasTest <E extends KryptoType<E>> implements PrimeTest<E
             lucastTestCompatibleFactoization(primeFactorsCollection); //not supported yet
         }
         if(!checkprimeFactorsCollection(primeFactorsCollection)){
-            throw new IllegalArgumentException("Unterschiedliche Anzahl an Faktorbasen und Potenzen");
+            throw new IllegalArgumentException("Different number of factor bases and powers.");
         }
         setPrimeFactorsInListTuples(primeFactorsCollection);
         setBasesSetMaxBases();
@@ -69,7 +69,7 @@ public abstract class LucasTest <E extends KryptoType<E>> implements PrimeTest<E
             lucastTestCompatibleFactoization(primeFactorsCollection); //not supported yet
         }
         if(!checkprimeFactorsCollection(primeFactorsCollection)){
-            throw new IllegalArgumentException("Unterschiedliche Anzahl an Faktorbasen und Potenzen");
+            throw new IllegalArgumentException("Different number of factor bases and powers.");
         }
         setPrimeFactorsInListTuples(primeFactorsCollection);
         setBasesSetMaxBases();

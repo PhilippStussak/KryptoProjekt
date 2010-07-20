@@ -396,9 +396,7 @@ public class MillerRabinFrame extends Kit {
         c.weighty = 0;
         JLabel primeLabel = new JLabel();
         primeLabel.setText("check whether prime:");
-        //primeLabel.setText("mod:");
         jPanelPrimeMiller.add(primeLabel, c);
-
 
         c = new GridBagConstraints();
         c.ipadx = 80;
@@ -659,6 +657,7 @@ public class MillerRabinFrame extends Kit {
         ArrayList<KryptoType> basen = new ArrayList<KryptoType>();
         ArrayList<KryptoType> moduls = new ArrayList<KryptoType>();
         ArrayList<Triple<Boolean, Double, LinkedList<String>>> result; //beinhaltet für jede Primzahl einzeln ob es prime ist, Wahrscheinlichkeit, Zwischenschritte
+        LinkedList<KryptoType> posResults = new LinkedList<KryptoType>(); //beinhaltet die erkannten Primzahlen für die Weiterleitung an ein anderes Fenster
 
         if(basesTextField.getResult() != null)
             basen.add((KryptoType)basesTextField.getResult());
@@ -695,6 +694,9 @@ public class MillerRabinFrame extends Kit {
                 double probDouble = output.second()*100;
                 probability = "    probability = " +String.valueOf(probDouble)+"%";
             }
+            if(output.first() == true){
+                posResults.add(moduls.get(i));
+            }
             extendList = output.third(); //erhält von der jeweiligen Primzahl die Zwischenschritte
             extendList.addFirst(moduls.get(i)+ ":");
             extendList.addLast("result");
@@ -702,9 +704,9 @@ public class MillerRabinFrame extends Kit {
             extension.add(extendList);
 
             outputWindow.append(moduls.get(i) + ": "  + result.get(i).first()+ "\n");
-            results.put(getTitle() + "_primeMillerRabin", output.first());
             i++;
         }
+        results.put(getTitle() + "_primeMillerRabin", posResults);
         return "In Window " + getTitle() + ": " + "\n\nprime numbers:\n" +outputWindow.toString();
     }
 

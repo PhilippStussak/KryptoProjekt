@@ -11,6 +11,7 @@
 
 package kryptoprojekt.primeFrames;
 
+
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Color;
@@ -72,6 +73,7 @@ public class LucasFrame extends Kit{
     private boolean correctArguments; //zeigt an, ob für Basen und Moduls korrekte Werte übergeben wurden
     private LinkedList<String> extendList;
     private LinkedList<LinkedList<String>> extension;
+    private StyledDocument doc;
     private StringBuilder outputWindow;
 
     /** Creates new form LucasFrame */
@@ -91,28 +93,59 @@ public class LucasFrame extends Kit{
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        jPanelDropListLucas = new javax.swing.JPanel();
+        extendBtLucas = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(true);
         setDoubleBuffered(true);
+        setMinimumSize(new java.awt.Dimension(200, 200));
         setName("Form"); // NOI18N
+        setPreferredSize(new java.awt.Dimension(350, 300));
 
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(kryptoprojekt.KryptoProjektApp.class).getContext().getResourceMap(LucasFrame.class);
         jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
         jLabel1.setName("jLabel1"); // NOI18N
 
+        jPanelDropListLucas.setName("jPanelDropListLucas"); // NOI18N
+
+        javax.swing.GroupLayout jPanelDropListLucasLayout = new javax.swing.GroupLayout(jPanelDropListLucas);
+        jPanelDropListLucas.setLayout(jPanelDropListLucasLayout);
+        jPanelDropListLucasLayout.setHorizontalGroup(
+            jPanelDropListLucasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 335, Short.MAX_VALUE)
+        );
+        jPanelDropListLucasLayout.setVerticalGroup(
+            jPanelDropListLucasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 13, Short.MAX_VALUE)
+        );
+
+        extendBtLucas.setText(resourceMap.getString("ExtendBtLucas.text")); // NOI18N
+        extendBtLucas.setAlignmentX(0.5F);
+        extendBtLucas.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        extendBtLucas.setName("ExtendBtLucas"); // NOI18N
+        extendBtLucas.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        extendBtLucas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                extendBtLucasActionPerformed(evt);
+            }
+        });
+
+        jPanel1.setMinimumSize(new java.awt.Dimension(200, 180));
         jPanel1.setName("jPanel1"); // NOI18N
+        jPanel1.setPreferredSize(new java.awt.Dimension(450, 450));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 380, Short.MAX_VALUE)
+            .addGap(0, 335, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 301, Short.MAX_VALUE)
+            .addGap(0, 120, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -120,25 +153,85 @@ public class LucasFrame extends Kit{
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 217, Short.MAX_VALUE)
+                        .addComponent(extendBtLucas))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanelDropListLucas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(extendBtLucas)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanelDropListLucas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void append(String text, String styleName){
+        try{
+            doc.insertString(doc.getLength(), text, doc.getStyle(styleName));
+        } catch (BadLocationException e) {
+            //System.err.println("get Message Ausgabe: Error in Start.java: " +e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private void extendBtLucasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_extendBtLucasActionPerformed
+        JInternalFrame frame = new JInternalFrame(getTitle() + "_extension", true, true, true, true);
+        frame.setLocation(getX(), getY());
+        frame.setSize(400, 340);
+
+        JTextPane fermatPane = new JTextPane(){
+            @Override
+            public boolean getScrollableTracksViewportWidth(){
+                return false;
+            }
+        };
+        fermatPane.setEditable(false);
+        doc = fermatPane.getStyledDocument();
+        Style defaultStyle = doc.getStyle("default");
+        Style intermediateHeadStyle = doc.addStyle("outputHead", defaultStyle);
+        StyleConstants.setFontSize(intermediateHeadStyle, StyleConstants.getFontSize(intermediateHeadStyle)+1);
+        StyleConstants.setBold(intermediateHeadStyle, true);
+        if(extension != null){
+            for (LinkedList<String> linkedStringList : extension){
+                append(linkedStringList.pollFirst()+ "\n", intermediateHeadStyle.getName());
+                for (String intermediateValues : linkedStringList){
+                    append(intermediateValues+ "\n", defaultStyle.getName());
+                }
+                append("\n", defaultStyle.getName());
+            }
+        }
+        fermatPane.setVisible(true);
+        JScrollPane scrollPane = new JScrollPane(fermatPane, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.getViewport().setBackground(Color.white);
+        frame.add(scrollPane);
+        frame.setVisible(true);
+        getParent().add(frame);
+}//GEN-LAST:event_extendBtLucasActionPerformed
+
     private void initLogicComponents() {
+        jPanelDropListLucas.setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+        this.setSize(260, 210);
 
         primeFactorsTextField.addKeyListener(new KeyListener() {
 
@@ -227,8 +320,8 @@ public class LucasFrame extends Kit{
         });
 
         jPanel1.setLayout(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
 
+        c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
         c.gridy = 0;
@@ -245,6 +338,12 @@ public class LucasFrame extends Kit{
         jPanel1.add(primeFactorsTextField, c);
 
         c = new GridBagConstraints();
+        c.gridx = 4;
+        c.gridy = 0;
+        jPanel1.add(extendBtLucas);
+
+
+        c = new GridBagConstraints();
         //c.weightx = 0.4;
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
@@ -259,6 +358,17 @@ public class LucasFrame extends Kit{
         c.gridx = 0;
         c.gridy = 3;
         jPanel1.add(basesTextField, c);
+
+      //JPanelDropListLucas
+        //drop List
+        c = new GridBagConstraints();
+        c.weightx = 1;
+        //c.weighty = 1;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridwidth = 1;
+        c.gridx = 0;
+        c.gridy = 4;
+        jPanelDropListLucas.add(getDragList(new Object[]{getTitle() + "_primeLucas"}), c);
 
         c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
@@ -294,8 +404,6 @@ public class LucasFrame extends Kit{
     private StringBuilder deleteChar(StringBuilder originalString, String delChar){
         return deleteChar(originalString, delChar, 0);
     }
-
-
 
 
     //splittet die Zahlenreihe in eine ArrayList auf
@@ -363,8 +471,6 @@ public class LucasFrame extends Kit{
               return result;
     }
 
-
-
     @Override
     public String execute() {
         ArrayList<KryptoType> bases = new ArrayList<KryptoType>();
@@ -373,7 +479,7 @@ public class LucasFrame extends Kit{
         ArrayList<KryptoType> summands = new ArrayList<KryptoType>();
         ArrayList<KryptoType> summandPowers = new ArrayList<KryptoType>();
         ArrayList<Triple<Boolean, Double, LinkedList<String>>> result; //beinhaltet für jede Primzahl einzeln ob es prime ist, Wahrscheinlichkeit, Zwischenschritte
-
+        LinkedList<KryptoType> posResults = new LinkedList<KryptoType>(); //beinhaltet die erkannten Primzahlen für die Weiterleitung an ein anderes Fenster
 
         ArrayList<Z> factors = new ArrayList<Z>();
         ArrayList<Z> powers = new ArrayList<Z>();
@@ -433,22 +539,28 @@ public class LucasFrame extends Kit{
             }
             extendList = output.third(); //erhält von der jeweiligen Primzahl die Zwischenschritte
             verifiedNumb = extendList.getFirst();
-            extendList.addFirst(extendList.peekFirst()+ ":");
+            if(output.first() == true){
+                posResults.add(new Z(verifiedNumb));
+            }
+            extendList.addFirst(extendList.pollFirst()+ ":");
             extendList.addLast("result");
             extendList.addLast(verifiedNumb+ " is prime number: " +output.first() +probability);
 
             extension.add(extendList);
 
             outputWindow.append(verifiedNumb+ ": "  + result.get(i).first()+ "\n");
-            results.put(getTitle() + "_primeFermat", output.first());
+            KryptoType er = new Z("2");            
             i++;
         }
+        results.put(getTitle() + "_primeLucas", posResults);
         return "In Window " + getTitle() + ": " + "\n\nprime numbers:\n" +outputWindow.toString();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton extendBtLucas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanelDropListLucas;
     // End of variables declaration//GEN-END:variables
 
 
