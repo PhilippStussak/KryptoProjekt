@@ -8,7 +8,6 @@
  *
  * Created on 18.07.2010, 14:36:32
  */
-
 package kryptoprojekt.matrixFrames;
 
 import java.awt.GridBagConstraints;
@@ -95,7 +94,7 @@ public class MatrixAddFrame extends Kit {
 
         textField1.setEditable(false);
         textField2.setEditable(false);
-        
+
         jPanel1.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.weightx = 0.49;
@@ -121,21 +120,19 @@ public class MatrixAddFrame extends Kit {
         c.gridwidth = 3;
         c.gridx = 0;
         c.gridy = 1;
-        jPanel1.add(getDragList(new Object[] {getTitle() + "_matSum"}), c);
+        jPanel1.add(getDragList(new Object[]{getTitle() + "_matSum"}), c);
 
-        this.setSize(160, 120);
+        this.setSize(200, 120);
     }
 
     @Override
     public String execute() {
-        Matrix m = ((Matrix)textField1.getResult()).add((Matrix)textField2.getResult());
+        Matrix m = ((Matrix) textField1.getResult()).add((Matrix) textField2.getResult());
         results.put(getTitle() + "_matSum", m);
         return m.toString();
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
-
 }

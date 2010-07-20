@@ -8,7 +8,6 @@
  *
  * Created on 27.06.2010, 11:47:21
  */
-
 package kryptoprojekt.basicFrames;
 
 import java.awt.Color;
@@ -17,9 +16,7 @@ import java.awt.GridBagLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.LinkedList;
-import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
-import javax.swing.JTextArea;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
 import kryptoprojekt.ResultFrame;
@@ -101,7 +98,7 @@ public class SaMModFrame extends Kit {
                 }
             }
         });
-        
+
         jPanel1.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
@@ -127,21 +124,21 @@ public class SaMModFrame extends Kit {
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
         c.gridy = 1;
-        jPanel1.add(new JLabel("Mod:"), c);
-        
+        jPanel1.add(new JLabel("mod"), c);
+
         c.weightx = 0.70;
         c.fill = GridBagConstraints.BOTH;
         c.gridwidth = 2;
         c.gridx = 1;
         c.gridy = 1;
         jPanel1.add(textField3, c);
-        
+
         c.weightx = 1;
         c.fill = GridBagConstraints.BOTH;
         c.gridwidth = 3;
         c.gridx = 0;
         c.gridy = 2;
-        jPanel1.add(getDragList(new Object[] {getTitle() + "_SaMMod"}), c);
+        jPanel1.add(getDragList(new Object[]{getTitle() + "_SaMMod"}), c);
 
         this.setSize(250, 150);
     }
@@ -149,23 +146,27 @@ public class SaMModFrame extends Kit {
     @Override
     public String execute() {
         KryptoType value1, value2, value3;
-        if(textField1.getResult() != null)
-            value1 = (KryptoType)textField1.getResult();
-        else
+        if (textField1.getResult() != null) {
+            value1 = (KryptoType) textField1.getResult();
+        } else {
             value1 = new Z(textField1.getText());
-        if(textField2.getResult() != null)
-            value2 = (KryptoType)textField2.getResult();
-        else
+        }
+        if (textField2.getResult() != null) {
+            value2 = (KryptoType) textField2.getResult();
+        } else {
             value2 = new Z(textField2.getText());
-        if(textField3.getResult() != null)
-            value3 = (KryptoType)textField3.getResult();
-        else
+        }
+        if (textField3.getResult() != null) {
+            value3 = (KryptoType) textField3.getResult();
+        } else {
             value3 = new Z(textField3.getText());
+        }
         Tuple result = Basic.squareAndMultiply(value1, value2, value3);
         results.put(getTitle() + "_SaMMod", result.first());
         extension = "";
-        for(String s : (LinkedList<String>)result.second())
+        for (String s : (LinkedList<String>) result.second()) {
             extension += s + "\n";
+        }
         return value1.toString() + " ^ " + value2.toString() + " mod " + value3.toString() + " = " + result.first().toString();
     }
 
@@ -242,11 +243,9 @@ public class SaMModFrame extends Kit {
         frame.setVisible(true);
         getParent().add(frame);
     }//GEN-LAST:event_jButton1ActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
-
 }

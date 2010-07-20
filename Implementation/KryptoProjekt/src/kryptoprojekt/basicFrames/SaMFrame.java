@@ -8,7 +8,6 @@
  *
  * Created on 27.06.2010, 11:26:35
  */
-
 package kryptoprojekt.basicFrames;
 
 import java.awt.Color;
@@ -17,9 +16,7 @@ import java.awt.GridBagLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.LinkedList;
-import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
-import javax.swing.JTextArea;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
 import kryptoprojekt.ResultFrame;
@@ -96,7 +93,7 @@ public class SaMFrame extends Kit {
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 1;
         c.gridy = 0;
-        jPanel1.add(new JLabel(" ^ "), c);
+        jPanel1.add(new JLabel("^"), c);
 
         c.weightx = 0.495;
         c.fill = GridBagConstraints.BOTH;
@@ -109,29 +106,33 @@ public class SaMFrame extends Kit {
         c.gridwidth = 3;
         c.gridx = 0;
         c.gridy = 1;
-        jPanel1.add(getDragList(new Object[] {getTitle() + "_SaM"}), c);
+        jPanel1.add(getDragList(new Object[]{getTitle() + "_SaM"}), c);
 
-        this.setSize(250, 150);
+        this.setSize(240, 120);
     }
 
     @Override
     public String execute() {
         KryptoType value1, value2;
-        if(textField1.getResult() != null)
-            value1 = (KryptoType)textField1.getResult();
-        else
+        if (textField1.getResult() != null) {
+            value1 = (KryptoType) textField1.getResult();
+        } else {
             value1 = new Z(textField1.getText());
-        if(textField2.getResult() != null)
-            value2 = (KryptoType)textField2.getResult();
-        else
+        }
+        if (textField2.getResult() != null) {
+            value2 = (KryptoType) textField2.getResult();
+        } else {
             value2 = new Z(textField2.getText());
+        }
         Tuple result = Basic.squareAndMultiply(value1, value2);
         results.put(getTitle() + "_SaM", result.first());
         extension = "";
-        for(String s : (LinkedList<String>)result.second())
+        for (String s : (LinkedList<String>) result.second()) {
             extension += s + "\n";
+        }
         return value1.toString() + " ^ " + value2.toString() + " = " + result.first().toString();
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -206,11 +207,9 @@ public class SaMFrame extends Kit {
         frame.setVisible(true);
         getParent().add(frame);
     }//GEN-LAST:event_jButton1ActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
-
 }

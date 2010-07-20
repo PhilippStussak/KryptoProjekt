@@ -219,11 +219,11 @@ public class ExtendedGCDFrame extends Kit {
         Tuple result = BasicController.extendedGCD(value1, value2);
         results.put(getTitle() + "_egcd", result.first());
         extension = "";
-        for(String s : (LinkedList<String>)result.second())
+        for (String s : (LinkedList<String>) result.second()) {
             extension += s + "\n";
+        }
         return Kit.xmlReader.getTagElement("ExtendedGCD", "returnString") + "(" + value1.toString() + ", " + value2.toString() + ") = " + result.first().toString();
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;

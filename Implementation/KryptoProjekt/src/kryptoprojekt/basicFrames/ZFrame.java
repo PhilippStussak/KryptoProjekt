@@ -97,11 +97,10 @@ public class ZFrame extends Kit {
 
     private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
         String text = jTextField1.getText();
-        if(LogicValidator.isInteger(text)) {
+        if (LogicValidator.isInteger(text)) {
             results.put(getTitle() + "_number", new Z(text));
             jTextField1.setForeground(Color.black);
-        }
-        else {
+        } else {
             results.put(getTitle() + "_number", null);
             jTextField1.setForeground(Color.red);
         }
@@ -120,7 +119,6 @@ public class ZFrame extends Kit {
     public String execute() {
         return results.get(getTitle() + "_number").toString();
     }
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;

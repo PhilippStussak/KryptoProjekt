@@ -99,7 +99,7 @@ public class GCDFrame extends Kit {
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 2;
         c.gridy = 0;
-        jPanel1.add(new JLabel(" , "), c);
+        jPanel1.add(new JLabel(","), c);
 
         c.weightx = 0.46;
         c.fill = GridBagConstraints.BOTH;
@@ -120,27 +120,30 @@ public class GCDFrame extends Kit {
         c.gridy = 1;
         jPanel1.add(getDragList(new Object[]{getTitle() + "_gcd"}), c);
 
-        this.setSize(160, 120);
+        this.setSize(200, 120);
     }
 
     @Override
     public String execute() {
         KryptoType value1, value2;
-        if(textField1.getResult() != null)
-            value1 = (KryptoType)textField1.getResult();
-        else
+        if (textField1.getResult() != null) {
+            value1 = (KryptoType) textField1.getResult();
+        } else {
             value1 = new Z(textField1.getText());
-        if(textField2.getResult() != null)
-            value2 = (KryptoType)textField2.getResult();
-        else
+        }
+        if (textField2.getResult() != null) {
+            value2 = (KryptoType) textField2.getResult();
+        } else {
             value2 = new Z(textField2.getText());
+        }
 
         Tuple result = BasicController.calculateGCD(value1, value2);
         results.put(getTitle() + "_gcd", result.first());
         extension = "";
-        for(Object[] o : (LinkedList<Object[]>)result.second())
+        for (Object[] o : (LinkedList<Object[]>) result.second()) {
             extension += o[0] + " = " + o[1] + " * " + o[2] + " + " + o[3] + "\n";
-        return Kit.xmlReader.getTagElement("GCDFrame", "GCD") + "(" + value1.toString() + ", " + value2.toString() + ") = " +  result.first().toString();
+        }
+        return Kit.xmlReader.getTagElement("GCDFrame", "GCD") + "(" + value1.toString() + ", " + value2.toString() + ") = " + result.first().toString();
     }
 
     @SuppressWarnings("unchecked")
@@ -217,11 +220,9 @@ public class GCDFrame extends Kit {
         frame.setVisible(true);
         getParent().add(frame);
     }//GEN-LAST:event_jButton1ActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
-
 }

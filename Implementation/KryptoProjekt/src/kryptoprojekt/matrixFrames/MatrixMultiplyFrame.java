@@ -8,7 +8,6 @@
  *
  * Created on 18.07.2010, 15:04:12
  */
-
 package kryptoprojekt.matrixFrames;
 
 import java.awt.GridBagConstraints;
@@ -122,21 +121,19 @@ public class MatrixMultiplyFrame extends Kit {
         c.gridwidth = 3;
         c.gridx = 0;
         c.gridy = 1;
-        jPanel1.add(getDragList(new Object[] {getTitle() + "_matMul"}), c);
+        jPanel1.add(getDragList(new Object[]{getTitle() + "_matMul"}), c);
 
-        this.setSize(160, 120);
+        this.setSize(200, 120);
     }
 
     @Override
     public String execute() {
-        Matrix m = ((Matrix)textField1.getResult()).multiply((Matrix)textField2.getResult());
+        Matrix m = ((Matrix) textField1.getResult()).multiply((Matrix) textField2.getResult());
         results.put(getTitle() + "_matMul", m);
         return m.toString();
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
-
 }

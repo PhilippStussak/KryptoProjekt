@@ -103,7 +103,7 @@ public class PrimeFieldElementFrame extends Kit {
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 1;
         c.gridy = 1;
-        jPanel1.add(new JLabel(" , "), c);
+        jPanel1.add(new JLabel(","), c);
 
         c.weightx = 0.495;
         c.fill = GridBagConstraints.BOTH;
@@ -137,8 +137,8 @@ public class PrimeFieldElementFrame extends Kit {
 
         PrimeFieldElement result = new PrimeFieldElement((Z) value1, (Z) value2);
         results.put(getTitle() + "_elem", result);
-        return Kit.xmlReader.getTagElement("PrimeFieldElementFrame", "PrimeFieldReturn1") + result.getPrimeElemBase() +
-               Kit.xmlReader.getTagElement("PrimeFieldElementFrame", "PrimeFieldReturn2") + result.getPrimeElemValue();
+        return Kit.xmlReader.getTagElement("PrimeFieldElementFrame", "PrimeFieldReturn1") + result.getPrimeElemBase()
+                + Kit.xmlReader.getTagElement("PrimeFieldElementFrame", "PrimeFieldReturn2") + result.getPrimeElemValue();
     }
 
     /** This method is called from within the constructor to

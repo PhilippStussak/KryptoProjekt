@@ -8,7 +8,6 @@
  *
  * Created on 21.06.2010, 16:38:03
  */
-
 package kryptoprojekt.basicFrames;
 
 import java.awt.Color;
@@ -159,7 +158,7 @@ public class DivisionFrame extends Kit {
         c.gridwidth = 3;
         c.gridx = 0;
         c.gridy = 1;
-        jPanel1.add(getDragList(new Object[] {getTitle() + "_quotient"}), c);
+        jPanel1.add(getDragList(new Object[]{getTitle() + "_quotient"}), c);
 
         this.setSize(160, 120);
     }
@@ -167,23 +166,23 @@ public class DivisionFrame extends Kit {
     @Override
     public String execute() {
         KryptoType value1, value2;
-        if(textField1.getResult() != null)
-            value1 = (KryptoType)textField1.getResult();
-        else
+        if (textField1.getResult() != null) {
+            value1 = (KryptoType) textField1.getResult();
+        } else {
             value1 = new Z(textField1.getText());
-        if(textField2.getResult() != null)
-            value2 = (KryptoType)textField2.getResult();
-        else
+        }
+        if (textField2.getResult() != null) {
+            value2 = (KryptoType) textField2.getResult();
+        } else {
             value2 = new Z(textField2.getText());
+        }
         KryptoType result = BasicController.division(value1, value2);
 
         results.put(getTitle() + "_quotient", result);
         return value1.toString() + " / " + value2.toString() + " = " + result.toString();
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
-
 }
