@@ -707,7 +707,7 @@ public class MillerRabinFrame extends Kit {
             i++;
         }
         results.put(getTitle() + "_primeMillerRabin", posResults);
-        return "In Window " + getTitle() + ": " + "\n\nprime numbers:\n" +outputWindow.toString();
+        return "prime numbers:\n" +outputWindow.toString();
     }
 
 

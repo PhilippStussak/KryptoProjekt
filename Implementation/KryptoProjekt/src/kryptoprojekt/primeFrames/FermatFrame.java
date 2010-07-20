@@ -680,7 +680,7 @@ public class FermatFrame extends Kit {
             i++;
         }
         results.put(getTitle() + "_primeFermat", posResults);
-        return "In Window " + getTitle() + ": " + "\n\nprime numbers:\n" +outputWindow.toString();
+        return "prime numbers:\n" +outputWindow.toString();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

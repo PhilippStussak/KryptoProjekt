@@ -181,7 +181,7 @@ public class MatrixPrimeFieldFrame extends Kit {
 
     @Override
     public String execute() {
-        return "\n" + results.get(getTitle() + "_matrix").toString();
+        return results.get(getTitle() + "_matrix").toString();
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel headerLbl;

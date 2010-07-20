@@ -130,7 +130,7 @@ public class MatrixAddFrame extends Kit {
     public String execute() {
         Matrix m = ((Matrix)textField1.getResult()).add((Matrix)textField2.getResult());
         results.put(getTitle() + "_matSum", m);
-        return "\n" + m.toString();
+        return m.toString();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

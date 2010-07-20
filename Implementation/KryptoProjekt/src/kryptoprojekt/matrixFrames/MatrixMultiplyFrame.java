@@ -122,7 +122,7 @@ public class MatrixMultiplyFrame extends Kit {
         c.gridwidth = 3;
         c.gridx = 0;
         c.gridy = 1;
-        jPanel1.add(getDragList(new Object[] {getTitle() + "_matSum"}), c);
+        jPanel1.add(getDragList(new Object[] {getTitle() + "_matMul"}), c);
 
         this.setSize(160, 120);
     }
@@ -130,8 +130,8 @@ public class MatrixMultiplyFrame extends Kit {
     @Override
     public String execute() {
         Matrix m = ((Matrix)textField1.getResult()).multiply((Matrix)textField2.getResult());
-        results.put(getTitle() + "_matSum", m);
-        return "\n" + m.toString();
+        results.put(getTitle() + "_matMul", m);
+        return m.toString();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -53,7 +53,7 @@
 		<correctErrorException>EncodedWord is not calculated yet.</correctErrorException>
 		<getErrorPositionException>Syndrom or controlMatrix not calculated yet.</getErrorPositionException>
 		<decodeException>EncodedWord is not calculated yet.</decodeException>
-		<wrongCodeWordLength>Length of codeWord has to be the same as columnCapacity of given generatorMatrix.</wrongCodeWordLength>
+		<wrongCodeWordLength>Length of codeWord has to be the same as rowCapacity of given generatorMatrix.</wrongCodeWordLength>
 		<hammingDistanceRowException>Only matrices with one row are allowed!</hammingDistanceRowException>
 		<hammingDistanceColumnException>Matrices should have same ColumnCapacity!</hammingDistanceColumnException>
     </HammingCode>
@@ -69,9 +69,9 @@
 		<correctWordCeckbox>correct encoded word?</correctWordCeckbox>
 		<NoErrorsCreated>No errors created</NoErrorsCreated>
 		<DecodedWord>decoded word: </DecodedWord>
-		<ErrorInEncodedWord>\nError in encoded word </ErrorInEncodedWord>
+		<ErrorInEncodedWord>Error in encoded word </ErrorInEncodedWord>
 		<AtPosition> at position </AtPosition>
-		<CorrectedDecodedWord>\ncorrected decoded word: </CorrectedDecodedWord>
+		<CorrectedDecodedWord>corrected decoded word: </CorrectedDecodedWord>
 		<HeaderLabel>Decode the codeword</HeaderLabel>
 	</DecodeHammingCodeFrame>
 	<EncodeHammingCodeFrame>

@@ -166,9 +166,9 @@ public class DecodeHammingCodeFrame extends Kit {
             results.put(getTitle() + "_hcElem", result);
             results.put(getTitle() + "decoded word", result.getDecodedWord());
             results.put(getTitle() + "corrected decoded word", result.getCorrectedDecodedWord());
-            return Kit.xmlReader.getTagElement("DecodeHammingCodeFrame", "DecodedWord") + result.getDecodedWord() +
+            return Kit.xmlReader.getTagElement("DecodeHammingCodeFrame", "DecodedWord") + result.getDecodedWord() + "\n" +
                    Kit.xmlReader.getTagElement("DecodeHammingCodeFrame", "ErrorInEncodedWord") +
-                   result.getEncodedWord() + Kit.xmlReader.getTagElement("DecodeHammingCodeFrame", "AtPosition") + result.getErrorPos() +
+                   result.getEncodedWord() + Kit.xmlReader.getTagElement("DecodeHammingCodeFrame", "AtPosition") + result.getErrorPos() + "\n" +
                    Kit.xmlReader.getTagElement("DecodeHammingCodeFrame", "CorrectedDecodedWord") + result.getCorrectedDecodedWord();
         }
         results.put(getTitle() + "_hcElem", result);

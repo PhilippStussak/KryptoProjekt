@@ -149,7 +149,7 @@ public class MatrixFrame extends Kit {
 
     @Override
     public String execute() {
-        return getTitle() + ":\n" + results.get(getTitle() + "_matrix").toString();
+        return results.get(getTitle() + "_matrix").toString();
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
