@@ -19,23 +19,23 @@ public class CoderController {
     }
 
     public static HammingCode calculateHammingSyndrom(HammingCode hc) {
-        hc.calculateSyndrom();
+        HammingCode newHc = hc.copy();
+        newHc.calculateSyndrom();
 
-        return hc;
+        return newHc;
     }
 
     public static HammingCode decodeHammingCode(HammingCode hc) throws RuntimeException{
-        hc.calculateSyndrom();
-        hc.decode();
-        hc.detectError();
+        HammingCode newHc = hc.copy();
+        newHc.calculateSyndrom();
+        newHc.decode();
+        newHc.detectError();
         
-
-        return hc;
+        return newHc;
     }
 
     public static HammingCode encodeHammingCode(HammingCode hc) throws NullPointerException{
-        HammingCode newHc = new HammingCode(hc.getSourceCodeWord());
-        
+        HammingCode newHc = hc.copy();
         newHc.encode();
 
         return newHc;
@@ -43,8 +43,8 @@ public class CoderController {
 
     public static HammingCode createHammingError(HammingCode hc, String probability) {
         HammingCode newHc = hc.copy();
-        
         newHc.generateBitError(Double.parseDouble(probability));
+
         return newHc.copy();
     }
 
