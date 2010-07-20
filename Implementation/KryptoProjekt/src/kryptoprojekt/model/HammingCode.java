@@ -275,7 +275,7 @@ public class HammingCode extends Coder {
                 this.generatorMatrix = generatorMatrix;
                 generateControlMatrix();
             } else {
-                throw new IllegalArgumentException("wrongCodeWordLength");
+                throw new IllegalArgumentException("noHammingMatrix");
             }
         }
     }
