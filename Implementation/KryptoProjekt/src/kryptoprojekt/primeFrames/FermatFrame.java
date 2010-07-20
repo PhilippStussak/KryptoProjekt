@@ -246,7 +246,7 @@ public class FermatFrame extends Kit {
         jPanelSettings.setLayout(new GridBagLayout());
         jPanelDropList.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
-        this.setSize(260, 210);
+        this.setSize(290, 210);
 
         basesTextField.addKeyListener(new KeyListener() {
 

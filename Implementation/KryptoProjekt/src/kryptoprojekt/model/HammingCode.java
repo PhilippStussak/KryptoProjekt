@@ -267,11 +267,16 @@ public class HammingCode extends Coder {
     public HammingCode(Matrix<PrimeFieldElement> generatorMatrix, String codeWord) throws IllegalArgumentException {
         this.codeWord = codeWord;
         this.sourceCodeWord = convertStringToOneRowMatrix(codeWord);
-        if (Math.pow(2, codeWord.length()) - 1 == generatorMatrix.getMatrixColumnCapacity()) {
+        if (Math.pow(2, codeWord.length()) - 2 == generatorMatrix.getMatrixColumnCapacity()) {
             this.generatorMatrix = generatorMatrix;
             generateControlMatrix();
         } else {
-            throw new IllegalArgumentException("wrongCodeWordLength");
+            if (Math.pow(2, codeWord.length()) - 1 == generatorMatrix.getMatrixColumnCapacity()) {
+                this.generatorMatrix = generatorMatrix;
+                generateControlMatrix();
+            } else {
+                throw new IllegalArgumentException("noHammingMatrix");
+            }
         }
     }
 

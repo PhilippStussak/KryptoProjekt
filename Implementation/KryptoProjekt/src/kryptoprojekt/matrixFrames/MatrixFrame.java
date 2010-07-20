@@ -124,7 +124,6 @@ public class MatrixFrame extends Kit {
             results.put(getTitle() + "_matrix", null);
             jTextField1.setForeground(Color.red);
         }
-        updateUI();
     }//GEN-LAST:event_jTextField1KeyReleased
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

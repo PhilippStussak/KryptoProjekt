@@ -167,7 +167,6 @@ public class MatrixPrimeFieldFrame extends Kit {
             jTextField1.setForeground(Color.red);
             jTextField2.setForeground(Color.red);
         }
-        updateUI();
     }
 
     private void initLogicComponents() {
