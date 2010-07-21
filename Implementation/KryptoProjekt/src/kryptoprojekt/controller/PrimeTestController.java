@@ -30,7 +30,7 @@ public class PrimeTestController {
     }
 
 
-    //Fermat Test
+    //Fermat-Test
     public static ArrayList<Triple<Boolean, Double, LinkedList<String>>> primeTestFermat(ArrayList<KryptoType> bases, ArrayList<KryptoType> moduls, boolean calcProb) throws RuntimeException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException{
         if (bases.get(0).getClass().equals(Z.class) && (moduls.get(0).getClass().equals(Z.class))){
             ArrayList<Z> basesZ = new ArrayList<Z>();
@@ -61,7 +61,7 @@ public class PrimeTestController {
 
     
 
-    //Miller-Rabin Test
+    //Miller-Rabin-Test
     public static ArrayList<Triple<Boolean, Double, LinkedList<String>>> primeTestRabin(ArrayList<KryptoType> bases, ArrayList<KryptoType> moduls, boolean calcProb) throws RuntimeException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException{
         if (bases.get(0).getClass().equals(Z.class) && (moduls.get(0).getClass().equals(Z.class))){
             ArrayList<Z> basesZ = new ArrayList<Z>();
@@ -92,12 +92,11 @@ public class PrimeTestController {
 
 
 
-    //Lucas Test
+    //Lucas-Test
     public static ArrayList<Triple<Boolean, Double, LinkedList<String>>> primeTestLucas(ArrayList<Triple<ArrayList<Z> , ArrayList<Z>, ArrayList<Z>>> primeFactorsCollection, ArrayList<Tuple<Z , Z>> summandCollection, boolean calcProb) throws RuntimeException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException{
-        for (Triple<ArrayList<Z>, ArrayList<Z>, ArrayList<Z>> triples : primeFactorsCollection){ //ACHTUNG, FALSCH, es atand überall E da
+        for (Triple<ArrayList<Z>, ArrayList<Z>, ArrayList<Z>> triples : primeFactorsCollection){
             if(triples.first().getClass().equals(Z.class) && triples.second().getClass().equals(Z.class)){
                 return lucasZPrimeTest(new LucasZ(primeFactorsCollection, summandCollection, calcProb));
-                //return rabinZPrimeTest(new LucasZ(basesZ, modulsZ, true));
             } else if(triples.first().getClass().equals(Polynom.class) && triples.second().getClass().equals(Polynom.class)){
                 throw new UnsupportedOperationException(xml.getTagElement("General", "UnsupportedOperationException"));
             }else{
@@ -105,16 +104,9 @@ public class PrimeTestController {
             }
         }
         throw new IllegalArgumentException("This line should never been reached");
-        //return null; //dürfte niemals erreicht werden
     }
 
-    /*
-    public LucasZ(Collection<Z> bases, Collection<Tuple<Z, Z>> primeFactors, Collection<Tuple<Z, Z>> summands, boolean calcProb){
-        super(bases, primeFactors, summands, calcProb);
-    }
-*/
 
-     //public static ArrayList<Triple<Boolean, Double, LinkedList<String>>> primeTestLucas(ArrayList<KryptoType> bases, ArrayList<Tuple<KryptoType, KryptoType>> primeFactors, ArrayList<Tuple<KryptoType, KryptoType>> summands, boolean calcProb) throws RuntimeException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException{
     public static ArrayList<Triple<Boolean, Double, LinkedList<String>>> primeTestLucas(ArrayList<KryptoType> bases, ArrayList<KryptoType> primeFactors, ArrayList<KryptoType> factorPowers, ArrayList<KryptoType> summands, ArrayList<KryptoType> summandPowers, boolean calcProb)
             throws RuntimeException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException{
         if (bases.get(0).getClass().equals(Z.class) && (primeFactors.get(0).getClass().equals(Z.class))){
