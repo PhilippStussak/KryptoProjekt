@@ -65,8 +65,8 @@ public class FermatFrame extends Kit {
     private LinkedList<Integer> probBases;
     private StringBuilder outputWindow;
     private StyledDocument doc;
-    private boolean calcProb; //ob die Wahrscheinlichkeit beim FermatTest berechnet werden soll
-    private boolean correctArguments; //zeigt an, ob für Basen und Moduls korrekte Werte übergeben wurden
+    private boolean calcProb; //true probability will calculated
+    private boolean correctArguments;
 
     /** Creates new form FermatFrame */
     public FermatFrame(ConnectionHandler handler) {
@@ -226,8 +226,6 @@ public class FermatFrame extends Kit {
         try {
             doc.insertString(doc.getLength(), text, doc.getStyle(styleName));
         } catch (BadLocationException e) {
-            //System.err.println("get Message Ausgabe: Fehler in der Start.java: " +e.getMessage());
-//            e.printStackTrace();
         }
     }
 
@@ -246,13 +244,11 @@ public class FermatFrame extends Kit {
             public void keyPressed(KeyEvent e) {
             }
 
-            //checkt ob gültige Eingabe in TextFeld gemacht wurde (Zahlen, Komma, Punkte, Leerzeichen, Bindestriche)
             public void keyReleased(KeyEvent e) {
                 StringBuilder numbSequence = new StringBuilder(basesTextField.getText());
                 int dashPos = 0;
                 boolean checkOther = true;
 
-                //checkt ob vor und hinter dem '-' eine Zahl steht. Wenn nein, markiere bases textfield rot.
                 int assertCounter = 0;
                 if (dashPos != -1) {
                     for (int k = 0; k < numbSequence.length() && k >= 0;) {
@@ -261,7 +257,7 @@ public class FermatFrame extends Kit {
                         k = -1;
                         if (dashPos > 0 && dashPos < numbSequence.length() - 1) {
                             if (LogicValidator.isPosInteger(String.valueOf(numbSequence.charAt(dashPos - 1))) && LogicValidator.isPosInteger(String.valueOf(numbSequence.charAt(dashPos + 1)))) {
-                                numbSequence = numbSequence.deleteCharAt(dashPos); //löscht "-" Zeichen und daher wird positive Int Zahl erkannt
+                                numbSequence = numbSequence.deleteCharAt(dashPos);
                                 k = dashPos;
                             } else {
                                 dashPos = -1; //wrong parameter
@@ -277,9 +273,9 @@ public class FermatFrame extends Kit {
                 }
 
                 if (checkOther) {
-                    numbSequence = deleteChar(numbSequence, ","); //alle Kommata löschen
-                    numbSequence = deleteChar(numbSequence, "."); //alle Punkte löschen
-                    numbSequence = deleteChar(numbSequence, " "); //alle Leerzeichen löschen
+                    numbSequence = deleteChar(numbSequence, ","); //delete
+                    numbSequence = deleteChar(numbSequence, "."); //delete
+                    numbSequence = deleteChar(numbSequence, " "); //delete
                 }
                 if (LogicValidator.isPosInteger(numbSequence.toString())) {
                     basesTextField.setForeground(Color.black);
@@ -299,13 +295,11 @@ public class FermatFrame extends Kit {
             public void keyPressed(KeyEvent e) {
             }
 
-            //checkt ob gültige Eingabe in TextFeld gemacht wurde (Zahlen, Komma, Punkte, Leerzeichen, Bindestriche)
             public void keyReleased(KeyEvent e) {
                 StringBuilder numbSequence = new StringBuilder(moduloTextField.getText());
                 int dashPos = 0;
                 boolean checkOther = true;
 
-                //checkt ob vor und hinter dem '-' eine Zahl steht. Wenn nein, markiere modulo textfield rot.
                 int assertCounter = 0;
                 if (dashPos != -1) {
                     for (int k = 0; k < numbSequence.length() && k >= 0;) {
@@ -330,9 +324,9 @@ public class FermatFrame extends Kit {
                 }
 
                 if (checkOther) {
-                    numbSequence = deleteChar(numbSequence, ","); //alle Kommata löschen
-                    numbSequence = deleteChar(numbSequence, "."); //alle Punkte löschen
-                    numbSequence = deleteChar(numbSequence, " "); //alle Leerzeichen löschen
+                    numbSequence = deleteChar(numbSequence, ","); //delete
+                    numbSequence = deleteChar(numbSequence, "."); //delete
+                    numbSequence = deleteChar(numbSequence, " "); //delete
                 }
                 if (LogicValidator.isPosInteger(numbSequence.toString())) {
                     moduloTextField.setForeground(Color.black);
@@ -405,24 +399,6 @@ public class FermatFrame extends Kit {
         Border settingsBorder = BorderFactory.createTitledBorder("settings");
         jPanelSettings.setBorder(settingsBorder);
 
-        /*
-        //probability Label
-        c = new GridBagConstraints();
-        c.fill = GridBagConstraints.NONE;
-        c.weightx = 0.5;
-        c.anchor = GridBagConstraints.NORTHWEST;
-        // c.gridwidth = 1;
-        //c.gridheight = 0;
-        c.gridx = 0;
-        c.gridy = 0;
-        JLabel probabilityLabel = new JLabel();
-        probabilityLabel.setFont(probabilityLabel.getFont().deriveFont(probabilityLabel.getFont().getSize2D()-0.6f));
-        probabilityLabel.setText("calc. probability");
-        probabilityLabel.setHorizontalAlignment(JLabel.LEFT);
-        jPanelSettings.add(probabilityLabel, c);
-         * */
-
-
         //checkbox Probability
         c = new GridBagConstraints();
         c.fill = GridBagConstraints.HORIZONTAL;
@@ -484,13 +460,14 @@ public class FermatFrame extends Kit {
                     Integer numberRandomBases = (Integer) randomNumberSP.getValue();
                     basesTextField.setText("");
                     if (numberRandomBases > 0 && numberRandomBases <= 9999) {
-                        int endProbBaseRange; //max. Zahl für eine zufallsgenerierte Basis
-                        if (Integer.parseInt(moduls.first().toString()) == 2) { //Achtung, möglicherweise funktioniert das nur für KryptoType 'Z'
+                        //max. number for a Zahl for a randomly generated base
+                        int endProbBaseRange;
+                        if (Integer.parseInt(moduls.first().toString()) == 2) {
                             Iterator<KryptoType> itModuls = moduls.iterator();
                             itModuls.next();
                             if (itModuls.hasNext()) {
-                                endProbBaseRange = Integer.parseInt(itModuls.next().toString()); //Achtung, möglicherweise funktioniert das nur für KryptoType 'Z'
-                                int maxProbNumbers = endProbBaseRange - 2; //Achtung, möglicherweise funktioniert das nur für KryptoType 'Z'
+                                endProbBaseRange = Integer.parseInt(itModuls.next().toString());
+                                int maxProbNumbers = endProbBaseRange - 2;
                                 numberRandomBases = numberRandomBases < maxProbNumbers ? numberRandomBases : maxProbNumbers;
                             } else {
                                 endProbBaseRange = 2;
@@ -544,7 +521,7 @@ public class FermatFrame extends Kit {
         jPanelSettings.add(randomBasesCB, c);
     }
 
-    //löscht den übergebenen char aus dem übergebenen String raus
+    //deleted the passed char out of the given string
     private StringBuilder deleteChar(StringBuilder originalString, String delChar, int fromIndex) {
         StringBuilder withoutCharString = new StringBuilder(originalString);
         int charPosition = withoutCharString.indexOf(delChar, fromIndex);
@@ -559,8 +536,7 @@ public class FermatFrame extends Kit {
         return deleteChar(originalString, delChar, 0);
     }
 
-    //splittet die Zahlenreihe in eine ArrayList auf
-    //1.250, 15.0.0, 17, 18,,,19,,  21, , 23  24,25, 26,   28,,,  ,,29 , 30,54,  ,, ,,, , ,, ,  ,,  31, ..., .31, 21..., 60-65... //diese Zahlen in der Anordnung in die Testklasse aufnehmen - müssen dem regulären Ausdruck standhalten
+    //splits the series of numbers in an ArrayList
     private ArrayList<KryptoType> splitInputToZ(String splitMe) {
         Pattern baseModulSeparator = Pattern.compile("(([,]+[\\s]*)+|([\\s]+[,]*)+)"); //split an input list of bases and moduls(primes)
         Pattern dashSeparator = Pattern.compile("[\\-]");
@@ -570,7 +546,7 @@ public class FermatFrame extends Kit {
         if (correctArguments == false) {
             throw new IllegalArgumentException("Wrong parameters found for bases, modules in window Fermat-Test " + getTitle());
         }
-        //entfernt alle Punkte aus der Zahlenreihe
+        //removes all points from the series of number
         for (int i = 0; i < numbSequence.length() && i >= 0;) {
             delPointPos = numbSequence.indexOf(".", i);
             if (delPointPos != -1) {
@@ -581,7 +557,7 @@ public class FermatFrame extends Kit {
         String[] result = baseModulSeparator.split(numbSequence);
         ArrayList<KryptoType> resultZ = new ArrayList<KryptoType>();
         for (String s : result) {
-            if (s.contains("-")) { //prüft ob eine range übergeben wurde und füllt diese auf
+            if (s.contains("-")) {
                 String[] range = dashSeparator.split(s);
                 resultZ.addAll(fillKryptoTypeZList(range));
                 continue;
@@ -591,7 +567,7 @@ public class FermatFrame extends Kit {
         return resultZ;
     }
 
-    //Füllt eine Liste mit Z von start bis end auf
+    //fills a list of Z from start to end
     private ArrayList<Z> fillKryptoTypeZList(String[] range) {
         //Precondition
         assert range.length == 2 : "Error, the array has more than 2 elements: " + Arrays.toString(range);
@@ -618,8 +594,8 @@ public class FermatFrame extends Kit {
     public String execute() {
         ArrayList<KryptoType> basen = new ArrayList<KryptoType>();
         ArrayList<KryptoType> moduls = new ArrayList<KryptoType>();
-        ArrayList<Triple<Boolean, Double, LinkedList<String>>> result; //beinhaltet für jede Primzahl einzeln ob es prime ist, Wahrscheinlichkeit, Zwischenschritte
-        LinkedList<KryptoType> posResults = new LinkedList<KryptoType>(); //beinhaltet die erkannten Primzahlen für die Weiterleitung an ein anderes Fenster
+        ArrayList<Triple<Boolean, Double, LinkedList<String>>> result; //contains for each number if it is a prime, probability, intermediate
+        LinkedList<KryptoType> posResults = new LinkedList<KryptoType>();
 
         if (basesTextField.getResult() != null) {
             basen.add((KryptoType) basesTextField.getResult());
@@ -646,9 +622,9 @@ public class FermatFrame extends Kit {
             return e.getMessage();
         }
 
-        extendList = new LinkedList<String>(); //Zwischenschritte von der aktuell getesteten Primzahl
-        extension = new LinkedList<LinkedList<String>>(); //ist die Gesamtliste an Zwischenschritten von allen Primzahlen wenn auf den Button extend geklickt wird
-        outputWindow = new StringBuilder(); //für das untere Ausgabefenster
+        extendList = new LinkedList<String>();
+        extension = new LinkedList<LinkedList<String>>();
+        outputWindow = new StringBuilder();
         int i = 0;
         String probability = "";
         for (Triple<Boolean, Double, LinkedList<String>> output : result) {
@@ -663,7 +639,7 @@ public class FermatFrame extends Kit {
             if (output.first() == true) {
                 posResults.add(moduls.get(i));
             }
-            extendList = output.third(); //erhält von der jeweiligen Primzahl die Zwischenschritte
+            extendList = output.third();
             extendList.addFirst(moduls.get(i) + ":");
             extendList.addLast("result");
             extendList.addLast(moduls.get(i) + " is prime number: " + output.first() + probability);
