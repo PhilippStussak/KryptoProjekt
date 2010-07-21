@@ -5,25 +5,34 @@
 
 package kryptoprojekt.model;
 
-/**
- *
- * @author Michael
- */
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
-//Macht den Fermat Test für Z (ganze Zahlen)
+/**
+ *
+ * Runs the Fermat primality test for natural numbers (PrimeType Z).
+ *
+ * @author Michael
+ */
 public class FermatZ extends FermatTest<Z>{
 
-    /*
-     * Erzeugt ein Fermat-Test Objekt für den PrimeType Z.
-     * Erwartet eine beliebige Liste mit Basen und Zahlen die auf Primzahleigenschaft getestet werden.
+    /**
+     * Constructs a new FermatZ object for natural numbers (PrimeType Z) by using the given argumets.
+     *
+     * @param bases Bases to be used for the Fermat-Test per modul
+     * @param moduls determine if these numbers are probably primes
+     * @param calcProb true if 'moduls' is probably prime, otherwise false
      */
     public FermatZ(Collection<Z> bases, Collection<Z> moduls, boolean calcProb){
         super(bases, moduls, calcProb);
     }
 
-
+    /**
+     * Starts the Fermat-Test for natural numbers.
+     *
+     * @return List of results by using the Fermat-Test (if 'modul' is probably prime, probability, intermediate values).
+     * @throws IllegalArgumentException if the paramters are incorrect (bases have to be: 1 < base < moduls, moduls have to be: 1 < modul > bases
+     */
     public ArrayList<Triple<Boolean, Double, LinkedList<String>>> test()
         throws IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException {
         
@@ -43,7 +52,7 @@ public class FermatZ extends FermatTest<Z>{
                             continue;
                         } else{
                             assert checkPrimeArgAnswer == true && isPrime == true && calcProb == false: "checkPrimeArgAnswer or isPrime have a false state: checkPrimeArgAnswer = " +checkPrimeArgAnswer+ ", isPrime = " +isPrime;
-                            primeResult.add(new Triple<Boolean, Double, LinkedList<String>>(isPrime, -1.0, intermediateValues)); //es sollte keine Wahrscheinlichkeit berechnet werden
+                            primeResult.add(new Triple<Boolean, Double, LinkedList<String>>(isPrime, -1.0, intermediateValues)); //return no probability
                             continue;
                         }
                     } else{
@@ -64,7 +73,7 @@ public class FermatZ extends FermatTest<Z>{
         }
     }
 
-    //checkt ob die übergebenen Werte: Primzahl größer 1 und die Basis '1 < a < Modul' sind
+    //checks whether the parameter values are correct: probably prime greater than 1 and base '1 < a < modul'
     private Tuple<Boolean, String> checkPrimeArguments()
             throws IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException {
         //Precondition
@@ -75,13 +84,14 @@ public class FermatZ extends FermatTest<Z>{
         Z one = new Z("1");
         Z two = new Z("2");
 
-        //prüft ob bases > 1 && bases < checkPrime ist
+        //checks whether 'bases' > 1 && bases < checkPrime
         if (argsCorrect && !bases.isEmpty()){
             if (getLowestBase().compareTo(new Z(1)) < 1) {
                 argsCorrect = false;
                 argsAnswer = "Base 'a' too small. Fermat-Test requires a base:  1 < a < prime";
             }
-            if (getHighestBase().compareTo(getLowestModul())>=0 && !getLowestModul().equals(two)){  //Wenn das kleinste Modul die 2 ist, gehe zum nächsten else if
+            //if the smallest 'modul' is 2, go to the next else-if
+            if (getHighestBase().compareTo(getLowestModul())>=0 && !getLowestModul().equals(two)){
                 argsCorrect = false;
                 argsAnswer = "Base 'a' too large. Fermat-Test requires a base:  1 < a < prime";
             }else if(getHighestBase().compareTo(getLowestModul())>=0 && getLowestModul().equals(two)){
@@ -99,7 +109,7 @@ public class FermatZ extends FermatTest<Z>{
             argsAnswer = "It requires at least one base >1 and <n.";
         }
 
-        //prüft ob Primzahl größer 1 ist
+        //checks whether the probably primes are greater than 1
         if (argsCorrect && getLowestModul().compareTo(new Z(1)) <= 0) {
             argsCorrect = false;
             argsAnswer = "There are only prime numbers >1";
@@ -111,6 +121,7 @@ public class FermatZ extends FermatTest<Z>{
         return new Tuple<Boolean, String>(argsCorrect, argsAnswer);
     }
 
+    //checks wheter the parameter is a prime number
     private boolean fermatCheck(Z checkPrime)
             throws IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException {
         boolean isPrime = false;
@@ -118,7 +129,8 @@ public class FermatZ extends FermatTest<Z>{
 
         Z twoObj = new Z(2);
         if(!checkPrime.equals(twoObj)){
-            Z oneObj = new Z(1); //Die neue Instanz wird mit 1 initialisiert, das ist der Wert der vom Exponenten dann subtrahiert wird
+            //The new instance is initialized to 1. This is the value which is subtracted from the exponent.
+            Z oneObj = new Z(1);
             Z result;
             int assertPostCondCounter = 0;
             for (Z base : bases) {

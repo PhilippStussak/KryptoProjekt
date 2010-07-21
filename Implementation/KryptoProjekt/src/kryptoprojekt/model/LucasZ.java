@@ -5,37 +5,45 @@
 
 package kryptoprojekt.model;
 
-/**
- *
- * @author Michael
- */
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
+/**
+ * Runs the Lucas primality test for natural numbers (PrimeType Z).
+ *
+ * @author Michael
+ */
 public class LucasZ extends LucasTest<Z>{
-
-
-
-    /*
-     * Erzeugt ein Lucas-Test Objekt für den PrimeType Z.
-     * 1. Argument: Triple (Basen, Faktoren, Potenzen von den Faktoren)
-     * 2. Argument: Tuple (Summand, Potenz vom Summanden)
-     * 3. Argument: Wahrscheinlichkeit berechnet/ausgegeben, ja oder nein
+    
+    /**
+     * Constructs a new LucasZ object for natural numbers by using the given argumets.
+     *
+     * @param primeFactorsCollection list of triples per Lucas term (list of bases to be used for the Lucas-Test, prime factors, powers of prime factors) for the number to determine if this is probably prime, (whitout summand !!!)
+     * @param summandCollection list of summand tuples per Lucas term (summand, power of summand), this summand will be added to the first argument
+     * @param calcProb true to calculate and return the probability, otherwise false
      */
-    //LucasZ(Collection<Triple<Collection<Z> , Collection<Z>, Collection<Z>>> primeFactorsCollection, Collection<Tuple<Z , Z>> summandCollection, boolean calcProb){
     public LucasZ(Collection<Triple<ArrayList<Z> , ArrayList<Z>, ArrayList<Z>>> primeFactorsCollection, Collection<Tuple<Z , Z>> summandCollection, boolean calcProb){
         super(primeFactorsCollection, summandCollection, calcProb);
     }
 
+    /**
+     * Constructs a new LucasZ object for natural numbers by using the given argumets.
+     *
+     * @param list of bases to be used for the Lucas-Test per Lucas Term
+     * @param primeFactors list of prime factors tuples per Lucas term ( prime factors, powers of prime factors) for the number to determine if this is probably prime, (whitout summand !!!)
+     * @param summands list of summand tuple per Lucas term (summand, power of summand), this summand will be added to the prime factos tuples argument
+     * @param calcProb true to calculate and return the probability, otherwise false
+     */
     public LucasZ(Collection<Z> bases, Collection<Tuple<Z, Z>> primeFactors, Collection<Tuple<Z, Z>> summands, boolean calcProb){
         super(bases, primeFactors, summands, calcProb);
     }
 
-    public ArrayList<Triple<Boolean, Double, LinkedList<String>>> test2(){
-        return null;
-    }
-
-    //gibt zurück ob es sich um eine Primzahl handelt und mit welcher Wahrscheinlichkeit
+    /**
+     * Starts the Lucas-Test for natural numbers.
+     *
+     * @return List of results by using the Lucas-Test (if 'modul' is probably prime, probability, intermediate values).
+     * @throws IllegalArgumentException  IllegalArgumentException if the paramters are incorrect (bases have to be: 1 < base < moduls, moduls have to be: 1 < modul > bases. modul = {@code prime factor bases * powers of prime factors + summand}
+     */
     public ArrayList<Triple<Boolean, Double, LinkedList<String>>> test()
                 throws IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException {
         ArrayList<Z> prime;
@@ -71,7 +79,8 @@ public class LucasZ extends LucasTest<Z>{
                             continue;
                         } else{
                             assert checkPrimeArgAnswer == true && isPrime == true && calcProb == false: "checkPrimeArgAnswer or isPrime have a false state: checkPrimeArgAnswer = " +checkPrimeArgAnswer+ ", isPrime = " +isPrime;
-                            primeResult.add(new Triple<Boolean, Double, LinkedList<String>>(isPrime, -1.0, intermediateValues)); //es sollte keine Wahrscheinlichkeit berechnet werden
+                            //es sollte keine Wahrscheinlichkeit berechnet werden
+                            primeResult.add(new Triple<Boolean, Double, LinkedList<String>>(isPrime, -1.0, intermediateValues));
                             continue;
                         }
                     }
@@ -80,7 +89,8 @@ public class LucasZ extends LucasTest<Z>{
                     continue;
                 }
                 probability = calculateProbability(maxBasesA.get(i), checkBases.get(i), listTuplesPrimeFactors.get(i));
-                primeResult.add(new Triple<Boolean, Double, LinkedList<String>>(false, probability, intermediateValues)); //probability = 1 --> it is not a prime number; probability = -2 --> it could be a prime number
+                //probability = 1 --> it is not a prime number; probability = -2 --> it could be a prime number
+                primeResult.add(new Triple<Boolean, Double, LinkedList<String>>(false, probability, intermediateValues));
             }
             assert !primeResult.isEmpty():"primeResult is empty: primeResult = " +primeResult.toString();
             return primeResult;
@@ -90,7 +100,7 @@ public class LucasZ extends LucasTest<Z>{
     }
 
 
-        //checkt ob die übergebenen Werte: Primzahl größer 1 und die Basis '1 < a < Modul' sind
+        //checks whether the parameter values are correct: probably prime greater than 1 and base '1 < a < modul'
         private Tuple<Boolean, String> checkPrimeArguments()
                 throws IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException {
             //Precondition
@@ -101,19 +111,19 @@ public class LucasZ extends LucasTest<Z>{
             Z one = new Z("1");
             Z two = new Z("2");
 
-            // Prüfung ob die Primzahlen korrekt sind. (p > 1)
+            //checks whether the probably primes are greater than 1
             if(argsCorrect){
                 for (Z primeCheck : maxBases){
-                    if (primeCheck.compareTo(one)< 0){ //Vorsicht, die Primzahl ist +1 größer als die Basis, deshalb Test <0. Die Primzahl 2 wird hier durchgelassen
+                    //Beware! The probably prime is greate +1 than the base, therefore test <0. The prime 2 let be passed.
+                    if (primeCheck.compareTo(one)< 0){
                          argsCorrect = false;
                          argsAnswer = "There are only prime numbers >1";
                          break;
                     }
                 }
-            } //Ende Prüfung Primzahlentest
+            } //end of testing probability prime
 
-
-            //checkt ob alle angegebenen Basen größer 1 sind und kleiner als das Modul (mögliche Primzahl)
+            //checks whether 'bases' > 1 && bases < probably prime (max. possible base +1)
             if(argsCorrect){
                 int i = 0;
                 for(TreeSet<Z> base : basesSet){
@@ -143,52 +153,48 @@ public class LucasZ extends LucasTest<Z>{
                     }
                     i++;
                 }
-            }//Ende Prüfung Basentest
+            }//end of testing bases
 
-            //Prüfung ob die Anzahl der übergebenen Faktorzeilen konsistenz sind (es muss gleich viele Zeilen mit Basen wie Summanden geben).
+            //check, wheter the passed factor lines are consistent (there have to the same number of base lines like summands).
             if(argsCorrect){
                 if (maxBases.size() != summandCollection.size()){
-                    //throw new IllegalArgumentException("Fehler: Anzahl von Faktorenzeilen und Summandenzeilen sind unterschiedlich. Basen = " +maxBases.size()+ " Summanden = " +summandCollection.size());
                     argsCorrect = false;
                     argsAnswer = "Error: Different number of factor bases and summands: bases = " +maxBases.size()+ " summands = " +summandCollection.size();
                 }
-            }//Ende Prüfung Faktorzeilen und und Summandenzeilen
+            }//end of testing lines of factors lines and summands
             return new Tuple<Boolean, String>(argsCorrect, argsAnswer);
         }
 
 
-        //Berechnet ob die übergebene Zahl die 2 ist. Muss extra gemacht werden, da diese die Basis 1 hat und diese ansonsten nicht zugelassen sind.
+        //determine wheter the passed number is the prime number 2.
         private boolean isPrimeTwo(int c){
             return (calculatePrime(new ArrayList<ArrayList<Tuple<Z, Z>>>(primeFactorsInListTuples).get(c), new ArrayList<Tuple<Z, Z>>(summandCollection).get(c)).equals(new Z(2)));
         }
 
-
-        //Macht den Lucas-Test.
-        /* Erwartet:
-         * 1.Argument(Liste mit Basen auf die diese Primfaktorenzeile getestet werden soll
-         * 2.Argument(die Primfaktoren also Faktor und Exponent als Tuple in einer Liste pro Primfaktorzeile)
-         * 3.Argument (die Primzahl auf die getestet werden soll)
+        /*
+         * This is the Lucas-Test
+         * 1.argument: list of bases to be used for the Lucas-Test for this Lucas term
+         * 2.argument: primefactor_base
+         * 3.argument: the probably prime
          */
         private boolean lucasCheck(Set<Z> bases, Collection<Z> primeFactors, Z checkPrime)
                 throws IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException {
-            Z oneObj = new Z(1); //wird verwendet um zu schauen ob 1 rauskommt
             Z modul = checkPrime;
             Z phiOfModul = modul.subtract(new Z(1)); //entspricht n-1
             Z result;
 
-            //macht den Primzahltest
             if(!checkPrime.equals(new Z("2"))){
                 ArrayList<Z> primeFactorsA = new ArrayList<Z>(primeFactors);
                 boolean isPrime = false;
                 for(Z base : bases){
                     for(Z factor : primeFactorsA){
-                        if(factor.equals(oneObj)){
+                        if(factor.isONE()){
                             continue;
                         }
                         isPrime = true;
                         result = Basic.squareAndMultiply(base, (phiOfModul.divide(factor)),modul).first();
                         intermediateValues.add(base+ "^(" +phiOfModul+ "/" +factor+ ") mod " +modul+ " = " +result);
-                        if(result.equals(oneObj)){
+                        if(result.isONE()){
                             isPrime = false;
                             intermediateValues.add("");
                             break;

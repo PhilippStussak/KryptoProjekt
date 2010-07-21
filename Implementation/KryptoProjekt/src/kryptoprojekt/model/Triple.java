@@ -6,6 +6,7 @@
 package kryptoprojekt.model;
 
 /**
+ * Can be used to create an object which has three parameters of any type.
  *
  * @author Michael
  */

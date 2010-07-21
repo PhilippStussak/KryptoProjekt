@@ -5,6 +5,7 @@
 package kryptoprojekt.model;
 
 /**
+ * Can be used to create an object which has two parameters of any type.
  *
  * @author Stefan
  */
