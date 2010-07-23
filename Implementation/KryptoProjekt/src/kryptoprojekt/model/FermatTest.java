@@ -8,10 +8,10 @@ package kryptoprojekt.model;
 import java.util.*;
 
 /**
+ * This is the superclass for all different KryptoTypes (Z, polynomial etc.) Fermat primality test subclasses.
  *
  * @author Michael
  */
-//This is the superclass for all different KryptoTypes (Z, polynomial etc.) Fermat primality test subclasses.
  abstract class FermatTest <E extends KryptoType<E>> implements PrimeTest<E>{
     protected TreeSet<E> bases;
     protected TreeSet<E> moduls;
@@ -19,7 +19,7 @@ import java.util.*;
     protected LinkedList<String> intermediateValues;
     //true to calculate and return the probability, otherwise false
     protected boolean calcProb;
-    //Probability can't be calculated at Fermat-Test.
+    //probability can't be calculated at Fermat-Test
     protected static final double probabilityValue = -2;
 
 

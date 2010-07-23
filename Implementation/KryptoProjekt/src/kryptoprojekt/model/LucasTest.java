@@ -8,10 +8,10 @@ package kryptoprojekt.model;
 import java.util.*;
 
 /**
+ * This is the superclass for all different KryptoTypes (Z, polynomial etc.) Lucas primality test subclasses.
  *
  * @author Michael
  */
-//This is the superclass for all different KryptoTypes (Z, polynomial etc.) Lucas primality test subclasses.
 abstract class LucasTest <E extends KryptoType<E>> implements PrimeTest<E> {
     protected Collection<TreeSet<E>> basesSet; //contains the given bases to be used for the Lucas-Test to determine primes per Lucas-Test terms
     protected Collection<E> maxBases; //contains the max. value of bases that can used for primality test per Lucas-Test term

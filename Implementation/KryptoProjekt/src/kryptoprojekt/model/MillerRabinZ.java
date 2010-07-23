@@ -28,7 +28,7 @@ public class MillerRabinZ extends MillerRabinTest<Z>{
 
     /**
      * Starts the Miller-Rabin-Test for natural numbers.
-     * @return List of results by using the Miller-Rabin-Test (if 'modul' is probably prime, probability, intermediate values).
+     * @return List of results by using the Miller-Rabin-Test (whether 'modul' is probably prime, probability, intermediate values).
      * @throws IllegalArgumentException if the paramters are incorrect (bases have to be: 1 < base < moduls, moduls have to be: 1 < modul > bases
      */
     public ArrayList<Triple<Boolean, Double, LinkedList<String>>> test()
@@ -72,7 +72,7 @@ public class MillerRabinZ extends MillerRabinTest<Z>{
             }
         }
 
-        //checks whether the parameter values are correct: probably prime greater than 1 and base '1 < a < modul'
+        //checks whether the parameter values are correct: probably prime greater than 1 and base '1 < base < modul'
         private Tuple<Boolean, String> checkPrimeArguments()
                 throws IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException {
             //Precondition
@@ -122,8 +122,10 @@ public class MillerRabinZ extends MillerRabinTest<Z>{
         //checks wheter the parameter is a prime number
         private boolean millerRabinCheck(Z checkPrime)
                  throws IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException {
-            Z oneObj = new Z(1); //the exponent will substract by 1
-            Z twoObj = new Z(2); //the exponent will multiply by 2
+            //the exponent will be substracted from 1
+            Z oneObj = new Z(1);
+            //the exponent will be multiplied by 2
+            Z twoObj = new Z(2);
             intermediateValues = new LinkedList<String>();
 
             if(!checkPrime.equals(twoObj)){

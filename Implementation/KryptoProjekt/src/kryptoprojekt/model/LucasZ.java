@@ -30,7 +30,7 @@ public class LucasZ extends LucasTest<Z>{
      * Constructs a new LucasZ object for natural numbers by using the given argumets.
      *
      * @param list of bases to be used for the Lucas-Test per Lucas Term
-     * @param primeFactors list of prime factors tuples per Lucas term ( prime factors, powers of prime factors) for the number to determine if this is probably prime, (whitout summand !!!)
+     * @param primeFactors list of prime factors tuples per Lucas term (prime factors, powers of prime factors) for the number to determine if this is probably prime, (whitout summand !!!)
      * @param summands list of summand tuple per Lucas term (summand, power of summand), this summand will be added to the prime factos tuples argument
      * @param calcProb true to calculate and return the probability, otherwise false
      */
@@ -41,8 +41,8 @@ public class LucasZ extends LucasTest<Z>{
     /**
      * Starts the Lucas-Test for natural numbers.
      *
-     * @return List of results by using the Lucas-Test (if 'modul' is probably prime, probability, intermediate values).
-     * @throws IllegalArgumentException  IllegalArgumentException if the paramters are incorrect (bases have to be: 1 < base < moduls, moduls have to be: 1 < modul > bases. modul = {@code prime factor bases * powers of prime factors + summand}
+     * @return List of results by using the Lucas-Test (whether 'modul' is probably prime, probability, intermediate values).
+     * @throws IllegalArgumentException  IllegalArgumentException if the paramters are incorrect (bases have to be: 1 < base < moduls, moduls have to be: 1 < modul > bases. modul = {@code prime factors + summand})
      */
     public ArrayList<Triple<Boolean, Double, LinkedList<String>>> test()
                 throws IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException {
@@ -100,7 +100,7 @@ public class LucasZ extends LucasTest<Z>{
     }
 
 
-        //checks whether the parameter values are correct: probably prime greater than 1 and base '1 < a < modul'
+        //checks whether the parameter values are correct: probably prime greater than 1 and base '1 < base < modul'
         private Tuple<Boolean, String> checkPrimeArguments()
                 throws IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException {
             //Precondition
@@ -109,12 +109,11 @@ public class LucasZ extends LucasTest<Z>{
             boolean argsCorrect = true;
             String argsAnswer = "Arguments are correct.";
             Z one = new Z("1");
-            Z two = new Z("2");
 
             //checks whether the probably primes are greater than 1
             if(argsCorrect){
                 for (Z primeCheck : maxBases){
-                    //Beware! The probably prime is greate +1 than the base, therefore test <0. The prime 2 let be passed.
+                    //Beware! The probably prime is greater +1 than the base, therefore test <0. The prime 2 let be passed.
                     if (primeCheck.compareTo(one)< 0){
                          argsCorrect = false;
                          argsAnswer = "There are only prime numbers >1";

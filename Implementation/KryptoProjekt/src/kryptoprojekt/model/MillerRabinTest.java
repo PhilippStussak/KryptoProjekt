@@ -8,10 +8,10 @@ package kryptoprojekt.model;
 import java.util.*;
 
 /**
+ * This is the superclass for all different KryptoTypes (Z, polynomial etc.) Miller-Rabin primality test subclasses.
  *
  * @author Michael
  */
-//This is the superclass for all different KryptoTypes (Z, polynomial etc.) Miller-Rabin primality test subclasses.
 abstract class MillerRabinTest <E extends KryptoType<E>> implements PrimeTest<E> {
     protected TreeSet<E> bases;
     protected TreeSet<E> moduls;

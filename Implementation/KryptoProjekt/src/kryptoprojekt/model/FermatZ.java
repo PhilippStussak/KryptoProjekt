@@ -30,8 +30,8 @@ public class FermatZ extends FermatTest<Z>{
     /**
      * Starts the Fermat-Test for natural numbers.
      *
-     * @return List of results by using the Fermat-Test (if 'modul' is probably prime, probability, intermediate values).
-     * @throws IllegalArgumentException if the paramters are incorrect (bases have to be: 1 < base < moduls, moduls have to be: 1 < modul > bases
+     * @return List of results by using the Fermat-Test (whether 'modul' is probably prime, probability, intermediate values).
+     * @throws IllegalArgumentException if the paramters are incorrect (bases have to be: 1 < base < moduls, moduls have to be: 1 < modul > bases)
      */
     public ArrayList<Triple<Boolean, Double, LinkedList<String>>> test()
         throws IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException {
@@ -73,7 +73,7 @@ public class FermatZ extends FermatTest<Z>{
         }
     }
 
-    //checks whether the parameter values are correct: probably prime greater than 1 and base '1 < a < modul'
+    //checks whether the parameter values are correct: probably prime greater than 1 and base '1 < base < modul'
     private Tuple<Boolean, String> checkPrimeArguments()
             throws IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException {
         //Precondition
@@ -90,7 +90,7 @@ public class FermatZ extends FermatTest<Z>{
                 argsCorrect = false;
                 argsAnswer = "Base 'a' too small. Fermat-Test requires a base:  1 < a < prime";
             }
-            //if the smallest 'modul' is 2, go to the next else-if
+            //if the smallest modul is 2, go to the next else-if
             if (getHighestBase().compareTo(getLowestModul())>=0 && !getLowestModul().equals(two)){
                 argsCorrect = false;
                 argsAnswer = "Base 'a' too large. Fermat-Test requires a base:  1 < a < prime";
@@ -129,7 +129,7 @@ public class FermatZ extends FermatTest<Z>{
 
         Z twoObj = new Z(2);
         if(!checkPrime.equals(twoObj)){
-            //The new instance is initialized to 1. This is the value which is subtracted from the exponent.
+            //The new instance is initialized to 1. This is the value which will be subtracted from the exponent.
             Z oneObj = new Z(1);
             Z result;
             int assertPostCondCounter = 0;
