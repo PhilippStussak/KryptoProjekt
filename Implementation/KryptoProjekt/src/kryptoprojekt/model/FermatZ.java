@@ -84,14 +84,20 @@ public class FermatZ extends FermatTest<Z>{
         Z one = new Z("1");
         Z two = new Z("2");
 
+        //checks whether the probably primes are greater than 1
+        if (argsCorrect && getLowestModul().compareTo(new Z(1)) <= 0) {
+            argsCorrect = false;
+            argsAnswer = "There are only prime numbers >1";
+        }
+
         //checks whether 'bases' > 1 && bases < checkPrime
         if (argsCorrect && !bases.isEmpty()){
             if (getLowestBase().compareTo(new Z(1)) < 1) {
                 argsCorrect = false;
                 argsAnswer = "Base 'a' too small. Fermat-Test requires a base:  1 < a < prime";
             }
-            //if the smallest modul is 2, go to the next else-if
-            if (getHighestBase().compareTo(getLowestModul())>=0 && !getLowestModul().equals(two)){
+            //if the smallest 'modul' is 2, go to the next else-if
+            if (argsCorrect && getHighestBase().compareTo(getLowestModul())>=0 && !getLowestModul().equals(two)){
                 argsCorrect = false;
                 argsAnswer = "Base 'a' too large. Fermat-Test requires a base:  1 < a < prime";
             }else if(getHighestBase().compareTo(getLowestModul())>=0 && getLowestModul().equals(two)){
@@ -108,16 +114,9 @@ public class FermatZ extends FermatTest<Z>{
             argsCorrect = false;
             argsAnswer = "It requires at least one base >1 and <n.";
         }
-
-        //checks whether the probably primes are greater than 1
-        if (argsCorrect && getLowestModul().compareTo(new Z(1)) <= 0) {
-            argsCorrect = false;
-            argsAnswer = "There are only prime numbers >1";
-        }
-
         //Postcondition
-        assert getLowestModul().compareTo(new Z(1)) >0: "checkprime isn't > 1: checkPrime = " +getLowestModul();
-        assert getLowestBase().compareTo(new Z(1)) >0 || getLowestModul().equals(new Z(2)): "base isn't > 1: base = " +getLowestBase();
+        assert getLowestModul().compareTo(new Z(1)) >0 || !argsCorrect: "checkprime isn't > 1: checkPrime = " +getLowestModul();
+        assert getLowestBase().compareTo(new Z(1)) >0 || getLowestModul().equals(new Z(2)) || !argsCorrect: "base isn't > 1: base = " +getLowestBase();
         return new Tuple<Boolean, String>(argsCorrect, argsAnswer);
     }
 

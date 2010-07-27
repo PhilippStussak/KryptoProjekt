@@ -29,6 +29,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JLabel;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.JTextField;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
 import javax.swing.text.Style;
@@ -59,17 +60,18 @@ public class MillerRabinFrame extends Kit {
 
     private DropTextField basesTextField = getDropTextField();
     private DropTextField moduloTextField = getDropTextField();
+    private Integer previousValue; //includes the value of the spinnbox
     private JCheckBox probabilityCB;
+    private JCheckBox randomBasesCB;
     private JLabel randomSPLabel;
     private JSpinner randomNumberSP;
     private LinkedList<String> extendList;
     private LinkedList<LinkedList<String>> extension;
-    private LinkedList<Integer> probBases;
     private StringBuilder outputWindow;
     private StyledDocument doc;
-    private Font fontSettings;
     private boolean calcProb;
-    private boolean correctArguments;
+    private boolean correctBasesArguments;
+    private boolean correctModulsArguments;
 
     /** Creates new form MillerRabinFrame */
     public MillerRabinFrame(ConnectionHandler handler) {
@@ -214,13 +216,6 @@ public class MillerRabinFrame extends Kit {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void append(String text, String styleName) {
-        try {
-            doc.insertString(doc.getLength(), text, doc.getStyle(styleName));
-        } catch (BadLocationException e) {
-            e.printStackTrace();
-        }
-    }
 
     private void extendButtonClick(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_extendButtonClick
     }//GEN-LAST:event_extendButtonClick
@@ -260,6 +255,14 @@ public class MillerRabinFrame extends Kit {
         getParent().add(frame);
 }//GEN-LAST:event_ExtendBtMillerActionPerformed
 
+    private void append(String text, String styleName) {
+        try {
+            doc.insertString(doc.getLength(), text, doc.getStyle(styleName));
+        } catch (BadLocationException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void initLogicComponents() {
         jPanelPrimeMiller.setLayout(new GridBagLayout());
         jPanelSettingsMiller.setLayout(new GridBagLayout());
@@ -267,8 +270,7 @@ public class MillerRabinFrame extends Kit {
         GridBagConstraints c = new GridBagConstraints();
         this.setSize(260, 210);
 
-        basesTextField.addKeyListener(new KeyListener() {
-
+        moduloTextField.addKeyListener(new KeyListener() {
             public void keyTyped(KeyEvent e) {
             }
 
@@ -276,50 +278,22 @@ public class MillerRabinFrame extends Kit {
             }
 
             public void keyReleased(KeyEvent e) {
-                StringBuilder numbSequence = new StringBuilder(basesTextField.getText());
-                int dashPos = 0;
-                boolean checkOther = true;
-
-                int assertCounter = 0;
-                if (dashPos != -1) {
-                    for (int k = 0; k < numbSequence.length() && k >= 0;) {
-                        assert assertCounter < basesTextField.getText().length() : "Too many iterations.";
-                        dashPos = numbSequence.indexOf("-", k);
-                        k = -1;
-                        if (dashPos > 0 && dashPos < numbSequence.length() - 1) {
-                            if (LogicValidator.isPosInteger(String.valueOf(numbSequence.charAt(dashPos - 1))) && LogicValidator.isPosInteger(String.valueOf(numbSequence.charAt(dashPos + 1)))) {
-                                numbSequence = numbSequence.deleteCharAt(dashPos);
-                                k = dashPos;
-                            } else {
-                                dashPos = -1; //wrong parameter
-                                checkOther = false;
-                            }
-                        } else if (dashPos == 0) {
-                            dashPos = -1; //wrong parameter
-                            checkOther = false;
-                        }
-                        assertCounter++;
+                if(validateModuloTextField()){
+                    moduloTextField.setForeground(Color.black);
+                    correctModulsArguments = true;
+                    if(randomBasesCB.isSelected()){
+                        setRandomBasesField();
+                        setMaxSpinnBox();
                     }
-                    assertCounter = 0;
-                }
-
-                if (checkOther) {
-                    numbSequence = deleteChar(numbSequence, ","); //delete
-                    numbSequence = deleteChar(numbSequence, "."); //delete
-                    numbSequence = deleteChar(numbSequence, " "); //delete
-                }
-                if (LogicValidator.isPosInteger(numbSequence.toString())) {
-                    basesTextField.setForeground(Color.black);
-                    correctArguments = true;
-                } else {
-                    basesTextField.setForeground(Color.red);
-                    correctArguments = false;
+                }else{
+                    moduloTextField.setForeground(Color.red);
+                    correctModulsArguments = false;
+                    basesTextField.setText("");
                 }
             }
         });
 
-        moduloTextField.addKeyListener(new KeyListener() {
-
+        basesTextField.addKeyListener(new KeyListener() {
             public void keyTyped(KeyEvent e) {
             }
 
@@ -327,44 +301,12 @@ public class MillerRabinFrame extends Kit {
             }
 
             public void keyReleased(KeyEvent e) {
-                StringBuilder numbSequence = new StringBuilder(moduloTextField.getText());
-                int dashPos = 0;
-                boolean checkOther = true;
-
-                int assertCounter = 0;
-                if (dashPos != -1) {
-                    for (int k = 0; k < numbSequence.length() && k >= 0;) {
-                        assert assertCounter < moduloTextField.getText().length() : "Too many iterations.";
-                        dashPos = numbSequence.indexOf("-", k);
-                        k = -1;
-                        if (dashPos > 0 && dashPos < numbSequence.length() - 1) {
-                            if (LogicValidator.isPosInteger(String.valueOf(numbSequence.charAt(dashPos - 1))) && LogicValidator.isPosInteger(String.valueOf(numbSequence.charAt(dashPos + 1)))) {
-                                numbSequence = numbSequence.deleteCharAt(dashPos);
-                                k = dashPos;
-                            } else {
-                                dashPos = -1; //wrong parameter
-                                checkOther = false;
-                            }
-                        } else if (dashPos == 0) {
-                            dashPos = -1; //wrong parameter
-                            checkOther = false;
-                        }
-                        assertCounter++;
-                    }
-                    assertCounter = 0;
-                }
-
-                if (checkOther) {
-                    numbSequence = deleteChar(numbSequence, ","); //delete
-                    numbSequence = deleteChar(numbSequence, "."); //delete
-                    numbSequence = deleteChar(numbSequence, " "); //delete
-                }
-                if (LogicValidator.isPosInteger(numbSequence.toString())) {
-                    moduloTextField.setForeground(Color.black);
-                    correctArguments = true;
-                } else {
-                    moduloTextField.setForeground(Color.red);
-                    correctArguments = false;
+                if(validateBaseTextField()){
+                    basesTextField.setForeground(Color.black);
+                    correctBasesArguments = true;
+                }else{
+                    basesTextField.setForeground(Color.red);
+                    correctBasesArguments = false;
                 }
             }
         });
@@ -443,7 +385,6 @@ public class MillerRabinFrame extends Kit {
         probabilityCB.setFont(probabilityCB.getFont().deriveFont(probabilityCB.getFont().getSize2D() - 0.6f));
         probabilityCB.setHorizontalAlignment(JLabel.LEFT);
         probabilityCB.addItemListener(new ItemListener() {
-
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.DESELECTED) {
                     calcProb = false;
@@ -479,42 +420,49 @@ public class MillerRabinFrame extends Kit {
         c.gridy = 2;
         c.weightx = 0.5;
         c.weighty = 0;
-        randomNumberSP = new JSpinner(new SpinnerNumberModel(3, 1, 9999, 1));
+        randomNumberSP = new JSpinner(new SpinnerNumberModel(3, 0, 9999, 1));
         randomNumberSP.setFont(randomNumberSP.getFont().deriveFont(randomNumberSP.getFont().getSize2D() - 0.6f));
         randomNumberSP.setEnabled(false);
         randomNumberSP.addChangeListener(new ChangeListener() {
-
             public void stateChanged(ChangeEvent e) {
-                TreeSet<KryptoType> moduls = new TreeSet<KryptoType>(splitInputToZ(moduloTextField.getText()));
-                if (!moduls.isEmpty()) {
-                    Integer numberRandomBases = (Integer) randomNumberSP.getValue();
-                    basesTextField.setText("");
-                    if (numberRandomBases > 0 && numberRandomBases <= 9999) {
-                        int endProbBaseRange;
-                        if (Integer.parseInt(moduls.first().toString()) == 2) {
-                            Iterator<KryptoType> itModuls = moduls.iterator();
-                            itModuls.next();
-                            if (itModuls.hasNext()) {
-                                endProbBaseRange = Integer.parseInt(itModuls.next().toString());
-                                int maxProbNumbers = endProbBaseRange - 2;
-                                numberRandomBases = numberRandomBases < maxProbNumbers ? numberRandomBases : maxProbNumbers;
-                            } else {
-                                endProbBaseRange = 2;
-                                numberRandomBases = 1;
+                if(correctModulsArguments){
+                    assert randomNumberSP.getModel() instanceof SpinnerNumberModel: "Error, Spinnbox isn't instance of SpinnerNumberModel. randomNumberSP.";
+                    final JTextField spinnTextField = ((JSpinner.DefaultEditor) randomNumberSP.getEditor()).getTextField();
+                    final SpinnerNumberModel maxBaseSpinner = (SpinnerNumberModel)randomNumberSP.getModel();
+                    previousValue = (Integer)randomNumberSP.getValue();
+                    setMaxSpinnBox();
+                    if (new Integer(deleteChar(spinnTextField.getText(), ".")) > ((Integer)maxBaseSpinner.getMaximum())){
+                        //spinnTextField.setText((String)maxBaseSpinner.getMaximum().toString());
+                        randomNumberSP.setValue(new Integer(maxBaseSpinner.getMaximum().toString()));
+                    }
+                    setRandomBasesField();
+                }
+            }
+        });
+        assert randomNumberSP.getModel() instanceof SpinnerNumberModel: "Error, Spinnbox isn't instance of SpinnerNumberModel. randomNumberSP.";
+        final JTextField spinnTextField = ((JSpinner.DefaultEditor) randomNumberSP.getEditor()).getTextField();
+        final SpinnerNumberModel maxBaseSpinner = (SpinnerNumberModel)randomNumberSP.getModel();
+        previousValue = (Integer)randomNumberSP.getValue();
+        spinnTextField.addKeyListener(new KeyListener() {
+            public void keyPressed(KeyEvent e){
+                if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                    if ((Integer)randomNumberSP.getValue() <= ((Integer)maxBaseSpinner.getMaximum())){
+                        if(correctModulsArguments){
+                            Integer newValue = new Integer(deleteChar(spinnTextField.getText(), "."));
+                            if((newValue >= previousValue) && (newValue >= new Integer(getModulTextFieldSet().first().toString())) || newValue<0){
+                                spinnTextField.setText(Integer.toString(previousValue));
+                            } else{
+                                previousValue = newValue;
                             }
-                        } else {
-                            endProbBaseRange = Integer.parseInt(moduls.first().toString());
-                            int maxProbNumbers = endProbBaseRange - 2;
-                            numberRandomBases = numberRandomBases < maxProbNumbers ? numberRandomBases : maxProbNumbers;
                         }
-                        probBases = new LinkedList<Integer>(PrimeUtility.getRandomNumber(2, endProbBaseRange, numberRandomBases));
-                        StringBuilder probBasesString = new StringBuilder("");
-                        for (int i = 0; i < probBases.size(); i++) {
-                            probBasesString.append(probBases.get(i) + ", ");
-                        }
-                        basesTextField.setText(probBasesString.toString());
+                    } else{
+                        spinnTextField.setText((String)(maxBaseSpinner.getMaximum()).toString());
                     }
                 }
+            }
+            public void keyReleased(KeyEvent e){
+            }
+            public void keyTyped(KeyEvent e){
             }
         });
         jPanelSettingsMiller.add(randomNumberSP, c);
@@ -528,7 +476,7 @@ public class MillerRabinFrame extends Kit {
         c.gridy = 1;
         c.weightx = 0.5;
         c.weighty = 0;
-        JCheckBox randomBasesCB = new JCheckBox("random bases", false);
+        randomBasesCB = new JCheckBox("random bases", false);
         randomBasesCB.setFont(randomBasesCB.getFont().deriveFont(randomBasesCB.getFont().getSize2D() - 0.6f));
         randomBasesCB.setHorizontalAlignment(JLabel.LEFT);
         randomBasesCB.addItemListener(new ItemListener() {
@@ -539,17 +487,190 @@ public class MillerRabinFrame extends Kit {
                     basesTextField.setText("");
                     randomSPLabel.setEnabled(true);
                     randomNumberSP.setEnabled(true);
+                    if(correctModulsArguments){
+                        setMaxSpinnBox();
+                        setRandomBasesField();
+                    }
+                    correctBasesArguments = true;
                 } else {
                     basesTextField.setEnabled(true);
                     basesTextField.setText("");
                     randomSPLabel.setEnabled(false);
                     randomNumberSP.setEnabled(false);
+                    correctBasesArguments = false;
                 }
             }
         });
         jPanelSettingsMiller.add(randomBasesCB, c);
     }
 
+        private boolean validateModuloTextField(){
+        StringBuilder numbSequence = new StringBuilder(moduloTextField.getText());
+        int dashPos = 0;
+        boolean checkOther = true;
+
+        int assertCounter = 0;
+        if (dashPos != -1) {
+            for (int k = 0; k < numbSequence.length() && k >= 0;) {
+                assert assertCounter < moduloTextField.getText().length() : "Too many iterations.";
+                dashPos = numbSequence.indexOf("-", k);
+                k = -1;
+                if (dashPos > 0 && dashPos < numbSequence.length() - 1) {
+                    if (LogicValidator.isPosInteger(String.valueOf(numbSequence.charAt(dashPos - 1))) && LogicValidator.isPosInteger(String.valueOf(numbSequence.charAt(dashPos + 1)))) {
+                        numbSequence = numbSequence.deleteCharAt(dashPos);
+                        k = dashPos;
+                    } else {
+                        dashPos = -1; //wrong parameter
+                        checkOther = false;
+                    }
+                } else if (dashPos == 0) {
+                    dashPos = -1; //wrong parameter
+                    checkOther = false;
+                }
+                assertCounter++;
+            }
+            assertCounter = 0;
+        }
+        if (checkOther) {
+            numbSequence = deleteChar(numbSequence, ","); //delete
+            numbSequence = deleteChar(numbSequence, "."); //delete
+            numbSequence = deleteChar(numbSequence, " "); //delete
+        }
+        if (LogicValidator.isPosInteger(numbSequence.toString())) {
+            return true;
+
+        } else {
+            return false;
+        }
+    }
+
+    private boolean validateBaseTextField(){
+        StringBuilder numbSequence = new StringBuilder(getBaseTextFieldValue());
+        int dashPos = 0;
+        boolean checkOther = true;
+
+        int assertCounter = 0;
+        if (dashPos != -1) {
+            for (int k = 0; k < numbSequence.length() && k >= 0;) {
+                assert assertCounter < getBaseTextFieldValue().length() : "Too many iterations.";
+                dashPos = numbSequence.indexOf("-", k);
+                k = -1;
+                if (dashPos > 0 && dashPos < numbSequence.length() - 1) {
+                    if (LogicValidator.isPosInteger(String.valueOf(numbSequence.charAt(dashPos - 1))) && LogicValidator.isPosInteger(String.valueOf(numbSequence.charAt(dashPos + 1)))) {
+                        numbSequence = numbSequence.deleteCharAt(dashPos);
+                        k = dashPos;
+                    } else {
+                        dashPos = -1; //wrong parameter
+                        checkOther = false;
+                    }
+                } else if (dashPos == 0) {
+                    dashPos = -1; //wrong parameter
+                    checkOther = false;
+                }
+                assertCounter++;
+            }
+            assertCounter = 0;
+        }
+        if (checkOther) {
+            numbSequence = deleteChar(numbSequence, ","); //delete
+            numbSequence = deleteChar(numbSequence, "."); //delete
+            numbSequence = deleteChar(numbSequence, " "); //delete
+        }
+        if (LogicValidator.isPosInteger(numbSequence.toString())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    //set the max value you can enter in the spinn box depending on the moduls
+    private void setMaxSpinnBox(){
+        TreeSet<KryptoType> moduls = getModulTextFieldSet();
+        int newModul = new Integer(moduls.first().toString());
+        if(newModul == 2){
+            Iterator<KryptoType> itModuls = moduls.iterator();
+            itModuls.next();
+            if(itModuls.hasNext()){
+                newModul = new Integer(itModuls.next().toString());
+            }
+        }
+        setMaxSpinnBox(newModul-2);
+    }
+
+    private void setMaxSpinnBox(int newMaxSpineBase){
+        //Precondition
+        assert randomNumberSP.getModel() instanceof SpinnerNumberModel: "Error, Spinnbox isn't instance of SpinnerNumberModel.";
+        SpinnerNumberModel newMaxBaseSpinner = (SpinnerNumberModel)randomNumberSP.getModel();
+        if(newMaxSpineBase >=0 && newMaxSpineBase <= 9999){
+            newMaxBaseSpinner.setMaximum(new Integer(newMaxSpineBase));
+            randomNumberSP.setModel(newMaxBaseSpinner);
+        } else {
+            if (newMaxSpineBase >=0) {
+                newMaxBaseSpinner.setMaximum(new Integer(9999));
+                randomNumberSP.setModel(newMaxBaseSpinner);
+            }
+        }
+    }
+
+    //sets the base values when using the random checkbox
+    private boolean setRandomBasesField(){
+        //Precondition
+        assert correctModulsArguments :"Error, Moduls arguments have a false state. moduls = " +correctModulsArguments;
+        TreeSet<KryptoType> moduls = getModulTextFieldSet();
+        if (!moduls.isEmpty() && correctModulsArguments) {
+            Integer numberRandomBases = (Integer) randomNumberSP.getValue();
+            basesTextField.setText("");
+            if (numberRandomBases > 0 && numberRandomBases <= 9999) {
+                //max. number for a randomly generated base
+                int endRandBaseRange;
+                if (Integer.parseInt(moduls.first().toString()) == 2) {
+                    Iterator<KryptoType> itModuls = moduls.iterator();
+                    itModuls.next();
+                    if (itModuls.hasNext()) {
+                        endRandBaseRange = Integer.parseInt(itModuls.next().toString());
+                        int maxProbNumbers = endRandBaseRange - 2;
+                        numberRandomBases = numberRandomBases < maxProbNumbers ? numberRandomBases : maxProbNumbers;
+                    } else {
+                        endRandBaseRange = 2;
+                        numberRandomBases = 1;
+                    }
+                } else {
+                    endRandBaseRange = Integer.parseInt(moduls.first().toString());
+                    int maxProbNumbers = endRandBaseRange - 2;
+                    numberRandomBases = numberRandomBases < maxProbNumbers ? numberRandomBases : maxProbNumbers;
+                }
+                LinkedList<Integer> randomBases = new LinkedList<Integer>(getRandomBases(2, endRandBaseRange, numberRandomBases));
+                StringBuilder randBasesString = new StringBuilder("");
+                int randomBasesSize = randomBases.size();
+                for (int i = 0; i < randomBasesSize; i++) {
+                    randBasesString.append(randomBases.get(i));
+                    if(i < randomBasesSize-1){
+                        randBasesString.append(", ");
+                    }
+                }
+                basesTextField.setText(randBasesString.toString());
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //returns the value of the moduls as String
+    private String getModulTextFieldValue(){
+        return moduloTextField.getText();
+    }
+
+    //returns the value of the moduls as sorted List
+    private TreeSet<KryptoType> getModulTextFieldSet(){
+        return new TreeSet<KryptoType>(splitInputToZ(getModulTextFieldValue()));
+    }
+
+    //returns the value of the bases as String
+    private String getBaseTextFieldValue(){
+        return basesTextField.getText();
+    }
+
+    //deleted the passed char out of the given string
     private StringBuilder deleteChar(StringBuilder originalString, String delChar, int fromIndex) {
         StringBuilder withoutCharString = new StringBuilder(originalString);
         int charPosition = withoutCharString.indexOf(delChar, fromIndex);
@@ -564,15 +685,21 @@ public class MillerRabinFrame extends Kit {
         return deleteChar(originalString, delChar, 0);
     }
 
+    private String deleteChar(String originalString, String delChar) {
+        return deleteChar(new StringBuilder(originalString), delChar, 0).toString();
+    }
+
+    //splits the series of numbers in an ArrayList
     private ArrayList<KryptoType> splitInputToZ(String splitMe) {
-        Pattern baseModulSeparator = Pattern.compile("(([,]+[\\s]*)+|([\\s]+[,]*)+)");
+        //Precondition
+        assert splitMe.length()!=0: "Error, String is empty. splitMe = " +splitMe;
+        assert correctModulsArguments || correctBasesArguments !=false: "Error, Moduls or Bases arguments have a false state. moduls = " +correctModulsArguments+ " bases =" +correctBasesArguments;
+        Pattern baseModulSeparator = Pattern.compile("(([,]+[\\s]*)+|([\\s]+[,]*)+)"); //split an input list of bases and moduls(primes)
         Pattern dashSeparator = Pattern.compile("[\\-]");
         StringBuilder numbSequence = new StringBuilder(splitMe);
         int delPointPos = 0;
 
-        if (correctArguments == false) {
-            throw new IllegalArgumentException("Wrong parameters found for bases, modules in window Miller-Rabin-Test " + getTitle());
-        }
+        //removes all points from the series of number
         for (int i = 0; i < numbSequence.length() && i >= 0;) {
             delPointPos = numbSequence.indexOf(".", i);
             if (delPointPos != -1) {
@@ -593,6 +720,7 @@ public class MillerRabinFrame extends Kit {
         return resultZ;
     }
 
+    //fills a list of Z from start (first argument in array) to end (second argument in array)
     private ArrayList<Z> fillKryptoTypeZList(String[] range) {
         //Precondition
         assert range.length == 2 : "Error, the array has more than 2 elements: " + Arrays.toString(range);
@@ -615,26 +743,41 @@ public class MillerRabinFrame extends Kit {
         return listKrypto;
     }
 
+    //returns a list of random numbers (between start and end)
+    private LinkedList<Integer> getRandomBases(int startBaseRange, int endRandBaseRange, int numberRandomBases){
+        return new LinkedList<Integer>(PrimeUtility.getRandomNumber(startBaseRange, endRandBaseRange, numberRandomBases));
+    }
+
     @Override
     public String execute() {
-        ArrayList<KryptoType> basen = new ArrayList<KryptoType>();
+        ArrayList<KryptoType> bases = new ArrayList<KryptoType>();
         ArrayList<KryptoType> moduls = new ArrayList<KryptoType>();
-        ArrayList<Triple<Boolean, Double, LinkedList<String>>> result;
+        ArrayList<Triple<Boolean, Double, LinkedList<String>>> result; //contains for each number whether it is a prime, probability, intermediate
         LinkedList<KryptoType> posResults = new LinkedList<KryptoType>();
 
-        if (basesTextField.getResult() != null) {
-            basen.add((KryptoType) basesTextField.getResult());
-        } else {
-            basen = splitInputToZ(basesTextField.getText());
-        }
         if (moduloTextField.getResult() != null) {
             moduls.add((KryptoType) moduloTextField.getResult());
-        } else {
+        } else if(correctModulsArguments && moduloTextField.getText().length() != 0){
             moduls = splitInputToZ(moduloTextField.getText());
+        }else{
+            return "You have to enter a natural number >=2 in order to check it's a prime.";
+        }
+
+        if (basesTextField.getResult() != null) {
+            bases.add((KryptoType) basesTextField.getResult());
+        } else if(correctBasesArguments && getBaseTextFieldValue().length() != 0){
+            bases = splitInputToZ(getBaseTextFieldValue());
+        } else if(getModulTextFieldValue().equals("2")){
+            ArrayList<KryptoType> two = new ArrayList<KryptoType>();
+            two.add(new Z("2"));
+            bases = two;
+        }
+        else{
+            return "You have to enter a valid base >=2";
         }
 
         try {
-            result = PrimeTestController.primeTestRabin(basen, moduls, calcProb);
+            result = PrimeTestController.primeTestRabin(bases, moduls, calcProb);
         } catch (RuntimeException e) {
             return e.getMessage();
         } catch (NoSuchMethodException e) {

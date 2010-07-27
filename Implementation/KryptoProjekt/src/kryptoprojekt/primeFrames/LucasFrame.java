@@ -377,6 +377,11 @@ public class LucasFrame extends Kit {
     }
 
     private ArrayList<KryptoType> splitInputToZ(String splitMe) {
+        if (correctArguments == false || splitMe.length()==0 || splitMe == null) {
+            return null;
+        }
+        assert splitMe.length()!=0: "Error, String is empty. splitMe = " +splitMe;
+        assert correctArguments !=false: "Error, correctArguments has a false state = " +correctArguments;
         Pattern baseModulSeparator = Pattern.compile("(([,]+[\\s]*)+|([\\s]+[,]*)+)"); //split an input list of bases and moduls(primes)
         Pattern dashSeparator = Pattern.compile("[\\-]");
         StringBuilder numbSequence = new StringBuilder(splitMe);
@@ -385,6 +390,7 @@ public class LucasFrame extends Kit {
         if (correctArguments == false) {
             throw new IllegalArgumentException("Wrong parameters found for bases, modules in window Lucas-Test " + getTitle());
         }
+        //removes all points from the series of number
         for (int i = 0; i < numbSequence.length() && i >= 0;) {
             delPointPos = numbSequence.indexOf(".", i);
             if (delPointPos != -1) {
@@ -405,6 +411,7 @@ public class LucasFrame extends Kit {
         return resultZ;
     }
 
+    //fills a list of Z from start to end
     private ArrayList<Z> fillKryptoTypeZList(String[] range) {
         //Precondition
         assert range.length == 2 : "Error, the array has more than 2 elements: " + Arrays.toString(range);
@@ -443,7 +450,7 @@ public class LucasFrame extends Kit {
         ArrayList<KryptoType> factorPowers = new ArrayList<KryptoType>();
         ArrayList<KryptoType> summands = new ArrayList<KryptoType>();
         ArrayList<KryptoType> summandPowers = new ArrayList<KryptoType>();
-        ArrayList<Triple<Boolean, Double, LinkedList<String>>> result;
+        ArrayList<Triple<Boolean, Double, LinkedList<String>>> result; //contains for each number whether it is a prime, probability, intermediate
         LinkedList<KryptoType> posResults = new LinkedList<KryptoType>();
 
         ArrayList<Z> factors = new ArrayList<Z>();
@@ -467,6 +474,9 @@ public class LucasFrame extends Kit {
             bases.add((Z) basesTextField.getResult());
         } else {
             bases = splitInputToZ(basesTextField.getText());
+            if(bases == null){
+                return "You have to enter a valid base >=2";
+            }
         }
         if (summandTextField.getResult() != null) {
             summands.add((Z) summandTextField.getResult());

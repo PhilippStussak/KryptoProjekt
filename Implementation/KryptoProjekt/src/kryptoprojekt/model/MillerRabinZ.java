@@ -74,49 +74,49 @@ public class MillerRabinZ extends MillerRabinTest<Z>{
 
         //checks whether the parameter values are correct: probably prime greater than 1 and base '1 < base < modul'
         private Tuple<Boolean, String> checkPrimeArguments()
-                throws IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException {
-            //Precondition
-            assert Set.class.isAssignableFrom(bases.getClass()): "check that bases contains no dublicate elements: Liste hs = " +bases;
+            throws IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException {
+        //Precondition
+        assert Set.class.isAssignableFrom(bases.getClass()): "check that bases contains no dublicate elements: Liste hs = " +bases;
 
-            boolean argsCorrect = true;
-            String argsAnswer = "Arguments are correct.";
-            Z one = new Z("1");
-            Z two = new Z("2");
+        boolean argsCorrect = true;
+        String argsAnswer = "Arguments are correct.";
+        Z one = new Z("1");
+        Z two = new Z("2");
 
-            //checks whether 'bases' > 1 && bases < checkPrime
-            if (argsCorrect && !bases.isEmpty()){
-                if (getLowestBase().compareTo(new Z(1)) < 1) {
-                    argsCorrect = false;
-                    argsAnswer = "Base 'a' too small. Miller-Rabin-Test requires a base:  1 < a < prime";
-                }
-                //if the smallest 'modul' is 2, go to the next else-if
-                if (getHighestBase().compareTo(getLowestModul())>=0 && !getLowestModul().equals(two)){
-                    argsCorrect = false;
-                    argsAnswer = "Base 'a' too large. Miller-Rabin-Test requires a base:  1 < a < prime";
-                }else if(getHighestBase().compareTo(getLowestModul())>=0 && getLowestModul().equals(two)){
-                    if(moduls.size() > 1){
-                        Iterator<Z> itModuls = moduls.iterator();
-                        itModuls.next();
-                        if(getHighestBase().compareTo(itModuls.next()) >=0){
-                            argsCorrect = false;
-                            argsAnswer = "Base 'a' too large. Miller-Rabin-Test requires a base:  1 < a < prime";
-                        }
+        //checks whether the probably primes are greater than 1
+        if (argsCorrect && getLowestModul().compareTo(new Z(1)) <= 0) {
+            argsCorrect = false;
+            argsAnswer = "There are only prime numbers >1";
+        }
+
+        //checks whether 'bases' > 1 && bases < checkPrime
+        if (argsCorrect && !bases.isEmpty()){
+            if (getLowestBase().compareTo(new Z(1)) < 1) {
+                argsCorrect = false;
+                argsAnswer = "Base 'a' too small. Miller-Rabin-Test requires a base:  1 < a < prime";
+            }
+            //if the smallest 'modul' is 2, go to the next else-if
+            if (argsCorrect && getHighestBase().compareTo(getLowestModul())>=0 && !getLowestModul().equals(two)){
+                argsCorrect = false;
+                argsAnswer = "Base 'a' too large. Miller-Rabin-Test requires a base:  1 < a < prime";
+            }else if(getHighestBase().compareTo(getLowestModul())>=0 && getLowestModul().equals(two)){
+                if(moduls.size() > 1){
+                    Iterator<Z> itModuls = moduls.iterator();
+                    itModuls.next();
+                    if(getHighestBase().compareTo(itModuls.next()) >=0){
+                        argsCorrect = false;
+                        argsAnswer = "Base 'a' too large. Miller-Rabin-Test requires a base:  1 < a < prime";
                     }
                 }
-            }else if(argsCorrect && bases.isEmpty()){
-                argsCorrect = false;
-                argsAnswer = "It requires at least one base >1 and <n.";
             }
-
-            //checks whether the probably primes are greater than 1
-            if (argsCorrect && getLowestModul().compareTo(new Z(1)) <= 0) {
-                argsCorrect = false;
-                argsAnswer = "There are only prime numbers >1";
-            }
-            //Postcondition
-            assert getLowestModul().compareTo(new Z(1)) >0: "checkprime isn't > 1: checkPrime = " +getLowestModul();
-            assert getLowestBase().compareTo(new Z(1)) >0 || getLowestModul().equals(new Z(2)): "base isn't > 1: base = " +getLowestBase();
-            return new Tuple<Boolean, String>(argsCorrect, argsAnswer);
+        }else if(argsCorrect && bases.isEmpty()){
+            argsCorrect = false;
+            argsAnswer = "It requires at least one base >1 and <n.";
+        }
+        //Postcondition
+        assert getLowestModul().compareTo(new Z(1)) >0 || !argsCorrect: "checkprime isn't > 1: checkPrime = " +getLowestModul();
+        assert getLowestBase().compareTo(new Z(1)) >0 || getLowestModul().equals(new Z(2)) || !argsCorrect: "base isn't > 1: base = " +getLowestBase();
+        return new Tuple<Boolean, String>(argsCorrect, argsAnswer);
         }
 
         //checks wheter the parameter is a prime number
