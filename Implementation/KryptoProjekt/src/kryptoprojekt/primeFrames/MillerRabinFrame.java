@@ -445,17 +445,19 @@ public class MillerRabinFrame extends Kit {
         spinnTextField.addKeyListener(new KeyListener() {
             public void keyPressed(KeyEvent e){
                 if(e.getKeyCode() == KeyEvent.VK_ENTER){
-                    if ((Integer)randomNumberSP.getValue() <= ((Integer)maxBaseSpinner.getMaximum())){
+                    if (new Integer(spinnTextField.getText()) <= ((Integer)maxBaseSpinner.getMaximum())){
                         if(correctModulsArguments){
                             Integer newValue = new Integer(deleteChar(spinnTextField.getText(), "."));
                             if((newValue >= previousValue) && (newValue >= new Integer(getModulTextFieldSet().first().toString())) || newValue<0){
                                 spinnTextField.setText(Integer.toString(previousValue));
+                                //randomNumberSP.setValue(previousValue);
                             } else{
                                 previousValue = newValue;
                             }
                         }
                     } else{
-                        spinnTextField.setText((String)(maxBaseSpinner.getMaximum()).toString());
+                        spinnTextField.setText(maxBaseSpinner.getMaximum().toString());
+                        //randomNumberSP.setValue((Integer)maxBaseSpinner.getMaximum());
                     }
                 }
             }
