@@ -69,7 +69,7 @@ public class HammingSyndromFrame extends Kit {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 277, Short.MAX_VALUE)
+            .addGap(0, 294, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -86,6 +86,7 @@ public class HammingSyndromFrame extends Kit {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -133,7 +134,7 @@ public class HammingSyndromFrame extends Kit {
         c.gridy = 2;
         jPanel1.add(getDragList(new Object[] {getTitle() + "_hcElem"}), c);
 
-        this.setSize(160, 120);
+        this.setSize(160, 130);
     }
 
     @Override

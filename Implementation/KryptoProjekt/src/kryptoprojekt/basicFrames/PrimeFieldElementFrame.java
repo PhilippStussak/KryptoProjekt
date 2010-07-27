@@ -173,9 +173,10 @@ public class PrimeFieldElementFrame extends Kit {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 281, Short.MAX_VALUE)
+            .addGap(0, 293, Short.MAX_VALUE)
         );
 
+        mulTableBtn.setFont(resourceMap.getFont("mulTableBtn.font")); // NOI18N
         mulTableBtn.setText(resourceMap.getString("mulTableBtn.text")); // NOI18N
         mulTableBtn.setName("mulTableBtn"); // NOI18N
         mulTableBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -184,6 +185,7 @@ public class PrimeFieldElementFrame extends Kit {
             }
         });
 
+        addTableBtn.setFont(resourceMap.getFont("addTableBtn.font")); // NOI18N
         addTableBtn.setText(resourceMap.getString("addTableBtn.text")); // NOI18N
         addTableBtn.setName("addTableBtn"); // NOI18N
         addTableBtn.addActionListener(new java.awt.event.ActionListener() {

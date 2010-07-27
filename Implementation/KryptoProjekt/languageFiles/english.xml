@@ -144,11 +144,11 @@
 		<ExtendBtn>Extend</ExtendBtn>
 	</SaMFrame>
 	<SaMModFrame>
-		<HeaderLabel>Square &amp; Multiply (Modulo)</HeaderLabel>
+		<HeaderLabel>Square &amp; Multiply (Mod)</HeaderLabel>
 		<ExtendBtn>Extend</ExtendBtn>
 	</SaMModFrame>
 	<SubstractFrame>
-		<HeaderLabel>Substraction</HeaderLabel>
+		<HeaderLabel>Subtraction</HeaderLabel>
 	</SubstractFrame>
 	<ZFrame>
 		<HeaderLabel>Z (Integer)</HeaderLabel>
@@ -164,7 +164,7 @@
 		<HeaderLabel>Matrix multiplication</HeaderLabel>
 	</MatrixMultiplyFrame>
 	<MatrixPrimeFieldFrame>
-		<HeaderLabel>Create new matrix with Primefields</HeaderLabel>
+		<HeaderLabel>Create new matrix (Primefield)</HeaderLabel>
 		<ExtendBtn>Extend</ExtendBtn>
 		<PrimefieldLabel>Primefield</PrimefieldLabel>
 	</MatrixPrimeFieldFrame>

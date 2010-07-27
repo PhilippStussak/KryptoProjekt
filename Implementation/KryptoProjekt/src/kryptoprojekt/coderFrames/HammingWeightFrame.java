@@ -63,7 +63,7 @@ public class HammingWeightFrame extends Kit {
         c.gridy = 2;
         jPanel1.add(getDragList(new Object[]{getTitle() + "_weight"}), c);
 
-        this.setSize(160, 120);
+        this.setSize(180, 130);
     }
 
     @Override
@@ -103,7 +103,7 @@ public class HammingWeightFrame extends Kit {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 262, Short.MAX_VALUE)
+            .addGap(0, 282, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

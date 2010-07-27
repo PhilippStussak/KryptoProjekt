@@ -109,7 +109,7 @@ public class FermatFrame extends Kit {
         jPanelPrime.setLayout(jPanelPrimeLayout);
         jPanelPrimeLayout.setHorizontalGroup(
             jPanelPrimeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 79, Short.MAX_VALUE)
+            .addGap(0, 76, Short.MAX_VALUE)
         );
         jPanelPrimeLayout.setVerticalGroup(
             jPanelPrimeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -133,7 +133,7 @@ public class FermatFrame extends Kit {
         jPanelSettings.setLayout(jPanelSettingsLayout);
         jPanelSettingsLayout.setHorizontalGroup(
             jPanelSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 165, Short.MAX_VALUE)
+            .addGap(0, 162, Short.MAX_VALUE)
         );
         jPanelSettingsLayout.setVerticalGroup(
             jPanelSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -146,7 +146,7 @@ public class FermatFrame extends Kit {
         jPanelDropList.setLayout(jPanelDropListLayout);
         jPanelDropListLayout.setHorizontalGroup(
             jPanelDropListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 250, Short.MAX_VALUE)
+            .addGap(0, 244, Short.MAX_VALUE)
         );
         jPanelDropListLayout.setVerticalGroup(
             jPanelDropListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -163,21 +163,20 @@ public class FermatFrame extends Kit {
                     .addComponent(jPanelDropList, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(fermatTestLabel)
-                            .addComponent(jPanelPrime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jPanelPrime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(fermatTestLabel))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jButton1)
-                            .addComponent(jPanelSettings, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE))))
+                            .addComponent(jPanelSettings, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jButton1))
+                    .addComponent(jButton1)
                     .addComponent(fermatTestLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

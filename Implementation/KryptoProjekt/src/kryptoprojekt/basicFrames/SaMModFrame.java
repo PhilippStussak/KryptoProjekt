@@ -140,7 +140,7 @@ public class SaMModFrame extends Kit {
         c.gridy = 2;
         jPanel1.add(getDragList(new Object[]{getTitle() + "_SaMMod"}), c);
 
-        this.setSize(250, 150);
+        this.setSize(260, 150);
     }
 
     @Override

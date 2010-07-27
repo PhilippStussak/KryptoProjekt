@@ -16,7 +16,6 @@ import javax.swing.JLabel;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
 import kryptoprojekt.controller.CoderController;
-import kryptoprojekt.model.HammingCode;
 import kryptoprojekt.model.Matrix;
 import kryptoprojekt.model.PrimeFieldElement;
 
@@ -78,7 +77,7 @@ public class HammingDistanceFrame extends Kit {
         c.gridy = 2;
         jPanel1.add(getDragList(new Object[]{getTitle() + "_distance"}), c);
 
-        this.setSize(160, 120);
+        this.setSize(190, 140);
     }
 
     @Override
