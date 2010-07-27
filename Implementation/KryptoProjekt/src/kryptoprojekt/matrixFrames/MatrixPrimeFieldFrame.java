@@ -175,7 +175,7 @@ public class MatrixPrimeFieldFrame extends Kit {
         results.put(getTitle() + "_matrix", null);
         jPanel1.setLayout(new BorderLayout());
         jPanel1.add(list);
-        this.setSize(280, 150);
+        this.setSize(300, 160);
     }
 
     @Override

@@ -199,7 +199,7 @@ public class ExtendedGCDFrame extends Kit {
         c.gridy = 1;
         jPanel1.add(getDragList(new Object[]{getTitle() + "_egcd"}), c);
 
-        this.setSize(200, 120);
+        this.setSize(200, 130);
     }
 
     @Override

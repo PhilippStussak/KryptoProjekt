@@ -3,6 +3,7 @@
  */
 package kryptoprojekt;
 
+import java.awt.Font;
 import kryptoprojekt.basicFrames.AdditionFrame;
 import kryptoprojekt.basicFrames.SubtractFrame;
 import kryptoprojekt.basicFrames.ZFrame;
@@ -17,6 +18,8 @@ import javax.swing.Timer;
 import javax.swing.Icon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.UIManager;
+import javax.swing.plaf.FontUIResource;
 import kryptoprojekt.basicFrames.DivisionFrame;
 import kryptoprojekt.basicFrames.ExtendedGCDFrame;
 import kryptoprojekt.basicFrames.GCDFrame;
@@ -50,6 +53,10 @@ public class KryptoProjektView extends FrameView {
     private Desktop desktop;
     private ConnectionHandler handler = new ConnectionHandler();
     private Executor executor;
+
+    static {
+        UIManager.put("TextArea.font", new FontUIResource("Courier New", Font.PLAIN, 11));
+    }
 
     public KryptoProjektView(SingleFrameApplication app) {
         super(app);

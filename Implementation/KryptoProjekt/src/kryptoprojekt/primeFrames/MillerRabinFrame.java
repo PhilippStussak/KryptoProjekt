@@ -132,7 +132,7 @@ public class MillerRabinFrame extends Kit {
         jPanelPrimeMiller.setLayout(jPanelPrimeMillerLayout);
         jPanelPrimeMillerLayout.setHorizontalGroup(
             jPanelPrimeMillerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 83, Short.MAX_VALUE)
+            .addGap(0, 80, Short.MAX_VALUE)
         );
         jPanelPrimeMillerLayout.setVerticalGroup(
             jPanelPrimeMillerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -156,7 +156,7 @@ public class MillerRabinFrame extends Kit {
         jPanelSettingsMiller.setLayout(jPanelSettingsMillerLayout);
         jPanelSettingsMillerLayout.setHorizontalGroup(
             jPanelSettingsMillerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 161, Short.MAX_VALUE)
+            .addGap(0, 158, Short.MAX_VALUE)
         );
         jPanelSettingsMillerLayout.setVerticalGroup(
             jPanelSettingsMillerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -169,7 +169,7 @@ public class MillerRabinFrame extends Kit {
         jPanelDropListMiller.setLayout(jPanelDropListMillerLayout);
         jPanelDropListMillerLayout.setHorizontalGroup(
             jPanelDropListMillerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 250, Short.MAX_VALUE)
+            .addGap(0, 244, Short.MAX_VALUE)
         );
         jPanelDropListMillerLayout.setVerticalGroup(
             jPanelDropListMillerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -187,21 +187,20 @@ public class MillerRabinFrame extends Kit {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanelPrimeMiller, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(millerRabinTestLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE))
+                            .addComponent(millerRabinTestLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(ExtendBtMiller)
-                            .addComponent(jPanelSettingsMiller, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE))))
+                            .addComponent(jPanelSettingsMiller, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(millerRabinTestLabel)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(ExtendBtMiller)))
+                    .addComponent(ExtendBtMiller)
+                    .addComponent(millerRabinTestLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanelSettingsMiller, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
@@ -265,7 +264,7 @@ public class MillerRabinFrame extends Kit {
         jPanelSettingsMiller.setLayout(new GridBagLayout());
         jPanelDropListMiller.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
-        this.setSize(260, 210);
+        this.setSize(290, 220);
 
         basesTextField.addKeyListener(new KeyListener() {
 

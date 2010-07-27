@@ -143,7 +143,7 @@ public class MatrixFrame extends Kit {
         results.put(getTitle() + "_matrix", null);
         jPanel1.setLayout(new BorderLayout());
         jPanel1.add(list);
-        this.setSize(200, 120);
+        this.setSize(220, 130);
     }
 
     @Override

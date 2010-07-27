@@ -65,19 +65,19 @@ public class PhiFrame extends Kit {
 
         jPanel1.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
-        c.weightx = 0.05;
+        c.weightx = 0.01;
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
         c.gridy = 0;
         jPanel1.add(new JLabel("phi("), c);
 
-        c.weightx = 0.9;
+        c.weightx = 0.98;
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 1;
         c.gridy = 0;
         jPanel1.add(textField1, c);
 
-        c.weightx = 0.05;
+        c.weightx = 0.01;
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 2;
         c.gridy = 0;
@@ -90,7 +90,7 @@ public class PhiFrame extends Kit {
         c.gridy = 1;
         jPanel1.add(getDragList(new Object[]{getTitle() + "_phi"}), c);
 
-        this.setSize(160, 120);
+        this.setSize(200, 130);
     }
 
     @Override
