@@ -812,7 +812,11 @@ public class MillerRabinFrame extends Kit {
                 probability = "";
             } else {
                 double probDouble = output.second() * 100;
-                probability = "    probability = " + String.valueOf(probDouble) + "%";
+                if(output.first() == true && probDouble == 100){
+                     probability = "    probability = <" + String.valueOf(probDouble) + "%";
+                }else{
+                     probability = "    probability = " + String.valueOf(probDouble) + "%";
+                }
             }
             if (output.first() == true) {
                 posResults.add(moduls.get(i));

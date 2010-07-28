@@ -145,13 +145,17 @@ public class MillerRabinZ extends MillerRabinTest<Z>{
                 //contains the value after the FermatTest step
                 Z firstTest;
                 Z result;
+                int basesCounter = 0;
+                int basesSize = bases.size();
                 nextBase:
                 for (Z base : bases) {
                     ++assertPostCondCounter;
                     firstTest = Basic.squareAndMultiply(base, oddFactor, checkPrime).first();
                     intermediateValues.add(base+ "^" +oddFactor+ " mod " +checkPrime+ " = " +firstTest);
                     if((firstTest).isONE() || firstTest.equals(checkPrime.subtract(oneObj))) {
-                        intermediateValues.add("");
+                        if(++basesCounter < basesSize){
+                            intermediateValues.add(" ");
+                        }
                         continue;
                     } else{
                         Z newBase = firstTest;
@@ -160,9 +164,11 @@ public class MillerRabinZ extends MillerRabinTest<Z>{
                             assert potenzK <= maxPower.intValue(): "Too many Iterations. assertZaehler: "+potenzK+ ", maxPower: " +maxPower ;
                             result = Basic.squareAndMultiply(newBase, twoFactor, checkPrime).first();
                             intermediateValues.add("(" +newBase+ ")^2^" +potenzK+ " mod " +checkPrime+ " = " +result);
-                            //n-1 than checkPrime is a prime number
+                            //n-1, than checkPrime is a prime number
                             if (result.equals(new Z(checkPrime.subtract(oneObj).toString()))){
-                                intermediateValues.add("");
+                                if(++basesCounter < basesSize){
+                                    intermediateValues.add(" ");
+                                }
                                 continue nextBase;
                             }
                             ++potenzK;
