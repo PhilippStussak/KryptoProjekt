@@ -68,8 +68,8 @@ public class FermatFrame extends Kit {
     private StringBuilder outputWindow;
     private StyledDocument doc;
     private boolean calcProb; //true probability will calculated
-    private boolean correctBasesArguments;
     private boolean correctModulsArguments;
+    private boolean correctBasesArguments;
 
 
     /** Creates new form FermatFrame */
@@ -95,6 +95,7 @@ public class FermatFrame extends Kit {
         jPanelDropList = new javax.swing.JPanel();
 
         setClosable(true);
+        setResizable(true);
         setDoubleBuffered(true);
         setName("Form"); // NOI18N
         setPreferredSize(new java.awt.Dimension(280, 190));
@@ -109,7 +110,7 @@ public class FermatFrame extends Kit {
         jPanelPrime.setLayout(jPanelPrimeLayout);
         jPanelPrimeLayout.setHorizontalGroup(
             jPanelPrimeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 76, Short.MAX_VALUE)
+            .addGap(0, 81, Short.MAX_VALUE)
         );
         jPanelPrimeLayout.setVerticalGroup(
             jPanelPrimeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -133,7 +134,7 @@ public class FermatFrame extends Kit {
         jPanelSettings.setLayout(jPanelSettingsLayout);
         jPanelSettingsLayout.setHorizontalGroup(
             jPanelSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 162, Short.MAX_VALUE)
+            .addGap(0, 163, Short.MAX_VALUE)
         );
         jPanelSettingsLayout.setVerticalGroup(
             jPanelSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -146,7 +147,7 @@ public class FermatFrame extends Kit {
         jPanelDropList.setLayout(jPanelDropListLayout);
         jPanelDropListLayout.setHorizontalGroup(
             jPanelDropListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 244, Short.MAX_VALUE)
+            .addGap(0, 250, Short.MAX_VALUE)
         );
         jPanelDropListLayout.setVerticalGroup(
             jPanelDropListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -168,7 +169,7 @@ public class FermatFrame extends Kit {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jButton1)
-                            .addComponent(jPanelSettings, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE))))
+                            .addComponent(jPanelSettings, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -239,7 +240,7 @@ public class FermatFrame extends Kit {
         jPanelDropList.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         this.setSize(290, 210);
-
+        
         moduloTextField.addKeyListener(new KeyListener() {
             public void keyTyped(KeyEvent e) {
             }
@@ -248,7 +249,7 @@ public class FermatFrame extends Kit {
             }
 
             public void keyReleased(KeyEvent e) {
-                if(validateModuloTextField()){
+                if(validateModuloTextField(getModulTextFieldValue())){
                     moduloTextField.setForeground(Color.black);
                     correctModulsArguments = true;
                     if(randomBasesCB.isSelected()){
@@ -271,7 +272,7 @@ public class FermatFrame extends Kit {
             }
 
             public void keyReleased(KeyEvent e) {
-                if(validateBaseTextField()){
+                if(validateBaseTextField(getBaseTextFieldValue())){
                     basesTextField.setForeground(Color.black);
                     correctBasesArguments = true;
                 }else{
@@ -476,15 +477,15 @@ public class FermatFrame extends Kit {
         jPanelSettings.add(randomBasesCB, c);
     }
 
-    private boolean validateModuloTextField(){
-        StringBuilder numbSequence = new StringBuilder(getModulTextFieldValue());
+    private boolean validateModuloTextField(String moduloTextFieldString){
+        StringBuilder numbSequence = new StringBuilder(moduloTextFieldString);
         int dashPos = 0;
         boolean checkOther = true;
 
         int assertCounter = 0;
         if (dashPos != -1) {
             for (int k = 0; k < numbSequence.length() && k >= 0;) {
-                assert assertCounter < getModulTextFieldValue().length() : "Too many iterations.";
+                assert assertCounter < moduloTextFieldString.length() : "Too many iterations.";
                 dashPos = numbSequence.indexOf("-", k);
                 k = -1;
                 if (dashPos > 0 && dashPos < numbSequence.length() - 1) {
@@ -516,15 +517,15 @@ public class FermatFrame extends Kit {
         }
     }
 
-    private boolean validateBaseTextField(){
-        StringBuilder numbSequence = new StringBuilder(getBaseTextFieldValue());
+    private boolean validateBaseTextField(String baseTextFieldString){
+        StringBuilder numbSequence = new StringBuilder(baseTextFieldString);
         int dashPos = 0;
         boolean checkOther = true;
 
         int assertCounter = 0;
         if (dashPos != -1) {
             for (int k = 0; k < numbSequence.length() && k >= 0;) {
-                assert assertCounter < getBaseTextFieldValue().length() : "Too many iterations.";
+                assert assertCounter < baseTextFieldString.length() : "Too many iterations.";
                 dashPos = numbSequence.indexOf("-", k);
                 k = -1;
                 if (dashPos > 0 && dashPos < numbSequence.length() - 1) {
@@ -665,7 +666,7 @@ public class FermatFrame extends Kit {
     private ArrayList<KryptoType> splitInputToZ(String splitMe) {
         //Precondition
         assert splitMe.length()!=0: "Error, String is empty. splitMe = " +splitMe;
-        assert correctModulsArguments || correctBasesArguments !=false: "Error, Moduls or Bases arguments have a false state. moduls = " +correctModulsArguments+ " bases =" +correctBasesArguments;
+        assert correctModulsArguments || correctBasesArguments !=false: "Error, moduls or bases arguments have a false state. moduls = " +correctModulsArguments+ " bases =" +correctBasesArguments;
         Pattern baseModulSeparator = Pattern.compile("(([,]+[\\s]*)+|([\\s]+[,]*)+)"); //split an input list of bases and moduls(primes)
         Pattern dashSeparator = Pattern.compile("[\\-]");
         StringBuilder numbSequence = new StringBuilder(splitMe);
@@ -728,24 +729,33 @@ public class FermatFrame extends Kit {
         LinkedList<KryptoType> posResults = new LinkedList<KryptoType>();
 
         if (moduloTextField.getResult() != null) {
-            moduls.add((KryptoType) moduloTextField.getResult());
+            if(validateModuloTextField(getModulTextFieldValue()) && validateBaseTextField(getBaseTextFieldValue())){
+                moduls = splitInputToZ(moduloTextField.getResult().toString());
+                //moduls.add((KryptoType) moduloTextField.getResult());
+            } else{
+                return correctModulsArguments ? "You passed an invalid natural number in order to check it's a prime." : "You passed an invalid base.";
+            }
         } else if(correctModulsArguments && getModulTextFieldValue().length() != 0){
             moduls = splitInputToZ(getModulTextFieldValue());
-        }else{
+        } else{
             return "You have to enter a natural number >=2 in order to check it's a prime.";
         }
 
         if (basesTextField.getResult() != null) {
-            bases.add((KryptoType) basesTextField.getResult());
+            if(validateBaseTextField(getBaseTextFieldValue()) && validateModuloTextField(getModulTextFieldValue())){
+                bases = splitInputToZ(basesTextField.getResult().toString());
+                //bases.add((KryptoType) basesTextField.getResult());
+            } else{
+                return correctBasesArguments ? "You passed an invalid base." : "You passed an invalid natural number in order to check it's a prime." ;
+            }
         } else if(correctBasesArguments && getBaseTextFieldValue().length() != 0){
             bases = splitInputToZ(getBaseTextFieldValue());
         } else if(getModulTextFieldValue().equals("2")){
             ArrayList<KryptoType> two = new ArrayList<KryptoType>();
             two.add(new Z("2"));
             bases = two;
-        }
-        else{
-            return "You have to enter a valid base >=2";
+        } else{
+            return "You have to enter a valid base >=2.";
         }
 
         try {

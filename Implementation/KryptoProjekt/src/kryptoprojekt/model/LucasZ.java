@@ -206,7 +206,7 @@ public class LucasZ extends LucasTest<Z>{
                 return false;
             }else{
                 assert Integer.parseInt(checkPrime.toString()) == 2: "Error, checkPrime != 2. checkPrime: " +checkPrime.toString();
-                intermediateValues.add(checkPrime+ " = 1");
+                //intermediateValues.add(checkPrime+ " = 1"); //This is already inserted by the Fermat-Test.
                 return true;
             }
         }

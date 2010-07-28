@@ -48,12 +48,14 @@ public class LucasFrame extends Kit {
     private DropTextField basesTextField = getDropTextField();
     private DropTextField summandTextField = getDropTextField();
     private boolean calcProb;
-    private boolean correctArguments;
     private LinkedList<String> extendList;
     private LinkedList<LinkedList<String>> extension;
     private StyledDocument doc;
     private StringBuilder outputWindow;
-
+    private boolean correctPrimeFactorsArguments;
+    private boolean correctSummandArguments;
+    private boolean correctBasesArguments;
+    
     /** Creates new form LucasFrame */
     public LucasFrame(ConnectionHandler handler) {
         super(handler);
@@ -80,11 +82,14 @@ public class LucasFrame extends Kit {
         setDoubleBuffered(true);
         setMinimumSize(new java.awt.Dimension(200, 200));
         setName("Form"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(350, 300));
+        setPreferredSize(new java.awt.Dimension(250, 200));
 
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(kryptoprojekt.KryptoProjektApp.class).getContext().getResourceMap(LucasFrame.class);
         jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
+        jLabel1.setMaximumSize(new java.awt.Dimension(80, 14));
+        jLabel1.setMinimumSize(new java.awt.Dimension(80, 14));
         jLabel1.setName("jLabel1"); // NOI18N
+        jLabel1.setPreferredSize(new java.awt.Dimension(80, 14));
 
         jPanelDropListLucas.setName("jPanelDropListLucas"); // NOI18N
 
@@ -92,7 +97,7 @@ public class LucasFrame extends Kit {
         jPanelDropListLucas.setLayout(jPanelDropListLucasLayout);
         jPanelDropListLucasLayout.setHorizontalGroup(
             jPanelDropListLucasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 314, Short.MAX_VALUE)
+            .addGap(0, 230, Short.MAX_VALUE)
         );
         jPanelDropListLucasLayout.setVerticalGroup(
             jPanelDropListLucasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -101,7 +106,10 @@ public class LucasFrame extends Kit {
 
         extendBtLucas.setText(resourceMap.getString("ExtendBtLucas.text")); // NOI18N
         extendBtLucas.setAlignmentX(0.5F);
+        extendBtLucas.setAlignmentY(0.0F);
+        extendBtLucas.setDoubleBuffered(true);
         extendBtLucas.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        extendBtLucas.setIconTextGap(0);
         extendBtLucas.setName("ExtendBtLucas"); // NOI18N
         extendBtLucas.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         extendBtLucas.addActionListener(new java.awt.event.ActionListener() {
@@ -110,19 +118,20 @@ public class LucasFrame extends Kit {
             }
         });
 
-        jPanel1.setMinimumSize(new java.awt.Dimension(200, 180));
+        jPanel1.setMaximumSize(new java.awt.Dimension(320, 320));
+        jPanel1.setMinimumSize(new java.awt.Dimension(120, 92));
         jPanel1.setName("jPanel1"); // NOI18N
-        jPanel1.setPreferredSize(new java.awt.Dimension(450, 450));
+        jPanel1.setPreferredSize(new java.awt.Dimension(120, 92));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 314, Short.MAX_VALUE)
+            .addGap(0, 230, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 120, Short.MAX_VALUE)
+            .addGap(0, 92, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -133,11 +142,11 @@ public class LucasFrame extends Kit {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 196, Short.MAX_VALUE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
                         .addComponent(extendBtLucas))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE)
-                    .addComponent(jPanelDropListLucas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanelDropListLucas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -146,12 +155,12 @@ public class LucasFrame extends Kit {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(extendBtLucas)
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(1, 1, 1)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanelDropListLucas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(92, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -201,12 +210,12 @@ public class LucasFrame extends Kit {
 }//GEN-LAST:event_extendBtLucasActionPerformed
 
     private void initLogicComponents() {
+        jPanel1.setLayout(new GridBagLayout());
         jPanelDropListLucas.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
-        this.setSize(260, 210);
+        this.setSize(250, 200);
 
         primeFactorsTextField.addKeyListener(new KeyListener() {
-
             public void keyTyped(KeyEvent e) {
             }
 
@@ -214,67 +223,18 @@ public class LucasFrame extends Kit {
             }
 
             public void keyReleased(KeyEvent e) {
-                if (LogicValidator.isTermMultiplication(primeFactorsTextField.getText())) {
+                if (validatePrimeFactorsField(getPrimeFactorsTextFieldValue())) {
                     primeFactorsTextField.setForeground(Color.black);
+                    correctPrimeFactorsArguments = true;
                 } else {
                     primeFactorsTextField.setForeground(Color.red);
-                }
-            }
-        });
-
-        basesTextField.addKeyListener(new KeyListener() {
-
-            public void keyTyped(KeyEvent e) {
-            }
-
-            public void keyPressed(KeyEvent e) {
-            }
-
-            public void keyReleased(KeyEvent e) {
-                StringBuilder numbSequence = new StringBuilder(basesTextField.getText());
-                int dashPos = 0;
-                boolean checkOther = true;
-
-                int assertCounter = 0;
-                if (dashPos != -1) {
-                    for (int k = 0; k < numbSequence.length() && k >= 0;) {
-                        assert assertCounter < basesTextField.getText().length() : "Too many iterations.";
-                        dashPos = numbSequence.indexOf("-", k);
-                        k = -1;
-                        if (dashPos > 0 && dashPos < numbSequence.length() - 1) {
-                            if (LogicValidator.isPosInteger(String.valueOf(numbSequence.charAt(dashPos - 1))) && LogicValidator.isPosInteger(String.valueOf(numbSequence.charAt(dashPos + 1)))) {
-                                numbSequence = numbSequence.deleteCharAt(dashPos);
-                                k = dashPos;
-                            } else {
-                                dashPos = -1; //wrong parameter
-                                checkOther = false;
-                            }
-                        } else if (dashPos == 0) {
-                            dashPos = -1; //wrong parameter
-                            checkOther = false;
-                        }
-                        assertCounter++;
-                    }
-                    assertCounter = 0;
-                }
-
-                if (checkOther) {
-                    numbSequence = deleteChar(numbSequence, ","); //delete
-                    numbSequence = deleteChar(numbSequence, "."); //delete
-                    numbSequence = deleteChar(numbSequence, " "); //delete
-                }
-                if (LogicValidator.isPosInteger(numbSequence.toString())) {
-                    basesTextField.setForeground(Color.black);
-                    correctArguments = true;
-                } else {
-                    basesTextField.setForeground(Color.red);
-                    correctArguments = false;
+                    correctPrimeFactorsArguments = false;
+                    basesTextField.setText("");
                 }
             }
         });
 
         summandTextField.addKeyListener(new KeyListener() {
-
             public void keyTyped(KeyEvent e) {
             }
 
@@ -282,41 +242,84 @@ public class LucasFrame extends Kit {
             }
 
             public void keyReleased(KeyEvent e) {
-                if (LogicValidator.isInteger(summandTextField.getText())) {
+                if (validateSummandTextField(getSummandTextFieldValue())) {
                     summandTextField.setForeground(Color.black);
+                    correctSummandArguments = true;
+                    basesTextField.setText("");
                 } else {
                     summandTextField.setForeground(Color.red);
+                    correctSummandArguments = false;
                 }
             }
         });
 
-        jPanel1.setLayout(new GridBagLayout());
+        basesTextField.addKeyListener(new KeyListener() {
+            public void keyTyped(KeyEvent e) {
+            }
 
+            public void keyPressed(KeyEvent e) {
+            }
+
+            public void keyReleased(KeyEvent e) {
+                if(validateBaseTextField(getBaseTextFieldValue())){
+                    basesTextField.setForeground(Color.black);
+                    correctBasesArguments = true;
+                }else{
+                    basesTextField.setForeground(Color.red);
+                    correctBasesArguments = false;
+                }
+            }
+        });
+
+        //JPanel1
+        //prime input
         c = new GridBagConstraints();
-        c.fill = GridBagConstraints.BOTH;
+        c.fill = GridBagConstraints.NONE;
+        c.anchor = GridBagConstraints.NORTHWEST;
         c.gridx = 0;
         c.gridy = 0;
+        c.weightx = 0;
+        //c.insets = new Insets(0, 2, 1, 2);
         JLabel l = new JLabel();
         l.setText("prime factors");
         jPanel1.add(l, c);
 
         c = new GridBagConstraints();
-        c.weightx = 0.6;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.anchor = GridBagConstraints.NORTHWEST;
+        c.weightx = 0.5;
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
         c.gridy = 1;
         c.gridwidth = 2;
         jPanel1.add(primeFactorsTextField, c);
 
+        //summand
         c = new GridBagConstraints();
-        c.gridx = 4;
-        c.gridy = 0;
-        jPanel1.add(extendBtLucas);
-
-
-        c = new GridBagConstraints();
-        //c.weightx = 0.4;
         c.fill = GridBagConstraints.BOTH;
+        c.anchor = GridBagConstraints.NORTH; //wegmachen
+        c.gridx = 2;
+        c.gridy = 1;
+        c.anchor = GridBagConstraints.CENTER;
+        c.insets = new Insets(1, 2, 1, 2);
+        jPanel1.add(new JLabel("+"), c);
+        
+        c = new GridBagConstraints();
+        c.weightx = 0.4;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.anchor = GridBagConstraints.NORTH; //wegmachen
+        c.gridx = 3;
+        c.gridy = 1;
+        jPanel1.add(summandTextField, c);
+        summandTextField.setText("1");
+        summandTextField.setEnabled(false);
+
+        //base input
+        c = new GridBagConstraints();
+        c.weightx = 0;
+        c.fill = GridBagConstraints.NONE;
+        c.anchor = GridBagConstraints.WEST;
+        c.insets = new Insets(5, 0, 0, 0);
         c.gridx = 0;
         c.gridy = 2;
         JLabel l2 = new JLabel();
@@ -325,7 +328,7 @@ public class LucasFrame extends Kit {
 
         c = new GridBagConstraints();
         c.weightx = 0.2;
-        c.fill = GridBagConstraints.BOTH;
+        c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
         c.gridy = 3;
         jPanel1.add(basesTextField, c);
@@ -334,31 +337,81 @@ public class LucasFrame extends Kit {
         //drop List
         c = new GridBagConstraints();
         c.weightx = 1;
-        //c.weighty = 1;
-        c.fill = GridBagConstraints.HORIZONTAL;
+        c.fill = GridBagConstraints.BOTH;
         c.gridwidth = 1;
         c.gridx = 0;
         c.gridy = 4;
         jPanelDropListLucas.add(getDragList(new Object[]{getTitle() + "_primeLucas"}), c);
+    }
 
-        c = new GridBagConstraints();
-        c.fill = GridBagConstraints.BOTH;
-        c.gridx = 2;
-        c.gridy = 1;
-        c.anchor = GridBagConstraints.CENTER;
-        c.insets = new Insets(1, 2, 1, 2);
-        jPanel1.add(new JLabel("+"), c);
+    private boolean validatePrimeFactorsField(String primeFactorsTextFieldString){
+        if (LogicValidator.isTermMultiplication(primeFactorsTextFieldString)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-        c = new GridBagConstraints();
-        c.weightx = 0.4;
-        c.fill = GridBagConstraints.BOTH;
-        c.gridx = 3;
-        c.gridy = 1;
-        jPanel1.add(summandTextField, c);
-        summandTextField.setText("1");
-        summandTextField.setEnabled(false);
+    private boolean validateSummandTextField(String summandTextFieldString){
+        if (LogicValidator.isInteger(summandTextFieldString)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-        this.setSize(300, 215);
+    private boolean validateBaseTextField(String baseTextFieldString){
+        StringBuilder numbSequence = new StringBuilder(baseTextFieldString);
+        int dashPos = 0;
+        boolean checkOther = true;
+
+        int assertCounter = 0;
+        if (dashPos != -1) {
+            for (int k = 0; k < numbSequence.length() && k >= 0;) {
+                assert assertCounter < baseTextFieldString.length() : "Too many iterations.";
+                dashPos = numbSequence.indexOf("-", k);
+                k = -1;
+                if (dashPos > 0 && dashPos < numbSequence.length() - 1) {
+                    if (LogicValidator.isPosInteger(String.valueOf(numbSequence.charAt(dashPos - 1))) && LogicValidator.isPosInteger(String.valueOf(numbSequence.charAt(dashPos + 1)))) {
+                        numbSequence = numbSequence.deleteCharAt(dashPos);
+                        k = dashPos;
+                    } else {
+                        dashPos = -1; //wrong parameter
+                        checkOther = false;
+                    }
+                } else if (dashPos == 0) {
+                    dashPos = -1; //wrong parameter
+                    checkOther = false;
+                }
+                assertCounter++;
+            }
+            assertCounter = 0;
+        }
+        if (checkOther) {
+            numbSequence = deleteChar(numbSequence, ","); //delete
+            numbSequence = deleteChar(numbSequence, "."); //delete
+            numbSequence = deleteChar(numbSequence, " "); //delete
+        }
+        if (LogicValidator.isPosInteger(numbSequence.toString())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    //returns the value of the prime factors as String
+    private String getPrimeFactorsTextFieldValue(){
+        return primeFactorsTextField.getText();
+    }
+
+    //return the value of the summand as String
+    private String getSummandTextFieldValue(){
+        return summandTextField.getText();
+    }
+
+    //returns the value of the bases as String
+    private String getBaseTextFieldValue(){
+        return basesTextField.getText();
     }
 
     private StringBuilder deleteChar(StringBuilder originalString, String delChar, int fromIndex) {
@@ -376,19 +429,14 @@ public class LucasFrame extends Kit {
     }
 
     private ArrayList<KryptoType> splitInputToZ(String splitMe) {
-        if (correctArguments == false || splitMe.length()==0 || splitMe == null) {
-            return null;
-        }
+        //Precondition
         assert splitMe.length()!=0: "Error, String is empty. splitMe = " +splitMe;
-        assert correctArguments !=false: "Error, correctArguments has a false state = " +correctArguments;
+        assert correctPrimeFactorsArguments || correctBasesArguments !=false: "Error, prime factors or bases arguments have a false state. moduls = " +correctPrimeFactorsArguments+ " bases =" +correctBasesArguments;
         Pattern baseModulSeparator = Pattern.compile("(([,]+[\\s]*)+|([\\s]+[,]*)+)"); //split an input list of bases and moduls(primes)
         Pattern dashSeparator = Pattern.compile("[\\-]");
         StringBuilder numbSequence = new StringBuilder(splitMe);
         int delPointPos = 0;
 
-        if (correctArguments == false) {
-            throw new IllegalArgumentException("Wrong parameters found for bases, modules in window Lucas-Test " + getTitle());
-        }
         //removes all points from the series of number
         for (int i = 0; i < numbSequence.length() && i >= 0;) {
             delPointPos = numbSequence.indexOf(".", i);
@@ -410,7 +458,7 @@ public class LucasFrame extends Kit {
         return resultZ;
     }
 
-    //fills a list of Z from start to end
+    //fills a list of Z from start (first argument in array) to end (second argument in array)
     private ArrayList<Z> fillKryptoTypeZList(String[] range) {
         //Precondition
         assert range.length == 2 : "Error, the array has more than 2 elements: " + Arrays.toString(range);
@@ -458,32 +506,70 @@ public class LucasFrame extends Kit {
 
 
         if (primeFactorsTextField.getResult() != null) {
-            factors.add((Z) primeFactorsTextField.getResult());
-        } else {
+            if(validatePrimeFactorsField(getPrimeFactorsTextFieldValue()) && validateSummandTextField(getSummandTextFieldValue()) && validateBaseTextField(getBaseTextFieldValue())){
+                factorsLinkedList = getFactors(primeFactorsTextField.getResult().toString());
+                for (Tuple<Z, Z> factorsL : factorsLinkedList) {
+                    primeFactors.add(factorsL.first());
+                    factorPowers.add(factorsL.second());
+                }
+            } else{
+                if(!correctPrimeFactorsArguments){
+                    return "You passed an invalid Lucas term in order to check it's a prime.";
+                } else if(!correctSummandArguments){
+                    return "You passed an invalid summand.";
+                } else if(!correctBasesArguments){
+                    return "You passed an invalid base.";
+                }
+            }
+        } else if(correctPrimeFactorsArguments && primeFactorsTextField.getText().length() != 0){
             factorsLinkedList = getFactors(primeFactorsTextField.getText());
-        }
-        {
             for (Tuple<Z, Z> factorsL : factorsLinkedList) {
                 primeFactors.add(factorsL.first());
                 factorPowers.add(factorsL.second());
             }
+        } else{
+            return "You have to enter a valid Lucas term in order to check it's a prime (e.g. 2^4*5*4^5).";
+        }
+
+        if (summandTextField.getResult() != null) {
+            if(validateSummandTextField(getSummandTextFieldValue()) && validatePrimeFactorsField(getPrimeFactorsTextFieldValue()) && validateBaseTextField(getBaseTextFieldValue())){
+                summands.add((Z) summandTextField.getResult());
+                summandPowers.add(new Z("1"));
+            } else{
+                if(!correctSummandArguments){
+                    return "You passed an invalid base.";
+                } else if(!correctPrimeFactorsArguments){
+                    return "You passed an invalid Lucas term in order to check it's a prime.";
+                } else if(!correctSummandArguments){
+                    return "You passed an invalid summand.";
+                }
+            }
+        } else if(validateSummandTextField(getSummandTextFieldValue()) && getSummandTextFieldValue().length() != 0){
+            summands.add(new Z(getSummandTextFieldValue()));
+            summandPowers.add(new Z("1"));
+        } else{
+                return "You have to enter a summand >=1 (recommended summand = 1).";
         }
 
         if (basesTextField.getResult() != null) {
-            bases.add((Z) basesTextField.getResult());
-        } else {
-            bases = splitInputToZ(basesTextField.getText());
-            if(bases == null){
-                return "You have to enter a valid base >=2";
+            if(validateBaseTextField(getBaseTextFieldValue()) && validatePrimeFactorsField(getPrimeFactorsTextFieldValue()) && validateSummandTextField(getSummandTextFieldValue())){
+                bases = splitInputToZ(basesTextField.getResult().toString());
+                //bases.add((Z) basesTextField.getResult());
+            } else{
+                if(!correctBasesArguments){
+                    return "You passed an invalid base.";
+                } else if(!correctPrimeFactorsArguments){
+                    return "You passed an invalid Lucas term in order to check it's a prime.";
+                } else if(!correctSummandArguments){
+                    return "You passed an invalid summand.";
+                }
             }
-        }
-        if (summandTextField.getResult() != null) {
-            summands.add((Z) summandTextField.getResult());
+        } else if(correctBasesArguments && getBaseTextFieldValue().length() != 0){
+            bases = splitInputToZ(getBaseTextFieldValue());
         } else {
-            summands.add(new Z(summandTextField.getText()));
+            return "You have to enter a valid base >=2.";
         }
-        summandPowers.add(new Z("1"));
-
+        
         try {
             result = PrimeTestController.primeTestLucas(bases, primeFactors, factorPowers, summands, summandPowers, calcProb);
         } catch (RuntimeException e) {

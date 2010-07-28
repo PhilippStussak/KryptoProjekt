@@ -70,8 +70,8 @@ public class MillerRabinFrame extends Kit {
     private StringBuilder outputWindow;
     private StyledDocument doc;
     private boolean calcProb;
-    private boolean correctBasesArguments;
     private boolean correctModulsArguments;
+    private boolean correctBasesArguments;
 
     /** Creates new form MillerRabinFrame */
     public MillerRabinFrame(ConnectionHandler handler) {
@@ -103,9 +103,11 @@ public class MillerRabinFrame extends Kit {
         jPanelDropListMiller = new javax.swing.JPanel();
 
         setClosable(true);
+        setResizable(true);
         setDoubleBuffered(true);
+        setMinimumSize(new java.awt.Dimension(295, 210));
         setName("Form"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(280, 190));
+        setPreferredSize(new java.awt.Dimension(295, 210));
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
             }
@@ -134,7 +136,7 @@ public class MillerRabinFrame extends Kit {
         jPanelPrimeMiller.setLayout(jPanelPrimeMillerLayout);
         jPanelPrimeMillerLayout.setHorizontalGroup(
             jPanelPrimeMillerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 80, Short.MAX_VALUE)
+            .addGap(0, 119, Short.MAX_VALUE)
         );
         jPanelPrimeMillerLayout.setVerticalGroup(
             jPanelPrimeMillerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -150,15 +152,15 @@ public class MillerRabinFrame extends Kit {
             }
         });
 
-        jPanelSettingsMiller.setMinimumSize(new java.awt.Dimension(120, 97));
+        jPanelSettingsMiller.setMinimumSize(new java.awt.Dimension(125, 97));
         jPanelSettingsMiller.setName("jPanelSettingsMiller"); // NOI18N
-        jPanelSettingsMiller.setPreferredSize(new java.awt.Dimension(135, 183));
+        jPanelSettingsMiller.setPreferredSize(new java.awt.Dimension(125, 183));
 
         javax.swing.GroupLayout jPanelSettingsMillerLayout = new javax.swing.GroupLayout(jPanelSettingsMiller);
         jPanelSettingsMiller.setLayout(jPanelSettingsMillerLayout);
         jPanelSettingsMillerLayout.setHorizontalGroup(
             jPanelSettingsMillerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 158, Short.MAX_VALUE)
+            .addGap(0, 125, Short.MAX_VALUE)
         );
         jPanelSettingsMillerLayout.setVerticalGroup(
             jPanelSettingsMillerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -171,7 +173,7 @@ public class MillerRabinFrame extends Kit {
         jPanelDropListMiller.setLayout(jPanelDropListMillerLayout);
         jPanelDropListMillerLayout.setHorizontalGroup(
             jPanelDropListMillerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 244, Short.MAX_VALUE)
+            .addGap(0, 250, Short.MAX_VALUE)
         );
         jPanelDropListMillerLayout.setVerticalGroup(
             jPanelDropListMillerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -189,11 +191,11 @@ public class MillerRabinFrame extends Kit {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanelPrimeMiller, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(millerRabinTestLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(millerRabinTestLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(ExtendBtMiller)
-                            .addComponent(jPanelSettingsMiller, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE))))
+                            .addComponent(jPanelSettingsMiller, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -267,7 +269,7 @@ public class MillerRabinFrame extends Kit {
         jPanelSettingsMiller.setLayout(new GridBagLayout());
         jPanelDropListMiller.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
-        this.setSize(290, 220);
+        this.setSize(295, 210);
 
         moduloTextField.addKeyListener(new KeyListener() {
             public void keyTyped(KeyEvent e) {
@@ -277,7 +279,7 @@ public class MillerRabinFrame extends Kit {
             }
 
             public void keyReleased(KeyEvent e) {
-                if(validateModuloTextField()){
+                if(validateModuloTextField(getModulTextFieldValue())){
                     moduloTextField.setForeground(Color.black);
                     correctModulsArguments = true;
                     if(randomBasesCB.isSelected()){
@@ -300,7 +302,7 @@ public class MillerRabinFrame extends Kit {
             }
 
             public void keyReleased(KeyEvent e) {
-                if(validateBaseTextField()){
+                if(validateBaseTextField(getBaseTextFieldValue())){
                     basesTextField.setForeground(Color.black);
                     correctBasesArguments = true;
                 }else{
@@ -505,15 +507,15 @@ public class MillerRabinFrame extends Kit {
         jPanelSettingsMiller.add(randomBasesCB, c);
     }
 
-        private boolean validateModuloTextField(){
-        StringBuilder numbSequence = new StringBuilder(moduloTextField.getText());
+        private boolean validateModuloTextField(String moduloTextFieldString){
+        StringBuilder numbSequence = new StringBuilder(moduloTextFieldString);
         int dashPos = 0;
         boolean checkOther = true;
 
         int assertCounter = 0;
         if (dashPos != -1) {
             for (int k = 0; k < numbSequence.length() && k >= 0;) {
-                assert assertCounter < moduloTextField.getText().length() : "Too many iterations.";
+                assert assertCounter < moduloTextFieldString.length() : "Too many iterations.";
                 dashPos = numbSequence.indexOf("-", k);
                 k = -1;
                 if (dashPos > 0 && dashPos < numbSequence.length() - 1) {
@@ -545,15 +547,15 @@ public class MillerRabinFrame extends Kit {
         }
     }
 
-    private boolean validateBaseTextField(){
-        StringBuilder numbSequence = new StringBuilder(getBaseTextFieldValue());
+    private boolean validateBaseTextField(String baseTextFieldString){
+        StringBuilder numbSequence = new StringBuilder(baseTextFieldString);
         int dashPos = 0;
         boolean checkOther = true;
 
         int assertCounter = 0;
         if (dashPos != -1) {
             for (int k = 0; k < numbSequence.length() && k >= 0;) {
-                assert assertCounter < getBaseTextFieldValue().length() : "Too many iterations.";
+                assert assertCounter < baseTextFieldString.length() : "Too many iterations.";
                 dashPos = numbSequence.indexOf("-", k);
                 k = -1;
                 if (dashPos > 0 && dashPos < numbSequence.length() - 1) {
@@ -694,7 +696,7 @@ public class MillerRabinFrame extends Kit {
     private ArrayList<KryptoType> splitInputToZ(String splitMe) {
         //Precondition
         assert splitMe.length()!=0: "Error, String is empty. splitMe = " +splitMe;
-        assert correctModulsArguments || correctBasesArguments !=false: "Error, Moduls or Bases arguments have a false state. moduls = " +correctModulsArguments+ " bases =" +correctBasesArguments;
+        assert correctModulsArguments || correctBasesArguments !=false: "Error, moduls or bases arguments have a false state. moduls = " +correctModulsArguments+ " bases =" +correctBasesArguments;
         Pattern baseModulSeparator = Pattern.compile("(([,]+[\\s]*)+|([\\s]+[,]*)+)"); //split an input list of bases and moduls(primes)
         Pattern dashSeparator = Pattern.compile("[\\-]");
         StringBuilder numbSequence = new StringBuilder(splitMe);
@@ -757,24 +759,33 @@ public class MillerRabinFrame extends Kit {
         LinkedList<KryptoType> posResults = new LinkedList<KryptoType>();
 
         if (moduloTextField.getResult() != null) {
-            moduls.add((KryptoType) moduloTextField.getResult());
+            if(validateModuloTextField(getModulTextFieldValue()) && validateBaseTextField(getBaseTextFieldValue())){
+                moduls = splitInputToZ(moduloTextField.getResult().toString());
+                //moduls.add((KryptoType) moduloTextField.getResult());
+            } else{
+                return correctModulsArguments ? "You passed an invalid natural number in order to check it's a prime." : "You an invalid false base.";
+            }
         } else if(correctModulsArguments && moduloTextField.getText().length() != 0){
             moduls = splitInputToZ(moduloTextField.getText());
-        }else{
+        } else{
             return "You have to enter a natural number >=2 in order to check it's a prime.";
         }
 
         if (basesTextField.getResult() != null) {
-            bases.add((KryptoType) basesTextField.getResult());
+            if(validateBaseTextField(getBaseTextFieldValue()) && validateModuloTextField(getModulTextFieldValue())){
+                bases = splitInputToZ(basesTextField.getResult().toString());
+                //bases.add((KryptoType) basesTextField.getResult());
+            } else{
+                return correctBasesArguments ? "You passed an invalid base." : "You passed an invalid natural number in order to check it's a prime." ;
+            }
         } else if(correctBasesArguments && getBaseTextFieldValue().length() != 0){
             bases = splitInputToZ(getBaseTextFieldValue());
         } else if(getModulTextFieldValue().equals("2")){
             ArrayList<KryptoType> two = new ArrayList<KryptoType>();
             two.add(new Z("2"));
             bases = two;
-        }
-        else{
-            return "You have to enter a valid base >=2";
+        } else{
+            return "You have to enter a valid base >=2.";
         }
 
         try {
