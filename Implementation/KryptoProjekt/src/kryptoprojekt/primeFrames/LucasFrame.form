@@ -36,11 +36,11 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="83" max="32767" attributes="0"/>
+                      <EmptySpace pref="73" max="32767" attributes="0"/>
                       <Component id="extendBtLucas" min="-2" max="-2" attributes="1"/>
                   </Group>
                   <Component id="jPanelDropListLucas" alignment="0" max="32767" attributes="0"/>
-                  <Component id="jPanel1" alignment="1" pref="230" max="32767" attributes="0"/>
+                  <Component id="jPanel1" alignment="1" pref="220" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -87,7 +87,7 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="230" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="220" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -129,7 +129,7 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="230" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="220" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">

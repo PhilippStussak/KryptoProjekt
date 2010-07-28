@@ -93,7 +93,8 @@ public class PrimeTestController {
 
 
     //Lucas-Test
-    public static ArrayList<Triple<Boolean, Double, LinkedList<String>>> primeTestLucas(ArrayList<Triple<ArrayList<Z> , ArrayList<Z>, ArrayList<Z>>> primeFactorsCollection, ArrayList<Tuple<Z , Z>> summandCollection, boolean calcProb) throws RuntimeException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException{
+    public static ArrayList<Triple<Boolean, Double, LinkedList<String>>> primeTestLucas(ArrayList<Triple<ArrayList<Z> , ArrayList<Z>, ArrayList<Z>>> primeFactorsCollection, ArrayList<Tuple<Z , Z>> summandCollection, boolean calcProb)
+            throws RuntimeException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException{
         for (Triple<ArrayList<Z>, ArrayList<Z>, ArrayList<Z>> triples : primeFactorsCollection){
             if(triples.first().getClass().equals(Z.class) && triples.second().getClass().equals(Z.class)){
                 return lucasZPrimeTest(new LucasZ(primeFactorsCollection, summandCollection, calcProb));
