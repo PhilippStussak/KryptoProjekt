@@ -55,7 +55,12 @@ public class KryptoProjektView extends FrameView {
     private Executor executor;
 
     static {
-        UIManager.put("TextArea.font", new FontUIResource("Courier New", Font.PLAIN, 11));
+        UIManager.put("TextArea.font", new FontUIResource("Courier New", Font.PLAIN, 12));
+        UIManager.put("Button.font", new FontUIResource("Arial", Font.PLAIN, 10));
+        UIManager.put("Label.font", new FontUIResource("Arial", Font.PLAIN, 11));
+        UIManager.put("List.font", new FontUIResource("Arial", Font.PLAIN, 11));
+        UIManager.put("CheckBox.font", new FontUIResource("Arial", Font.PLAIN, 11));
+        UIManager.put("TitledBorder.font", new FontUIResource("Arial", Font.BOLD, 10));
     }
 
     public KryptoProjektView(SingleFrameApplication app) {
