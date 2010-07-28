@@ -13,7 +13,6 @@ package kryptoprojekt.primeFrames;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Insets;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -136,11 +135,11 @@ public class MillerRabinFrame extends Kit {
         jPanelPrimeMiller.setLayout(jPanelPrimeMillerLayout);
         jPanelPrimeMillerLayout.setHorizontalGroup(
             jPanelPrimeMillerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 119, Short.MAX_VALUE)
+            .addGap(0, 124, Short.MAX_VALUE)
         );
         jPanelPrimeMillerLayout.setVerticalGroup(
             jPanelPrimeMillerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 97, Short.MAX_VALUE)
+            .addGap(0, 106, Short.MAX_VALUE)
         );
 
         ExtendBtMiller.setText(resourceMap.getString("ExtendBtMiller.text")); // NOI18N
@@ -160,11 +159,11 @@ public class MillerRabinFrame extends Kit {
         jPanelSettingsMiller.setLayout(jPanelSettingsMillerLayout);
         jPanelSettingsMillerLayout.setHorizontalGroup(
             jPanelSettingsMillerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 125, Short.MAX_VALUE)
+            .addGap(0, 129, Short.MAX_VALUE)
         );
         jPanelSettingsMillerLayout.setVerticalGroup(
             jPanelSettingsMillerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 97, Short.MAX_VALUE)
+            .addGap(0, 106, Short.MAX_VALUE)
         );
 
         jPanelDropListMiller.setName("jPanelDropListMiller"); // NOI18N
@@ -173,7 +172,7 @@ public class MillerRabinFrame extends Kit {
         jPanelDropListMiller.setLayout(jPanelDropListMillerLayout);
         jPanelDropListMillerLayout.setHorizontalGroup(
             jPanelDropListMillerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 250, Short.MAX_VALUE)
+            .addGap(0, 259, Short.MAX_VALUE)
         );
         jPanelDropListMillerLayout.setVerticalGroup(
             jPanelDropListMillerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -189,13 +188,13 @@ public class MillerRabinFrame extends Kit {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanelDropListMiller, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanelPrimeMiller, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(millerRabinTestLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE))
+                        .addComponent(jPanelPrimeMiller, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(ExtendBtMiller)
-                            .addComponent(jPanelSettingsMiller, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(jPanelSettingsMiller, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(millerRabinTestLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ExtendBtMiller)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -207,7 +206,7 @@ public class MillerRabinFrame extends Kit {
                     .addComponent(millerRabinTestLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanelSettingsMiller, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
+                    .addComponent(jPanelSettingsMiller, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
                     .addComponent(jPanelPrimeMiller, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanelDropListMiller, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
