@@ -757,6 +757,7 @@ public class MillerRabinFrame extends Kit {
         ArrayList<Triple<Boolean, Double, LinkedList<String>>> result; //contains for each number whether it is a prime, probability, intermediate
         LinkedList<KryptoType> posResults = new LinkedList<KryptoType>();
 
+        //verify the parameters from the TextFields (moduloTextField & basesTextField)
         if (moduloTextField.getResult() != null) {
             if(validateModuloTextField(getModulTextFieldValue()) && validateBaseTextField(getBaseTextFieldValue())){
                 moduls = splitInputToZ(moduloTextField.getResult().toString());
@@ -786,8 +787,10 @@ public class MillerRabinFrame extends Kit {
         } else{
             return "You have to enter a valid base >=2.";
         }
+        //end of the verification
 
         try {
+            //starts the Miller-Rabin-Test
             result = PrimeTestController.primeTestRabin(bases, moduls, calcProb);
         } catch (RuntimeException e) {
             return e.getMessage();

@@ -728,6 +728,7 @@ public class FermatFrame extends Kit {
         ArrayList<Triple<Boolean, Double, LinkedList<String>>> result; //contains for each number whether it is a prime, probability, intermediate
         LinkedList<KryptoType> posResults = new LinkedList<KryptoType>();
 
+        //verify the parameters from the TextFields (moduloTextField & basesTextField)
         if (moduloTextField.getResult() != null) {
             if(validateModuloTextField(getModulTextFieldValue()) && validateBaseTextField(getBaseTextFieldValue())){
                 moduls = splitInputToZ(moduloTextField.getResult().toString());
@@ -757,9 +758,11 @@ public class FermatFrame extends Kit {
         } else{
             return "You have to enter a valid base >=2.";
         }
+        //end of the verification
 
         try {
             result = PrimeTestController.primeTestFermat(bases, moduls, calcProb);
+            //starts the Fermat-Test
         } catch (RuntimeException e) {
             return e.getMessage();
         } catch (NoSuchMethodException e) {

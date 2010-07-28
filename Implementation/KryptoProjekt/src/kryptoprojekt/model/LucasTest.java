@@ -35,7 +35,7 @@ abstract class LucasTest <E extends KryptoType<E>> implements PrimeTest<E> {
         if (!checkSummandsOne(summandCollection)){
             lucastTestCompatibleFactoization(primeFactorsCollection); //not supported yet
         }
-        if(!checkprimeFactorsCollection(primeFactorsCollection)){
+        if(!checkPrimeFactorsCollection(primeFactorsCollection)){
             throw new IllegalArgumentException("Error, different number of factor bases and powers.");
         }
         setPrimeFactorsInListTuples(primeFactorsCollection);
@@ -65,7 +65,7 @@ abstract class LucasTest <E extends KryptoType<E>> implements PrimeTest<E> {
         if (!checkSummandsOne(summandCollection)){
             lucastTestCompatibleFactoization(primeFactorsCollection); //not supported yet
         }
-        if(!checkprimeFactorsCollection(primeFactorsCollection)){
+        if(!checkPrimeFactorsCollection(primeFactorsCollection)){
             throw new IllegalArgumentException("Different number of factor bases and powers.");
         }
         setPrimeFactorsInListTuples(primeFactorsCollection);
@@ -86,7 +86,7 @@ abstract class LucasTest <E extends KryptoType<E>> implements PrimeTest<E> {
     }
 
     //checks whether all prime factors per Lucas term have one power
-    private boolean checkprimeFactorsCollection(Collection<Triple<ArrayList<E> , ArrayList<E>, ArrayList<E>>> primeFactorsCollection){
+    private boolean checkPrimeFactorsCollection(Collection<Triple<ArrayList<E> , ArrayList<E>, ArrayList<E>>> primeFactorsCollection){
         for (Triple<ArrayList<E>, ArrayList<E>, ArrayList<E>> triples : primeFactorsCollection){
             if(triples.second().size() == triples.third().size()){
                 return true;

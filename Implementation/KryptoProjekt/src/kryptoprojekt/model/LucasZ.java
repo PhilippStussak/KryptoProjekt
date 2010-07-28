@@ -49,7 +49,9 @@ public class LucasZ extends LucasTest<Z>{
         ArrayList<Z> prime;
         double probability;
 
+        //the passed parameters are correct/incorrect
         boolean checkPrimeArgAnswer = checkPrimeArguments().first();
+        //message about the parameters answer correct/incorrect (e.g. Base 'a' too large ...)
         String argsCorrectMessage = checkPrimeArguments().second();
 
         ArrayList<Triple<Boolean, Double, LinkedList<String>>> primeResult = new ArrayList<Triple<Boolean, Double, LinkedList<String>>>();
@@ -69,8 +71,10 @@ public class LucasZ extends LucasTest<Z>{
                 intermediateValues.add(prime.get(i).toString());
                 result = new FermatZ(checkBases.get(i), prime, false).test().get(0);
                 intermediateValues.add(result.third().getFirst());
+                //all numbers that have passed the Fermat-Test
                 if (result.first()){
                     boolean isPrime = lucasCheck(checkBases.get(i), getPrimeFactors(listTuplesPrimeFactors.get(i)), prime.get(0));
+                    //all numbers that have passed the Lucas-Test
                     if(isPrime){
                         if (calcProb){
                             //Postcondition
@@ -79,19 +83,25 @@ public class LucasZ extends LucasTest<Z>{
                             continue;
                         } else{
                             assert checkPrimeArgAnswer == true && isPrime == true && calcProb == false: "checkPrimeArgAnswer or isPrime have a false state: checkPrimeArgAnswer = " +checkPrimeArgAnswer+ ", isPrime = " +isPrime;
-                            //es sollte keine Wahrscheinlichkeit berechnet werden
+                            //no probability should be calculated
                             primeResult.add(new Triple<Boolean, Double, LinkedList<String>>(isPrime, -1.0, intermediateValues));
                             continue;
                         }
                     }
-                }else{                  
+                 //all numbers that have failed the Fermat-Test
+                }else{
                     primeResult.add(new Triple<Boolean, Double, LinkedList<String>>(false, 1.0, intermediateValues));
                     continue;
                 }
+                /*
+                 * all numbers that have failed the Lucas-Test
+                 * probability = 1 --> it is not a prime number; probability = -2 --> it could be a prime number
+                 * Attention, this line could return false values, you have to repair the calculateProbability method
+                 */
                 probability = calculateProbability(maxBasesA.get(i), checkBases.get(i), listTuplesPrimeFactors.get(i));
-                //probability = 1 --> it is not a prime number; probability = -2 --> it could be a prime number
                 primeResult.add(new Triple<Boolean, Double, LinkedList<String>>(false, probability, intermediateValues));
             }
+            //Postcondition
             assert !primeResult.isEmpty():"primeResult is empty: primeResult = " +primeResult.toString();
             return primeResult;
         } else{
@@ -100,7 +110,11 @@ public class LucasZ extends LucasTest<Z>{
     }
 
 
-        //checks whether the parameter values are correct: probably prime greater than 1 and base '1 < base < modul'
+        /* checks whether the parameter values are correct: probably prime greater than 1 and base '1 < base < modul'
+         * returns Tuple:
+         * 1. argument = prime arguments (number greater than 1, 1 < base < modul) are correct true/false
+         * 2. argument = message to describe what's false or all correct
+         */
         private Tuple<Boolean, String> checkPrimeArguments()
                 throws IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException {
             //Precondition
@@ -179,7 +193,7 @@ public class LucasZ extends LucasTest<Z>{
         private boolean lucasCheck(Set<Z> bases, Collection<Z> primeFactors, Z checkPrime)
                 throws IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassCastException {
             Z modul = checkPrime;
-            Z phiOfModul = modul.subtract(new Z(1)); //entspricht n-1
+            Z phiOfModul = modul.subtract(new Z(1)); //this is n-1
             Z result;
 
             if(!checkPrime.equals(new Z("2"))){
@@ -206,7 +220,7 @@ public class LucasZ extends LucasTest<Z>{
                 return false;
             }else{
                 assert Integer.parseInt(checkPrime.toString()) == 2: "Error, checkPrime != 2. checkPrime: " +checkPrime.toString();
-                //intermediateValues.add(checkPrime+ " = 1"); //This is already inserted by the Fermat-Test.
+                //intermediateValues.add(checkPrime+ " = 1"); //This is already inserted by Fermat-Test.
                 return true;
             }
         }

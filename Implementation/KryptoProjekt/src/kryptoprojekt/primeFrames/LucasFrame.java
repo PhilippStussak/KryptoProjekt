@@ -47,7 +47,7 @@ public class LucasFrame extends Kit {
     private DropTextField primeFactorsTextField = getDropTextField();
     private DropTextField basesTextField = getDropTextField();
     private DropTextField summandTextField = getDropTextField();
-    private boolean calcProb;
+    private boolean calcProb = true; //the user should set this value (in an later software release)
     private LinkedList<String> extendList;
     private LinkedList<LinkedList<String>> extension;
     private StyledDocument doc;
@@ -504,7 +504,7 @@ public class LucasFrame extends Kit {
         ArrayList<Z> powers = new ArrayList<Z>();
         LinkedList<Tuple<Z, Z>> factorsLinkedList = new LinkedList<Tuple<Z, Z>>();
 
-
+        //verify the parameters from the TextFields (primeFactorsTextField & summandTextField & basesTextField)
         if (primeFactorsTextField.getResult() != null) {
             if(validatePrimeFactorsField(getPrimeFactorsTextFieldValue()) && validateSummandTextField(getSummandTextFieldValue()) && validateBaseTextField(getBaseTextFieldValue())){
                 factorsLinkedList = getFactors(primeFactorsTextField.getResult().toString());
@@ -569,8 +569,10 @@ public class LucasFrame extends Kit {
         } else {
             return "You have to enter a valid base >=2.";
         }
+        //end of the verification
         
         try {
+            //starts the Lucas-Test
             result = PrimeTestController.primeTestLucas(bases, primeFactors, factorPowers, summands, summandPowers, calcProb);
         } catch (RuntimeException e) {
             return e.getMessage();
@@ -592,7 +594,7 @@ public class LucasFrame extends Kit {
         String probability = "";
         for (Triple<Boolean, Double, LinkedList<String>> output : result) {
             if (output.second() == -2.0) {
-                probability = "    probability = undefined";
+                probability = "    probability = undefined (attention: still an experimental feature)";
             } else if (output.second() == -1.0) {
                 probability = "";
             } else {
