@@ -229,7 +229,6 @@ public class LucasFrame extends Kit {
                 } else {
                     primeFactorsTextField.setForeground(Color.red);
                     correctPrimeFactorsArguments = false;
-                    basesTextField.setText("");
                 }
             }
         });
@@ -245,7 +244,6 @@ public class LucasFrame extends Kit {
                 if (validateSummandTextField(getSummandTextFieldValue())) {
                     summandTextField.setForeground(Color.black);
                     correctSummandArguments = true;
-                    basesTextField.setText("");
                 } else {
                     summandTextField.setForeground(Color.red);
                     correctSummandArguments = false;
@@ -448,6 +446,9 @@ public class LucasFrame extends Kit {
         String[] result = baseModulSeparator.split(numbSequence);
         ArrayList<KryptoType> resultZ = new ArrayList<KryptoType>();
         for (String s : result) {
+            if(s.equals("")){
+                continue;
+            }
             if (s.contains("-")) {
                 String[] range = dashSeparator.split(s);
                 resultZ.addAll(fillKryptoTypeZList(range));
@@ -594,7 +595,7 @@ public class LucasFrame extends Kit {
         String probability = "";
         for (Triple<Boolean, Double, LinkedList<String>> output : result) {
             if (output.second() == -2.0) {
-                probability = "    probability = undefined (attention: still an experimental feature)";
+                probability = "    probability = undefined";
             } else if (output.second() == -1.0) {
                 probability = "";
             } else {

@@ -237,35 +237,60 @@ abstract class LucasTest <E extends KryptoType<E>> implements PrimeTest<E> {
     }
 
     /*
-     * NOT IMPLEMENTED CORRECTLY. DON'T USE THESE METHOD!
-     * returns:
-     *  1: the number is 100% not a prime
-     * -2: it could be a prime number
+     * When a prime not passed the Lucas Test, you can here check whether it's a prime number.
+     * This method is usually unnecessary if you do the Lucas-Test.
      */
-    protected double calculateProbability(E maxBases, Set<E> bases, Collection<Tuple<E, E>> primeFactorsInTuples){
-        //contains the factos without the summand
-        ArrayList<E> factorsA = new ArrayList<E>(getPrimeFactors(primeFactorsInTuples));
+    protected double calculateProbability(E maxBaseValue, Set<E> bases, E prime){
         //contains the number of generating elements
-        E numberOfGeneratingElements = maxGeneratingElements(factorsA);
-        if (maxBases.subtract(numberOfGeneratingElements).compareTo((E) maxBases.newInstance(Integer.toString(bases.size()))) >= 1){
+        /*E numberOfGeneratingElements = maxGeneratingElements(prime);
+        if (maxBaseValue.subtract(numberOfGeneratingElements).compareTo((E) maxBaseValue.newInstance(Integer.toString(bases.size()))) >= 1){
             //it could be a prime number
             return probabilityValue = -2;
         }
-        return probabilityValue = 1;
+        //it's not a prime number
+        return probabilityValue = 1;*/
+        if(bases.size() == new Integer(maxBaseValue.toString())){
+            //it's not a prime number
+            return probabilityValue = 1;
+        } else{
+            //it could be a prime number
+            return -2;
+        }
     }
 
     /*
-     * NOT IMPLEMENTED CORRECTLY. DON'T USE THESE METHOD!
-     * needs the prime factors of the Lucas term and return the generating elemts
+     * calculate the max. generating Elements of an number
+     * This method is usually unnecessary if you do the Lucas-Test.
      */
-    private E maxGeneratingElements(Collection<E> primeFactors){
-        ArrayList<E> factors = new ArrayList<E>(primeFactors);
-        E one = factors.get(0).newInstance("1");
-        E generatingElements = one.newInstance("1");
+    private E maxGeneratingElements(E number){
+        //Precondition
+        //assert number instanceof Number: "The method maxGeneratingElements only works with numbers. The passed parameter is: " +number.getClass().getName();
 
-        for(E factor : factors){
-            generatingElements = generatingElements.multiply(factor.subtract(one));
-        }
+        Tuple<Z, LinkedList<Z>> phiElements = Basic.phi(new Z(number.toString()));
+        E numberCoprime = number.newInstance(phiElements.first().toString());
+        Tuple<Z, LinkedList<Z>> phiGenerating = Basic.phi(new Z(numberCoprime.toString()));
+        E generatingElements = number.newInstance(phiGenerating.first().toString());
         return generatingElements;
+    }
+
+    private ArrayList<LinkedList<Z>> primeFactorization(Collection<Tuple<Z, Z>> primeFactors){
+        ArrayList<LinkedList<Z>> primeFactorsList = new ArrayList<LinkedList<Z>>();
+        LinkedList<Z> primeFactorsLinked;
+        for(Tuple<Z, Z> primeFactor : primeFactors){
+            primeFactorsLinked = Basic.phi(new Z(Basic.squareAndMultiply(primeFactor.first(), primeFactor.second()).first().toString())).second();
+            primeFactorsList.add(primeFactorsLinked);
+        }
+        return primeFactorsList;
+    }
+
+    protected TreeSet<Z> primeFactorizationTreeSet(ArrayList<Tuple<Z, Z>> primeFactors){
+        ArrayList<LinkedList<Z>> primeFactorsList = primeFactorization(primeFactors);
+        ArrayList<Z> primeFactorsArray = new ArrayList<Z>();
+        for(LinkedList<Z> factors : primeFactorsList){
+            for(Z factor : factors){
+                primeFactorsArray.add(factor);
+            }
+        }
+        return new TreeSet<Z>(primeFactorsArray);
     }
 }

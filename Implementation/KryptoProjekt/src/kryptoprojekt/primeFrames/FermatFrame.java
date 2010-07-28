@@ -681,8 +681,12 @@ public class FermatFrame extends Kit {
             i = delPointPos;
         }
         String[] result = baseModulSeparator.split(numbSequence);
+
         ArrayList<KryptoType> resultZ = new ArrayList<KryptoType>();
         for (String s : result) {
+            if(s.equals("")){
+                continue;
+            }
             if (s.contains("-")) {
                 String[] range = dashSeparator.split(s);
                 resultZ.addAll(fillKryptoTypeZList(range));
