@@ -128,12 +128,13 @@ public class MillerRabinZ extends MillerRabinTest<Z>{
             Z twoObj = new Z(2);
             intermediateValues = new LinkedList<String>();
 
-            if(!checkPrime.equals(twoObj)){
+            if(!checkPrime.mod(new Z("2")).isZERO()){
                 //1. return value: power to the base 2, 2. return value: odd factor
                 Tuple<Z, Z> factors = factorizeEven(checkPrime.subtract(oneObj));
                 if(factors.first().equals(new Z(-1)) || factors.second().equals(new Z(-1))){
                     throw new RuntimeException("The passed number couldn't be factored.");
                 }
+                intermediateValues.add("n-1 = (2^" +factors.first()+ ") * " +factors.second());
                 //contains the power after factorization
                 Z exponent = factors.first();
                 //contain the odd factor after factorization
@@ -172,11 +173,14 @@ public class MillerRabinZ extends MillerRabinTest<Z>{
                 //Postcondition
                 assert assertPostCondCounter == bases.size(): "There have not tested all bases.";
                 return true;
-            }else{
+            }else if(checkPrime.equals(twoObj)){
                 //Precondition
                 assert Integer.parseInt(checkPrime.toString()) == 2: "Error, checkPrime != 2. checkPrime: " +checkPrime.toString();
                 intermediateValues.add(checkPrime+ " = 1");
-                return true;
+                return true; //2 is a prime (100%)
+            }else{
+                intermediateValues.add("n-1 = odd number, you can't factorize an odd number.");
+                return false; //it was passed an even number, it's not a prime (100%)
             }
         }
 }
