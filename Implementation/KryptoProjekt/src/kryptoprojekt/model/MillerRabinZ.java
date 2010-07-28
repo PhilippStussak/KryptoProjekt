@@ -179,7 +179,7 @@ public class MillerRabinZ extends MillerRabinTest<Z>{
                 intermediateValues.add(checkPrime+ " = 1");
                 return true; //2 is a prime (100%)
             }else{
-                intermediateValues.add("n-1 = odd number, you can't factorize an odd number.");
+                intermediateValues.add("n-1 = odd number --> you passed an even number.");
                 return false; //it was passed an even number, it's not a prime (100%)
             }
         }
