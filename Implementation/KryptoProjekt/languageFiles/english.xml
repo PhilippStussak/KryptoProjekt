@@ -43,9 +43,32 @@
 	<PrimeTestController>
 		<FalseKryptoTypes>Kryptotypes are different. You have to enter the same Kryptotypes. e.g. Z, Z</FalseKryptoTypes>
 	</PrimeTestController>
+	<PrimeFrames>
+		<CheckWetherPrimes>check wether primes</CheckWetherPrimes>
+		<Bases>bases</Bases>
+		<Settings>settings</Settings>
+		<CalcProbability>calc. probability</CalcProbability>
+		<RandNumber>number</RandNumber>
+		<RandBases>random bases</RandBases>
+		<InvalidBase>You entered an invalid base.</InvalidBase>
+		<InvalidNumber>You entered an invalid number.</InvalidNumber>
+		<NumberGreater1Required>You have to enter a natural number >=2 to check if it's a prime.</NumberGreater1Required>
+		<BaseGreater1Required>You have to enter a base >=2.</BaseGreater1Required>
+		<Probability>probability</Probability>
+		<PrimeNumbers>prime numbers</PrimeNumbers>
+		<IsPrimeNumber>is prime number</IsPrimeNumber>
+		<Result>result</Result>
+	</PrimeFrames>
 	<MillerRabinFrame>
 		<ExtendBtn>Extend</ExtendBtn>
 	</MillerRabinFrame>
+	<LucasFrame>
+		<PrimeFactors>prime factors</PrimeFactors>
+		<InvalidSummand>invalidSummand</InvalidSummand>
+		<InvalidLucasTerm>You entered an invalid Lucas term to check if it's a prime.</InvalidLucasTerm>
+		<InputExample>e.g. 2^4*5*4^5</InputExample>
+		<SummandGreater0Required>You have to enter a summand >=1 (recommended summand = 1).</SummandGreater0Required>
+	</LucasFrame>
 	<HammingCode>
         <encodeException>SourceCodeWord or generatorMatrix is not calculated yet.</encodeException>
 		<detectErrorNullException>Syndrom is not calculated yet.</detectErrorNullException>

@@ -8,7 +8,6 @@
  *
  * Created on 27.06.2010, 11:35:24
  */
-
 package kryptoprojekt.coderFrames;
 
 import java.awt.GridBagConstraints;
@@ -17,11 +16,9 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
 import kryptoprojekt.controller.CoderController;
-import kryptoprojekt.model.Coder;
 import kryptoprojekt.model.HammingCode;
 
 /**
@@ -97,8 +94,9 @@ public class DecodeHammingCodeFrame extends Kit {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
     private void initLogicComponents() {
-      jPanel1.setLayout(new GridBagLayout());
+        jPanel1.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
         c.weightx = 0.5;
@@ -118,18 +116,19 @@ public class DecodeHammingCodeFrame extends Kit {
         c.gridwidth = 3;
         c.gridx = 0;
         c.gridy = 2;
-        jPanel1.add(getDragList(new Object[] {getTitle() + "_hcElem"}), c);
+        jPanel1.add(getDragList(new Object[]{getTitle() + "_hcElem"}), c);
 
-        final DragList corrDecodedWord = getDragList(new Object[] {getTitle() + "_corrected decoded word"});
+        final DragList corrDecodedWord = getDragList(new Object[]{getTitle() + "_corrected decoded word"});
         correctWordCeckbox.addItemListener(
                 new ItemListener() {
 
                     public void itemStateChanged(ItemEvent e) {
                         // Set "ignore" whenever box is checked or unchecked.
-                        if(e.getStateChange() == ItemEvent.SELECTED)
-                           corrDecodedWord.setEnabled(true);
-                       else
-                           corrDecodedWord.setEnabled(false);
+                        if (e.getStateChange() == ItemEvent.SELECTED) {
+                            corrDecodedWord.setEnabled(true);
+                        } else {
+                            corrDecodedWord.setEnabled(false);
+                        }
                     }
                 });
 
@@ -144,7 +143,7 @@ public class DecodeHammingCodeFrame extends Kit {
         c.gridwidth = 3;
         c.gridx = 0;
         c.gridy = 6;
-        jPanel1.add(getDragList(new Object[] {getTitle() + "_decoded word"}), c);
+        jPanel1.add(getDragList(new Object[]{getTitle() + "_decoded word"}), c);
 
         c.weightx = 0.5;
         c.fill = GridBagConstraints.BOTH;
@@ -159,30 +158,31 @@ public class DecodeHammingCodeFrame extends Kit {
 
     @Override
     public String execute() {
-        try{
-        HammingCode result = CoderController.decodeHammingCode((HammingCode) hcField.getResult());
-        if(result.getErrorPos() == -1)
-            return Kit.xmlReader.getTagElement("DecodeHammingCodeFrame", "NoErrorsCreated");
-        if(correctWordCeckbox.isSelected()){
+        try {
+            HammingCode result = CoderController.decodeHammingCode((HammingCode) hcField.getResult());
+
             results.put(getTitle() + "_hcElem", result);
             results.put(getTitle() + "_decoded word", result.getDecodedWord());
-            results.put(getTitle() + "_corrected decoded word", result.getCorrectedDecodedWord());
-            return Kit.xmlReader.getTagElement("DecodeHammingCodeFrame", "DecodedWord") + result.getDecodedWord() + "\n" +
-                   Kit.xmlReader.getTagElement("DecodeHammingCodeFrame", "ErrorInEncodedWord") +
-                   result.getEncodedWord() + Kit.xmlReader.getTagElement("DecodeHammingCodeFrame", "AtPosition") + result.getErrorPos() + "\n" +
-                   Kit.xmlReader.getTagElement("DecodeHammingCodeFrame", "CorrectedDecodedWord") + result.getCorrectedDecodedWord();
-        }
-        results.put(getTitle() + "_hcElem", result);
-        results.put(getTitle() + "_decoded word", result.getDecodedWord());
-        return Kit.xmlReader.getTagElement("DecodeHammingCodeFrame", "DecodedWord") + result.getDecodedWord();
-        }catch(RuntimeException r){
+            if (correctWordCeckbox.isSelected()) {
+                if (result.isErrorsFound()) {
+                    results.put(getTitle() + "_corrected decoded word", result.getCorrectedDecodedWord());
+                    return Kit.xmlReader.getTagElement("DecodeHammingCodeFrame", "DecodedWord") + result.getDecodedWord() + "\n"
+                            + Kit.xmlReader.getTagElement("DecodeHammingCodeFrame", "ErrorInEncodedWord")
+                            + result.getEncodedWord() + Kit.xmlReader.getTagElement("DecodeHammingCodeFrame", "AtPosition") + result.getErrorPos() + "\n"
+                            + Kit.xmlReader.getTagElement("DecodeHammingCodeFrame", "CorrectedDecodedWord") + result.getCorrectedDecodedWord();
+                } else {
+                    results.put(getTitle() + "_corrected decoded word", result.getDecodedWord());
+                    return (Kit.xmlReader.getTagElement("DecodeHammingCodeFrame", "NoErrorsCreated") + "\n"
+                            + Kit.xmlReader.getTagElement("DecodeHammingCodeFrame", "DecodedWord") + result.getDecodedWord());
+                }
+            }
+            return Kit.xmlReader.getTagElement("DecodeHammingCodeFrame", "DecodedWord") + result.getDecodedWord();
+        } catch (RuntimeException r) {
             return Kit.xmlReader.getTagElement("HammingCode", r.getMessage());
         }
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
-
 }

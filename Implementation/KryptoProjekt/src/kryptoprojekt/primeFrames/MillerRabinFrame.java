@@ -321,7 +321,7 @@ public class MillerRabinFrame extends Kit {
         c.weightx = 0;
         c.weighty = 0;
         JLabel primeLabel = new JLabel();
-        primeLabel.setText("check whether prime:");
+        primeLabel.setText(Kit.xmlReader.getTagElement("PrimeFrames", "CheckWetherPrimes") + ":");
         jPanelPrimeMiller.add(primeLabel, c);
 
         c = new GridBagConstraints();
@@ -344,7 +344,7 @@ public class MillerRabinFrame extends Kit {
         c.weightx = 0;
         c.weighty = 0;
         JLabel baseLabel = new JLabel();
-        baseLabel.setText("bases:");
+        baseLabel.setText(Kit.xmlReader.getTagElement("PrimeFrames", "Bases") + ":");
         jPanelPrimeMiller.add(baseLabel, c);
 
         c = new GridBagConstraints();
@@ -368,7 +368,7 @@ public class MillerRabinFrame extends Kit {
         jPanelDropListMiller.add(getDragList(new Object[]{getTitle() + "_primeMillerRabin"}), c);
 
         //JPanelSettings
-        Border settingsBorder = BorderFactory.createTitledBorder("settings");
+        Border settingsBorder = BorderFactory.createTitledBorder(Kit.xmlReader.getTagElement("PrimeFrames", "Settings"));
         jPanelSettingsMiller.setBorder(settingsBorder);
 
         //checkbox Probability
@@ -380,7 +380,7 @@ public class MillerRabinFrame extends Kit {
         c.gridy = 0;
         c.weightx = 0.5;
         c.weighty = 0;
-        probabilityCB = new JCheckBox("calc. probability", true);
+        probabilityCB = new JCheckBox(Kit.xmlReader.getTagElement("PrimeFrames", "CalcProbability"), true);
         calcProb = true;
         probabilityCB.setFont(probabilityCB.getFont().deriveFont(probabilityCB.getFont().getSize2D() - 0.6f));
         probabilityCB.setHorizontalAlignment(JLabel.LEFT);
@@ -406,7 +406,7 @@ public class MillerRabinFrame extends Kit {
         c.weighty = 0.5;
         randomSPLabel = new JLabel();
         randomSPLabel.setFont(randomSPLabel.getFont().deriveFont(randomSPLabel.getFont().getSize2D() - 0.6f));
-        randomSPLabel.setText("number");
+        randomSPLabel.setText(Kit.xmlReader.getTagElement("PrimeFrames", "RandNumber"));
         randomSPLabel.setEnabled(false);
         jPanelSettingsMiller.add(randomSPLabel, c);
 
@@ -478,7 +478,7 @@ public class MillerRabinFrame extends Kit {
         c.gridy = 1;
         c.weightx = 0.5;
         c.weighty = 0;
-        randomBasesCB = new JCheckBox("random bases", false);
+        randomBasesCB = new JCheckBox(Kit.xmlReader.getTagElement("PrimeFrames", "RandBases"), false);
         randomBasesCB.setFont(randomBasesCB.getFont().deriveFont(randomBasesCB.getFont().getSize2D() - 0.6f));
         randomBasesCB.setHorizontalAlignment(JLabel.LEFT);
         randomBasesCB.addItemListener(new ItemListener() {
@@ -766,12 +766,13 @@ public class MillerRabinFrame extends Kit {
                 moduls = splitInputToZ(moduloTextField.getResult().toString());
                 //moduls.add((KryptoType) moduloTextField.getResult());
             } else{
-                return correctModulsArguments ? "You passed an invalid natural number in order to check it's a prime." : "You an invalid false base.";
+                return correctModulsArguments ? Kit.xmlReader.getTagElement("PrimeFrames", "InvalidBase") :
+                        Kit.xmlReader.getTagElement("PrimeFrames", "InvalidNumber");
             }
         } else if(correctModulsArguments && moduloTextField.getText().length() != 0){
             moduls = splitInputToZ(moduloTextField.getText());
         } else{
-            return "You have to enter a natural number >=2 in order to check it's a prime.";
+            return Kit.xmlReader.getTagElement("PrimeFrames", "NumberGreater1Required");
         }
 
         if (basesTextField.getResult() != null) {
@@ -779,7 +780,8 @@ public class MillerRabinFrame extends Kit {
                 bases = splitInputToZ(basesTextField.getResult().toString());
                 //bases.add((KryptoType) basesTextField.getResult());
             } else{
-                return correctBasesArguments ? "You passed an invalid base." : "You passed an invalid natural number in order to check it's a prime." ;
+                return correctBasesArguments ? Kit.xmlReader.getTagElement("PrimeFrames", "InvalidNumber") :
+                        Kit.xmlReader.getTagElement("PrimeFrames", "InvalidBase");
             }
         } else if(correctBasesArguments && getBaseTextFieldValue().length() != 0){
             bases = splitInputToZ(getBaseTextFieldValue());
@@ -788,7 +790,7 @@ public class MillerRabinFrame extends Kit {
             two.add(new Z("2"));
             bases = two;
         } else{
-            return "You have to enter a valid base >=2.";
+            return Kit.xmlReader.getTagElement("PrimeFrames", "BaseGreater1Required");
         }
         //end of the verification
 
@@ -818,9 +820,9 @@ public class MillerRabinFrame extends Kit {
             } else {
                 double probDouble = output.second() * 100;
                 if(output.first() == true && probDouble == 100){
-                     probability = "    probability = <" + String.valueOf(probDouble) + "%";
+                     probability = "    " + Kit.xmlReader.getTagElement("PrimeFrames", "Probability") + " = <" + String.valueOf(probDouble) + "%";
                 }else{
-                     probability = "    probability = " + String.valueOf(probDouble) + "%";
+                     probability = "    " + Kit.xmlReader.getTagElement("PrimeFrames", "Probability") + " = " + String.valueOf(probDouble) + "%";
                 }
             }
             if (output.first() == true) {
@@ -828,15 +830,15 @@ public class MillerRabinFrame extends Kit {
             }
             extendList = output.third();
             extendList.addFirst(moduls.get(i) + ":");
-            extendList.addLast("result");
-            extendList.addLast(moduls.get(i) + " is prime number: " + output.first() + probability);
+            extendList.addLast(Kit.xmlReader.getTagElement("PrimeFrames", "Result"));
+            extendList.addLast(moduls.get(i) + " " + Kit.xmlReader.getTagElement("PrimeFrames", "IsPrimeNumber") + ": " + output.first() + probability);
             extension.add(extendList);
 
             outputWindow.append(moduls.get(i) + ": " + result.get(i).first() + "\n");
             i++;
         }
         results.put(getTitle() + "_primeMillerRabin", posResults);
-        return "prime numbers:\n" + outputWindow.toString();
+        return Kit.xmlReader.getTagElement("PrimeFrames", "PrimeNumbers") + ":\n" + outputWindow.toString();
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ExtendBtMiller;

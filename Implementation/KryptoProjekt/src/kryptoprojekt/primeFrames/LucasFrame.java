@@ -279,7 +279,7 @@ public class LucasFrame extends Kit {
         c.weightx = 0;
         //c.insets = new Insets(0, 2, 1, 2);
         JLabel l = new JLabel();
-        l.setText("prime factors");
+        l.setText(Kit.xmlReader.getTagElement("LucasFrame", "PrimeFactors"));
         jPanel1.add(l, c);
 
         c = new GridBagConstraints();
@@ -321,7 +321,7 @@ public class LucasFrame extends Kit {
         c.gridx = 0;
         c.gridy = 2;
         JLabel l2 = new JLabel();
-        l2.setText("bases:");
+        l2.setText(Kit.xmlReader.getTagElement("PrimeFrames", "Bases") + ":");
         jPanel1.add(l2, c);
 
         c = new GridBagConstraints();
@@ -515,11 +515,11 @@ public class LucasFrame extends Kit {
                 }
             } else{
                 if(!correctPrimeFactorsArguments){
-                    return "You passed an invalid Lucas term in order to check it's a prime.";
+                    return Kit.xmlReader.getTagElement("LucasFrame", "InvalidLucasTerm");
                 } else if(!correctSummandArguments){
-                    return "You passed an invalid summand.";
+                    return Kit.xmlReader.getTagElement("LucasFrame", "InvalidSummand");
                 } else if(!correctBasesArguments){
-                    return "You passed an invalid base.";
+                    return Kit.xmlReader.getTagElement("PrimeFrames", "InvalidBase");
                 }
             }
         } else if(correctPrimeFactorsArguments && primeFactorsTextField.getText().length() != 0){
@@ -529,7 +529,8 @@ public class LucasFrame extends Kit {
                 factorPowers.add(factorsL.second());
             }
         } else{
-            return "You have to enter a valid Lucas term in order to check it's a prime (e.g. 2^4*5*4^5).";
+            return Kit.xmlReader.getTagElement("LucasFrame", "InvalidLucasTerm") +
+                    " (" + Kit.xmlReader.getTagElement("LucasFrame", "InputExample") + ")";
         }
 
         if (summandTextField.getResult() != null) {
@@ -538,18 +539,18 @@ public class LucasFrame extends Kit {
                 summandPowers.add(new Z("1"));
             } else{
                 if(!correctSummandArguments){
-                    return "You passed an invalid base.";
+                    return Kit.xmlReader.getTagElement("PrimeFrames", "InvalidBase");
                 } else if(!correctPrimeFactorsArguments){
-                    return "You passed an invalid Lucas term in order to check it's a prime.";
+                    return Kit.xmlReader.getTagElement("LucasFrame", "InvalidLucasTerm");
                 } else if(!correctSummandArguments){
-                    return "You passed an invalid summand.";
+                    return Kit.xmlReader.getTagElement("LucasFrame", "InvalidSummand");
                 }
             }
         } else if(validateSummandTextField(getSummandTextFieldValue()) && getSummandTextFieldValue().length() != 0){
             summands.add(new Z(getSummandTextFieldValue()));
             summandPowers.add(new Z("1"));
         } else{
-                return "You have to enter a summand >=1 (recommended summand = 1).";
+                return Kit.xmlReader.getTagElement("LucasFrame", "SummandGreater0Required");
         }
 
         if (basesTextField.getResult() != null) {
@@ -558,17 +559,17 @@ public class LucasFrame extends Kit {
                 //bases.add((Z) basesTextField.getResult());
             } else{
                 if(!correctBasesArguments){
-                    return "You passed an invalid base.";
+                    return Kit.xmlReader.getTagElement("PrimeFrames", "InvalidBase");
                 } else if(!correctPrimeFactorsArguments){
-                    return "You passed an invalid Lucas term in order to check it's a prime.";
+                    return Kit.xmlReader.getTagElement("LucasFrame", "InvalidLucasTerm");
                 } else if(!correctSummandArguments){
-                    return "You passed an invalid summand.";
+                    return Kit.xmlReader.getTagElement("LucasFrame", "InvalidSummand");
                 }
             }
         } else if(correctBasesArguments && getBaseTextFieldValue().length() != 0){
             bases = splitInputToZ(getBaseTextFieldValue());
         } else {
-            return "You have to enter a valid base >=2.";
+            return Kit.xmlReader.getTagElement("PrimeFrames", "BaseGreater1Required");
         }
         //end of the verification
         
@@ -595,12 +596,12 @@ public class LucasFrame extends Kit {
         String probability = "";
         for (Triple<Boolean, Double, LinkedList<String>> output : result) {
             if (output.second() == -2.0) {
-                probability = "    probability = undefined";
+                probability = "    " + Kit.xmlReader.getTagElement("PrimeFrames", "Probability") + " = undefined";
             } else if (output.second() == -1.0) {
                 probability = "";
             } else {
                 double probDouble = output.second() * 100;
-                probability = "    probability = " + String.valueOf(probDouble) + "%";
+                probability = "    " + Kit.xmlReader.getTagElement("PrimeFrames", "Probability") + " = " + String.valueOf(probDouble) + "%";
             }
             extendList = output.third();
             verifiedNumb = extendList.getFirst();
@@ -608,8 +609,8 @@ public class LucasFrame extends Kit {
                 posResults.add(new Z(verifiedNumb));
             }
             extendList.addFirst(extendList.pollFirst() + ":");
-            extendList.addLast("result");
-            extendList.addLast(verifiedNumb + " is prime number: " + output.first() + probability);
+            extendList.addLast(Kit.xmlReader.getTagElement("PrimeFrames", "Result"));
+            extendList.addLast(verifiedNumb + " " + Kit.xmlReader.getTagElement("PrimeFrames", "IsPrimeNumber") + ": " + output.first() + probability);
 
             extension.add(extendList);
 
@@ -618,7 +619,7 @@ public class LucasFrame extends Kit {
             i++;
         }
         results.put(getTitle() + "_primeLucas", posResults);
-        return "prime numbers:\n" + outputWindow.toString();
+        return Kit.xmlReader.getTagElement("PrimeFrames", "PrimeNumbers") + ":\n" + outputWindow.toString();
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton extendBtLucas;
