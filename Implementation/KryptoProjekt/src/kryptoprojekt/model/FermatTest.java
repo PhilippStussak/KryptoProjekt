@@ -13,19 +13,24 @@ import java.util.*;
  * @author Michael
  */
  abstract class FermatTest <E extends KryptoType<E>> implements PrimeTest<E>{
-    protected TreeSet<E> bases;
-    protected TreeSet<E> moduls;
+    protected LinkedHashSet<E> bases;
+    protected LinkedHashSet<E> moduls;
     //contains the intermediate values of the Fermat-Test
     protected LinkedList<String> intermediateValues;
     //true to calculate and return the probability, otherwise false
     protected boolean calcProb;
     //probability can't be calculated at Fermat-Test
     protected static final double probabilityValue = -2;
+    //contains bases in sorted order and without duplicates
+    protected TreeSet<E> basesTree;
+    protected TreeSet<E> modulsTree;
 
 
     protected FermatTest(Collection<E> bases, Collection<E> modul, boolean calcProb){
-        this.bases = new TreeSet<E>(bases);
-        this.moduls = new TreeSet<E>(modul);
+        this.bases = new LinkedHashSet<E>(bases);
+        this.basesTree = new TreeSet<E>(bases);
+        this.moduls = new LinkedHashSet<E>(modul);
+        this.modulsTree = new TreeSet<E>(modul);
         this.calcProb = calcProb;
     }
     
@@ -34,18 +39,18 @@ import java.util.*;
     }
     
     protected E getHighestBase(){
-        return bases.last();
+        return basesTree.last();
     }
 
     protected E getLowestBase(){
-        return bases.first();
+        return basesTree.first();
     }
 
     protected E getHighestModul(){
-        return moduls.last();
+        return modulsTree.last();
     }
 
     protected E getLowestModul(){
-        return moduls.first();
+        return modulsTree.first();
     }
 }

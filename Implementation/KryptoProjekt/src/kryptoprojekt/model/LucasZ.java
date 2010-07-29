@@ -73,7 +73,8 @@ public class LucasZ extends LucasTest<Z>{
                 intermediateValues.add(result.third().getFirst());
                 //all numbers that have passed the Fermat-Test
                 if (result.first()){
-                    boolean isPrime = lucasCheck(checkBases.get(i), getPrimeFactors(listTuplesPrimeFactors.get(i)), prime.get(0));
+                    //boolean isPrime = lucasCheck(checkBases.get(i), getPrimeFactors(listTuplesPrimeFactors.get(i)), prime.get(0)); //please keep
+                    boolean isPrime = lucasCheck(checkBases.get(i), new ArrayList<Z>(primeFactorizationTreeSet(listTuplesPrimeFactors.get(i))), prime.get(0)); //only to test the phi function
                     //all numbers that have passed the Lucas-Test
                     if(isPrime){
                         if (calcProb){
@@ -96,9 +97,9 @@ public class LucasZ extends LucasTest<Z>{
                 /*
                  * all numbers that have failed the Lucas-Test
                  * probability = 1 --> it is not a prime number; probability = -2 --> it could be a prime number
-                 * Attention, this line could return false values, you have to repair the calculateProbability method
                  */
-                probability = calculateProbability(maxBasesA.get(i), checkBases.get(i), listTuplesPrimeFactors.get(i));
+                //probability = calculateProbability(maxBasesA.get(i), checkBases.get(i), listTuplesPrimeFactors.get(i));
+                probability = calculateProbability(maxBasesA.get(i), checkBases.get(i), calculatePrime(listTuplesPrimeFactors.get(i), summands.get(i)));
                 primeResult.add(new Triple<Boolean, Double, LinkedList<String>>(false, probability, intermediateValues));
             }
             //Postcondition
@@ -199,6 +200,8 @@ public class LucasZ extends LucasTest<Z>{
             if(!checkPrime.equals(new Z("2"))){
                 ArrayList<Z> primeFactorsA = new ArrayList<Z>(primeFactors);
                 boolean isPrime = false;
+                int basesCounter = 0;
+                int basesSize = bases.size();
                 for(Z base : bases){
                     for(Z factor : primeFactorsA){
                         if(factor.isONE()){
@@ -209,7 +212,9 @@ public class LucasZ extends LucasTest<Z>{
                         intermediateValues.add(base+ "^(" +phiOfModul+ "/" +factor+ ") mod " +modul+ " = " +result);
                         if(result.isONE()){
                             isPrime = false;
-                            intermediateValues.add("");
+                            if(++basesCounter < basesSize){
+                                intermediateValues.add("");
+                            }
                             break;
                         }
                     }
