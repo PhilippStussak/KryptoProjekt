@@ -5,7 +5,6 @@
 
 package kryptoprojekt.model;
 
-import java.util.Hashtable;
 import junit.framework.TestCase;
 
 /**

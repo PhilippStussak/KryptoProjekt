@@ -136,6 +136,7 @@ public class CreateHammingErrorFrame extends Kit {
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
         c.gridy = 3;
+        field.setTransferHandler(null);
         jPanel1.add(field, c);
 
         c.fill = GridBagConstraints.BOTH;

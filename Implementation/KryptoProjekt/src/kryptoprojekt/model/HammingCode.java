@@ -4,8 +4,6 @@
  */
 package kryptoprojekt.model;
 
-import java.util.Hashtable;
-
 /**
  *
  * @author LiTTle, Mario
@@ -77,7 +75,6 @@ public class HammingCode extends Coder {
      * Calculates the syndrom.
      */
     @Override
-    //Do we have to throw an exception in this case, too?
     public String calculateSyndrom(){
         if (encodedWord == null) {
             encode();
@@ -297,7 +294,7 @@ public class HammingCode extends Coder {
      * @return given String converted in Matrix<PrimeFieldElement>
      */
     private Matrix<PrimeFieldElement> convertStringToOneRowMatrix(String sourceCodeWord) {
-        KryptoType<PrimeFieldElement> cWord[][] = new KryptoType[1][this.codeWord.length()];
+        KryptoType<PrimeFieldElement> cWord[][] = new KryptoType[1][sourceCodeWord.length()];
         char[] t = sourceCodeWord.toCharArray();
         for (int i = 0; i < sourceCodeWord.length(); i++) {
             for (int j = 0; j < this.galoisBase; j++) //added 48 to j because of ascii-value of '0'
@@ -399,7 +396,7 @@ public class HammingCode extends Coder {
      * @return a copy of {@code this} object
      */
     public HammingCode copy() {
-        HammingCode newHc = new HammingCode(codeWord);
+        HammingCode newHc = new HammingCode(this.generatorMatrix,this.codeWord);
 
         newHc.sourceCodeWord = this.sourceCodeWord.copy();
         newHc.encodedWord = this.encodedWord == null ? null : this.encodedWord.copy();

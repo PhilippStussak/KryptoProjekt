@@ -4,7 +4,7 @@
  */
 
 /*
- * InitHammingJFrame.java
+ * InitHammingFrame.java
  *
  * Created on 27.06.2010, 11:19:09
  */
@@ -20,6 +20,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
 import kryptoprojekt.controller.CoderController;
@@ -36,12 +37,12 @@ public class InitHammingFrame extends Kit {
 
 
     private DropTextField textGeneratorMatrix = getDropTextField();
-    private DropTextField textSourceCodeword = getDropTextField();
+    private JTextField textSourceCodeword = new JTextField();
     private JCheckBox enableMatrix = new JCheckBox("add own generator matrix");
 
 
 
-    /** Creates new form InitHammingJFrame */
+    /** Creates new form InitHammingFrame */
     public InitHammingFrame(ConnectionHandler handler) {
         super(handler);
         initComponents();
@@ -140,14 +141,8 @@ public class InitHammingFrame extends Kit {
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
         c.gridy = 1;
+        textSourceCodeword.setTransferHandler(null);
         jPanel1.add(textSourceCodeword, c);
-
-        c.weightx = 0.5;
-        c.fill = GridBagConstraints.BOTH;
-        c.gridwidth = 3;
-        c.gridx = 0;
-        c.gridy = 2;
-        jPanel1.add(getDragList(new Object[] {getTitle() + "_srcCodeword"}), c);
         
         textGeneratorMatrix.setEnabled(false);
 
@@ -221,8 +216,7 @@ public class InitHammingFrame extends Kit {
             hc = CoderController.initHammingCode(false, null, value1);
         }
         results.put(getTitle() + "_hcElem", hc);
-        results.put(getTitle() + "_genMatrix", textGeneratorMatrix);
-        results.put(getTitle() + "_srcCodeword", textSourceCodeword);
+        results.put(getTitle() + "_genMatrix", textGeneratorMatrix.getResult());
 
         return "Init Hamming Code with source codeword " + hc.getSourceCodeWord() +
                 "\n" + Kit.xmlReader.getTagElement("InitHammingFrame", "GeneratorMatrix") + ": \n" + hc.getGeneratorMatrix().toString() +

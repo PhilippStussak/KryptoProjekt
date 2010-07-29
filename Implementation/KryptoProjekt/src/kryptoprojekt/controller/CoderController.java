@@ -52,7 +52,6 @@ public class CoderController {
         HammingCode result = null;
         if (enableMatrix && generatorM != null) {
             result = new HammingCode(generatorM, sourceCodeWord);
-
         } else {
             result = new HammingCode(sourceCodeWord);
         }
