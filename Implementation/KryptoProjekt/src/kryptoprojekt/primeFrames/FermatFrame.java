@@ -744,7 +744,7 @@ public class FermatFrame extends Kit {
         } else if(correctModulsArguments && getModulTextFieldValue().length() != 0){
             moduls = splitInputToZ(getModulTextFieldValue());
         } else{
-            return Kit.xmlReader.getTagElement("MillerRabinFrame", "NumberGreater1Required");
+            return Kit.xmlReader.getTagElement("PrimeFrames", "NumberGreater1Required");
         }
 
         if (basesTextField.getResult() != null) {
@@ -753,7 +753,7 @@ public class FermatFrame extends Kit {
                 //bases.add((KryptoType) basesTextField.getResult());
             } else{
                 return correctBasesArguments ? Kit.xmlReader.getTagElement("PrimeFrames", "InvalidNumber") :
-                        Kit.xmlReader.getTagElement("PrimeFrames", "InvalidBase") ;
+                        Kit.xmlReader.getTagElement("PrimeFrames", "InvalidBase");
             }
         } else if(correctBasesArguments && getBaseTextFieldValue().length() != 0){
             bases = splitInputToZ(getBaseTextFieldValue());
@@ -762,7 +762,7 @@ public class FermatFrame extends Kit {
             two.add(new Z("2"));
             bases = two;
         } else{
-            return Kit.xmlReader.getTagElement("MillerRabinFrame", "BaseGreater1Required");
+            return Kit.xmlReader.getTagElement("PrimeFrames", "BaseGreater1Required");
         }
         //end of the verification
 

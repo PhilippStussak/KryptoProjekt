@@ -769,8 +769,8 @@ public class MillerRabinFrame extends Kit {
                 return correctModulsArguments ? Kit.xmlReader.getTagElement("PrimeFrames", "InvalidBase") :
                         Kit.xmlReader.getTagElement("PrimeFrames", "InvalidNumber");
             }
-        } else if(correctModulsArguments && moduloTextField.getText().length() != 0){
-            moduls = splitInputToZ(moduloTextField.getText());
+        } else if(correctModulsArguments && getModulTextFieldValue().length() != 0){
+            moduls = splitInputToZ(getModulTextFieldValue());
         } else{
             return Kit.xmlReader.getTagElement("PrimeFrames", "NumberGreater1Required");
         }
