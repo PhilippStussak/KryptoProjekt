@@ -88,6 +88,7 @@
 		<ErrorProbability>Probability of errorCreation (0-1)</ErrorProbability>
 		<ReturnedProbability>generated errors with probability of</ReturnedProbability>
 		<HeaderLabel>Create errors in encodedWord</HeaderLabel>
+		<ReturnedNewEncWord>'new' encoded word</ReturnedNewEncWord>
 	</CreateHammingErrorFrame>
 	<DecodeHammingCodeFrame>
 		<correctWordCeckbox>correct encoded word?</correctWordCeckbox>
@@ -105,6 +106,7 @@
 	<HammingDistanceFrame>
 		<Vector>Vector</Vector>
 		<HeaderLabel>Calculate hammingdistance</HeaderLabel>
+		<ReturnString>Hammingdistance</ReturnString>
 	</HammingDistanceFrame>
 	<HammingSyndromFrame>
 		<Syndrom>Syndrom</Syndrom>
@@ -124,6 +126,9 @@
 		<HeaderLabel>Create a hammingcode element</HeaderLabel>
 		<NoMatrixElement>Wrong parameter, this isn't a matrix element</NoMatrixElement>
 	</InitHammingFrame>
+	<Basics>
+		<GCDNotPossible>Calculation of GCD is not possible with these arguments.</GCDNotPossible>
+	</Basics>
 	<GCDFrame>
 		<GCD>GCD</GCD>
 		<HeaderLabel>GCD</HeaderLabel>
@@ -149,6 +154,7 @@
 		<HeaderLabel>Extended GCD</HeaderLabel>
 		<ExtendBtn>Extend</ExtendBtn>
 		<returnString>extended GCD</returnString>
+		<EGCD>eGCD</EGCD>
 	</ExtendedGCDFrame>
 	<ModuloFrame>
 		<HeaderLabel>Modulo</HeaderLabel>

@@ -5,6 +5,7 @@
 package kryptoprojekt.model;
 
 import java.util.LinkedList;
+import java.util.NoSuchElementException;
 
 /**
  *
@@ -181,6 +182,7 @@ public class Basic {
      * {@code Tuple(s, intermediate data)}
      */
     public static <E extends KryptoType<E>> Tuple<E, LinkedList<String>> extendedGCD(E e1, E e2) {
+        try {
         Tuple<E, LinkedList<E[]>> gcd = Basic.gcd(e1, e2);
         LinkedList<E[]> list = gcd.second();
         list.removeLast();
@@ -206,6 +208,9 @@ public class Basic {
             index++;
         }
         return new Tuple<E, LinkedList<String>>((result[1].compareTo(result[3]) < 0) ? result[0] : result[2].add(result[1]), resultList);
+        } catch (Exception e) {
+            throw new NoSuchElementException("GCDNotPossible");
+        }
     }
 
     private static <E extends KryptoType<E>> E[] permuteForEctendedGCD(E[] equation) {

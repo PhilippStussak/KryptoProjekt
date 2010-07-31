@@ -16,6 +16,7 @@ import java.awt.GridBagLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.LinkedList;
+import java.util.NoSuchElementException;
 import javax.swing.JLabel;
 import kryptoprojekt.ConnectionHandler;
 import kryptoprojekt.Kit;
@@ -166,7 +167,7 @@ public class ExtendedGCDFrame extends Kit {
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
         c.gridy = 0;
-        jPanel1.add(new JLabel("eGCD("), c);
+        jPanel1.add(new JLabel(Kit.xmlReader.getTagElement("ExtendedGCDFrame", "EGCD") + "("), c);
 
         c.weightx = 0.46;
         c.fill = GridBagConstraints.BOTH;
@@ -208,21 +209,30 @@ public class ExtendedGCDFrame extends Kit {
         if (textField1.getResult() != null) {
             value1 = (KryptoType) textField1.getResult();
         } else {
+            if (textField1.getText().isEmpty()) {
+                throw new NullPointerException();
+            }
             value1 = new Z(textField1.getText());
         }
         if (textField2.getResult() != null) {
             value2 = (KryptoType) textField2.getResult();
         } else {
+            if (textField2.getText().isEmpty()) {
+                throw new NullPointerException();
+            }
             value2 = new Z(textField2.getText());
         }
-
-        Tuple result = BasicController.extendedGCD(value1, value2);
-        results.put(getTitle() + "_egcd", result.first());
-        extension = "";
-        for (String s : (LinkedList<String>) result.second()) {
-            extension += s + "\n";
+        try {
+            Tuple result = BasicController.extendedGCD(value1, value2);
+            results.put(getTitle() + "_egcd", result.first());
+            extension = "";
+            for (String s : (LinkedList<String>) result.second()) {
+                extension += s + "\n";
+            }
+            return Kit.xmlReader.getTagElement("ExtendedGCDFrame", "returnString") + "(" + value1.toString() + ", " + value2.toString() + ") = " + result.first().toString();
+        } catch (NoSuchElementException e) {
+            return Kit.xmlReader.getTagElement("Basics", e.getMessage());
         }
-        return Kit.xmlReader.getTagElement("ExtendedGCDFrame", "returnString") + "(" + value1.toString() + ", " + value2.toString() + ") = " + result.first().toString();
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

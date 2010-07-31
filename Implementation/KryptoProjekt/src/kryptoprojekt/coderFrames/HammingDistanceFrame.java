@@ -87,7 +87,7 @@ public class HammingDistanceFrame extends Kit {
                             (Matrix<PrimeFieldElement>) textVector1.getResult(),
                             (Matrix<PrimeFieldElement>) textVector2.getResult());
         results.put(getTitle() + "_distance", result);
-        return result.toString();
+        return Kit.xmlReader.getTagElement("HammingDistanceFrame", "ReturnString") + ": " + result.toString();
         } catch (IllegalArgumentException e) {
             return Kit.xmlReader.getTagElement("HammingCode", e.getMessage());
         }
