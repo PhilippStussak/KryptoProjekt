@@ -77,7 +77,13 @@ public class BasicTest extends TestCase {
     }
 
     public void testExtendedGCD() {
-        
+        Random generator = new Random();
+        for(int i : new Primes(100)) {
+            if(i > 3) {
+                Z randomNumber = new Z(generator.nextInt(i - 3)).add(new Z(2));
+                assertEquals(new Z(1), Basic.extendedGCD(new Z(i), randomNumber).first().multiply(randomNumber).mod(new Z(i)));
+            }
+        }
     }
 
     public void testSqrt() {
