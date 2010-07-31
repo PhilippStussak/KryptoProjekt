@@ -205,7 +205,7 @@ public class Basic {
             resultList.add(gcd.first() + " = " + result[0] + " * " + result[1] + " " + result[2] + " * " + result[3]);
             index++;
         }
-        return new Tuple<E, LinkedList<String>>(result[0], resultList);
+        return new Tuple<E, LinkedList<String>>((result[1].compareTo(result[3]) < 0) ? result[0] : result[2].add(result[1]), resultList);
     }
 
     private static <E extends KryptoType<E>> E[] permuteForEctendedGCD(E[] equation) {

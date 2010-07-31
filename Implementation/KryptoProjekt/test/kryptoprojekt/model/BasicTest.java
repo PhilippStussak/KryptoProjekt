@@ -5,6 +5,7 @@
 package kryptoprojekt.model;
 
 import java.util.LinkedList;
+import java.util.Random;
 import junit.framework.TestCase;
 import static org.junit.Assert.*;
 
@@ -76,6 +77,7 @@ public class BasicTest extends TestCase {
     }
 
     public void testExtendedGCD() {
+        
     }
 
     public void testSqrt() {
