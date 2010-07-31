@@ -212,11 +212,15 @@ public class HammingCode extends Coder {
         //set parity bits
         for (int i = 0; i < codewordLength; i++) {
             for (int j = codewordLength; j < (int) Math.pow(2, codewordLength) - 1; j++) {
-                if (i != j - codewordLength) {
+                if ((j - codewordLength)%codewordLength != i) {
                     t[i][j] = new PrimeFieldElement(1, this.galoisBase);
                 }
             }
         }
+        for (int i=0; i<codewordLength; i++)
+            t[i][columnCapacity-1] = new PrimeFieldElement(1, this.galoisBase);
+
+        
         this.generatorMatrix = new Matrix(t);
         return this.generatorMatrix;
     }
